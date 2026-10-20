@@ -34,19 +34,22 @@ Si un día no llego, se recorta primero el minijuego; el resto del plan se corre
 - [x] Spec de Bolti: comer arrastrando (como Pou), dormir a las 00:00, minijuegos
       (`docs/specs/bolti-personaje.md`) y sus valores en `config.js`
 
-## Jue 22 — Bolti en Casa
-- [ ] Publicar en GitHub Pages (HTTPS, se actualiza solo con cada push)
-- [ ] Componente `Bolti` (SVG por partes) a partir del prototipo, uno por archivo
-- [ ] Estado de Bolti v3: panza, energía, cariño, durmiendo, `ultimaActualizacion` (migración)
-- [ ] `logic/bolti.js`: necesidades con reloj real (aunque la app esté cerrada) y humor,
-      incluido triste si no estudió el último día obligatorio. Con pruebas
-- [ ] Mimos: tocar (salto + frase) y frotar (corazones, +cariño)
-- [ ] Barras de necesidades y burbuja de frases en Casa
+## Jue 22 — Bolti en Casa ✅
+- [x] Workflow de GitHub Actions para publicar en Pages (pruebas + build + deploy)
+- [ ] **Activar Pages** en GitHub (Settings → Pages → Source: GitHub Actions) — lo hace Uri
+- [x] Componente `Bolti` (SVG por partes) a partir del prototipo
+- [x] Estado v3 de Bolti: panza, energía, cariño, durmiendo, `actualizadaEn`, `instaladaEn`
+- [x] `logic/bolti.js`: necesidades con reloj real (aunque la app esté cerrada), se duerme a las 00:00,
+      se despierta a las 10:00, humor (incluye triste si no estudió). 11 pruebas nuevas (24 en total)
+- [x] Mimos: tocar (salto + frase, +1) y frotar (corazones, +3)
+- [x] Barras de necesidades y globo de frases ("¡Te extrañé!", "Vamos a dormir, Mari 💤", hambre…)
+- [x] Prueba en navegador con reloj adelantado + `/ux-review` de Casa
 
 ## Vie 23 — Comida y sueño
+- [ ] Botones de acción en Casa (al alcance del pulgar): Comer, Luz, Jugar
 - [ ] Tienda: comprar comida con 🪙 → inventario
 - [ ] Bandeja de inventario y **arrastrar la comida a la boca** (abre la boca al acercarse)
-- [ ] Dormir: luz desde las 22:00, se duerme sola a las 00:00, se despierta a las 10:00
+- [ ] Botón de luz: apagarla desde las 22:00 (o siesta con energía < 20); prenderla la despierta
 - [ ] Bolti festeja cuando completa una tarea o termina de estudiar
 - [ ] Probar el cronómetro en un celular real con HTTPS (bloqueo de pantalla, cambiar de app)
 
@@ -87,17 +90,22 @@ Si un día no llego, se recorta primero el minijuego; el resto del plan se corre
 
 ---
 
-## Próxima sesión — Jue 22: Bolti en Casa
+## Próxima sesión — Vie 23: Comida y sueño
+
+Antes de arrancar: activar GitHub Pages (Settings → Pages → Source: **GitHub Actions**) y volver a
+correr el workflow (Actions → "Publicar en GitHub Pages" → Re-run). La app queda en
+https://urip24.github.io/MascotaVirtual/
 
 Tareas concretas:
-1. Workflow de GitHub Actions que publique en GitHub Pages con cada push (`base: '/MascotaVirtual/'`
-   en `vite.config.js`). El repo tiene que ser público.
-2. Pasar el SVG del prototipo a componentes React: `Bolti.jsx` (+ `Bolti.css`) con props `animo`
-   y `accion` (salto, mimos, comiendo).
-3. `logic/bolti.js` + pruebas: avanzar necesidades con el tiempo que pasó, humor según
-   `docs/specs/bolti-personaje.md`. Estado v3 en `storage.js` con migración.
-4. Pantalla Casa: barras de necesidades, Bolti, burbuja de frases, mimos (tocar y frotar).
+1. Estado: `inventario: { croqueta: 0, … }` (estado v4). `logic/comida.js`: comprar (resta 🪙,
+   nunca puntos), dar de comer (suma panza/cariño, no gasta si está llena). Con pruebas.
+2. Pantalla de tienda simple (desde Casa) con las comidas de `COMIDAS`.
+3. Bandeja de inventario en Casa y **arrastrar la comida a la boca** (pointer events): Bolti abre
+   la boca cuando la comida se acerca y mastica sin lengua afuera.
+4. Botón de luz con las reglas de `bolti-personaje.md` (22:00, siesta con energía < 20).
+5. Bolti festeja cuando se completa una tarea o una sesión de estudio.
+6. Como todavía no hay minijuego, dar unas 🪙 de bienvenida (por ejemplo 30) para poder probar.
 
 Prompt para arrancar:
 
-> Leé `CLAUDE.md`, `PLAN.md` y `docs/specs/bolti-personaje.md`. Hoy toca el día Jue 22: Bolti en Casa (personaje, necesidades con reloj real, humor y mimos) y publicar en GitHub Pages. Mostrame el plan antes de codear, hacé un commit por paso y al final actualizá `PLAN.md` y dejame la sección "Próxima sesión".
+> Leé `CLAUDE.md`, `PLAN.md` y `docs/specs/bolti-personaje.md`. Hoy toca el día Vie 23: comida (tienda, inventario y arrastrar la comida a la boca) y el botón de la luz para dormir. Mostrame el plan antes de codear, hacé un commit por paso y al final actualizá `PLAN.md` y dejame la sección "Próxima sesión".
