@@ -159,6 +159,8 @@
   #bolti.comiendo #cabeza { transform: rotate(0deg) translateY(16px); }
   #bolti.comiendo .boca-cerrada { animation: masticar 0.32s steps(1) infinite; }
   #bolti.comiendo .boca-abierta { display: inline; animation: masticar 0.32s steps(1) infinite reverse; }
+  /* Comiendo tiene prioridad: sin lengua afuera mientras mastica */
+  #bolti.comiendo .lengua { display: none !important; }
   @keyframes masticar { 50% { opacity: 0; } }
   .zzz text { font-family: var(--fuente); font-weight: 800; fill: var(--lila); animation: zzz 2.4s ease-in-out infinite; }
   .zzz text:nth-child(2) { animation-delay: 0.8s; }
