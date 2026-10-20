@@ -6,6 +6,7 @@ import Tareas from './screens/Tareas.jsx'
 import Canjes from './screens/Canjes.jsx'
 import Jugar from './screens/Jugar.jsx'
 import { cargarEstado, guardarEstado } from './storage.js'
+import { actualizarDia, retomarCronometros } from './logic/tareas.js'
 import './App.css'
 
 const PANTALLAS = {
@@ -17,8 +18,15 @@ const PANTALLAS = {
 
 function App() {
   const [pantallaActiva, setPantallaActiva] = useState('casa')
-  // Se pasa la función (sin llamarla) para que lea localStorage una sola vez, al arrancar.
-  const [estado, setEstado] = useState(cargarEstado)
+  // La función se ejecuta una sola vez, al arrancar: lee el progreso, retoma cronómetros
+  // que hayan quedado abiertos y crea la tarea de estudio del día si corresponde.
+  const [estado, setEstado] = useState(() => actualizarDia(retomarCronometros(cargarEstado())))
+
+  // Cada minuto revisa si cambió el día (por si la app queda abierta pasada la medianoche).
+  useEffect(() => {
+    const timer = setInterval(() => setEstado((e) => actualizarDia(e)), 60 * 1000)
+    return () => clearInterval(timer)
+  }, [])
 
   // Cada vez que cambia el estado, se guarda en el celular.
   useEffect(() => {

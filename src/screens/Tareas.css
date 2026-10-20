@@ -1,0 +1,20 @@
+.tareas h2 {
+  margin: 16px 0 8px;
+  font-size: 1rem;
+  color: var(--color-texto-suave);
+}
+
+.tareas ul {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+}
+
+.tareas .vacio {
+  padding: 16px;
+  text-align: center;
+  border-radius: 14px;
+  background: var(--color-superficie);
+}

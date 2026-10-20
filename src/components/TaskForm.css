@@ -1,0 +1,64 @@
+.task-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.task-form .fila {
+  display: flex;
+  gap: 8px;
+}
+
+.task-form input {
+  flex: 1;
+  min-width: 0;
+  height: 44px;
+  padding: 0 12px;
+  border: 1px solid var(--color-borde);
+  border-radius: 12px;
+  font-size: 1rem; /* 16px evita que el iPhone haga zoom al tocar */
+  background: var(--color-superficie);
+  color: var(--color-texto);
+}
+
+.task-form input:focus {
+  outline: 2px solid var(--color-principal);
+  border-color: transparent;
+}
+
+.task-form .agregar {
+  height: 44px;
+  padding: 0 16px;
+  border: none;
+  border-radius: 12px;
+  background: var(--color-principal);
+  color: white;
+  font-weight: 600;
+}
+
+.task-form .agregar:disabled {
+  opacity: 0.5;
+}
+
+.task-form .tipos {
+  display: flex;
+  gap: 6px;
+}
+
+.task-form .tipos button {
+  flex: 1;
+  height: 36px;
+  border: 1px solid var(--color-borde);
+  border-radius: 999px;
+  background: var(--color-superficie);
+  font-size: 0.85rem;
+  color: var(--color-texto-suave);
+}
+
+.task-form .tipos button.elegido {
+  border-color: var(--color-secundario);
+  background: var(--color-secundario-claro);
+  color: var(--color-secundario-oscuro);
+  font-weight: 600;
+}
