@@ -30,16 +30,27 @@ Si un día no llego, se recorta primero el minijuego; el resto del plan se corre
 - [x] `historialEstudio` guardado (para que Bolti se ponga triste si no estudió)
 - [x] 13 pruebas de lógica (`npm test`) + prueba en navegador a 360 px
 - [x] `/ux-review`: botones táctiles más grandes
+- [x] Prototipo jugable de Bolti como personaje (`public/prototipo-bolti.html`)
+- [x] Spec de Bolti: comer arrastrando (como Pou), dormir a las 00:00, minijuegos
+      (`docs/specs/bolti-personaje.md`) y sus valores en `config.js`
 
-## Jue 22 — Publicación temprana, conversión y respaldo
-- [ ] Publicar ya en GitHub Pages (HTTPS, se actualiza solo con cada push) para probar en el
-      celular la instalación y el Wake Lock, que solo andan con HTTPS
-- [ ] Probar el cronómetro en el celular real: bloquear pantalla, cambiar de app, volver
-- [ ] Botón para convertir 50 monedas en 1 punto
-- [ ] Aviso si falla el guardado
-- [ ] Botones de exportar/importar progreso (respaldo)
+## Jue 22 — Bolti en Casa
+- [ ] Publicar en GitHub Pages (HTTPS, se actualiza solo con cada push)
+- [ ] Componente `Bolti` (SVG por partes) a partir del prototipo, uno por archivo
+- [ ] Estado de Bolti v3: panza, energía, cariño, durmiendo, `ultimaActualizacion` (migración)
+- [ ] `logic/bolti.js`: necesidades con reloj real (aunque la app esté cerrada) y humor,
+      incluido triste si no estudió el último día obligatorio. Con pruebas
+- [ ] Mimos: tocar (salto + frase) y frotar (corazones, +cariño)
+- [ ] Barras de necesidades y burbuja de frases en Casa
 
-## Vie 23 — Canjes
+## Vie 23 — Comida y sueño
+- [ ] Tienda: comprar comida con 🪙 → inventario
+- [ ] Bandeja de inventario y **arrastrar la comida a la boca** (abre la boca al acercarse)
+- [ ] Dormir: luz desde las 22:00, se duerme sola a las 00:00, se despierta a las 10:00
+- [ ] Bolti festeja cuando completa una tarea o termina de estudiar
+- [ ] Probar el cronómetro en un celular real con HTTPS (bloqueo de pantalla, cambiar de app)
+
+## Sáb 24 — Canjes
 - [ ] Tarjetas de planes con precio en puntos
 - [ ] Comprar plan → genera cupón con fecha
 - [ ] Lista de cupones y marcar cupón como cumplido
@@ -47,23 +58,18 @@ Si un día no llego, se recorta primero el minijuego; el resto del plan se corre
 - [ ] Mostrar si el canje del mes está disponible o desde qué fecha vuelve a estarlo
 - [ ] `/balance-check` de la economía
 
-## Sáb 24 — Perrita
-- [ ] `/quick-design` de la perrita (estados y reglas)
-- [ ] Sprites en pixel art (contenta, con hambre, triste, dormida) según `docs/specs/bolti-apariencia.md`
-- [ ] Pantalla Casa con la perrita y barra de hambre
-- [ ] Estados calculados según saciedad, hora y última visita (nunca se enferma ni muere)
-- [ ] Triste si el último día de semana no estudió (`estudioElDia` en `logic/tareas.js`); se le pasa al estudiar
+## Dom 25 — Jugar
+- [ ] Botón "Jugar" con lista de minijuegos (energía mínima, cuesta energía, da cariño)
+- [ ] Minijuego "Atrapá los huesitos" (45 s, 1 🪙 por huesito) — *se recorta primero si falta tiempo*
+- [ ] Botón para convertir 50 monedas en 1 punto
 
-## Dom 25 — Comida y minijuego
-- [ ] Tienda de comida (se paga con monedas)
-- [ ] Darle de comer a la perrita
-- [ ] Minijuego: atrapar huesitos que caen (da monedas) — *se recorta primero si falta tiempo*
-
-## Lun 26 — Pulido y publicación
-- [ ] Bienvenida con mensaje de cumpleaños
-- [ ] Ícono definitivo y colores
-- [ ] `/ux-review` a 360 px
-- [ ] Revisar la publicación final
+## Lun 26 — Pulido
+- [ ] Bienvenida con mensaje de cumpleaños y 🎂 torta de regalo el 28/10
+- [ ] Comidas favoritas reales de Bolti (Uri le pregunta a Mari)
+- [ ] Ícono definitivo con Bolti
+- [ ] Aviso si falla el guardado; exportar/importar progreso (respaldo)
+- [ ] `/ux-review` de toda la app a 360 px
+- [ ] Borrar `public/prototipo-bolti.html`
 
 ## Mar 27 — Prueba en el celular
 - [ ] `/smoke-check` + prueba completa en un celular real (instalar, usar sin internet)
@@ -73,22 +79,25 @@ Si un día no llego, se recorta primero el minijuego; el resto del plan se corre
 
 ## Después del cumple
 - [ ] Tala y Lucky
-- [ ] Gacha de ropa con puntos
+- [ ] Bolti repite lo que dice Mari con ladridos (como Tom)
+- [ ] Habitaciones: cocina, baño (bañarla), patio
+- [ ] Ropa y accesorios para Bolti (gacha con puntos)
 - [ ] Más minijuegos
 - [ ] Sincronización en la nube
 
 ---
 
-## Próxima sesión — Jue 22: Publicación temprana, conversión y respaldo
+## Próxima sesión — Jue 22: Bolti en Casa
 
 Tareas concretas:
-1. Workflow de GitHub Actions que publique en GitHub Pages con cada push (ajustar `base` en
-   `vite.config.js` a `/MascotaVirtual/`). El repo tiene que ser público, o tener GitHub Pro.
-2. Uri prueba en su celular: instalar la app, estudiar unos minutos, bloquear pantalla y cambiar
-   de app (el tiempo no tiene que contar), y ver que la pantalla no se apague sola.
-3. Convertir monedas en puntos (`logic/economia.js` + botón; por ahora no hay fuente de monedas).
-4. Aviso si `guardarEstado` falla, y botones de exportar/importar progreso.
+1. Workflow de GitHub Actions que publique en GitHub Pages con cada push (`base: '/MascotaVirtual/'`
+   en `vite.config.js`). El repo tiene que ser público.
+2. Pasar el SVG del prototipo a componentes React: `Bolti.jsx` (+ `Bolti.css`) con props `animo`
+   y `accion` (salto, mimos, comiendo).
+3. `logic/bolti.js` + pruebas: avanzar necesidades con el tiempo que pasó, humor según
+   `docs/specs/bolti-personaje.md`. Estado v3 en `storage.js` con migración.
+4. Pantalla Casa: barras de necesidades, Bolti, burbuja de frases, mimos (tocar y frotar).
 
 Prompt para arrancar:
 
-> Leé `CLAUDE.md` y `PLAN.md`. Hoy toca el día Jue 22: publicación temprana en GitHub Pages, convertir monedas en puntos y respaldo del progreso. Mostrame el plan antes de codear, hacé un commit por paso y al final actualizá `PLAN.md` y dejame la sección "Próxima sesión".
+> Leé `CLAUDE.md`, `PLAN.md` y `docs/specs/bolti-personaje.md`. Hoy toca el día Jue 22: Bolti en Casa (personaje, necesidades con reloj real, humor y mimos) y publicar en GitHub Pages. Mostrame el plan antes de codear, hacé un commit por paso y al final actualizá `PLAN.md` y dejame la sección "Próxima sesión".
