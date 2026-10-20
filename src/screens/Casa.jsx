@@ -129,6 +129,9 @@ function Casa({ estado, setEstado, horasAusente = 0 }) {
         <SpeechBubble texto={texto} />
         <Bolti
           animo={animo}
+          carino={estado.perrita.carino}
+          energia={estado.perrita.energia}
+          saciedad={estado.perrita.saciedad}
           mimos={mimos}
           saltos={saltos}
           onPointerDown={alApretar}

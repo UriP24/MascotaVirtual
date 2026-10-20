@@ -11,10 +11,13 @@
 }
 
 /* Partes animadas */
-.bolti .cuerpo {
+.bolti .torso {
   transform-box: fill-box;
   transform-origin: 50% 100%;
-  animation: bolti-respirar 3s ease-in-out infinite;
+  animation: bolti-respirar 2.8s ease-in-out infinite;
+}
+.bolti .cabeza-respira {
+  animation: bolti-cabeza-respira 2.8s ease-in-out infinite;
 }
 .bolti .cola {
   transform-box: fill-box;
@@ -53,7 +56,12 @@
 }
 @keyframes bolti-respirar {
   50% {
-    transform: scale(1.015, 1.03);
+    transform: scale(1.04, 1.07);
+  }
+}
+@keyframes bolti-cabeza-respira {
+  50% {
+    transform: translateY(-4px);
   }
 }
 @keyframes bolti-menear {
@@ -72,20 +80,48 @@
 .bolti .cejas-tristes,
 .bolti .lagrima,
 .bolti .boca-abierta,
-.bolti .lengua,
+.bolti .parpado,
+.bolti .ojeras,
+.bolti .panza-hambre,
 .bolti .zzz {
   display: none;
 }
 
-.bolti[data-animo='contenta'] .lengua {
+/* Cariño = cachetes sonrojados (la opacidad la pone el componente según el cariño) */
+.bolti .cachetes {
+  transition: opacity 0.8s ease;
+}
+
+/* Energía baja = ojeras y párpados caídos */
+.bolti.cansada:not([data-animo='dormida']) .ojeras,
+.bolti.cansada:not([data-animo='dormida']):not(.mimos) .parpado {
   display: inline;
+}
+
+/* Hambre = la panza gruñe */
+.bolti.hambrienta:not([data-animo='dormida']) .panza-hambre {
+  display: inline;
+  animation: bolti-gruñir 0.5s ease-in-out infinite;
+}
+@keyframes bolti-gruñir {
+  0%,
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  25% {
+    transform: translateX(-1.5px);
+  }
+  75% {
+    transform: translateX(1.5px);
+    opacity: 0.6;
+  }
 }
 
 .bolti.mimos .ojos-normales {
   display: none;
 }
-.bolti.mimos .ojos-felices,
-.bolti.mimos .lengua {
+.bolti.mimos .ojos-felices {
   display: inline;
 }
 .bolti.mimos .cola {
@@ -121,15 +157,18 @@
   display: none;
 }
 .bolti[data-animo='dormida'] .ojos-dormidos,
-.bolti[data-animo='dormida'] .lengua,
 .bolti[data-animo='dormida'] .zzz {
   display: inline;
+}
+.bolti[data-animo='dormida'] .lengua {
+  display: none;
 }
 .bolti[data-animo='dormida'] .cola {
   animation: none;
   transform: rotate(-4deg);
 }
-.bolti[data-animo='dormida'] .cuerpo {
+.bolti[data-animo='dormida'] .torso,
+.bolti[data-animo='dormida'] .cabeza-respira {
   animation-duration: 4.5s;
 }
 .bolti[data-animo='dormida'] .cabeza {
@@ -161,10 +200,15 @@
   }
 }
 
+/* Con "reducir movimiento" se apagan los efectos, pero sigue respirando despacito */
 @media (prefers-reduced-motion: reduce) {
-  .bolti .cuerpo,
   .bolti .cola,
-  .bolti .zzz text {
+  .bolti .zzz text,
+  .bolti .panza-hambre {
     animation: none;
+  }
+  .bolti .torso,
+  .bolti .cabeza-respira {
+    animation-duration: 5s;
   }
 }

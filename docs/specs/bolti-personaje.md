@@ -41,6 +41,13 @@ real, aunque la app esté cerrada. **Nunca se enferma ni muere.**
 7. **Frases** en una burbuja cuando cambia el humor, al tocarla y en momentos especiales
    (completó una tarea, terminó de estudiar, cumpleaños).
 
+## Cara según cada necesidad (se combinan)
+- **Cariño = cachetes sonrojados:** cuanto más cariño, más rosados; con poco cariño, sin rubor.
+- **Lengua:** afuera siempre que está despierta; adentro cuando duerme (y mientras come).
+- **Energía baja (< 30):** ojeras y párpados caídos.
+- **Hambre (< 30):** cejas tristes y la panza gruñe ("grrr" con rayitas que tiemblan).
+- **Respira** siempre de forma visible (más lento y profundo dormida). La cabeza acompaña.
+
 ## Ciclo del juego
 Jugar → monedas 🪙 → comprar comida → darle de comer arrastrando → Bolti contenta.
 Los puntos ⭐ van aparte (tareas y estudio → canjes).
