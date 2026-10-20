@@ -14,7 +14,7 @@ Si un día no llego, se recorta primero el minijuego; el resto del plan se corre
 - [x] Skills seleccionadas de claude-code-game-studios en `.claude/`
 - [x] Nombre (Bolti), paleta rosa + turquesa e íconos en degradé
 - [x] Referencia de apariencia de Bolti para los sprites
-- [ ] Pushear a GitHub (`UriP24/MascotaVirtual`) — falta dar acceso a Claude al repo
+- [x] Subido a GitHub: https://github.com/UriP24/MascotaVirtual
 
 ## Mié 21 — Tareas
 - [ ] Agregar tarea (texto + tipo simple/grande)
