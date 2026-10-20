@@ -1,7 +1,40 @@
-import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import { VitePWA } from 'vite-plugin-pwa'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  server: {
+    // Escucha en toda la red local para poder abrirla desde el celular.
+    host: true,
+  },
+  plugins: [
+    react(),
+    VitePWA({
+      // Cuando subimos una versión nueva, la app se actualiza sola.
+      registerType: 'autoUpdate',
+      includeAssets: ['favicon.svg', 'icons/apple-touch-icon.png'],
+      manifest: {
+        name: 'Patitas',
+        short_name: 'Patitas',
+        description: 'Un regalo de cumpleaños con mucho amor',
+        lang: 'es-AR',
+        theme_color: '#f08a8a',
+        background_color: '#fff8f0',
+        display: 'standalone',
+        orientation: 'portrait',
+        start_url: '/',
+        icons: [
+          { src: 'icons/icon-192.png', sizes: '192x192', type: 'image/png' },
+          { src: 'icons/icon-512.png', sizes: '512x512', type: 'image/png' },
+          {
+            src: 'icons/icon-maskable-512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'maskable',
+          },
+        ],
+      },
+    }),
+  ],
 })
