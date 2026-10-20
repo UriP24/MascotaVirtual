@@ -13,8 +13,12 @@ function azar(lista) {
   return lista[Math.floor(Math.random() * lista.length)]
 }
 
-function saludoInicial(horasAusente, animo) {
-  if (animo === 'dormida') return null // dormida no saluda
+const HORA_FIN_DE_LA_NOCHE = 6 // de 00:00 a 06:00, si abre la app, Bolti la manda a dormir
+
+function saludoInicial(horasAusente, animo, ahora) {
+  if (animo === 'dormida') {
+    return ahora.getHours() < HORA_FIN_DE_LA_NOCHE ? 'Vamos a dormir, Mari 💤' : null
+  }
   if (horasAusente >= 12) return '¡Te extrañé! 🥺'
   return '¡Hola, Mari! 🐾'
 }
@@ -38,7 +42,7 @@ function Casa({ estado, setEstado, horasAusente = 0 }) {
   const animo = humor(estado, ahora)
   const [mimos, setMimos] = useState(false)
   const [saltos, setSaltos] = useState(0)
-  const [frase, setFrase] = useState(() => saludoInicial(horasAusente, animo))
+  const [frase, setFrase] = useState(() => saludoInicial(horasAusente, animo, ahora))
   const [flotantes, setFlotantes] = useState([])
   const habitacionRef = useRef(null)
   const toque = useRef({ apretado: false, recorrido: 0, ultimo: null, huboMimos: false })
@@ -47,7 +51,7 @@ function Casa({ estado, setEstado, horasAusente = 0 }) {
   // El saludo se va solo después de un ratito. Al salir de la pantalla, se cancelan los timers.
   useEffect(() => {
     const t = timers.current
-    t.frase = setTimeout(() => setFrase(null), 2500)
+    t.frase = setTimeout(() => setFrase(null), 3500)
     return () => {
       clearTimeout(t.frase)
       clearTimeout(t.mimos)

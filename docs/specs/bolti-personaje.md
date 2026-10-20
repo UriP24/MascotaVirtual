@@ -30,6 +30,8 @@ real, aunque la app esté cerrada. **Nunca se enferma ni muere.**
      que tenga menos de 20 de energía (siesta).
    - **A las 00:00 se duerme sola** aunque la luz siga prendida, y le dice a Mari que vaya a dormir
      ("Vamos a dormir, Mari 💤"). Sin castigo.
+   - **Cada vez que Mari abre la app entre las 00:00 y las 06:00**, Bolti (dormida) la recibe con
+     "Vamos a dormir, Mari 💤".
    - Durmiendo recarga +12,5 de energía por hora; despierta baja −4 por hora.
    - Se despierta sola a las **10:00** o cuando se prende la luz (con la energía que haya juntado).
 6. **Jugar:** abre la lista de minijuegos. Cada partida da 🪙 y +8 de cariño, y cuesta −10 de
