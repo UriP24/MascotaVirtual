@@ -1,0 +1,103 @@
+.casa {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.casa .habitacion {
+  position: relative;
+  flex: 1;
+  min-height: 320px;
+  border-radius: 24px;
+  overflow: hidden;
+  background: linear-gradient(
+    180deg,
+    var(--color-principal-claro) 0%,
+    var(--color-terciario-claro) 55%,
+    var(--color-secundario-claro) 56%,
+    #bfe9e4 100%
+  );
+}
+
+/* De noche (Bolti dormida) la habitación se oscurece */
+.casa .habitacion::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #2a2550;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1.2s ease;
+}
+.casa .habitacion.noche::after {
+  opacity: 0.55;
+}
+
+.casa .ventana {
+  position: absolute;
+  top: 9%;
+  left: 8%;
+  width: 64px;
+  height: 74px;
+  border: 5px solid var(--color-superficie);
+  border-radius: 32px 32px 8px 8px;
+  background: linear-gradient(180deg, #bfe6ff, #fff3fb);
+  transition: background 1.2s;
+}
+.casa .habitacion.noche .ventana {
+  background: linear-gradient(180deg, #1c1a44, #3a3577);
+}
+.casa .ventana::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 4px;
+  margin-left: -2px;
+  background: var(--color-superficie);
+}
+
+.casa .cuadro {
+  position: absolute;
+  top: 11%;
+  right: 9%;
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 48px;
+  border: 4px solid #a488ec;
+  border-radius: 6px;
+  background: var(--color-superficie);
+  color: var(--color-principal-oscuro);
+  font-size: 0.7rem;
+  font-weight: 800;
+  transform: rotate(4deg);
+}
+
+.casa .alfombra {
+  position: absolute;
+  left: 50%;
+  bottom: 7%;
+  width: 78%;
+  height: 16%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, #fff 0 30%, var(--color-principal-claro) 31% 60%, #f7b9cf 61%);
+  opacity: 0.9;
+  transform: translateX(-50%);
+}
+
+.casa .bolti {
+  position: absolute;
+  left: 50%;
+  bottom: 4%;
+  z-index: 2;
+  width: min(80%, 300px);
+  transform: translateX(-50%);
+}
+
+.casa .ayuda {
+  margin: 0;
+  font-size: 0.8rem;
+  text-align: center;
+}

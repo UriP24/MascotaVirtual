@@ -1,0 +1,18 @@
+.floating-emoji {
+  position: absolute;
+  z-index: 4;
+  font-size: 1.6rem;
+  pointer-events: none;
+  animation: flotar 1.4s ease-out forwards;
+}
+
+@keyframes flotar {
+  from {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(0.6);
+  }
+  to {
+    opacity: 0;
+    transform: translate(calc(-50% + var(--dx, 0px)), -110px) scale(1.2);
+  }
+}

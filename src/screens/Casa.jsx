@@ -1,8 +1,140 @@
-function Casa() {
+import { useEffect, useRef, useState } from 'react'
+import Bolti from '../components/Bolti.jsx'
+import NeedsBars from '../components/NeedsBars.jsx'
+import SpeechBubble from '../components/SpeechBubble.jsx'
+import FloatingEmoji from '../components/FloatingEmoji.jsx'
+import { darMimos, extranaElEstudio, humor } from '../logic/bolti.js'
+import './Casa.css'
+
+const DISTANCIA_POR_MIMO = 45 // px que hay que frotar para cada corazón
+const FRASES_AL_TOCARLA = ['¡Guau! 🐾', '¡Hola, Mari! 💕', '¿Jugamos?', '¡Te quiero!', '¡Más mimos!']
+
+function azar(lista) {
+  return lista[Math.floor(Math.random() * lista.length)]
+}
+
+function saludoInicial(horasAusente, animo) {
+  if (animo === 'dormida') return null // dormida no saluda
+  if (horasAusente >= 12) return '¡Te extrañé! 🥺'
+  return '¡Hola, Mari! 🐾'
+}
+
+// Lo que dice Bolti cuando nadie la toca, según cómo está.
+function fraseDeHumor(estado, animo, ahora) {
+  if (animo === 'dormida') return ahora.getHours() === 0 ? 'Vamos a dormir, Mari 💤' : null
+  if (animo === 'hambre') return 'Tengo hambre… 🥺'
+  if (animo === 'triste') {
+    if (extranaElEstudio(estado, ahora)) return '¿Hoy estudiamos juntas? 📚'
+    if (estado.perrita.energia < 30) return 'Estoy cansadita… 🥱'
+    return '¿Me hacés mimos? 🥺'
+  }
+  return null
+}
+
+function Casa({ estado, setEstado, horasAusente = 0 }) {
+  // "Ahora" es la última vez que se actualizó Bolti (App lo hace cada minuto). Así el dibujo
+  // no depende de la hora exacta en que React decide redibujar.
+  const ahora = new Date(estado.perrita.actualizadaEn)
+  const animo = humor(estado, ahora)
+  const [mimos, setMimos] = useState(false)
+  const [saltos, setSaltos] = useState(0)
+  const [frase, setFrase] = useState(() => saludoInicial(horasAusente, animo))
+  const [flotantes, setFlotantes] = useState([])
+  const habitacionRef = useRef(null)
+  const toque = useRef({ apretado: false, recorrido: 0, ultimo: null, huboMimos: false })
+  const timers = useRef({})
+
+  // El saludo se va solo después de un ratito. Al salir de la pantalla, se cancelan los timers.
+  useEffect(() => {
+    const t = timers.current
+    t.frase = setTimeout(() => setFrase(null), 2500)
+    return () => {
+      clearTimeout(t.frase)
+      clearTimeout(t.mimos)
+    }
+  }, [])
+
+  function decir(texto, duracion = 1800) {
+    setFrase(texto)
+    clearTimeout(timers.current.frase)
+    timers.current.frase = setTimeout(() => setFrase(null), duracion)
+  }
+
+  function soltarEmoji(emoji, clientX, clientY) {
+    const r = habitacionRef.current.getBoundingClientRect()
+    const item = {
+      id: Date.now() + Math.random(),
+      emoji,
+      x: clientX - r.left,
+      y: clientY - r.top - 20,
+      dx: Math.random() * 60 - 30,
+    }
+    setFlotantes((lista) => [...lista, item])
+    setTimeout(() => setFlotantes((lista) => lista.filter((f) => f.id !== item.id)), 1500)
+  }
+
+  function alApretar(e) {
+    e.currentTarget.setPointerCapture(e.pointerId)
+    toque.current = { apretado: true, recorrido: 0, ultimo: { x: e.clientX, y: e.clientY }, huboMimos: false }
+  }
+
+  // Frotar = mimos: cada tanto recorrido suma cariño y suelta un corazón.
+  function alMover(e) {
+    const t = toque.current
+    if (!t.apretado || animo === 'dormida') return
+    t.recorrido += Math.hypot(e.clientX - t.ultimo.x, e.clientY - t.ultimo.y)
+    t.ultimo = { x: e.clientX, y: e.clientY }
+    if (t.recorrido < DISTANCIA_POR_MIMO) return
+    t.recorrido = 0
+    t.huboMimos = true
+    setEstado((est) => darMimos(est, 3))
+    soltarEmoji('💗', e.clientX, e.clientY)
+    navigator.vibrate?.(15)
+    setMimos(true)
+    clearTimeout(timers.current.mimos)
+    timers.current.mimos = setTimeout(() => setMimos(false), 900)
+  }
+
+  // Tocar sin frotar = saltito y una frase.
+  function alSoltar(e) {
+    const t = toque.current
+    if (!t.apretado) return
+    t.apretado = false
+    if (t.huboMimos) return
+    if (animo === 'dormida') {
+      decir('zzz… 😴')
+      return
+    }
+    setSaltos((s) => s + 1)
+    setEstado((est) => darMimos(est, 1))
+    soltarEmoji('💗', e.clientX, e.clientY)
+    decir(azar(FRASES_AL_TOCARLA))
+  }
+
+  const texto = frase ?? fraseDeHumor(estado, animo, ahora)
+
   return (
-    <section className="pantalla">
-      <h1>🐶 Casa</h1>
-      <p>Acá va a vivir Bolti.</p>
+    <section className="pantalla casa">
+      <NeedsBars perrita={estado.perrita} />
+      <div ref={habitacionRef} className={`habitacion ${animo === 'dormida' ? 'noche' : ''}`}>
+        <div className="ventana" aria-hidden="true" />
+        <div className="cuadro" aria-hidden="true">
+          BOLTI
+        </div>
+        <div className="alfombra" aria-hidden="true" />
+        <SpeechBubble texto={texto} />
+        <Bolti
+          animo={animo}
+          mimos={mimos}
+          saltos={saltos}
+          onPointerDown={alApretar}
+          onPointerMove={alMover}
+          onPointerUp={alSoltar}
+          onPointerCancel={() => (toque.current.apretado = false)}
+        />
+        <FloatingEmoji items={flotantes} />
+      </div>
+      <p className="ayuda">Tocala para que salte · Frotala con el dedo para hacerle mimos</p>
     </section>
   )
 }
