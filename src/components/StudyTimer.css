@@ -1,0 +1,76 @@
+.study-timer {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--color-borde);
+  text-align: center;
+}
+
+.study-timer .reloj {
+  font-size: 2.4rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 1px;
+}
+
+.study-timer .barra {
+  height: 8px;
+  margin: 6px 0;
+  border-radius: 999px;
+  background: var(--color-secundario-claro);
+  overflow: hidden;
+}
+
+.study-timer .barra div {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--color-principal), var(--color-secundario));
+  transition: width 1s linear;
+}
+
+.study-timer .detalle {
+  margin: 0 0 8px;
+  font-size: 0.85rem;
+  color: var(--color-texto-suave);
+}
+
+.study-timer .aviso-pausa {
+  margin: 0 0 8px;
+  padding: 8px;
+  border-radius: 10px;
+  background: var(--color-principal-claro);
+  font-size: 0.85rem;
+  color: var(--color-principal-oscuro);
+}
+
+.study-timer .botones {
+  display: flex;
+  gap: 8px;
+}
+
+.study-timer .botones button {
+  flex: 1;
+  height: 48px;
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.study-timer .empezar {
+  background: var(--color-secundario);
+  color: white;
+}
+
+.study-timer .pausar {
+  background: var(--color-secundario-claro);
+  color: var(--color-secundario-oscuro);
+}
+
+.study-timer .completar {
+  background: var(--color-principal);
+  color: white;
+}
+
+.study-timer button:disabled {
+  opacity: 0.4;
+}

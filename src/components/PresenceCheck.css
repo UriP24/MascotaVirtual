@@ -1,0 +1,62 @@
+.presence-check {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgb(63 53 64 / 0.5);
+  z-index: 20;
+}
+
+.presence-check .tarjeta {
+  width: 100%;
+  max-width: 320px;
+  padding: 24px 20px;
+  border-radius: 20px;
+  background: var(--color-superficie);
+  text-align: center;
+  animation: saltito 0.4s ease-out;
+}
+
+.presence-check .bolti {
+  font-size: 3.5rem;
+}
+
+.presence-check h2 {
+  margin: 8px 0 4px;
+  font-size: 1.3rem;
+  color: var(--color-texto);
+}
+
+.presence-check p {
+  margin: 0 0 16px;
+  color: var(--color-texto-suave);
+}
+
+.presence-check button {
+  width: 100%;
+  height: 52px;
+  border: none;
+  border-radius: 14px;
+  background: var(--color-principal);
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.presence-check small {
+  display: block;
+  margin-top: 12px;
+  color: var(--color-texto-suave);
+}
+
+@keyframes saltito {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.04);
+  }
+}

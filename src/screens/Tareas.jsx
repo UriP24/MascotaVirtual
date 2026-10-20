@@ -2,7 +2,14 @@ import { useEffect, useState } from 'react'
 import TaskForm from '../components/TaskForm.jsx'
 import TaskItem from '../components/TaskItem.jsx'
 import Toast from '../components/Toast.jsx'
-import { agregarTarea, borrarTarea, completarTarea } from '../logic/tareas.js'
+import StudyTimer from '../components/StudyTimer.jsx'
+import {
+  actualizarCronometro,
+  agregarTarea,
+  borrarTarea,
+  completarTarea,
+  msDisponibles,
+} from '../logic/tareas.js'
 import './Tareas.css'
 
 function Tareas({ estado, setEstado }) {
@@ -39,7 +46,18 @@ function Tareas({ estado, setEstado }) {
   const hechas = estado.tareas.filter((t) => t.hecha)
 
   function renderTarea(tarea) {
-    return <TaskItem key={tarea.id} tarea={tarea} onCompletar={completar} onBorrar={borrar} />
+    return (
+      <TaskItem key={tarea.id} tarea={tarea} onCompletar={completar} onBorrar={borrar}>
+        {tarea.tipo === 'estudio' && !tarea.hecha && (
+          <StudyTimer
+            tarea={tarea}
+            limiteMs={msDisponibles(estado, tarea.id)}
+            onActualizar={(cambio) => setEstado((e) => actualizarCronometro(e, tarea.id, cambio))}
+            onCompletar={completar}
+          />
+        )}
+      </TaskItem>
+    )
   }
 
   return (
