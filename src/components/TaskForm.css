@@ -48,7 +48,7 @@
 
 .task-form .tipos button {
   flex: 1;
-  height: 36px;
+  height: 40px;
   border: 1px solid var(--color-borde);
   border-radius: 999px;
   background: var(--color-superficie);
