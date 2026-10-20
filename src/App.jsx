@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import TopBar from './components/TopBar.jsx'
 import BottomNav from './components/BottomNav.jsx'
 import Casa from './screens/Casa.jsx'
 import Tareas from './screens/Tareas.jsx'
@@ -15,10 +16,13 @@ const PANTALLAS = {
 
 function App() {
   const [pantallaActiva, setPantallaActiva] = useState('casa')
+  const [monedas] = useState(0)
+  const [puntos] = useState(0)
   const Pantalla = PANTALLAS[pantallaActiva]
 
   return (
     <div className="app">
+      <TopBar monedas={monedas} puntos={puntos} />
       <Pantalla />
       <BottomNav pantallaActiva={pantallaActiva} onCambiar={setPantallaActiva} />
     </div>

@@ -1,0 +1,29 @@
+.top-bar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  height: calc(var(--alto-barra-superior) + env(safe-area-inset-top));
+  padding: env(safe-area-inset-top) 16px 0;
+  align-items: center;
+  background: var(--color-superficie);
+  border-bottom: 1px solid var(--color-borde);
+}
+
+.contador {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 1rem;
+}
+
+.contador.moneda {
+  background: #fdf1d8;
+  color: #9a6a12;
+}
+
+.contador.punto {
+  background: #eee6fb;
+  color: #5e43a8;
+}
