@@ -44,6 +44,8 @@ Si un día no llego, se recorta primero el minijuego; el resto del plan se corre
 - [x] Mimos: tocar (salto + frase, +1) y frotar (corazones, +3)
 - [x] Barras de necesidades y globo de frases ("¡Te extrañé!", "Vamos a dormir, Mari 💤", hambre…)
 - [x] Prueba en navegador con reloj adelantado + `/ux-review` de Casa
+- [x] Nombre de la app: **Huellitas** (Bolti es sorpresa)
+- [x] Modo prueba oculto (`?prueba`) para testear sin esperar
 
 ## Vie 23 — Comida y sueño
 - [ ] Botones de acción en Casa (al alcance del pulgar): Comer, Luz, Jugar
@@ -73,6 +75,7 @@ Si un día no llego, se recorta primero el minijuego; el resto del plan se corre
 - [ ] Aviso si falla el guardado; exportar/importar progreso (respaldo)
 - [ ] `/ux-review` de toda la app a 360 px
 - [ ] Borrar `public/prototipo-bolti.html`
+- [ ] Revisar que el modo prueba no aparezca sin `?prueba` (y decidir si se deja)
 
 ## Mar 27 — Prueba en el celular
 - [ ] `/smoke-check` + prueba completa en un celular real (instalar, usar sin internet)

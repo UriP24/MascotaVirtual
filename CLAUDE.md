@@ -96,6 +96,11 @@ Las pantallas reciben `estado` y `setEstado` como props desde `App`.
   del saldo, pero `puntosGanadosTotal` nunca baja).
 - Los puntos **no vencen**.
 
+## Modo prueba
+Panel oculto 🧪 para probar sin esperar (sumar estudio, adelantar a Bolti, monedas, reiniciar).
+Se activa con `?prueba` al final del link o con `npm run dev`; Mari nunca lo ve. Lógica en
+`src/logic/prueba.js`. Cuando se agregue una función nueva que dependa del tiempo, sumarle un atajo acá.
+
 ## Forma de trabajo
 - Antes de codear, mostrar un plan corto y esperar el OK.
 - Un commit por paso, mensajes en español.

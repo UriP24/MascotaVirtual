@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import TopBar from './components/TopBar.jsx'
 import BottomNav from './components/BottomNav.jsx'
+import TestPanel from './components/TestPanel.jsx'
 import Casa from './screens/Casa.jsx'
 import Tareas from './screens/Tareas.jsx'
 import Canjes from './screens/Canjes.jsx'
@@ -8,7 +9,11 @@ import Jugar from './screens/Jugar.jsx'
 import { cargarEstado, guardarEstado } from './storage.js'
 import { actualizarDia, retomarCronometros } from './logic/tareas.js'
 import { actualizarBolti, horasDesdeUltimaVisita, registrarVisita } from './logic/bolti.js'
+import { modoPruebaActivo } from './logic/prueba.js'
 import './App.css'
+
+// Se decide una sola vez al abrir la app.
+const modoPrueba = modoPruebaActivo()
 
 const PANTALLAS = {
   casa: Casa,
@@ -49,6 +54,7 @@ function App() {
       <TopBar monedas={estado.monedas} puntos={estado.puntos} />
       <Pantalla estado={estado} setEstado={setEstado} horasAusente={inicio.horasAusente} />
       <BottomNav pantallaActiva={pantallaActiva} onCambiar={setPantallaActiva} />
+      {modoPrueba && <TestPanel setEstado={setEstado} />}
     </div>
   )
 }
