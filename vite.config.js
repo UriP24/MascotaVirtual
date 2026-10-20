@@ -19,9 +19,9 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'icons/apple-touch-icon.png'],
       manifest: {
-        name: 'Bolti',
-        short_name: 'Bolti',
-        description: 'Bolti te espera en casa 🐾',
+        name: 'Huellitas',
+        short_name: 'Huellitas',
+        description: 'Alguien especial te espera en casa 🐾',
         lang: 'es-AR',
         theme_color: '#ec6f9e',
         background_color: '#fff5f8',

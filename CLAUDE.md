@@ -51,6 +51,11 @@ Mascota estilo Pou / Talking Tom. Spec completa en `docs/specs/bolti-personaje.m
 - **Jugar:** minijuegos que dan 🪙 y cariño, y gastan energía.
 - Es un recuerdo de una perrita que ya no está: todo lo que tenga que ver con ella, con cariño.
 
+### Nombre de la app: sorpresa
+La app se llama **Huellitas** (manifest, título, ícono). **Nunca** poner "Bolti" en nada que se vea
+antes de abrir la app (nombre, ícono, descripción, título de la pestaña): la sorpresa es descubrir a
+su perrita al entrar. Adentro de la app sí se la nombra.
+
 ### Estilo visual
 Paleta rosa + turquesa, con un lila de transición (tokens en `src/index.css`).
 Rosa `#ec6f9e`, turquesa `#2bb8b0`, lila `#a488ec`, fondo `#fff5f8`.
