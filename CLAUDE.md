@@ -23,6 +23,8 @@ PWA instalable en el celular con cuatro pantallas:
 - **Puntos** (premium): 1 punto = $500 de un plan real, tienen que costar. Tarea simple: 1,
   grande: 2. Estudio: 1 cada 30 min. 50 monedas → 1 punto.
 - **Precio de canjes**: costo del plan en pesos / 500 (salida a comer $40.000 = 80 puntos).
+- **Límite**: 1 canje por mes calendario, sea cual sea; se renueva el día 1. La pantalla de
+  canjes muestra si está disponible o desde qué fecha vuelve a estarlo.
 
 ### Estudio
 - De lunes a viernes aparece sola una tarea **"Estudiar" obligatoria** (no se puede borrar hasta
@@ -35,13 +37,19 @@ PWA instalable en el celular con cuatro pantallas:
   responde en 3 min, se pausa y no cuenta nada desde que preguntó.
 - Si no estudia un día obligatorio: **sin castigo**, la tarea desaparece a medianoche (si tenía
   ≥ 30 min se completa sola). Pero queda en `historialEstudio` y **Bolti se pone triste**.
-- **Límite**: 1 canje por mes calendario, sea cual sea; se renueva el día 1. La pantalla de
-  canjes muestra si está disponible o desde qué fecha vuelve a estarlo.
 
-### Bolti
-Pelaje rubio/crema, mancha blanca en la frente, pecho blanco y franja blanca desde la nuca hasta
-la mitad del cuello. Orejas caídas y cola larga, también rubias/crema. Detalle y paleta de pixel art en
-`docs/specs/bolti-apariencia.md`. Es un recuerdo: todo lo que tenga que ver con ella, con cariño.
+### Bolti (el personaje, lo más importante)
+Mascota estilo Pou / Talking Tom. Spec completa en `docs/specs/bolti-personaje.md`, prototipo en
+`public/prototipo-bolti.html`, apariencia en `docs/specs/bolti-apariencia.md`.
+- Dibujo **SVG por partes** animado con CSS (respira, parpadea, cola, ojos que siguen el dedo).
+- Pelaje rubio/crema, mancha blanca en la frente, pecho blanco, franja blanca de la nuca a la mitad
+  del cuello, orejas caídas y cola larga, también rubias/crema.
+- Necesidades: panza, energía y cariño (0–100), con reloj real aunque la app esté cerrada.
+- **Comer:** comida comprada con 🪙 → inventario → se arrastra a la boca (como Pou).
+- **Dormir:** se le puede apagar la luz desde las 22:00; **a las 00:00 se duerme sola**; se
+  despierta a las 10:00. Durmiendo recarga energía.
+- **Jugar:** minijuegos que dan 🪙 y cariño, y gastan energía.
+- Es un recuerdo de una perrita que ya no está: todo lo que tenga que ver con ella, con cariño.
 
 ### Estilo visual
 Paleta rosa + turquesa, con un lila de transición (tokens en `src/index.css`).

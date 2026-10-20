@@ -1,6 +1,6 @@
 # Bolti — referencia de apariencia
 
-Referencia para los sprites en pixel art (Sáb 24). Sale de la descripción de Uri y de tres fotos
+Referencia para el dibujo de Bolti (SVG por partes, ver `bolti-personaje.md`). Sale de la descripción de Uri y de tres fotos
 que compartió en la sesión del 20/10. Las fotos **no** están en el repo.
 
 ## Cómo es
@@ -16,7 +16,7 @@ que compartió en la sesión del 20/10. Las fotos **no** están en el repo.
 - **Pose característica (foto 1):** durmiendo de costado, ojos cerrados, la lengüita afuera,
   apoyada en una manta. Ideal para el estado **dormida**.
 
-## Paleta para el pixel art (aproximada, ajustar al dibujar)
+## Paleta (la usa el prototipo SVG)
 | Uso | Color |
 |---|---|
 | Pelaje base (crema/rubio) | `#e8c48f` |
