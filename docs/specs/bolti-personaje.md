@@ -43,7 +43,9 @@ real, aunque la app esté cerrada. **Nunca se enferma ni muere.**
 
 ## Cara según cada necesidad (se combinan)
 - **Cariño = cachetes sonrojados:** cuanto más cariño, más rosados; con poco cariño, sin rubor.
-- **Lengua:** afuera siempre que está despierta; adentro cuando duerme (y mientras come).
+- **Boca y lengua:** despierta, boca cerrada. **Contenta jadea** cada 10–20 s durante ~3 s (boca un
+  poco abierta, lengua afuera que se mueve, respiración rápida). Con mimos saca la lengua.
+  Dormida (y mientras come), lengua adentro.
 - **Energía baja (< 30):** ojeras y párpados caídos.
 - **Hambre (< 30):** cejas tristes y la panza gruñe ("grrr" con rayitas que tiemblan).
 - **Respira** siempre de forma visible (más lento y profundo dormida). La cabeza acompaña.

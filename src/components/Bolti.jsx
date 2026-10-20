@@ -17,6 +17,7 @@ function Bolti({ animo, mimos = false, saltos = 0, carino = 70, energia = 80, sa
   const ojosRef = useRef(null)
   const [parpadeo, setParpadeo] = useState(false)
   const [ladea, setLadea] = useState(false)
+  const [jadeando, setJadeando] = useState(false)
 
   // Parpadea cada tanto, al azar, para parecer viva.
   useEffect(() => {
@@ -51,6 +52,27 @@ function Bolti({ animo, mimos = false, saltos = 0, carino = 70, energia = 80, sa
     return () => clearTimeout(timer)
   }, [animo])
 
+  // Contenta: cada tanto jadea unos segundos (boca un poco abierta, lengua afuera) y después
+  // cierra la boca. El primero llega rápido para que se note al entrar.
+  useEffect(() => {
+    if (animo !== 'contenta') return
+    let timer
+    function siguiente(espera) {
+      timer = setTimeout(() => {
+        setJadeando(true)
+        timer = setTimeout(() => {
+          setJadeando(false)
+          siguiente(10000 + Math.random() * 10000)
+        }, 3000)
+      }, espera)
+    }
+    siguiente(3000 + Math.random() * 3000)
+    return () => {
+      clearTimeout(timer)
+      setJadeando(false)
+    }
+  }, [animo])
+
   // Los ojos siguen el dedo o el mouse. Movemos el grupo directo (sin estado) para no
   // redibujar todo el componente con cada movimiento.
   useEffect(() => {
@@ -79,6 +101,7 @@ function Bolti({ animo, mimos = false, saltos = 0, carino = 70, energia = 80, sa
     parpadeo && 'parpadeo',
     ladea && 'ladea',
     mimos && 'mimos',
+    jadeando && animo === 'contenta' && !mimos && 'jadeando',
     cansada && 'cansada',
     hambrienta && 'hambrienta',
   ]
@@ -162,6 +185,11 @@ function Bolti({ animo, mimos = false, saltos = 0, carino = 70, energia = 80, sa
               <path className="boca-cerrada" fill="none" stroke="#5a3a2a" strokeWidth="3" strokeLinecap="round" d="M150 144 L150 150 M136 150 Q143 158 150 150 Q157 158 164 150" />
               <path className="boca-abierta" fill="#7a2f3a" stroke="#5a3a2a" strokeWidth="3" d="M136 150 Q150 172 164 150 Q150 156 136 150 Z" />
               <path className="lengua" fill="#f08aa0" stroke="#c9566f" strokeWidth="2" d="M144 153 L156 153 L156 162 C156 168 144 168 144 162 Z" />
+              {/* Jadeo: boca un poco abierta y la lengua que se mueve */}
+              <g className="jadeo">
+                <path fill="#7a2f3a" stroke="#5a3a2a" strokeWidth="3" strokeLinejoin="round" d="M137 149 Q150 165 163 149 Q150 154 137 149 Z" />
+                <path className="lengua-jadeo" fill="#f08aa0" stroke="#c9566f" strokeWidth="2" d="M143 155 L157 155 L157 167 C157 175 143 175 143 167 Z" />
+              </g>
               <g className="zzz">
                 <text x="210" y="60" fontSize="22">z</text>
                 <text x="226" y="44" fontSize="18">z</text>

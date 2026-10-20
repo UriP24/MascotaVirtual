@@ -80,6 +80,8 @@
 .bolti .cejas-tristes,
 .bolti .lagrima,
 .bolti .boca-abierta,
+.bolti .lengua,
+.bolti .jadeo,
 .bolti .parpado,
 .bolti .ojeras,
 .bolti .panza-hambre,
@@ -121,8 +123,35 @@
 .bolti.mimos .ojos-normales {
   display: none;
 }
-.bolti.mimos .ojos-felices {
+.bolti.mimos .ojos-felices,
+.bolti.mimos .lengua {
   display: inline;
+}
+
+/* Jadeo (contenta, cada tanto): boca abierta, lengua que sube y baja, respiración rápida */
+.bolti.jadeando .boca-cerrada {
+  display: none;
+}
+.bolti.jadeando .jadeo {
+  display: inline;
+}
+.bolti .lengua-jadeo {
+  transform-box: fill-box;
+  transform-origin: 50% 0%;
+  animation: bolti-lengua-jadeo 0.3s ease-in-out infinite;
+}
+.bolti.jadeando .torso {
+  animation: bolti-jadeo 0.3s ease-in-out infinite;
+}
+@keyframes bolti-lengua-jadeo {
+  50% {
+    transform: scaleY(1.18) translateY(1px);
+  }
+}
+@keyframes bolti-jadeo {
+  50% {
+    transform: scale(1.02, 1.035);
+  }
 }
 .bolti.mimos .cola {
   animation-duration: 0.35s;
