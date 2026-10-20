@@ -20,9 +20,21 @@ PWA instalable en el celular con cuatro pantallas:
 
 ### Economía (valores provisorios, todos en `src/config.js`)
 - **Monedas**: se ganan en el minijuego, se gastan en comida para la perrita.
-- **Puntos** (premium): 1 punto = $1.000 de un plan real, tienen que costar. Tarea simple: 1,
-  grande: 2. Estudio: 1 cada 25 min. 50 monedas → 1 punto.
-- **Precio de canjes**: costo del plan en pesos / 1.000 (salida a comer $40.000 = 40 puntos).
+- **Puntos** (premium): 1 punto = $500 de un plan real, tienen que costar. Tarea simple: 1,
+  grande: 2. Estudio: 1 cada 30 min. 50 monedas → 1 punto.
+- **Precio de canjes**: costo del plan en pesos / 500 (salida a comer $40.000 = 80 puntos).
+
+### Estudio
+- De lunes a viernes aparece sola una tarea **"Estudiar" obligatoria** (no se puede borrar hasta
+  completarla). Fines de semana puede agregar tareas de tipo "estudio" si quiere.
+- Cronómetro: hay que llegar a **30 min** para completar; **1 punto cada 30 min**; tope de
+  **4 h por día** sumando todas las tareas de estudio.
+- **Antitrampa:** si la app pasa a segundo plano (otra app, pantalla bloqueada, cerrada), ese
+  tiempo no cuenta; al volver el cronómetro sigue solo. La pantalla se mantiene encendida con
+  la Wake Lock API mientras corre. Cada 20–30 min Bolti pregunta "¿Seguís estudiando?"; si no
+  responde en 3 min, se pausa y no cuenta nada desde que preguntó.
+- Si no estudia un día obligatorio: **sin castigo**, la tarea desaparece a medianoche (si tenía
+  ≥ 30 min se completa sola). Pero queda en `historialEstudio` y **Bolti se pone triste**.
 - **Límite**: 1 canje por mes calendario, sea cual sea; se renueva el día 1. La pantalla de
   canjes muestra si está disponible o desde qué fecha vuelve a estarlo.
 

@@ -4,7 +4,7 @@
 import { PERRITA } from './config.js'
 
 const CLAVE = 'patitas:estado'
-const VERSION_ACTUAL = 1
+const VERSION_ACTUAL = 2
 
 export function crearEstadoInicial() {
   const ahora = new Date().toISOString()
@@ -14,8 +14,13 @@ export function crearEstadoInicial() {
     puntos: 0,
     // Historial de todo lo ganado. Nunca baja: los puntos ganados no se restan ni vencen.
     puntosGanadosTotal: 0,
-    // { id, texto, tipo: 'simple' | 'grande', hecha, creadaEn }
+    // { id, texto, tipo: 'simple' | 'grande' | 'estudio', fecha, hecha, obligatoria, estudio? }
     tareas: [],
+    // Minutos de estudio acreditados por día: { 'AAAA-MM-DD': minutos }.
+    // Sirve para el tope diario y para que Bolti se ponga triste si un día de semana no estudió.
+    historialEstudio: {},
+    // Último día en que se creó la tarea de estudio obligatoria (para no crearla dos veces)
+    ultimoDiaObligatorio: null,
     // { id, planId, costo, fecha (ISO), cumplido }. La fecha sirve para el límite mensual.
     cupones: [],
     // Sin salud ni vida: la perrita nunca se enferma ni muere, como mucho se pone triste.
