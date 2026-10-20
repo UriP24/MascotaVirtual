@@ -36,7 +36,7 @@ Si un día no llego, se recorta primero el minijuego; el resto del plan se corre
 
 ## Jue 22 — Bolti en Casa ✅
 - [x] Workflow de GitHub Actions para publicar en Pages (pruebas + build + deploy)
-- [ ] **Activar Pages** en GitHub (Settings → Pages → Source: GitHub Actions) — lo hace Uri
+- [x] Pages activo: https://urip24.github.io/MascotaVirtual/ (se actualiza solo con cada push)
 - [x] Componente `Bolti` (SVG por partes) a partir del prototipo
 - [x] Estado v3 de Bolti: panza, energía, cariño, durmiendo, `actualizadaEn`, `instaladaEn`
 - [x] `logic/bolti.js`: necesidades con reloj real (aunque la app esté cerrada), se duerme a las 00:00,
@@ -92,9 +92,7 @@ Si un día no llego, se recorta primero el minijuego; el resto del plan se corre
 
 ## Próxima sesión — Vie 23: Comida y sueño
 
-Antes de arrancar: activar GitHub Pages (Settings → Pages → Source: **GitHub Actions**) y volver a
-correr el workflow (Actions → "Publicar en GitHub Pages" → Re-run). La app queda en
-https://urip24.github.io/MascotaVirtual/
+La app publicada: https://urip24.github.io/MascotaVirtual/ (se actualiza sola con cada push).
 
 Tareas concretas:
 1. Estado: `inventario: { croqueta: 0, … }` (estado v4). `logic/comida.js`: comprar (resta 🪙,
