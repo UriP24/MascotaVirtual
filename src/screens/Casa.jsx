@@ -83,9 +83,10 @@ function Casa({ estado, setEstado, horasAusente = 0 }) {
   }
 
   // Frotar = mimos: cada tanto recorrido suma cariño y suelta un corazón.
+  // También funciona dormida: siente los mimos pero sigue durmiendo.
   function alMover(e) {
     const t = toque.current
-    if (!t.apretado || animo === 'dormida') return
+    if (!t.apretado) return
     t.recorrido += Math.hypot(e.clientX - t.ultimo.x, e.clientY - t.ultimo.y)
     t.ultimo = { x: e.clientX, y: e.clientY }
     if (t.recorrido < DISTANCIA_POR_MIMO) return
@@ -141,7 +142,11 @@ function Casa({ estado, setEstado, horasAusente = 0 }) {
         />
         <FloatingEmoji items={flotantes} />
       </div>
-      <p className="ayuda">Tocala para que salte · Frotala con el dedo para hacerle mimos</p>
+      <p className="ayuda">
+        {animo === 'dormida'
+          ? 'Está durmiendo 💤 · Frotala suave para hacerle mimos sin despertarla'
+          : 'Tocala para que salte · Frotala con el dedo para hacerle mimos'}
+      </p>
     </section>
   )
 }

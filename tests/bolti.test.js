@@ -103,12 +103,19 @@ test('el lunes mira al viernes anterior; no cuenta días antes de instalar la ap
   assert.equal(extranaElEstudio(recienInstalada, new Date('2026-10-21T12:00:00')), false)
 })
 
-test('mimos suben el cariño hasta 100 y no cuentan si está dormida', () => {
+test('mimos suben el cariño hasta 100', () => {
   const t = ms('2026-10-21T15:00:00')
   const e = estadoCon(perrita({ carino: 98 }))
   assert.equal(darMimos(e, 5, t).perrita.carino, 100)
-  const dormida = estadoCon(perrita({ durmiendo: true, actualizadaEn: ms('2026-10-22T02:00:00') }))
-  assert.equal(darMimos(dormida, 5, ms('2026-10-22T02:00:00')).perrita.carino, 70)
+})
+
+test('dormida siente los mimos pero no se despierta', () => {
+  const t = ms('2026-10-22T02:00:00')
+  let e = estadoCon(perrita({ durmiendo: true, actualizadaEn: t }))
+  for (let i = 0; i < 10; i++) e = darMimos(e, 3, t + i * 60 * 1000) // 10 min de mimos
+  assert.equal(e.perrita.carino, 100)
+  assert.equal(e.perrita.durmiendo, true)
+  assert.equal(e.perrita.ultimaActividad, null, 'no cuenta como actividad que la despierte')
 })
 
 test('horas desde la última visita', () => {

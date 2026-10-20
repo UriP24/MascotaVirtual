@@ -19,7 +19,8 @@ real, aunque la app esté cerrada. **Nunca se enferma ni muere.**
       se le pasa en cuanto completa el estudio de hoy).
    4. Contenta.
 3. **Mimos:** tocarla la hace saltar y hablar (+1 cariño). Frotarla con el dedo da corazones
-   (+3 cariño cada tanto).
+   (+3 cariño cada tanto). **Dormida:** tocarla dice "zzz… 😴"; frotarla da corazones y cariño pero
+   sigue durmiendo (ojos cerrados, mueve la cola despacito). Dormida no muestra hambre ni cansancio.
 4. **Comer (como Pou):** la tienda vende comida por 🪙, que va al **inventario**. En Casa, una
    bandeja muestra el inventario y **se arrastra la comida hasta la boca**: Bolti abre la boca
    cuando la comida se acerca. Si la suelta en la boca, come (masticando **sin lengua afuera**); si

@@ -229,6 +229,19 @@
   }
 }
 
+/* Mimos mientras duerme: sigue con los ojos cerrados y la lengua adentro,
+   y mueve la cola despacito porque le gusta */
+.bolti[data-animo='dormida'].mimos .ojos-felices,
+.bolti[data-animo='dormida'].mimos .lengua {
+  display: none;
+}
+.bolti[data-animo='dormida'].mimos .ojos-dormidos {
+  display: inline;
+}
+.bolti[data-animo='dormida'].mimos .cola {
+  animation: bolti-menear 2.5s ease-in-out infinite;
+}
+
 /* Con "reducir movimiento" se apagan los efectos, pero sigue respirando despacito */
 @media (prefers-reduced-motion: reduce) {
   .bolti .cola,

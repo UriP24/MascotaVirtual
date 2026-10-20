@@ -104,14 +104,13 @@ export function humor(estado, ahora = new Date()) {
   return 'contenta'
 }
 
-// Mimos: suben el cariño. Dormida no los siente (no se despierta por tocarla).
+// Mimos: suben el cariño. Dormida también los siente, pero no se despierta: por eso no se
+// registra como actividad (la actividad es lo que la mantiene despierta de madrugada).
 export function darMimos(estado, cantidad, ahora = Date.now()) {
   const p = avanzarTiempo(estado.perrita, ahora)
-  if (p.durmiendo) return { ...estado, perrita: p }
-  return {
-    ...estado,
-    perrita: { ...p, carino: limitar(p.carino + cantidad), ultimaActividad: ahora },
-  }
+  const carino = limitar(p.carino + cantidad)
+  if (p.durmiendo) return { ...estado, perrita: { ...p, carino } }
+  return { ...estado, perrita: { ...p, carino, ultimaActividad: ahora } }
 }
 
 export function horasDesdeUltimaVisita(perrita, ahora = Date.now()) {
