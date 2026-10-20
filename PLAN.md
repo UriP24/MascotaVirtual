@@ -46,8 +46,16 @@ Si un día no llego, se recorta primero el minijuego; el resto del plan se corre
 - [x] Prueba en navegador con reloj adelantado + `/ux-review` de Casa
 - [x] Nombre de la app: **Huellitas** (Bolti es sorpresa)
 - [x] Modo prueba oculto (`?prueba`) para testear sin esperar
+- [x] La app se actualiza sola cuando hay una versión nueva publicada
+- [x] Modo prueba: forzar a Bolti despierta/dormida 1 h; arranca dormida si se instala de noche
+- [x] "Vamos a dormir, Mari 💤" al abrir la app entre las 00:00 y las 06:00
+- [x] Cara según cada necesidad: rubor = cariño, ojeras = cansancio, panza que gruñe = hambre;
+      respiración visible
+- [x] Jadeo cada 10–20 s cuando está contenta (boca abierta + lengua), después boca cerrada
+- [x] Mimos mientras duerme (sube el cariño sin despertarla); dormida no muestra hambre ni cansancio
 
 ## Vie 23 — Comida y sueño
+- [ ] **Recordatorio de Uri:** cuando Bolti jadea, que mueva la cola (más rápido, de contenta)
 - [ ] Botones de acción en Casa (al alcance del pulgar): Comer, Luz, Jugar
 - [ ] Tienda: comprar comida con 🪙 → inventario
 - [ ] Bandeja de inventario y **arrastrar la comida a la boca** (abre la boca al acercarse)
@@ -98,6 +106,8 @@ Si un día no llego, se recorta primero el minijuego; el resto del plan se corre
 La app publicada: https://urip24.github.io/MascotaVirtual/ (se actualiza sola con cada push).
 
 Tareas concretas:
+0. **Primero (lo pidió Uri):** que Bolti mueva la cola mientras jadea (`.bolti.jadeando .cola` más
+   rápida en `Bolti.css`). Es un cambio chico para arrancar.
 1. Estado: `inventario: { croqueta: 0, … }` (estado v4). `logic/comida.js`: comprar (resta 🪙,
    nunca puntos), dar de comer (suma panza/cariño, no gasta si está llena). Con pruebas.
 2. Pantalla de tienda simple (desde Casa) con las comidas de `COMIDAS`.
