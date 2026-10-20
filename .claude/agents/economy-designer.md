@@ -1,6 +1,6 @@
 ---
 name: economy-designer
-description: "Diseño y balance de la economía de Patitas: monedas, puntos, precios de canjes, fuentes y sumideros."
+description: "Diseño y balance de la economía de Bolti: monedas, puntos, precios de canjes, fuentes y sumideros."
 tools: Read, Glob, Grep
 model: inherit
 ---

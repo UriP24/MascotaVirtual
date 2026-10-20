@@ -15,9 +15,9 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'icons/apple-touch-icon.png'],
       manifest: {
-        name: 'Patitas',
-        short_name: 'Patitas',
-        description: 'Un regalo de cumpleaños con mucho amor',
+        name: 'Bolti',
+        short_name: 'Bolti',
+        description: 'Bolti te espera en casa 🐾',
         lang: 'es-AR',
         theme_color: '#f08a8a',
         background_color: '#fff8f0',

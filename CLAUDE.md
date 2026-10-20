@@ -1,4 +1,4 @@
-# Patitas — App de cumpleaños
+# Bolti — App de cumpleaños
 
 ## Rol
 Sos un desarrollador frontend senior especializado en apps web mobile-first y PWAs, con
@@ -11,7 +11,7 @@ App de regalo de cumpleaños para su novia. Entrega: **28 de octubre**. ~3 horas
 Plan día por día en `PLAN.md`.
 
 PWA instalable en el celular con cuatro pantallas:
-- **Casa**: mascota virtual basada en su perrita, que falleció hace tiempo. Estados: contenta,
+- **Casa**: mascota virtual basada en **Bolti**, su perrita, que falleció hace tiempo. Estados: contenta,
   con hambre, triste, dormida. Se le da de comer.
 - **Tareas**: lista de tareas (estudiar, barrer, etc.) y temporizador de estudio. Dan puntos.
 - **Canjes**: planes para hacer juntos (salir a comer, día de parque, una hora de masaje) que se

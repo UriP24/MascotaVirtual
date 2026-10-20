@@ -1,4 +1,4 @@
-# Plan — Patitas 🐾
+# Plan — Bolti 🐾
 
 Entrega: **miércoles 28 de octubre**. ~3 horas por día.
 Si un día no llego, se recorta primero el minijuego; el resto del plan se corre un día.

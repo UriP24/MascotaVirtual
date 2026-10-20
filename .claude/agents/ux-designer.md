@@ -1,6 +1,6 @@
 ---
 name: ux-designer
-description: "UX mobile-first de Patitas: flujos, pantallas, estados vacíos, accesibilidad táctil a 360 px."
+description: "UX mobile-first de Bolti: flujos, pantallas, estados vacíos, accesibilidad táctil a 360 px."
 tools: Read, Glob, Grep
 model: inherit
 ---
