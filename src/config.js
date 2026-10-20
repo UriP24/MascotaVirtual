@@ -36,9 +36,46 @@ export const ESTUDIO = {
 }
 
 export const PERRITA = {
-  // La saciedad va de 0 (con hambre) a SACIEDAD_MAXIMA (llena)
-  SACIEDAD_MAXIMA: 100,
+  // Las tres necesidades (panza, energía, cariño) van de 0 a este máximo. Nunca se enferma ni muere:
+  // con valores bajos solo se pone triste o con hambre.
+  NECESIDAD_MAXIMA: 100,
   SACIEDAD_INICIAL: 80,
+  ENERGIA_INICIAL: 80,
+  CARINO_INICIAL: 70,
+  // Debajo de este nivel se nota (con hambre, triste, cansada)
+  NIVEL_BAJO: 30,
+
+  // Cuánto baja cada necesidad por hora (con reloj real, aunque la app esté cerrada)
+  SACIEDAD_BAJA_POR_HORA: 4, // de llena a vacía en ~24 h; "con hambre" a las ~12 h
+  CARINO_BAJA_POR_HORA: 4, // ~1 día sin mimos
+  ENERGIA_BAJA_POR_HORA: 4, // despierta
+  ENERGIA_SUBE_POR_HORA_DURMIENDO: 12.5, // de 0 a 100 en 8 h
+
+  // Sueño (horas en formato 24 h)
+  HORA_PUEDE_DORMIR: 22, // desde esta hora se le puede apagar la luz
+  HORA_SE_DUERME_SOLA: 0, // a medianoche se duerme sola aunque la luz siga prendida
+  HORA_SE_DESPIERTA: 10, // se despierta sola
+  ENERGIA_PARA_SIESTA: 20, // con menos energía puede dormir siesta a cualquier hora
+}
+
+// Comida: se compra con monedas, va al inventario y se le da arrastrándola a la boca.
+// precio null = no se vende (regalo).
+export const COMIDAS = [
+  { id: 'croqueta', nombre: 'Croqueta', emoji: '🦴', precio: 5, saciedad: 10, carino: 0 },
+  { id: 'hueso', nombre: 'Hueso', emoji: '🍖', precio: 12, saciedad: 25, carino: 0 },
+  { id: 'pollito', nombre: 'Pollito', emoji: '🍗', precio: 20, saciedad: 40, carino: 5 },
+  // Se regala una el día del cumple (28/10)
+  { id: 'torta', nombre: 'Torta de cumple', emoji: '🎂', precio: null, saciedad: 100, carino: 20 },
+]
+export const FECHA_REGALO_TORTA = '10-28' // MM-DD
+
+export const JUEGOS = {
+  ENERGIA_POR_PARTIDA: 10,
+  ENERGIA_MINIMA_PARA_JUGAR: 10,
+  CARINO_POR_PARTIDA: 8,
+  // Minijuego "Atrapá los huesitos"
+  HUESITOS_DURACION_SEGUNDOS: 45,
+  HUESITOS_MONEDAS_POR_HUESITO: 1,
 }
 
 // Planes para canjear. El precio en puntos se calcula con precioEnPuntos().
