@@ -1,0 +1,170 @@
+.bolti {
+  overflow: visible;
+  touch-action: none; /* que frotarla no haga scroll */
+  cursor: grab;
+}
+
+.bolti .contorno {
+  stroke: #5a3a2a;
+  stroke-width: 3;
+  stroke-linejoin: round;
+}
+
+/* Partes animadas */
+.bolti .cuerpo {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: bolti-respirar 3s ease-in-out infinite;
+}
+.bolti .cola {
+  transform-box: fill-box;
+  transform-origin: 6% 94%;
+  animation: bolti-menear 1.4s ease-in-out infinite;
+}
+.bolti .cabeza {
+  transform-box: fill-box;
+  transform-origin: 50% 92%;
+  transition: transform 0.5s ease;
+}
+.bolti .oreja {
+  transform-box: fill-box;
+  transform-origin: 50% 8%;
+  transition: transform 0.4s ease;
+}
+.bolti .ojo {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  transition: transform 0.09s;
+}
+.bolti.parpadeo .ojo {
+  transform: scaleY(0.1);
+}
+.bolti.ladea .cabeza {
+  transform: rotate(-7deg);
+}
+.bolti.salto {
+  animation: bolti-salto 0.45s ease-out;
+}
+
+@keyframes bolti-salto {
+  40% {
+    translate: 0 -22px;
+  }
+}
+@keyframes bolti-respirar {
+  50% {
+    transform: scale(1.015, 1.03);
+  }
+}
+@keyframes bolti-menear {
+  0%,
+  100% {
+    transform: rotate(-6deg);
+  }
+  50% {
+    transform: rotate(14deg);
+  }
+}
+
+/* Expresiones: se muestran u ocultan partes según el humor */
+.bolti .ojos-felices,
+.bolti .ojos-dormidos,
+.bolti .cejas-tristes,
+.bolti .lagrima,
+.bolti .boca-abierta,
+.bolti .lengua,
+.bolti .zzz {
+  display: none;
+}
+
+.bolti[data-animo='contenta'] .lengua {
+  display: inline;
+}
+
+.bolti.mimos .ojos-normales {
+  display: none;
+}
+.bolti.mimos .ojos-felices,
+.bolti.mimos .lengua {
+  display: inline;
+}
+.bolti.mimos .cola {
+  animation-duration: 0.35s;
+}
+
+.bolti[data-animo='hambre'] .cabeza {
+  transform: translateY(4px);
+}
+.bolti[data-animo='hambre'] .cejas-tristes {
+  display: inline;
+}
+
+.bolti[data-animo='triste'] .cejas-tristes,
+.bolti[data-animo='triste'] .lagrima {
+  display: inline;
+}
+.bolti[data-animo='triste'] .cola {
+  animation-duration: 4s;
+}
+.bolti[data-animo='triste'] .oreja-izq {
+  transform: rotate(12deg);
+}
+.bolti[data-animo='triste'] .oreja-der {
+  transform: rotate(-12deg);
+}
+.bolti[data-animo='triste'] .cabeza {
+  transform: rotate(4deg) translateY(6px);
+}
+
+.bolti[data-animo='dormida'] .ojos-normales,
+.bolti[data-animo='dormida'] .ojos-felices {
+  display: none;
+}
+.bolti[data-animo='dormida'] .ojos-dormidos,
+.bolti[data-animo='dormida'] .lengua,
+.bolti[data-animo='dormida'] .zzz {
+  display: inline;
+}
+.bolti[data-animo='dormida'] .cola {
+  animation: none;
+  transform: rotate(-4deg);
+}
+.bolti[data-animo='dormida'] .cuerpo {
+  animation-duration: 4.5s;
+}
+.bolti[data-animo='dormida'] .cabeza {
+  transform: rotate(9deg) translateY(10px);
+}
+
+.bolti .zzz text {
+  font-weight: 800;
+  fill: #a488ec;
+  animation: bolti-zzz 2.4s ease-in-out infinite;
+}
+.bolti .zzz text:nth-child(2) {
+  animation-delay: 0.8s;
+}
+.bolti .zzz text:nth-child(3) {
+  animation-delay: 1.6s;
+}
+@keyframes bolti-zzz {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0);
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(14px, -30px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bolti .cuerpo,
+  .bolti .cola,
+  .bolti .zzz text {
+    animation: none;
+  }
+}
