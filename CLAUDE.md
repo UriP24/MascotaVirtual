@@ -28,7 +28,7 @@ PWA instalable en el celular con cuatro pantallas:
 
 ### Bolti
 Pelaje rubio/crema, mancha blanca en la frente, pecho blanco y franja blanca desde la nuca hasta
-la mitad del cuello. Orejas caídas, más oscuras. Detalle y paleta de pixel art en
+la mitad del cuello. Orejas caídas y cola larga, también rubias/crema. Detalle y paleta de pixel art en
 `docs/specs/bolti-apariencia.md`. Es un recuerdo: todo lo que tenga que ver con ella, con cariño.
 
 ### Estilo visual
