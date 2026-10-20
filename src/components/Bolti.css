@@ -42,13 +42,13 @@
 .bolti.ladea .cabeza {
   transform: rotate(-7deg);
 }
-.bolti.salto {
+.bolti .saltito {
   animation: bolti-salto 0.45s ease-out;
 }
 
 @keyframes bolti-salto {
   40% {
-    translate: 0 -22px;
+    transform: translateY(-22px);
   }
 }
 @keyframes bolti-respirar {

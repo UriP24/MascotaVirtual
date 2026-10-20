@@ -14,7 +14,6 @@ function Bolti({ animo, mimos = false, saltos = 0, ...resto }) {
   const ojosRef = useRef(null)
   const [parpadeo, setParpadeo] = useState(false)
   const [ladea, setLadea] = useState(false)
-  const [saltando, setSaltando] = useState(false)
 
   // Parpadea cada tanto, al azar, para parecer viva.
   useEffect(() => {
@@ -49,14 +48,6 @@ function Bolti({ animo, mimos = false, saltos = 0, ...resto }) {
     return () => clearTimeout(timer)
   }, [animo])
 
-  // Saltito cuando aumenta el contador.
-  useEffect(() => {
-    if (saltos === 0) return
-    setSaltando(true)
-    const timer = setTimeout(() => setSaltando(false), 450)
-    return () => clearTimeout(timer)
-  }, [saltos])
-
   // Los ojos siguen el dedo o el mouse. Movemos el grupo directo (sin estado) para no
   // redibujar todo el componente con cada movimiento.
   useEffect(() => {
@@ -75,13 +66,15 @@ function Bolti({ animo, mimos = false, saltos = 0, ...resto }) {
     return () => window.removeEventListener('pointermove', mirar)
   }, [])
 
-  const clases = ['bolti', parpadeo && 'parpadeo', ladea && 'ladea', saltando && 'salto', mimos && 'mimos']
+  const clases = ['bolti', parpadeo && 'parpadeo', ladea && 'ladea', mimos && 'mimos']
     .filter(Boolean)
     .join(' ')
 
   return (
     <svg ref={svgRef} className={clases} viewBox="0 0 300 320" data-animo={animo} role="img" aria-label={`Bolti, ${animo}`} {...resto}>
       <ellipse cx="150" cy="304" rx="92" ry="11" fill="rgb(63 53 64 / 0.12)" />
+      {/* Saltito: al cambiar la key, React vuelve a crear el grupo y la animación arranca de nuevo */}
+      <g key={saltos} className={saltos > 0 ? 'saltito' : undefined}>
       <g className="cuerpo">
         <path className="cola contorno" fill="#e8c48f" d="M200 252 C246 246 274 210 268 166 C266 152 252 152 252 166 C255 200 238 226 198 234 Z" />
         <ellipse className="contorno" cx="104" cy="266" rx="38" ry="34" fill="#e2b97f" />
@@ -142,6 +135,7 @@ function Bolti({ animo, mimos = false, saltos = 0, ...resto }) {
             <text x="240" y="30" fontSize="14">z</text>
           </g>
         </g>
+      </g>
       </g>
     </svg>
   )
