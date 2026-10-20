@@ -2,9 +2,10 @@
 // porque localStorage puede fallar (modo incógnito, almacenamiento lleno, datos corruptos).
 
 import { PERRITA } from './config.js'
+import { fechaLocal } from './logic/fechas.js'
 
 const CLAVE = 'patitas:estado'
-const VERSION_ACTUAL = 2
+const VERSION_ACTUAL = 3
 
 export function crearEstadoInicial() {
   const ahora = new Date().toISOString()
@@ -23,11 +24,17 @@ export function crearEstadoInicial() {
     ultimoDiaObligatorio: null,
     // { id, planId, costo, fecha (ISO), cumplido }. La fecha sirve para el límite mensual.
     cupones: [],
-    // Sin salud ni vida: la perrita nunca se enferma ni muere, como mucho se pone triste.
+    // Día en que se empezó a usar la app (para no ponerla triste por días anteriores)
+    instaladaEn: fechaLocal(),
+    // Sin salud ni vida: Bolti nunca se enferma ni muere, como mucho se pone triste.
     perrita: {
       saciedad: PERRITA.SACIEDAD_INICIAL,
-      ultimaComida: ahora,
-      ultimaVisita: ahora,
+      energia: PERRITA.ENERGIA_INICIAL,
+      carino: PERRITA.CARINO_INICIAL,
+      durmiendo: false,
+      actualizadaEn: Date.now(), // última vez que se calcularon las necesidades (ms)
+      ultimaActividad: null, // último mimo (ms), para volver a dormirse de madrugada
+      ultimaVisita: ahora, // para saludarla si hace mucho que no entra
     },
   }
 }

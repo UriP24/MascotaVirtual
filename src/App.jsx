@@ -7,6 +7,7 @@ import Canjes from './screens/Canjes.jsx'
 import Jugar from './screens/Jugar.jsx'
 import { cargarEstado, guardarEstado } from './storage.js'
 import { actualizarDia, retomarCronometros } from './logic/tareas.js'
+import { actualizarBolti } from './logic/bolti.js'
 import './App.css'
 
 const PANTALLAS = {
@@ -19,12 +20,15 @@ const PANTALLAS = {
 function App() {
   const [pantallaActiva, setPantallaActiva] = useState('casa')
   // La función se ejecuta una sola vez, al arrancar: lee el progreso, retoma cronómetros
-  // que hayan quedado abiertos y crea la tarea de estudio del día si corresponde.
-  const [estado, setEstado] = useState(() => actualizarDia(retomarCronometros(cargarEstado())))
+  // que hayan quedado abiertos, crea la tarea de estudio del día si corresponde y calcula
+  // lo que le pasó a Bolti mientras la app estuvo cerrada.
+  const [estado, setEstado] = useState(() =>
+    actualizarBolti(actualizarDia(retomarCronometros(cargarEstado()))),
+  )
 
-  // Cada minuto revisa si cambió el día (por si la app queda abierta pasada la medianoche).
+  // Cada minuto: revisa si cambió el día y avanza las necesidades de Bolti.
   useEffect(() => {
-    const timer = setInterval(() => setEstado((e) => actualizarDia(e)), 60 * 1000)
+    const timer = setInterval(() => setEstado((e) => actualizarBolti(actualizarDia(e))), 60 * 1000)
     return () => clearInterval(timer)
   }, [])
 
