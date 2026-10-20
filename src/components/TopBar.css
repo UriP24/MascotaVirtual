@@ -5,8 +5,7 @@
   height: calc(var(--alto-barra-superior) + env(safe-area-inset-top));
   padding: env(safe-area-inset-top) 16px 0;
   align-items: center;
-  background: var(--color-superficie);
-  border-bottom: 1px solid var(--color-borde);
+  background: var(--color-degrade);
 }
 
 .contador {
@@ -16,14 +15,15 @@
   padding: 4px 12px;
   border-radius: 999px;
   font-size: 1rem;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.08);
 }
 
 .contador.moneda {
-  background: #fdf1d8;
+  background: var(--color-superficie);
   color: #9a6a12;
 }
 
 .contador.punto {
-  background: #eee6fb;
-  color: #5e43a8;
+  background: var(--color-superficie);
+  color: var(--color-secundario-oscuro);
 }
