@@ -39,8 +39,27 @@ export function adelantarBolti(estado, horas, ahora = Date.now()) {
   return actualizarBolti({ ...estado, perrita: corrida }, ahora)
 }
 
-export function cambiarBolti(estado, cambios) {
-  return { ...estado, perrita: { ...estado.perrita, ...cambios } }
+const DURACION_FORZADO = 1 * HORA
+
+// Cambia valores de Bolti y la deja despierta (o dormida) 1 hora sin importar el horario,
+// para poder tocarla y probar tranquilo aunque sea de noche (o de día).
+export function cambiarBolti(estado, cambios, ahora = Date.now()) {
+  const durmiendo = cambios.durmiendo ?? false
+  return {
+    ...estado,
+    perrita: {
+      ...estado.perrita,
+      ...cambios,
+      durmiendo,
+      actualizadaEn: ahora,
+      forzado: { durmiendo, hasta: ahora + DURACION_FORZADO },
+    },
+  }
+}
+
+// Saca el forzado: Bolti vuelve a seguir su horario de sueño.
+export function volverAlHorarioNormal(estado, ahora = Date.now()) {
+  return actualizarBolti({ ...estado, perrita: { ...estado.perrita, forzado: null, ultimaActividad: null } }, ahora + 1)
 }
 
 // Como si la app estuviera instalada hace una semana y ayer no hubiera estudiado.

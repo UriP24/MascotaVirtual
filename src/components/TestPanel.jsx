@@ -7,11 +7,12 @@ import {
   sumarEstudio,
   sumarMonedas,
   sumarPuntos,
+  volverAlHorarioNormal,
 } from '../logic/prueba.js'
 import './TestPanel.css'
 
 // Panel oculto del modo prueba. Solo aparece con ?prueba en el link (o con npm run dev).
-function TestPanel({ setEstado }) {
+function TestPanel({ estado, setEstado }) {
   const [abierto, setAbierto] = useState(false)
   const [confirmarReinicio, setConfirmarReinicio] = useState(false)
 
@@ -29,10 +30,11 @@ function TestPanel({ setEstado }) {
       acciones: [
         ['Adelantar 1 h', (e) => adelantarBolti(e, 1)],
         ['Adelantar 6 h', (e) => adelantarBolti(e, 6)],
-        ['Con hambre', (e) => cambiarBolti(e, { saciedad: 15, durmiendo: false })],
-        ['Triste', (e) => cambiarBolti(e, { carino: 15, durmiendo: false })],
+        ['Con hambre', (e) => cambiarBolti(e, { saciedad: 15 })],
+        ['Triste', (e) => cambiarBolti(e, { carino: 15, saciedad: Math.max(e.perrita.saciedad, 50) })],
         ['Dormida', (e) => cambiarBolti(e, { durmiendo: true })],
-        ['Todo lleno', (e) => cambiarBolti(e, { saciedad: 100, energia: 100, carino: 100, durmiendo: false })],
+        ['Todo lleno', (e) => cambiarBolti(e, { saciedad: 100, energia: 100, carino: 100 })],
+        ['Contenta normal', (e) => cambiarBolti(e, { saciedad: 80, energia: 80, carino: 80 })],
       ],
     },
     {
@@ -93,7 +95,20 @@ function TestPanel({ setEstado }) {
           )}
         </div>
       </div>
-      <small>"Dormida" de día dura hasta el próximo minuto: a esa hora Bolti se despierta sola.</small>
+      <div className="grupo">
+        <span>🕐 Horario de sueño</span>
+        {estado.perrita.forzado ? (
+          <div className="botones">
+            <small>
+              Forzada {estado.perrita.forzado.durmiendo ? 'dormida' : 'despierta'} hasta las{' '}
+              {new Date(estado.perrita.forzado.hasta).toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' })}
+            </small>
+            <button onClick={() => setEstado((e) => volverAlHorarioNormal(e))}>Volver al horario normal</button>
+          </div>
+        ) : (
+          <small>Normal: duerme de 00:00 a 10:00. Los botones de Bolti la fuerzan 1 hora.</small>
+        )}
+      </div>
     </div>
   )
 }

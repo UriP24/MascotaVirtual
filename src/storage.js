@@ -3,6 +3,7 @@
 
 import { PERRITA } from './config.js'
 import { fechaLocal } from './logic/fechas.js'
+import { esHorarioDeDormir } from './logic/bolti.js'
 
 const CLAVE = 'patitas:estado'
 const VERSION_ACTUAL = 3
@@ -31,10 +32,11 @@ export function crearEstadoInicial() {
       saciedad: PERRITA.SACIEDAD_INICIAL,
       energia: PERRITA.ENERGIA_INICIAL,
       carino: PERRITA.CARINO_INICIAL,
-      durmiendo: false,
+      durmiendo: esHorarioDeDormir(new Date()), // si la abre por primera vez de noche, ya duerme
       actualizadaEn: Date.now(), // última vez que se calcularon las necesidades (ms)
       ultimaActividad: null, // último mimo (ms), para volver a dormirse de madrugada
       ultimaVisita: ahora, // para saludarla si hace mucho que no entra
+      forzado: null, // solo modo prueba: { durmiendo, hasta (ms) } ignora el horario de sueño
     },
   }
 }

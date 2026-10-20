@@ -22,11 +22,38 @@ test('adelantar a Bolti baja sus necesidades', () => {
 })
 
 test('"ayer no estudió" la pone triste', () => {
-  const e = simularQueNoEstudio(crearEstadoInicial(), MARTES)
+  const inicial = crearEstadoInicial()
+  // despierta, para no depender de la hora real en que se corren las pruebas
+  const e = simularQueNoEstudio({ ...inicial, perrita: { ...inicial.perrita, durmiendo: false } }, MARTES)
   assert.equal(humor(e, MARTES), 'triste')
 })
 
 test('sumar puntos también suma al total ganado', () => {
   const e = sumarPuntos(crearEstadoInicial(), 10)
   assert.equal(e.puntosGanadosTotal, 10)
+})
+
+test('"Todo lleno" de noche la deja despierta 1 h aunque la toquen', async () => {
+  const { cambiarBolti, volverAlHorarioNormal } = await import('../src/logic/prueba.js')
+  const { darMimos } = await import('../src/logic/bolti.js')
+  const noche = new Date('2026-10-23T01:30:00').getTime()
+  let e = { ...crearEstadoInicial(), perrita: { ...crearEstadoInicial().perrita, durmiendo: true, actualizadaEn: noche } }
+  e = cambiarBolti(e, { saciedad: 100, energia: 100, carino: 100 }, noche)
+  e = darMimos(e, 3, noche + 5 * 60 * 1000)
+  assert.equal(e.perrita.durmiendo, false, 'sigue despierta después de 5 min')
+  e = darMimos(e, 3, noche + 50 * 60 * 1000)
+  assert.equal(e.perrita.durmiendo, false, 'sigue despierta a los 50 min')
+  const vencido = adelantarBolti(e, 0, noche + 80 * 60 * 1000)
+  assert.equal(vencido.perrita.forzado, null, 'el forzado vence a la hora')
+  assert.equal(vencido.perrita.durmiendo, true, 'y vuelve a su horario')
+  const normal = volverAlHorarioNormal(cambiarBolti(e, {}, noche), noche)
+  assert.equal(normal.perrita.durmiendo, true)
+})
+
+test('"Dormida" de día dura 1 h', async () => {
+  const { cambiarBolti } = await import('../src/logic/prueba.js')
+  const tarde = new Date('2026-10-22T15:00:00').getTime()
+  let e = { ...crearEstadoInicial(), perrita: { ...crearEstadoInicial().perrita, actualizadaEn: tarde } }
+  e = cambiarBolti(e, { durmiendo: true }, tarde)
+  assert.equal(adelantarBolti(e, 0, tarde + 30 * 60 * 1000).perrita.durmiendo, true)
 })

@@ -43,8 +43,12 @@ export function avanzarTiempo(perrita, ahora) {
     const fin = Math.min(t + PASO, ahora)
     const fecha = new Date(t)
     const ultimaActividad = perrita.ultimaActividad ?? 0
+    const forzado = perrita.forzado
 
-    if (!durmiendo && esHorarioDeDormir(fecha) && t >= ultimaActividad + ESPERA_PARA_REDORMIRSE) {
+    if (forzado && t < forzado.hasta) {
+      // Modo prueba: despierta o dormida a la fuerza, sin importar el horario
+      durmiendo = forzado.durmiendo
+    } else if (!durmiendo && esHorarioDeDormir(fecha) && t >= ultimaActividad + ESPERA_PARA_REDORMIRSE) {
       durmiendo = true
     } else if (durmiendo && esHorarioDeDia(fecha)) {
       durmiendo = false
@@ -64,7 +68,9 @@ export function avanzarTiempo(perrita, ahora) {
     t = fin
   }
 
-  return { ...perrita, saciedad, energia, carino, durmiendo, actualizadaEn: ahora }
+  // Cuando vence el forzado de prueba, se borra
+  const forzado = perrita.forzado && ahora < perrita.forzado.hasta ? perrita.forzado : null
+  return { ...perrita, saciedad, energia, carino, durmiendo, forzado, actualizadaEn: ahora }
 }
 
 // Avanza a Bolti dentro del estado completo. Mismo objeto si no cambió nada.

@@ -54,7 +54,7 @@ function App() {
       <TopBar monedas={estado.monedas} puntos={estado.puntos} />
       <Pantalla estado={estado} setEstado={setEstado} horasAusente={inicio.horasAusente} />
       <BottomNav pantallaActiva={pantallaActiva} onCambiar={setPantallaActiva} />
-      {modoPrueba && <TestPanel setEstado={setEstado} />}
+      {modoPrueba && <TestPanel estado={estado} setEstado={setEstado} />}
     </div>
   )
 }
