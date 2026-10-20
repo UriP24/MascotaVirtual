@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="es-AR">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Bolti en casa</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap">
+<style>
+  /* Layout: una sola pantalla tipo juego — barras de necesidades arriba, la habitación con Bolti al centro, acciones abajo.
+     Un solo tema a propósito: es la habitación de Bolti, con la paleta rosa + turquesa de la app. */
+  :root {
+    --rosa: #ec6f9e;
+    --rosa-osc: #c94f80;
+    --rosa-claro: #ffd9e7;
+    --turquesa: #2bb8b0;
+    --turquesa-osc: #1a8f89;
+    --turquesa-claro: #cdf3f0;
+    --lila: #a488ec;
+    --lila-claro: #e9e0fc;
+    --fondo: #fff5f8;
+    --texto: #3f3540;
+    --texto-suave: #857682;
+    --blanco: #ffffff;
+    --noche: #2a2550;
+    --fuente: 'Baloo 2', ui-rounded, 'SF Pro Rounded', system-ui, sans-serif;
+    color-scheme: light;
+  }
+  html, body { height: 100%; }
+  body {
+    background: var(--fondo);
+    color: var(--texto);
+    font-family: var(--fuente);
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .app {
+    height: 100%;
+    max-width: 460px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 12px;
+    box-sizing: border-box;
+  }
+
+  /* Necesidades */
+  .necesidades { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .necesidad {
+    display: flex; flex-direction: column; gap: 4px;
+    padding: 6px 10px 8px; border-radius: 14px; background: var(--blanco);
+    box-shadow: 0 1px 3px rgb(63 53 64 / 0.1);
+  }
+  .necesidad .etq { display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 700; }
+  .necesidad .etq span:last-child { color: var(--texto-suave); font-variant-numeric: tabular-nums; }
+  .barra { height: 8px; border-radius: 999px; background: var(--lila-claro); overflow: hidden; }
+  .barra i { display: block; height: 100%; border-radius: 999px; transition: width 0.6s ease, background 0.6s; }
+  .barra.bien i { background: var(--turquesa); }
+  .barra.media i { background: var(--lila); }
+  .barra.baja i { background: var(--rosa); }
+
+  /* Habitación */
+  .habitacion {
+    position: relative; flex: 1; min-height: 340px; border-radius: 24px; overflow: hidden;
+    background: linear-gradient(180deg, var(--rosa-claro) 0%, var(--lila-claro) 55%, var(--turquesa-claro) 56%, #bfe9e4 100%);
+    touch-action: none;
+  }
+  .habitacion::after {
+    content: ""; position: absolute; inset: 0; background: var(--noche);
+    opacity: 0; transition: opacity 1.2s ease; pointer-events: none;
+  }
+  .habitacion.noche::after { opacity: 0.55; }
+  .ventana {
+    position: absolute; top: 9%; left: 8%; width: 70px; height: 80px; border-radius: 35px 35px 8px 8px;
+    background: linear-gradient(180deg, #bfe6ff, #fff3fb); border: 5px solid var(--blanco);
+    box-shadow: inset 0 0 0 2px rgb(63 53 64 / 0.08); transition: background 1.2s;
+  }
+  .habitacion.noche .ventana { background: linear-gradient(180deg, #1c1a44, #3a3577); }
+  .ventana::before { content: ""; position: absolute; left: 50%; top: 0; bottom: 0; width: 4px; margin-left: -2px; background: var(--blanco); }
+  .cuadro {
+    position: absolute; top: 11%; right: 9%; width: 62px; height: 52px; border-radius: 6px;
+    background: var(--blanco); border: 4px solid var(--lila); display: grid; place-items: center;
+    font-size: 0.75rem; font-weight: 800; color: var(--rosa-osc); transform: rotate(4deg);
+  }
+  .alfombra {
+    position: absolute; left: 50%; bottom: 7%; width: 78%; height: 16%; transform: translateX(-50%);
+    border-radius: 50%; background: radial-gradient(ellipse, #fff 0 30%, var(--rosa-claro) 31% 60%, #f7b9cf 61%);
+    opacity: 0.9;
+  }
+  #bolti {
+    position: absolute; left: 50%; bottom: 4%; width: min(78%, 300px); transform: translateX(-50%);
+    overflow: visible; cursor: grab; z-index: 2;
+  }
+  .burbuja {
+    position: absolute; left: 50%; top: 10%; transform: translateX(-50%) scale(0.8); z-index: 3;
+    padding: 6px 14px; border-radius: 16px; background: var(--blanco); font-weight: 700;
+    box-shadow: 0 2px 8px rgb(63 53 64 / 0.15); white-space: nowrap; opacity: 0;
+    transition: opacity 0.25s, transform 0.25s;
+  }
+  .burbuja::after {
+    content: ""; position: absolute; left: 50%; bottom: -7px; margin-left: -7px;
+    border: 7px solid transparent; border-bottom: 0; border-top-color: var(--blanco);
+  }
+  .burbuja.ver { opacity: 1; transform: translateX(-50%) scale(1); }
+  .flotante {
+    position: absolute; z-index: 4; pointer-events: none; font-size: 1.6rem;
+    animation: flotar 1.4s ease-out forwards;
+  }
+  @keyframes flotar {
+    from { transform: translate(-50%, 0) scale(0.6); opacity: 1; }
+    to { transform: translate(calc(-50% + var(--dx, 0px)), -110px) scale(1.2); opacity: 0; }
+  }
+  .plato {
+    position: absolute; left: 50%; bottom: 3%; z-index: 3; font-size: 2.6rem;
+    transform: translate(-50%, 140%); transition: transform 0.4s ease;
+  }
+  .plato.ver { transform: translate(-50%, 0); }
+
+  /* Bolti: partes y animaciones */
+  #bolti .contorno { stroke: #5a3a2a; stroke-width: 3; stroke-linejoin: round; }
+  #cuerpo { transform-box: fill-box; transform-origin: 50% 100%; animation: respirar 3s ease-in-out infinite; }
+  #cola { transform-box: fill-box; transform-origin: 6% 94%; animation: menear 1.4s ease-in-out infinite; }
+  #cabeza { transform-box: fill-box; transform-origin: 50% 92%; transition: transform 0.5s ease; }
+  .oreja { transform-box: fill-box; transform-origin: 50% 8%; transition: transform 0.4s ease; }
+  #ojos { transition: transform 0.08s linear; }
+  .ojo { transform-box: fill-box; transform-origin: 50% 50%; transition: transform 0.09s; }
+  #bolti.parpadeo .ojo { transform: scaleY(0.1); }
+  #bolti.ladea #cabeza { transform: rotate(-7deg); }
+  #bolti.salto { animation: salto 0.45s ease-out; }
+  @keyframes salto { 40% { translate: 0 -22px; } }
+  @keyframes respirar { 50% { transform: scale(1.015, 1.03); } }
+  @keyframes menear { 0%, 100% { transform: rotate(-6deg); } 50% { transform: rotate(14deg); } }
+
+  /* Estados de ánimo: se muestran u ocultan partes de la cara */
+  .ojos-felices, .ojos-dormidos, .cejas-tristes, .lagrima, .boca-abierta, .lengua, .zzz { display: none; }
+  #bolti[data-animo="contenta"] .lengua { display: inline; }
+  #bolti.mimos .ojos-normales, #bolti[data-animo="dormida"] .ojos-normales { display: none; }
+  #bolti.mimos .ojos-felices { display: inline; }
+  #bolti.mimos #cola { animation-duration: 0.35s; }
+  #bolti.mimos .lengua { display: inline; }
+  #bolti[data-animo="triste"] .cejas-tristes,
+  #bolti[data-animo="triste"] .lagrima { display: inline; }
+  #bolti[data-animo="triste"] #cola { animation-duration: 4s; }
+  #bolti[data-animo="triste"] .oreja-izq { transform: rotate(12deg); }
+  #bolti[data-animo="triste"] .oreja-der { transform: rotate(-12deg); }
+  #bolti[data-animo="triste"] #cabeza { transform: rotate(4deg) translateY(6px); }
+  #bolti[data-animo="hambre"] #cabeza { transform: translateY(4px); }
+  #bolti[data-animo="hambre"] .cejas-tristes { display: inline; }
+  #bolti[data-animo="dormida"] .ojos-dormidos,
+  #bolti[data-animo="dormida"] .lengua,
+  #bolti[data-animo="dormida"] .zzz { display: inline; }
+  #bolti[data-animo="dormida"] #cola { animation: none; transform: rotate(-4deg); }
+  #bolti[data-animo="dormida"] #cuerpo { animation-duration: 4.5s; }
+  #bolti[data-animo="dormida"] #cabeza { transform: rotate(9deg) translateY(10px); }
+  #bolti.comiendo #cabeza { transform: rotate(0deg) translateY(16px); }
+  #bolti.comiendo .boca-cerrada { animation: masticar 0.32s steps(1) infinite; }
+  #bolti.comiendo .boca-abierta { display: inline; animation: masticar 0.32s steps(1) infinite reverse; }
+  @keyframes masticar { 50% { opacity: 0; } }
+  .zzz text { font-family: var(--fuente); font-weight: 800; fill: var(--lila); animation: zzz 2.4s ease-in-out infinite; }
+  .zzz text:nth-child(2) { animation-delay: 0.8s; }
+  .zzz text:nth-child(3) { animation-delay: 1.6s; }
+  @keyframes zzz { 0% { opacity: 0; transform: translate(0, 0); } 30% { opacity: 1; } 100% { opacity: 0; transform: translate(14px, -30px); } }
+
+  /* Acciones */
+  .acciones { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .accion {
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0;
+    min-height: 64px; border: none; border-radius: 18px; background: var(--blanco); color: var(--texto);
+    font: 700 0.9rem var(--fuente); box-shadow: 0 2px 0 rgb(63 53 64 / 0.12); cursor: pointer;
+  }
+  .accion span { font-size: 1.6rem; line-height: 1.1; }
+  .accion:active { transform: translateY(2px); box-shadow: none; }
+  .accion:focus-visible, .chip:focus-visible { outline: 3px solid var(--turquesa); outline-offset: 2px; }
+  .prueba { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 0.8rem; color: var(--texto-suave); }
+  .chip {
+    min-height: 32px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--lila-claro);
+    background: var(--blanco); color: var(--texto); font: 600 0.8rem var(--fuente); cursor: pointer;
+  }
+  .ayuda { margin: 0; font-size: 0.8rem; color: var(--texto-suave); text-align: center; }
+
+  @media (prefers-reduced-motion: reduce) {
+    #cuerpo, #cola, .zzz text { animation: none !important; }
+    .flotante { animation-duration: 0.01s; }
+  }
+</style>
+
+<div class="app">
+  <div class="necesidades" aria-label="Necesidades de Bolti">
+    <div class="necesidad"><div class="etq"><span>🍖 Panza</span><span id="v-saciedad">80</span></div><div class="barra" id="b-saciedad"><i></i></div></div>
+    <div class="necesidad"><div class="etq"><span>⚡ Energía</span><span id="v-energia">70</span></div><div class="barra" id="b-energia"><i></i></div></div>
+    <div class="necesidad"><div class="etq"><span>💗 Cariño</span><span id="v-carino">60</span></div><div class="barra" id="b-carino"><i></i></div></div>
+  </div>
+
+  <div class="habitacion" id="habitacion">
+    <div class="ventana" aria-hidden="true"></div>
+    <div class="cuadro" aria-hidden="true">BOLTI</div>
+    <div class="alfombra" aria-hidden="true"></div>
+    <div class="burbuja" id="burbuja" role="status"></div>
+
+    <svg id="bolti" viewBox="0 0 300 320" data-animo="contenta" role="img" aria-label="Bolti">
+      <ellipse cx="150" cy="304" rx="92" ry="11" fill="rgb(63 53 64 / 0.12)"/>
+      <g id="cuerpo">
+        <path id="cola" class="contorno" fill="#e8c48f"
+          d="M200 252 C246 246 274 210 268 166 C266 152 252 152 252 166 C255 200 238 226 198 234 Z"/>
+        <ellipse class="contorno" cx="104" cy="266" rx="38" ry="34" fill="#e2b97f"/>
+        <ellipse class="contorno" cx="196" cy="266" rx="38" ry="34" fill="#e2b97f"/>
+        <ellipse class="contorno" cx="150" cy="232" rx="62" ry="68" fill="#e8c48f"/>
+        <ellipse cx="150" cy="222" rx="34" ry="50" fill="#fbf4e8"/>
+        <ellipse cx="150" cy="168" rx="44" ry="16" fill="#fbf4e8"/>
+        <rect class="contorno" x="117" y="246" width="26" height="52" rx="13" fill="#e8c48f"/>
+        <rect class="contorno" x="157" y="246" width="26" height="52" rx="13" fill="#e8c48f"/>
+        <ellipse class="contorno" cx="129" cy="298" rx="17" ry="9" fill="#efd3a5"/>
+        <ellipse class="contorno" cx="171" cy="298" rx="17" ry="9" fill="#efd3a5"/>
+
+        <g id="cabeza">
+          <path class="oreja oreja-izq contorno" fill="#e2b77c"
+            d="M92 78 C60 80 44 130 58 172 C66 192 92 186 98 162 C104 132 108 96 92 78 Z"/>
+          <path class="oreja oreja-der contorno" fill="#e2b77c"
+            d="M208 78 C240 80 256 130 242 172 C234 192 208 186 202 162 C196 132 192 96 208 78 Z"/>
+          <ellipse class="contorno" cx="150" cy="112" rx="68" ry="60" fill="#e8c48f"/>
+          <path fill="#fbf4e8" d="M142 54 C146 52 154 52 158 54 L161 100 C168 114 176 124 178 138 L122 138 C124 124 132 114 139 100 Z"/>
+          <ellipse cx="150" cy="146" rx="38" ry="27" fill="#fbf4e8"/>
+          <ellipse cx="106" cy="134" rx="12" ry="7" fill="#f6a3bd" opacity="0.55"/>
+          <ellipse cx="194" cy="134" rx="12" ry="7" fill="#f6a3bd" opacity="0.55"/>
+
+          <g id="ojos">
+            <g class="ojos-normales">
+              <g class="ojo"><ellipse cx="121" cy="110" rx="10" ry="12" fill="#2a2022"/><circle cx="124.5" cy="105.5" r="3.6" fill="#fff"/><circle cx="118" cy="114" r="1.6" fill="#fff"/></g>
+              <g class="ojo"><ellipse cx="179" cy="110" rx="10" ry="12" fill="#2a2022"/><circle cx="182.5" cy="105.5" r="3.6" fill="#fff"/><circle cx="176" cy="114" r="1.6" fill="#fff"/></g>
+            </g>
+          </g>
+          <g class="ojos-felices" fill="none" stroke="#2a2022" stroke-width="4.5" stroke-linecap="round">
+            <path d="M110 114 Q121 100 132 114"/><path d="M168 114 Q179 100 190 114"/>
+          </g>
+          <g class="ojos-dormidos" fill="none" stroke="#2a2022" stroke-width="4" stroke-linecap="round">
+            <path d="M110 110 Q121 120 132 110"/><path d="M168 110 Q179 120 190 110"/>
+          </g>
+          <g class="cejas-tristes" fill="none" stroke="#5a3a2a" stroke-width="3.5" stroke-linecap="round">
+            <path d="M108 92 L130 86"/><path d="M192 92 L170 86"/>
+          </g>
+          <path class="lagrima" fill="#8fd8f0" d="M116 124 C112 132 112 138 117 139 C122 138 121 132 116 124 Z"/>
+
+          <path fill="#2a2022" d="M139 132 C139 125 161 125 161 132 C161 139 154 144 150 144 C146 144 139 139 139 132 Z"/>
+          <ellipse cx="146" cy="130" rx="3.5" ry="2" fill="#fff" opacity="0.7"/>
+          <path class="boca-cerrada" fill="none" stroke="#5a3a2a" stroke-width="3" stroke-linecap="round" d="M150 144 L150 150 M136 150 Q143 158 150 150 Q157 158 164 150"/>
+          <path class="boca-abierta" fill="#7a2f3a" stroke="#5a3a2a" stroke-width="3" d="M136 150 Q150 172 164 150 Q150 156 136 150 Z"/>
+          <path class="lengua" fill="#f08aa0" stroke="#c9566f" stroke-width="2" d="M144 153 L156 153 L156 162 C156 168 144 168 144 162 Z"/>
+          <g class="zzz"><text x="210" y="60" font-size="22">z</text><text x="226" y="44" font-size="18">z</text><text x="240" y="30" font-size="14">z</text></g>
+        </g>
+      </g>
+    </svg>
+
+    <div class="plato" id="plato" aria-hidden="true">🥣</div>
+  </div>
+
+  <div class="acciones">
+    <button class="accion" id="btn-comer"><span>🍖</span>Dar de comer</button>
+    <button class="accion" id="btn-dormir"><span>💡</span>Apagar la luz</button>
+    <button class="accion" id="btn-pelota"><span>🎾</span>Jugar</button>
+  </div>
+  <p class="ayuda">Tocala para que salte · Frotala con el dedo para hacerle mimos</p>
+  <div class="prueba" aria-label="Probar estados">
+    Probar:
+    <button class="chip" data-forzar="contenta">Contenta</button>
+    <button class="chip" data-forzar="hambre">Con hambre</button>
+    <button class="chip" data-forzar="triste">Triste</button>
+    <button class="chip" data-forzar="dormida">Dormida</button>
+  </div>
+</div>
+
+<script>
+(() => {
+  const $ = (s) => document.querySelector(s)
+  const bolti = $('#bolti'), hab = $('#habitacion'), burbuja = $('#burbuja'), plato = $('#plato')
+  const estado = { saciedad: 80, energia: 70, carino: 60, durmiendo: false, ocupada: false }
+  const limitar = (v) => Math.max(0, Math.min(100, v))
+
+  function animoActual() {
+    if (estado.durmiendo) return 'dormida'
+    if (estado.saciedad < 30) return 'hambre'
+    if (estado.carino < 30 || estado.energia < 15) return 'triste'
+    return 'contenta'
+  }
+
+  let ultimoAnimo = null
+  function dibujar() {
+    for (const k of ['saciedad', 'energia', 'carino']) {
+      const v = Math.round(estado[k])
+      $('#v-' + k).textContent = v
+      const b = $('#b-' + k)
+      b.className = 'barra ' + (v >= 60 ? 'bien' : v >= 30 ? 'media' : 'baja')
+      b.querySelector('i').style.width = v + '%'
+    }
+    const animo = animoActual()
+    bolti.dataset.animo = animo
+    hab.classList.toggle('noche', estado.durmiendo)
+    $('#btn-dormir').innerHTML = estado.durmiendo ? '<span>☀️</span>Despertarla' : '<span>💡</span>Apagar la luz'
+    if (animo !== ultimoAnimo && ultimoAnimo !== null) {
+      const frases = { hambre: 'Tengo hambre… 🥺', triste: '¿Me hacés mimos? 🥺', contenta: '¡Qué lindo día! 🐾' }
+      if (frases[animo]) decir(frases[animo])
+    }
+    ultimoAnimo = animo
+  }
+
+  let timerBurbuja
+  function decir(texto, ms = 1800) {
+    burbuja.textContent = texto
+    burbuja.classList.add('ver')
+    clearTimeout(timerBurbuja)
+    timerBurbuja = setTimeout(() => burbuja.classList.remove('ver'), ms)
+  }
+
+  function flotante(emoji, x, y) {
+    const el = document.createElement('span')
+    el.className = 'flotante'
+    el.textContent = emoji
+    el.style.left = x + 'px'
+    el.style.top = y + 'px'
+    el.style.setProperty('--dx', (Math.random() * 60 - 30) + 'px')
+    hab.appendChild(el)
+    setTimeout(() => el.remove(), 1500)
+  }
+
+  function puntoCabeza() {
+    const r = bolti.getBoundingClientRect(), h = hab.getBoundingClientRect()
+    return { x: r.left - h.left + r.width / 2, y: r.top - h.top + r.height * 0.25 }
+  }
+
+  // Parpadeo y ladeo de cabeza al azar: la hacen parecer viva
+  function parpadear() {
+    if (bolti.dataset.animo !== 'dormida') {
+      bolti.classList.add('parpadeo')
+      setTimeout(() => bolti.classList.remove('parpadeo'), 130)
+    }
+    setTimeout(parpadear, 1800 + Math.random() * 3500)
+  }
+  function ladear() {
+    if (bolti.dataset.animo === 'contenta' && !estado.ocupada) {
+      bolti.classList.add('ladea')
+      setTimeout(() => bolti.classList.remove('ladea'), 1400)
+    }
+    setTimeout(ladear, 5000 + Math.random() * 6000)
+  }
+
+  // Los ojos siguen el dedo o el mouse
+  const ojos = $('#ojos')
+  function mirarHacia(cx, cy) {
+    const r = bolti.getBoundingClientRect()
+    const ox = r.left + r.width * 0.5, oy = r.top + r.height * 0.34
+    const dx = cx - ox, dy = cy - oy, d = Math.hypot(dx, dy) || 1
+    const f = Math.min(1, d / 200) * 4
+    ojos.setAttribute('transform', `translate(${(dx / d) * f} ${(dy / d) * f})`)
+  }
+  window.addEventListener('pointermove', (e) => mirarHacia(e.clientX, e.clientY))
+
+  // Tocar = salto; frotar = mimos
+  let apretado = false, recorrido = 0, ultimo = null, timerMimos
+  bolti.addEventListener('pointerdown', (e) => {
+    apretado = true; recorrido = 0; ultimo = { x: e.clientX, y: e.clientY }
+    bolti.setPointerCapture(e.pointerId)
+  })
+  bolti.addEventListener('pointermove', (e) => {
+    if (!apretado || estado.durmiendo) return
+    recorrido += Math.hypot(e.clientX - ultimo.x, e.clientY - ultimo.y)
+    ultimo = { x: e.clientX, y: e.clientY }
+    if (recorrido > 45) {
+      recorrido = 0
+      estado.carino = limitar(estado.carino + 3)
+      bolti.classList.add('mimos')
+      clearTimeout(timerMimos)
+      timerMimos = setTimeout(() => bolti.classList.remove('mimos'), 900)
+      const h = hab.getBoundingClientRect()
+      flotante('💗', e.clientX - h.left, e.clientY - h.top - 20)
+      navigator.vibrate?.(15)
+      dibujar()
+    }
+  })
+  bolti.addEventListener('pointerup', () => {
+    if (!apretado) return
+    apretado = false
+    if (bolti.classList.contains('mimos')) return
+    if (estado.durmiendo) { decir('zzz… 😴'); return }
+    bolti.classList.remove('salto'); void bolti.getBBox(); bolti.classList.add('salto')
+    estado.carino = limitar(estado.carino + 1)
+    const p = puntoCabeza()
+    flotante('💗', p.x, p.y)
+    decir(['¡Guau! 🐾', '¡Hola! 💕', '¿Jugamos?', '¡Te quiero!'][Math.floor(Math.random() * 4)])
+    dibujar()
+  })
+
+  $('#btn-comer').addEventListener('click', () => {
+    if (estado.durmiendo) { decir('Está durmiendo… 😴'); return }
+    if (estado.ocupada) return
+    if (estado.saciedad >= 95) { decir('¡Estoy llena! 😋'); return }
+    estado.ocupada = true
+    plato.classList.add('ver')
+    bolti.classList.add('comiendo')
+    decir('¡Ñam ñam! 😋', 2400)
+    setTimeout(() => {
+      estado.saciedad = limitar(estado.saciedad + 30)
+      estado.carino = limitar(estado.carino + 5)
+      bolti.classList.remove('comiendo')
+      plato.classList.remove('ver')
+      estado.ocupada = false
+      const p = puntoCabeza(); flotante('✨', p.x, p.y)
+      dibujar()
+    }, 2400)
+  })
+
+  $('#btn-dormir').addEventListener('click', () => {
+    estado.durmiendo = !estado.durmiendo
+    if (!estado.durmiendo) decir('¡Buen día! ☀️')
+    dibujar()
+  })
+
+  $('#btn-pelota').addEventListener('click', () => {
+    if (estado.durmiendo) { decir('Está durmiendo… 😴'); return }
+    if (estado.energia < 10) { decir('Estoy cansada… 🥱'); return }
+    const h = hab.getBoundingClientRect()
+    flotante('🎾', h.width * 0.8, h.height * 0.55)
+    bolti.classList.remove('salto'); void bolti.getBBox(); bolti.classList.add('salto')
+    bolti.classList.add('mimos')
+    setTimeout(() => bolti.classList.remove('mimos'), 1200)
+    estado.energia = limitar(estado.energia - 8)
+    estado.carino = limitar(estado.carino + 6)
+    decir('¡Pelota! 🎾')
+    dibujar()
+  })
+
+  document.querySelectorAll('[data-forzar]').forEach((b) => b.addEventListener('click', () => {
+    const f = b.dataset.forzar
+    estado.durmiendo = f === 'dormida'
+    estado.saciedad = f === 'hambre' ? 15 : 80
+    estado.carino = f === 'triste' ? 15 : 70
+    estado.energia = 70
+    dibujar()
+  }))
+
+  // En el prototipo las necesidades bajan rápido para ver los cambios de humor.
+  setInterval(() => {
+    estado.saciedad = limitar(estado.saciedad - 0.6)
+    estado.carino = limitar(estado.carino - 0.5)
+    estado.energia = limitar(estado.energia + (estado.durmiendo ? 2 : -0.3))
+    dibujar()
+  }, 1500)
+
+  dibujar()
+  setTimeout(() => decir('¡Hola! Soy Bolti 🐾', 2200), 500)
+  parpadear()
+  ladear()
+})()
+</script>
+</html>
