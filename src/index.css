@@ -8,7 +8,13 @@
   --color-secundario: #2bb8b0;
   --color-secundario-oscuro: #1a8f89;
   --color-secundario-claro: #cdf3f0;
-  --color-degrade: linear-gradient(120deg, var(--color-principal-claro), var(--color-secundario-claro));
+  --color-terciario-claro: #e9e0fc;
+  --color-degrade: linear-gradient(
+    120deg,
+    var(--color-principal-claro),
+    var(--color-terciario-claro),
+    var(--color-secundario-claro)
+  );
   --color-texto: #3f3540;
   --color-texto-suave: #857682;
   --color-borde: #f4dce6;

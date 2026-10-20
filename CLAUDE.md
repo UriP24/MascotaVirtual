@@ -26,6 +26,15 @@ PWA instalable en el celular con cuatro pantallas:
 - **Límite**: 1 canje por mes calendario, sea cual sea; se renueva el día 1. La pantalla de
   canjes muestra si está disponible o desde qué fecha vuelve a estarlo.
 
+### Bolti
+Pelaje rubio/crema, mancha blanca en la frente, pecho blanco y franja blanca desde la nuca hasta
+la mitad del cuello. Orejas caídas, más oscuras. Detalle y paleta de pixel art en
+`docs/specs/bolti-apariencia.md`. Es un recuerdo: todo lo que tenga que ver con ella, con cariño.
+
+### Estilo visual
+Paleta rosa + turquesa, con un lila de transición (tokens en `src/index.css`).
+Rosa `#ec6f9e`, turquesa `#2bb8b0`, lila `#a488ec`, fondo `#fff5f8`.
+
 ## Tecnología
 React + Vite en JavaScript (sin TypeScript), vite-plugin-pwa, datos en localStorage. Sin backend
 ni cuentas. Hosting: Netlify (o GitHub Pages).

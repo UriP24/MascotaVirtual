@@ -12,6 +12,9 @@ Si un día no llego, se recorta primero el minijuego; el resto del plan se corre
 - [x] `config.js` con todos los valores de la economía
 - [x] `PLAN.md` y `CLAUDE.md`
 - [x] Skills seleccionadas de claude-code-game-studios en `.claude/`
+- [x] Nombre (Bolti), paleta rosa + turquesa e íconos en degradé
+- [x] Referencia de apariencia de Bolti para los sprites
+- [ ] Pushear a GitHub (`UriP24/MascotaVirtual`) — falta dar acceso a Claude al repo
 
 ## Mié 21 — Tareas
 - [ ] Agregar tarea (texto + tipo simple/grande)
@@ -35,7 +38,7 @@ Si un día no llego, se recorta primero el minijuego; el resto del plan se corre
 
 ## Sáb 24 — Perrita
 - [ ] `/quick-design` de la perrita (estados y reglas)
-- [ ] Sprites en pixel art (contenta, con hambre, triste, dormida)
+- [ ] Sprites en pixel art (contenta, con hambre, triste, dormida) según `docs/specs/bolti-apariencia.md`
 - [ ] Pantalla Casa con la perrita y barra de hambre
 - [ ] Estados calculados según saciedad, hora y última visita (nunca se enferma ni muere)
 
