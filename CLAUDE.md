@@ -37,6 +37,9 @@ PWA instalable en el celular con cuatro pantallas:
   - Plata media (cena casera, pedir comida): 1 vez cada 2 meses.
   - Poca plata (helado, café, picnic, parque): 1 vez por mes.
   - Sin plata (masaje, hoy no hacés nada, desayuno, peli, serie): hasta 2 veces por mes, no se acumulan.
+  - **Jueguitos** (regalo para Mari sola, precio completo: USD × 1.600 redondeado para arriba a los mil,
+    / 500): chico hasta 5 USD 16 ⭐ cada 3 meses; mediano hasta 15 USD 48 ⭐ cada 6; grande hasta
+    30 USD 96 ⭐ cada 8; enorme hasta 60 USD 192 ⭐ cada 12.
 - **Cupones:** "Mis cupones" muestra solo los pendientes; al marcarlos cumplidos pasan al
   **historial de canjes** (todos, con fecha y hora de canje y de cumplido).
 

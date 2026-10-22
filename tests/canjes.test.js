@@ -1,7 +1,7 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { crearEstadoInicial } from '../src/storage.js'
-import { PLANES, precioEnPuntos } from '../src/config.js'
+import { PLANES, precioEnPuntos, precioEnPesosDeJuego } from '../src/config.js'
 import { canjear, disponibleDesde, marcarCumplido, puntosQueFaltan, buscarPlan, usosRestantesEsteMes, cuponesPendientes, historialDeCupones, textoRotacion } from '../src/logic/canjes.js'
 
 const OCT = new Date('2026-10-24T18:00:00')
@@ -26,6 +26,10 @@ test('precios: mitad de Mari / 500 + 5 de margen, redondeando si la unidad es 5 
     desayuno: 15,
     'noche-de-peli': 10,
     'elegis-la-serie': 10,
+    'juego-chico': 16,
+    'juego-mediano': 48,
+    'juego-grande': 96,
+    'juego-enorme': 192,
   })
 })
 
@@ -107,4 +111,19 @@ test('los cupones cumplidos salen de la lista y quedan en el historial', () => {
   e = marcarCumplido(e, e.cupones.find((c) => c.planId === 'helado').id)
   assert.deepEqual(cuponesPendientes(e).map((c) => c.planId), ['cafe'])
   assert.deepEqual(historialDeCupones(e).map((c) => c.planId), ['cafe', 'helado'], 'del más nuevo al más viejo')
+})
+
+test('jueguitos: dólares a 1600, redondeado para arriba a los mil', () => {
+  assert.equal(precioEnPesosDeJuego(5), 8000)
+  assert.equal(precioEnPesosDeJuego(4.4), 8000, '7.040 → 8.000')
+  assert.equal(precioEnPesosDeJuego(4.75), 8000, '7.600 → 8.000')
+  assert.equal(precioEnPesosDeJuego(5.1), 9000, '8.160 → 9.000')
+})
+
+test('jueguitos: cada uno con su espera (3, 6, 8 y 12 meses)', () => {
+  const rot = Object.fromEntries(PLANES.filter((p) => p.usdMaximo).map((p) => [p.id, p.rotacionMeses]))
+  assert.deepEqual(rot, { 'juego-chico': 3, 'juego-mediano': 6, 'juego-grande': 8, 'juego-enorme': 12 })
+  const e = canjear(conPuntos(400), 'juego-enorme', OCT).estado
+  assert.equal(canjear(e, 'juego-enorme', new Date('2027-09-30T12:00:00')).resultado, 'en-rotacion')
+  assert.equal(canjear(e, 'juego-enorme', new Date('2027-10-01T00:00:00')).resultado, 'ok')
 })

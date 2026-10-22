@@ -22,6 +22,9 @@ export const ECONOMIA = {
   // Margen de puntos que se suma a los planes con precio investigado (por si suben los precios)
   MARGEN_PUNTOS_PLAN: 5,
 
+  // Para los canjes de jueguitos (precio en dólares)
+  DOLAR_EN_PESOS: 1600,
+
   // Monedas con las que arranca la app (para poder comprarle comida desde el primer día)
   MONEDAS_DE_BIENVENIDA: 30,
 }
@@ -108,6 +111,8 @@ export const JUEGOS = {
 // - `margen: true`: suma MARGEN_PUNTOS_PLAN (precios investigados en octubre 2026, por si suben).
 // - Redondeo: si la unidad queda en 5 o más, sube a la decena siguiente (67 → 70); si no, queda.
 // - `puntosFijos`: puntos elegidos a mano (planes que no son plata o con precio decidido); sin redondeo.
+// - `usdMaximo` (jueguitos): regalo para Mari sola, precio completo = dólares × DOLAR_EN_PESOS,
+//   redondeado para arriba a los mil pesos (7.100 → 8.000), / PESOS_POR_PUNTO.
 export const PLANES = [
   {
     id: 'comer-afuera',
@@ -226,6 +231,38 @@ export const PLANES = [
     vecesPorMes: 2, // no cuesta plata: hasta 2 veces por mes (no se acumulan)
     descripcion: 'Elegís qué serie vemos y no hay discusión',
   },
+  {
+    id: 'juego-chico',
+    nombre: 'Jueguito chico',
+    emoji: '🎮',
+    usdMaximo: 5, // regalo para Mari sola: precio completo (no se divide a la mitad)
+    rotacionMeses: 3,
+    descripcion: 'Un jueguito de hasta 5 dólares, el que vos quieras',
+  },
+  {
+    id: 'juego-mediano',
+    nombre: 'Juego mediano',
+    emoji: '🎮',
+    usdMaximo: 15, // regalo para Mari sola: precio completo (no se divide a la mitad)
+    rotacionMeses: 6,
+    descripcion: 'Un juego de hasta 15 dólares, el que vos quieras',
+  },
+  {
+    id: 'juego-grande',
+    nombre: 'Juego grande',
+    emoji: '🎮',
+    usdMaximo: 30, // regalo para Mari sola: precio completo (no se divide a la mitad)
+    rotacionMeses: 8,
+    descripcion: 'Un juego de hasta 30 dólares, el que vos quieras',
+  },
+  {
+    id: 'juego-enorme',
+    nombre: 'Juego enorme',
+    emoji: '🎮',
+    usdMaximo: 60, // regalo para Mari sola: precio completo (no se divide a la mitad)
+    rotacionMeses: 12,
+    descripcion: 'Un juegazo de hasta 60 dólares, el que vos quieras',
+  },
 ]
 
 // Si la unidad es 5 o más, sube a la decena siguiente; si no, queda igual (67 → 70, 30 → 30).
@@ -233,8 +270,13 @@ function redondear(puntos) {
   return puntos % 10 >= 5 ? Math.ceil(puntos / 10) * 10 : puntos
 }
 
+export function precioEnPesosDeJuego(usd) {
+  return Math.ceil((usd * ECONOMIA.DOLAR_EN_PESOS) / 1000) * 1000
+}
+
 export function precioEnPuntos(plan) {
   if (plan.puntosFijos) return plan.puntosFijos // elegidos a mano: sin redondeo
+  if (plan.usdMaximo) return Math.ceil(precioEnPesosDeJuego(plan.usdMaximo) / ECONOMIA.PESOS_POR_PUNTO)
   const base = Math.ceil(plan.costoParaDos / 2 / ECONOMIA.PESOS_POR_PUNTO)
   return redondear(base + (plan.margen ? ECONOMIA.MARGEN_PUNTOS_PLAN : 0))
 }
