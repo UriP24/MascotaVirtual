@@ -22,6 +22,8 @@ function Canjes({ estado, setEstado }) {
 
   // "Ahora" = última actualización del estado (App lo refresca cada minuto)
   const ahora = new Date(estado.perrita.actualizadaEn)
+  // Del más caro al más barato
+  const planesOrdenados = [...PLANES].sort((a, b) => precioEnPuntos(b) - precioEnPuntos(a))
   const pendientes = estado.cupones.filter((c) => !c.cumplido)
   const cumplidos = estado.cupones.filter((c) => c.cumplido)
 
@@ -53,7 +55,7 @@ function Canjes({ estado, setEstado }) {
 
       <h2>Planes juntos</h2>
       <ul className="lista">
-        {PLANES.map((plan) => (
+        {planesOrdenados.map((plan) => (
           <PlanCard
             key={plan.id}
             plan={plan}

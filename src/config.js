@@ -101,7 +101,7 @@ export const JUEGOS = {
 // - Salidas de a dos: los puntos cubren la parte de Mari = costo para los dos / 2 / PESOS_POR_PUNTO.
 // - `margen: true`: suma MARGEN_PUNTOS_PLAN (precios investigados en octubre 2026, por si suben).
 // - Redondeo: si la unidad queda en 5 o más, sube a la decena siguiente (67 → 70); si no, queda.
-// - `puntosFijos`: planes que no son plata (el masaje).
+// - `puntosFijos`: puntos elegidos a mano (planes que no son plata o con precio decidido); sin redondeo.
 export const PLANES = [
   {
     id: 'comer-afuera',
@@ -131,6 +131,14 @@ export const PLANES = [
     descripcion: 'Te cocino lo que me pidas y después lavo todo yo',
   },
   {
+    id: 'delivery',
+    nombre: 'Pedir delivery',
+    emoji: '🍕',
+    puntosFijos: 50,
+    rotacionMeses: 2,
+    descripcion: 'Pedimos lo que vos quieras, de donde quieras, y lo pago yo',
+  },
+  {
     id: 'helado',
     nombre: 'Salida por helado',
     emoji: '🍦',
@@ -149,6 +157,14 @@ export const PLANES = [
     descripcion: 'Un cafecito con una cookie, en el lugar que elijas',
   },
   {
+    id: 'picnic',
+    nombre: 'Picnic',
+    emoji: '🧺',
+    puntosFijos: 20,
+    rotacionMeses: 1,
+    descripcion: 'Mantita, algo rico comprado y una tarde al aire libre',
+  },
+  {
     id: 'masaje',
     nombre: 'Media hora de masaje',
     emoji: '💆',
@@ -164,6 +180,38 @@ export const PLANES = [
     rotacionMeses: 1,
     descripcion: 'Salir a pasear, caminar o patinar juntos, con mate y facturas',
   },
+  {
+    id: 'hoy-no-haces-nada',
+    nombre: 'Hoy no hacés nada',
+    emoji: '🧹',
+    puntosFijos: 20,
+    rotacionMeses: 1,
+    descripcion: 'Ese día me encargo yo de todas las tareas de la casa',
+  },
+  {
+    id: 'desayuno',
+    nombre: 'Desayuno en la cama',
+    emoji: '🍳',
+    puntosFijos: 15,
+    rotacionMeses: 1,
+    descripcion: 'Te despierto con el desayuno listo, sin moverte de la cama',
+  },
+  {
+    id: 'noche-de-peli',
+    nombre: 'Noche de peli en casa',
+    emoji: '🛋️',
+    puntosFijos: 10,
+    rotacionMeses: 1,
+    descripcion: 'Vos elegís la peli y yo hago los pochoclos',
+  },
+  {
+    id: 'elegis-la-serie',
+    nombre: 'Vos elegís la serie',
+    emoji: '📺',
+    puntosFijos: 10,
+    rotacionMeses: 1,
+    descripcion: 'Elegís qué serie vemos y no hay discusión',
+  },
 ]
 
 // Si la unidad es 5 o más, sube a la decena siguiente; si no, queda igual (67 → 70, 30 → 30).
@@ -172,6 +220,7 @@ function redondear(puntos) {
 }
 
 export function precioEnPuntos(plan) {
-  const base = plan.puntosFijos ?? Math.ceil(plan.costoParaDos / 2 / ECONOMIA.PESOS_POR_PUNTO)
+  if (plan.puntosFijos) return plan.puntosFijos // elegidos a mano: sin redondeo
+  const base = Math.ceil(plan.costoParaDos / 2 / ECONOMIA.PESOS_POR_PUNTO)
   return redondear(base + (plan.margen ? ECONOMIA.MARGEN_PUNTOS_PLAN : 0))
 }

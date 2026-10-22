@@ -20,6 +20,12 @@ test('precios: mitad de Mari / 500 + 5 de margen, redondeando si la unidad es 5 
     cafe: 30, // 20 + 5 = 25 → 30
     masaje: 20, // fijo
     'dia-de-parque': 10, // 10
+    delivery: 50,
+    picnic: 20,
+    'hoy-no-haces-nada': 20,
+    desayuno: 15,
+    'noche-de-peli': 10,
+    'elegis-la-serie': 10,
   })
 })
 
