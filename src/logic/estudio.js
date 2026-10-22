@@ -16,6 +16,7 @@ export function crearCronometro() {
     proximoChequeo: null, // cuándo Bolti va a preguntar "¿Seguís estudiando?"
     chequeoDesde: null, // cuándo preguntó (si todavía no respondió)
     latido: null, // última vez que la app confirmó que seguía abierta
+    bloquesAvisados: 0, // pomodoros terminados que ya se le avisaron
   }
 }
 
@@ -70,8 +71,15 @@ export function pausar(crono, ahora, motivo = 'manual') {
 export function revisar(crono, ahora, limiteMs) {
   if (!estaCorriendo(crono)) return crono
 
-  if (msContados(crono, ahora) >= limiteMs) {
-    return { ...pausar(crono, ahora, 'maximo'), acumuladoMs: limiteMs }
+  const contado = msContados(crono, ahora)
+  const bloquesHechos = Math.floor(Math.min(contado, limiteMs) / msPorBloque())
+  if (contado >= limiteMs) {
+    return { ...pausar(crono, ahora, 'maximo'), acumuladoMs: limiteMs, bloquesAvisados: bloquesHechos }
+  }
+
+  // Terminó un pomodoro: se pausa y Bolti le pregunta si quiere seguir
+  if (bloquesHechos > (crono.bloquesAvisados ?? 0)) {
+    return { ...pausar(crono, ahora, 'bloque'), acumuladoMs: bloquesHechos * msPorBloque(), bloquesAvisados: bloquesHechos }
   }
 
   if (crono.chequeoDesde !== null) {
@@ -104,6 +112,14 @@ export function retomarDespuesDeCerrar(crono, ahora) {
   if (!estaCorriendo(crono)) return crono
   const fin = Math.min(crono.latido ?? crono.inicioTramo, ahora)
   return iniciar(pausar(crono, fin, 'segundo-plano'), ahora)
+}
+
+function msPorBloque() {
+  return ECONOMIA.MINUTOS_POR_BLOQUE_ESTUDIO * MINUTO
+}
+
+export function bloquesCompletos(ms) {
+  return Math.floor(ms / msPorBloque())
 }
 
 export function puntosPorTiempo(ms) {

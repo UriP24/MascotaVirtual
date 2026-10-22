@@ -25,7 +25,7 @@ function TestPanel({ estado, setEstado }) {
       titulo: '⏱ Estudio',
       acciones: [
         ['+10 min', (e) => sumarEstudio(e, 10)],
-        ['+30 min', (e) => sumarEstudio(e, 30)],
+        ['+25 min', (e) => sumarEstudio(e, 25)],
         ['Ayer no estudió', (e) => simularQueNoEstudio(e)],
       ],
     },

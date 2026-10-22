@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { ECONOMIA, ESTUDIO } from '../config.js'
 import * as crono from '../logic/estudio.js'
 import PresenceCheck from './PresenceCheck.jsx'
+import PomodoroBreak from './PomodoroBreak.jsx'
 import './StudyTimer.css'
 
 const MINUTO = 60 * 1000
@@ -17,7 +18,8 @@ function formatear(ms) {
 
 const MENSAJES_PAUSA = {
   inactividad: 'Se pausó porque no respondiste a Bolti. Ese rato no contó.',
-  maximo: '¡Llegaste al máximo de estudio de hoy! A descansar 💤',
+  maximo: '¡Llegaste a los 8 pomodoros de hoy! A descansar 💤',
+  descanso: '☕ Descansando. Cuando quieras, tocá Seguir para otro pomodoro.',
 }
 
 function StudyTimer({ tarea, limiteMs, onActualizar, onCompletar }) {
@@ -102,8 +104,8 @@ function StudyTimer({ tarea, limiteMs, onActualizar, onCompletar }) {
       </div>
       <p className="detalle">
         {puedeCompletar
-          ? `Llevás +${puntos}⭐ · el próximo en ${faltan} min`
-          : `Faltan ${faltan} min para poder completarla`}
+          ? `🍅 ${crono.bloquesCompletos(contado)} ${crono.bloquesCompletos(contado) === 1 ? 'pomodoro' : 'pomodoros'} · +${puntos}⭐ · el próximo en ${faltan} min`
+          : `Faltan ${faltan} min para tu primer pomodoro 🍅`}
       </p>
       {estudio.pausa && MENSAJES_PAUSA[estudio.pausa] && (
         <p className="aviso-pausa">{MENSAJES_PAUSA[estudio.pausa]}</p>
@@ -130,6 +132,20 @@ function StudyTimer({ tarea, limiteMs, onActualizar, onCompletar }) {
           ✓ Listo{puedeCompletar ? ` +${puntos}⭐` : ''}
         </button>
       </div>
+
+      {(estudio.pausa === 'bloque' || estudio.pausa === 'maximo') && (
+        <PomodoroBreak
+          bloques={crono.bloquesCompletos(contado)}
+          puntos={puntos}
+          maximo={estudio.pausa === 'maximo'}
+          onSeguir={() => {
+            setAhora(Date.now())
+            onActualizar((c) => crono.iniciar(c, Date.now()))
+          }}
+          onDescansar={() => onActualizar((c) => ({ ...c, pausa: 'descanso' }))}
+          onTerminar={() => onCompletar(tarea.id)}
+        />
+      )}
 
       {corriendo && estudio.chequeoDesde !== null && (
         <PresenceCheck

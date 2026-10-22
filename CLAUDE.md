@@ -25,7 +25,7 @@ PWA instalable en el celular con cuatro pantallas:
   frena la energía de Bolti). Se gastan en comida
   para Bolti o se cambian por puntos: **100 🪙 → 1 ⭐, máximo 1 ⭐ por día**.
 - **Puntos ⭐** (premium): 1 punto = $500 de un plan real, tienen que costar. Salen sobre todo del
-  **estudio** (1 cada 30 min, tope 4 h/día) y del cambio diario de monedas. Las tareas **no** dan
+  **estudio** (pomodoro: 1 cada 25 min, máximo 8 pomodoros por día) y del cambio diario de monedas. Las tareas **no** dan
   puntos (si no, inventar tareas rompería la economía). Máximo realista: ~95–105 ⭐ por mes.
 - **Precio de canjes** (los puntos cubren la **parte de Mari**): costo para los dos / 2 / 500, +5 de
   margen en los precios investigados, y a número redondo: unidad 5 o más sube a la decena, si no
@@ -48,14 +48,16 @@ PWA instalable en el celular con cuatro pantallas:
 ### Estudio
 - De lunes a viernes aparece sola una tarea **"Estudiar" obligatoria** (no se puede borrar hasta
   completarla). Fines de semana puede agregar tareas de tipo "estudio" si quiere.
-- Cronómetro: hay que llegar a **30 min** para completar; **1 punto cada 30 min**; tope de
-  **4 h por día** sumando todas las tareas de estudio.
+- **Pomodoro:** bloques de **25 min**; hay que completar 1 para poder terminar la tarea; **1 punto
+  por pomodoro**; máximo **8 pomodoros por día** (sumando todas las tareas de estudio). Al terminar
+  cada bloque el cronómetro se pausa y Bolti pregunta "¿Querés seguir estudiando?" con un mensaje de
+  ánimo: seguir, descansar 5 minutitos o terminar por hoy.
 - **Antitrampa:** si la app pasa a segundo plano (otra app, pantalla bloqueada, cerrada), ese
   tiempo no cuenta; al volver el cronómetro sigue solo. La pantalla se mantiene encendida con
   la Wake Lock API mientras corre. Cada 20–30 min Bolti pregunta "¿Seguís estudiando?"; si no
   responde en 3 min, se pausa y no cuenta nada desde que preguntó.
 - Si no estudia un día obligatorio: **sin castigo**, la tarea desaparece a medianoche (si tenía
-  ≥ 30 min se completa sola). Pero queda en `historialEstudio` y **Bolti se pone triste**.
+  ≥ 25 min se completa sola). Pero queda en `historialEstudio` y **Bolti se pone triste**.
 
 ### Bolti (el personaje, lo más importante)
 Mascota estilo Pou / Talking Tom. Spec completa en `docs/specs/bolti-personaje.md`, prototipo en

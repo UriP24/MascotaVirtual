@@ -19,7 +19,7 @@ const FRASES_AL_TOCARLA = ['¡Guau! 🐾', '¡Hola, Mari! 💕', '¿Jugamos?', '
 const RECORDATORIOS_ESTUDIO = [
   '¿Estudiamos un ratito? 📚',
   'Te espero para estudiar juntas 🐶📚',
-  'Con 30 minutitos de estudio me pongo contenta 💕',
+  'Con un pomodorito de 25 minutos me pongo contenta 💕',
   '¿Hoy toca estudiar? Yo te acompaño 📚',
 ]
 

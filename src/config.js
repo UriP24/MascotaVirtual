@@ -9,7 +9,7 @@ export const ECONOMIA = {
   TAREAS_CON_RECOMPENSA_POR_DIA: 5,
 
   // Estudio: cada bloque completo de minutos da puntos
-  MINUTOS_POR_BLOQUE_ESTUDIO: 30,
+  MINUTOS_POR_BLOQUE_ESTUDIO: 25, // un pomodoro
   PUNTOS_POR_BLOQUE_ESTUDIO: 1,
 
   // Conversión de monedas a puntos, con tope diario
@@ -31,9 +31,9 @@ export const ECONOMIA = {
 
 export const ESTUDIO = {
   // Hay que llegar a este mínimo para poder completar una tarea de estudio
-  MINUTOS_MINIMOS: 30,
+  MINUTOS_MINIMOS: 25, // un pomodoro
   // Tope de estudio por día, sumando todas las tareas de estudio
-  MINUTOS_MAXIMOS_POR_DIA: 240,
+  MINUTOS_MAXIMOS_POR_DIA: 200, // 8 pomodoros
   // Días con tarea de estudio obligatoria (0 = domingo, 1 = lunes … 6 = sábado)
   DIAS_OBLIGATORIOS: [1, 2, 3, 4, 5],
   // Bolti pregunta "¿Seguís estudiando?" cada tanto (al azar entre estos minutos).

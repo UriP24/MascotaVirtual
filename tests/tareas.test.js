@@ -88,14 +88,14 @@ test('de lunes a viernes aparece una sola tarea obligatoria, que no se puede bor
   assert.equal(actualizarDia(crearEstadoInicial(), SABADO).tareas.length, 0)
 })
 
-test('estudio: no se completa antes de 30 min y da 1 punto cada 30', () => {
+test('estudio: no se completa antes de 25 min y da 1 punto cada 25 (pomodoro)', () => {
   let e = actualizarDia(crearEstadoInicial(), MARTES)
   const id = e.tareas[0].id
   const t0 = MARTES.getTime()
   e = actualizarCronometro(e, id, (c) => ({ ...crono.iniciar(c, t0), proximoChequeo: null }))
-  assert.equal(completarTarea(e, id, new Date(t0 + 29 * MIN)).puntos, 0)
+  assert.equal(completarTarea(e, id, new Date(t0 + 24 * MIN)).puntos, 0)
   const r = completarTarea(e, id, new Date(t0 + 75 * MIN))
-  assert.equal(r.puntos, 2)
+  assert.equal(r.puntos, 3)
   assert.equal(r.estado.historialEstudio['2026-10-20'], 75)
   assert.ok(estudioElDia(r.estado, '2026-10-20'))
 })
@@ -129,13 +129,28 @@ test('estudio: si responde a tiempo, cuenta todo', () => {
   assert.equal(c.proximoChequeo, 41 * MIN)
 })
 
-test('estudio: se frena solo al llegar al tope de 4 h por día', () => {
+test('estudio: se frena solo al llegar al tope de 8 pomodoros por día', () => {
   let c = crono.iniciar(crono.crearCronometro(), 0, 0)
-  c = { ...c, proximoChequeo: null }
-  c = crono.revisar(c, 250 * MIN, 240 * MIN)
+  c = { ...c, proximoChequeo: null, bloquesAvisados: 7 }
+  c = crono.revisar(c, 250 * MIN, 200 * MIN)
   assert.equal(c.pausa, 'maximo')
-  assert.equal(c.acumuladoMs, 240 * MIN)
+  assert.equal(c.acumuladoMs, 200 * MIN)
   assert.equal(crono.puntosPorTiempo(c.acumuladoMs), 8)
+})
+
+test('pomodoro: a los 25 min se pausa y espera que diga si sigue', () => {
+  let c = { ...crono.iniciar(crono.crearCronometro(), 0, 0), proximoChequeo: null }
+  c = crono.revisar(c, 24 * MIN, 200 * MIN)
+  assert.equal(crono.estaCorriendo(c), true)
+  c = crono.revisar(c, 25 * MIN + 500, 200 * MIN)
+  assert.equal(c.pausa, 'bloque')
+  assert.equal(c.acumuladoMs, 25 * MIN, 'queda justo en 25 min')
+  c = { ...crono.iniciar(c, 30 * MIN, 0), proximoChequeo: null } // eligió seguir
+  c = crono.revisar(c, 40 * MIN, 200 * MIN)
+  assert.equal(crono.estaCorriendo(c), true, 'no vuelve a preguntar por el mismo bloque')
+  c = crono.revisar(c, 55 * MIN, 200 * MIN)
+  assert.equal(c.pausa, 'bloque')
+  assert.equal(crono.bloquesCompletos(c.acumuladoMs), 2)
 })
 
 test('el tope de 4 h se reparte entre todas las tareas de estudio del día', () => {

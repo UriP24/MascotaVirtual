@@ -1,0 +1,89 @@
+.pomodoro-break {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgb(63 53 64 / 0.5);
+}
+
+.pomodoro-break .tarjeta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  max-width: 330px;
+  padding: 22px 20px;
+  border-radius: 20px;
+  background: var(--color-superficie);
+  text-align: center;
+  animation: pomodoro-saltito 0.4s ease-out;
+}
+
+.pomodoro-break .bolti {
+  font-size: 3.2rem;
+}
+
+.pomodoro-break h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: var(--color-texto);
+}
+
+.pomodoro-break p {
+  margin: 0;
+}
+
+.pomodoro-break .llevas {
+  font-weight: 700;
+  color: var(--color-secundario-oscuro);
+}
+
+.pomodoro-break .animo {
+  padding: 8px 10px;
+  border-radius: 12px;
+  background: var(--color-principal-claro);
+  color: var(--color-principal-oscuro);
+  font-weight: 600;
+}
+
+.pomodoro-break .pregunta {
+  margin-top: 4px;
+  font-weight: 700;
+  color: var(--color-texto);
+}
+
+.pomodoro-break button {
+  height: 48px;
+  border: none;
+  border-radius: 14px;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.pomodoro-break .principal {
+  background: var(--color-principal);
+  color: white;
+}
+
+.pomodoro-break .secundario {
+  background: var(--color-secundario-claro);
+  color: var(--color-secundario-oscuro);
+}
+
+.pomodoro-break .terciario {
+  background: none;
+  color: var(--color-texto-suave);
+}
+
+@keyframes pomodoro-saltito {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.04);
+  }
+}
