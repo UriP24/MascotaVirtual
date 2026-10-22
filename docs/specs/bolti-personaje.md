@@ -35,6 +35,10 @@ real, aunque la app esté cerrada. **Nunca se enferma ni muere.**
      "Vamos a dormir, Mari 💤".
    - Durmiendo recarga +12,5 de energía por hora; despierta baja −4 por hora.
    - Se despierta sola a las **10:00** o cuando se prende la luz (con la energía que haya juntado).
+   - **Siesta:** con energía < 20 se le puede apagar la luz a cualquier hora; se despierta sola al
+     llegar a 80 de energía (si la siesta llega a la noche, sigue durmiendo como de noche).
+   - Botón 💡 "Apagar la luz" / ☀️ "Prender la luz" en Casa. Frases: "Buenas noches 💤",
+     "Una siestita… 😴", "No tengo sueño todavía 🐶", "¡Buen día! ☀️" / "¿Ya es de día? 🥱".
 6. **Jugar:** abre la lista de minijuegos. Cada partida da 🪙 y +8 de cariño, y cuesta −10 de
    energía. No juega con menos de 10 de energía o dormida ("Estoy cansada… 🥱").
    - Antes del cumple: "Atrapá los huesitos" (45 s, 1 🪙 por huesito).

@@ -122,3 +122,35 @@ test('horas desde la última visita', () => {
   const p = perrita({ ultimaVisita: '2026-10-21T03:00:00.000Z' })
   assert.equal(horasDesdeUltimaVisita(p, ms('2026-10-21T03:00:00.000Z') + 13 * HORA), 13)
 })
+
+test('luz: desde las 22 se puede apagar; a la tarde no tiene sueño', async () => {
+  const { apagarLuz } = await import('../src/logic/bolti.js')
+  const noche = ms('2026-10-22T22:30:00')
+  const r = apagarLuz(estadoCon(perrita({ actualizadaEn: noche })), noche)
+  assert.equal(r.resultado, 'noche')
+  assert.equal(r.estado.perrita.durmiendo, true)
+  // a las 23:30 sigue dormida (no la despierta ninguna regla)
+  assert.equal(avanzarTiempo(r.estado.perrita, ms('2026-10-22T23:30:00')).durmiendo, true)
+  const tarde = ms('2026-10-22T16:00:00')
+  assert.equal(apagarLuz(estadoCon(perrita({ actualizadaEn: tarde })), tarde).resultado, 'sin-sueno')
+})
+
+test('siesta: con poca energía duerme de día hasta recuperar 80', async () => {
+  const { apagarLuz } = await import('../src/logic/bolti.js')
+  const tarde = ms('2026-10-22T14:00:00')
+  const r = apagarLuz(estadoCon(perrita({ energia: 10, actualizadaEn: tarde })), tarde)
+  assert.equal(r.resultado, 'siesta')
+  const p1 = avanzarTiempo(r.estado.perrita, tarde + 2 * HORA) // +25 → 35
+  assert.equal(p1.durmiendo, true, 'a las 2 h sigue en la siesta')
+  const p2 = avanzarTiempo(r.estado.perrita, tarde + 6 * HORA) // llega a 80 a las ~5,6 h
+  assert.equal(p2.durmiendo, false, 'se despierta sola al recuperar energía')
+  assert.ok(p2.energia >= 75)
+})
+
+test('prender la luz la despierta; de madrugada se vuelve a dormir sola', async () => {
+  const { prenderLuz } = await import('../src/logic/bolti.js')
+  const t = ms('2026-10-23T02:00:00')
+  const e = prenderLuz(estadoCon(perrita({ durmiendo: true, actualizadaEn: t })), t)
+  assert.equal(e.perrita.durmiendo, false)
+  assert.equal(avanzarTiempo(e.perrita, t + 20 * MIN).durmiendo, true)
+})

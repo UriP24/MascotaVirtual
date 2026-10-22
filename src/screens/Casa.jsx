@@ -6,7 +6,7 @@ import FloatingEmoji from '../components/FloatingEmoji.jsx'
 import ActionBar from '../components/ActionBar.jsx'
 import Shop from '../components/Shop.jsx'
 import FoodTray from '../components/FoodTray.jsx'
-import { darMimos, extranaElEstudio, humor } from '../logic/bolti.js'
+import { apagarLuz, darMimos, extranaElEstudio, humor, prenderLuz } from '../logic/bolti.js'
 import { comprar, darDeComer } from '../logic/comida.js'
 import './Casa.css'
 
@@ -173,6 +173,24 @@ function Casa({ estado, setEstado, horasAusente = 0 }) {
     }
   }
 
+  const FRASES_LUZ = {
+    noche: 'Buenas noches 💤',
+    siesta: 'Una siestita… 😴',
+    'sin-sueno': 'No tengo sueño todavía 🐶',
+  }
+
+  function alternarLuz() {
+    if (estado.perrita.durmiendo) {
+      setEstado((e) => prenderLuz(e))
+      const hora = new Date().getHours()
+      decir(hora < 10 || hora >= 22 ? '¿Ya es de día? 🥱' : '¡Buen día! ☀️')
+      return
+    }
+    const r = apagarLuz(estado)
+    setEstado(r.estado)
+    if (FRASES_LUZ[r.resultado]) decir(FRASES_LUZ[r.resultado])
+  }
+
   const texto = frase ?? fraseDeHumor(estado, animo, ahora)
 
   return (
@@ -211,7 +229,14 @@ function Casa({ estado, setEstado, horasAusente = 0 }) {
         onCancelar={() => setArrastre(null)}
         onAbrirTienda={() => setTiendaAbierta(true)}
       />
-      <ActionBar acciones={[{ id: 'tienda', icono: '🛒', texto: 'Tienda', onClick: () => setTiendaAbierta(true) }]} />
+      <ActionBar
+        acciones={[
+          { id: 'tienda', icono: '🛒', texto: 'Tienda', onClick: () => setTiendaAbierta(true) },
+          estado.perrita.durmiendo
+            ? { id: 'luz', icono: '☀️', texto: 'Prender la luz', onClick: alternarLuz }
+            : { id: 'luz', icono: '💡', texto: 'Apagar la luz', onClick: alternarLuz },
+        ]}
+      />
       <p className="ayuda">
         {animo === 'dormida'
           ? 'Está durmiendo 💤 · Frotala suave para hacerle mimos sin despertarla'

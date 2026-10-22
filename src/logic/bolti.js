@@ -37,6 +37,7 @@ export function avanzarTiempo(perrita, ahora) {
   if (ahora <= desde) return perrita
 
   let { saciedad, energia, carino, durmiendo } = perrita
+  let siesta = perrita.siesta ?? false
   let t = Math.max(desde, ahora - MAXIMO_A_SIMULAR)
 
   while (t < ahora) {
@@ -50,7 +51,12 @@ export function avanzarTiempo(perrita, ahora) {
       durmiendo = forzado.durmiendo
     } else if (!durmiendo && esHorarioDeDormir(fecha) && t >= ultimaActividad + ESPERA_PARA_REDORMIRSE) {
       durmiendo = true
-    } else if (durmiendo && esHorarioDeDia(fecha)) {
+    } else if (siesta && !esHorarioDeDia(fecha)) {
+      siesta = false // la siesta se hizo de noche: sigue durmiendo como de noche
+    } else if (siesta && energia >= PERRITA.SIESTA_HASTA_ENERGIA) {
+      durmiendo = false // terminó la siesta
+      siesta = false
+    } else if (durmiendo && !siesta && esHorarioDeDia(fecha)) {
       durmiendo = false
     }
 
@@ -70,7 +76,7 @@ export function avanzarTiempo(perrita, ahora) {
 
   // Cuando vence el forzado de prueba, se borra
   const forzado = perrita.forzado && ahora < perrita.forzado.hasta ? perrita.forzado : null
-  return { ...perrita, saciedad, energia, carino, durmiendo, forzado, actualizadaEn: ahora }
+  return { ...perrita, saciedad, energia, carino, durmiendo, siesta, forzado, actualizadaEn: ahora }
 }
 
 // Avanza a Bolti dentro del estado completo. Mismo objeto si no cambió nada.
@@ -111,6 +117,36 @@ export function darMimos(estado, cantidad, ahora = Date.now()) {
   const carino = limitar(p.carino + cantidad)
   if (p.durmiendo) return { ...estado, perrita: { ...p, carino } }
   return { ...estado, perrita: { ...p, carino, ultimaActividad: ahora } }
+}
+
+// ¿Se le puede apagar la luz ahora? Desde las 22:00, de madrugada, o si está muy cansada (siesta).
+export function puedeDormir(perrita, ahora = new Date()) {
+  return (
+    ahora.getHours() >= PERRITA.HORA_PUEDE_DORMIR ||
+    esHorarioDeDormir(ahora) ||
+    perrita.energia < PERRITA.ENERGIA_PARA_SIESTA
+  )
+}
+
+// Apagar la luz. Devuelve { estado, resultado }: 'noche' | 'siesta' | 'sin-sueno' | 'ya-dormida'.
+// Apagar o prender la luz le gana al forzado del modo prueba.
+export function apagarLuz(estado, ahora = Date.now()) {
+  const p = avanzarTiempo(estado.perrita, ahora)
+  if (p.durmiendo) return { estado: { ...estado, perrita: p }, resultado: 'ya-dormida' }
+  const fecha = new Date(ahora)
+  if (!puedeDormir(p, fecha)) return { estado: { ...estado, perrita: p }, resultado: 'sin-sueno' }
+  const esNoche = fecha.getHours() >= PERRITA.HORA_PUEDE_DORMIR || esHorarioDeDormir(fecha)
+  return {
+    estado: { ...estado, perrita: { ...p, durmiendo: true, siesta: !esNoche, ultimaActividad: null, forzado: null } },
+    resultado: esNoche ? 'noche' : 'siesta',
+  }
+}
+
+// Prender la luz: la despierta. De madrugada vuelve a dormirse sola al rato si nadie le hace mimos.
+export function prenderLuz(estado, ahora = Date.now()) {
+  const p = avanzarTiempo(estado.perrita, ahora)
+  if (!p.durmiendo) return { ...estado, perrita: p }
+  return { ...estado, perrita: { ...p, durmiendo: false, siesta: false, ultimaActividad: ahora, forzado: null } }
 }
 
 export function horasDesdeUltimaVisita(perrita, ahora = Date.now()) {
