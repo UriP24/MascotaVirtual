@@ -3,6 +3,8 @@ import { PLANES, precioEnPuntos } from '../config.js'
 import PlanCard from '../components/PlanCard.jsx'
 import CouponItem from '../components/CouponItem.jsx'
 import CouponHistory from '../components/CouponHistory.jsx'
+import GameCard from '../components/GameCard.jsx'
+import GamePicker from '../components/GamePicker.jsx'
 import CoinExchange from '../components/CoinExchange.jsx'
 import ConfirmDialog from '../components/ConfirmDialog.jsx'
 import Toast from '../components/Toast.jsx'
@@ -24,6 +26,7 @@ function Canjes({ estado, setEstado }) {
   const [planElegido, setPlanElegido] = useState(null)
   const [aviso, setAviso] = useState(null)
   const [verHistorial, setVerHistorial] = useState(false)
+  const [eligiendoJuego, setEligiendoJuego] = useState(false)
 
   useEffect(() => {
     if (!aviso) return
@@ -33,8 +36,13 @@ function Canjes({ estado, setEstado }) {
 
   // "Ahora" = última actualización del estado (App lo refresca cada minuto)
   const ahora = new Date(estado.perrita.actualizadaEn)
-  // Del más caro al más barato
-  const planesOrdenados = [...PLANES].sort((a, b) => precioEnPuntos(b) - precioEnPuntos(a))
+  // Del más caro al más barato. Los jueguitos van juntos en una sola tarjeta (arriba de todo).
+  const planesOrdenados = PLANES.filter((p) => !p.grupo).sort((a, b) => precioEnPuntos(b) - precioEnPuntos(a))
+  const juegos = PLANES.filter((p) => p.grupo === 'juegos').map((plan) => ({
+    plan,
+    vuelveEl: disponibleDesde(estado, plan, ahora),
+    usosRestantes: usosRestantesEsteMes(estado, plan, ahora),
+  }))
   const pendientes = cuponesPendientes(estado)
   const historial = historialDeCupones(estado)
 
@@ -66,6 +74,7 @@ function Canjes({ estado, setEstado }) {
 
       <h2>Planes juntos</h2>
       <ul className="lista">
+        <GameCard juegos={juegos.map((j) => j.plan)} onElegir={() => setEligiendoJuego(true)} />
         {planesOrdenados.map((plan) => (
           <PlanCard
             key={plan.id}
@@ -93,6 +102,18 @@ function Canjes({ estado, setEstado }) {
         📜 {verHistorial ? 'Ocultar historial' : `Historial de canjes (${historial.length})`}
       </button>
       {verHistorial && <CouponHistory cupones={historial} />}
+
+      {eligiendoJuego && (
+        <GamePicker
+          juegos={juegos}
+          puntos={estado.puntos}
+          onElegir={(plan) => {
+            setEligiendoJuego(false)
+            setPlanElegido(plan)
+          }}
+          onCerrar={() => setEligiendoJuego(false)}
+        />
+      )}
 
       {planElegido && (
         <ConfirmDialog

@@ -235,6 +235,7 @@ export const PLANES = [
     id: 'juego-chico',
     nombre: 'Jueguito chico',
     emoji: '🎮',
+    grupo: 'juegos', // se eligen desde una sola tarjeta "Un jueguito"
     usdMaximo: 5, // regalo para Mari sola: precio completo (no se divide a la mitad)
     rotacionMeses: 3,
     descripcion: 'Un jueguito de hasta 5 dólares, el que vos quieras',
@@ -243,6 +244,7 @@ export const PLANES = [
     id: 'juego-mediano',
     nombre: 'Juego mediano',
     emoji: '🎮',
+    grupo: 'juegos',
     usdMaximo: 15, // regalo para Mari sola: precio completo (no se divide a la mitad)
     rotacionMeses: 6,
     descripcion: 'Un juego de hasta 15 dólares, el que vos quieras',
@@ -251,6 +253,7 @@ export const PLANES = [
     id: 'juego-grande',
     nombre: 'Juego grande',
     emoji: '🎮',
+    grupo: 'juegos',
     usdMaximo: 30, // regalo para Mari sola: precio completo (no se divide a la mitad)
     rotacionMeses: 8,
     descripcion: 'Un juego de hasta 30 dólares, el que vos quieras',
@@ -259,6 +262,7 @@ export const PLANES = [
     id: 'juego-enorme',
     nombre: 'Juego enorme',
     emoji: '🎮',
+    grupo: 'juegos',
     usdMaximo: 60, // regalo para Mari sola: precio completo (no se divide a la mitad)
     rotacionMeses: 12,
     descripcion: 'Un juegazo de hasta 60 dólares, el que vos quieras',
