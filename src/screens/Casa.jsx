@@ -41,7 +41,7 @@ function fraseDeHumor(estado, animo, ahora) {
   return null
 }
 
-function Casa({ estado, setEstado, horasAusente = 0 }) {
+function Casa({ estado, setEstado, horasAusente = 0, onCambiarPantalla }) {
   // "Ahora" es la última vez que se actualizó Bolti (App lo hace cada minuto). Así el dibujo
   // no depende de la hora exacta en que React decide redibujar.
   const ahora = new Date(estado.perrita.actualizadaEn)
@@ -235,6 +235,7 @@ function Casa({ estado, setEstado, horasAusente = 0 }) {
           estado.perrita.durmiendo
             ? { id: 'luz', icono: '☀️', texto: 'Prender la luz', onClick: alternarLuz }
             : { id: 'luz', icono: '💡', texto: 'Apagar la luz', onClick: alternarLuz },
+          { id: 'jugar', icono: '🎮', texto: 'Jugar', onClick: () => onCambiarPantalla?.('jugar') },
         ]}
       />
       <p className="ayuda">
