@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import Bolti from './Bolti.jsx'
-import { crearJuego, moverBolti, paso, segundosRestantes } from '../logic/huesitos.js'
+import { crearJuego, enTurbo, moverBolti, paso, segundosRestantes } from '../logic/huesitos.js'
 import { JUEGOS } from '../config.js'
 import './CatchBones.css'
 
@@ -89,7 +89,7 @@ function CatchBones({ onTerminar }) {
         <span>⏱ {segundosRestantes(juego)}</span>
         <span>
           🦴 {juego.huesos} · 🪙 {juego.monedas}
-          {juego.monedas >= JUEGOS.HUESITOS_MONEDAS_MAXIMAS && ' (máx.)'}
+          {juego.monedas >= JUEGOS.MONEDAS_MAXIMAS_POR_PARTIDA && ' (máx.)'}
         </span>
         <span className="vidas" aria-label={`${juego.vidas} vidas`}>
           {'❤️'.repeat(juego.vidas)}
@@ -99,6 +99,12 @@ function CatchBones({ onTerminar }) {
           ⏸️
         </button>
       </div>
+
+      {enTurbo(juego) && juego.t < JUEGOS.HUESITOS_DURACION_SEGUNDOS - JUEGOS.HUESITOS_TURBO_SEGUNDOS_FINALES + 1.5 && (
+        <div className="turbo" aria-live="polite">
+          ¡Más rápido! 🔥
+        </div>
+      )}
 
       {juego.items.map((it) => (
         <span key={it.id} className={`cosa ${it.tipo}`} style={{ left: `${it.x * 100}%`, top: `${it.y * 100}%` }} aria-hidden="true">

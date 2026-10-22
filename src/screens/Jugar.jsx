@@ -49,7 +49,7 @@ function Jugar({ estado, setEstado }) {
           <span>
             +{resultado.monedas} 🪙 · +{JUEGOS.CARINO_POR_PARTIDA} 💗 · −{JUEGOS.ENERGIA_POR_PARTIDA} ⚡
           </span>
-          {resultado.monedas >= JUEGOS.HUESITOS_MONEDAS_MAXIMAS && <small>¡Llegaste al máximo de la partida!</small>}
+          {resultado.monedas >= JUEGOS.MONEDAS_MAXIMAS_POR_PARTIDA && <small>¡Llegaste al máximo de la partida!</small>}
         </div>
       )}
 
@@ -64,7 +64,7 @@ function Jugar({ estado, setEstado }) {
               Mové a Bolti con el dedo y atrapá los huesitos que caen. ¡Ojo con el chocolate 🍫!
             </small>
             <small className="detalle">
-              {JUEGOS.HUESITOS_DURACION_SEGUNDOS} s · cuesta {JUEGOS.ENERGIA_POR_PARTIDA} ⚡ · hasta {JUEGOS.HUESITOS_MONEDAS_MAXIMAS} 🪙 y +
+              {JUEGOS.HUESITOS_DURACION_SEGUNDOS} s · cuesta {JUEGOS.ENERGIA_POR_PARTIDA} ⚡ · hasta {JUEGOS.MONEDAS_MAXIMAS_POR_PARTIDA} 🪙 y +
               {JUEGOS.CARINO_POR_PARTIDA} 💗
             </small>
           </div>

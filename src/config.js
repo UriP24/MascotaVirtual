@@ -96,19 +96,21 @@ export const JUEGOS = {
   ENERGIA_MINIMA_PARA_JUGAR: 10,
   CARINO_POR_PARTIDA: 8,
 
+  MONEDAS_MAXIMAS_POR_PARTIDA: 40, // tope de monedas por partida, en cualquier minijuego
+
   // Minijuego "Atrapá los huesitos"
-  HUESITOS_DURACION_SEGUNDOS: 45,
+  HUESITOS_DURACION_SEGUNDOS: 40,
+  HUESITOS_TURBO_SEGUNDOS_FINALES: 25, // a los 25 s del final se pone más rápido y cae más cantidad
   HUESITOS_VIDAS: 3, // el chocolate saca una vida (nunca resta monedas)
-  HUESITOS_MONEDAS_MAXIMAS: 40, // tope de monedas por partida
   HUESITOS_MONEDAS_HUESO: 1,
   HUESITOS_MONEDAS_DORADO: 3,
-  HUESITOS_PROB_DORADO: 0.07,
-  HUESITOS_PROB_CHOCOLATE_INICIO: 0.12, // va subiendo durante la partida
-  HUESITOS_PROB_CHOCOLATE_FIN: 0.28,
-  HUESITOS_INTERVALO_INICIO: 1.1, // segundos entre cosa y cosa (cada vez más seguido)
-  HUESITOS_INTERVALO_FIN: 0.65,
-  HUESITOS_VELOCIDAD_INICIO: 0.28, // alto de pantalla por segundo (cada vez más rápido)
-  HUESITOS_VELOCIDAD_FIN: 0.55,
+  HUESITOS_PROB_DORADO: 0.11,
+  HUESITOS_PROB_CHOCOLATE_INICIO: 0.15, // va subiendo durante la partida
+  HUESITOS_PROB_CHOCOLATE_FIN: 0.32,
+  HUESITOS_INTERVALO_INICIO: 0.8, // segundos entre cosa y cosa (cada vez más seguido)
+  HUESITOS_INTERVALO_FIN: 0.38,
+  HUESITOS_VELOCIDAD_INICIO: 0.32, // alto de pantalla por segundo (cada vez más rápido)
+  HUESITOS_VELOCIDAD_FIN: 0.78,
 }
 
 // Planes para canjear. Se pueden canjear varios planes distintos en el mismo mes, pero cada uno

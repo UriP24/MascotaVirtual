@@ -24,7 +24,7 @@ export function empezarPartida(estado, ahora = Date.now()) {
 
 // Al terminar: monedas (con tope por partida), cariño y festejo de Bolti
 export function terminarPartida(estado, monedasGanadas) {
-  const monedas = Math.max(0, Math.min(JUEGOS.HUESITOS_MONEDAS_MAXIMAS, Math.floor(monedasGanadas)))
+  const monedas = Math.max(0, Math.min(JUEGOS.MONEDAS_MAXIMAS_POR_PARTIDA, Math.floor(monedasGanadas)))
   const p = estado.perrita
   const conPremio = {
     ...estado,

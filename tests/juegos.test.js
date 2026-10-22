@@ -1,7 +1,7 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { crearEstadoInicial } from '../src/storage.js'
-import { crearJuego, moverBolti, paso } from '../src/logic/huesitos.js'
+import { crearJuego, moverBolti, paso, progresoDificultad } from '../src/logic/huesitos.js'
 import { empezarPartida, puedeJugar, terminarPartida } from '../src/logic/juegos.js'
 
 const TARDE = new Date('2026-10-25T16:00:00').getTime()
@@ -66,18 +66,38 @@ test('si no está debajo, se le escapa', () => {
   assert.equal(j.items.length, 0, 'se cayó de la pantalla')
 })
 
-test('termina a los 45 segundos o sin vidas', () => {
+test('termina a los 40 segundos o sin vidas', () => {
   const quieta = jugar(crearJuego(), 60, azarFijo([0.5, 0.5]))
   assert.equal(quieta.terminado, true)
-  assert.ok(quieta.t <= 45.05)
+  assert.ok(quieta.t <= 40.05)
   const conChocolates = jugar(moverBolti(crearJuego(), 0.5), 60, azarFijo([0.01, 0.5]))
   assert.equal(conChocolates.vidas, 0)
-  assert.ok(conChocolates.t < 45, 'terminó antes por perder las vidas')
+  assert.ok(conChocolates.t < 40, 'terminó antes por perder las vidas')
 })
 
 test('balance: jugando bien da cerca del tope, sin pasar de 40', () => {
   let semilla = 7
   const azar = () => ((semilla = (semilla * 16807) % 2147483647) / 2147483647)
-  const j = jugar(crearJuego(), 46, azar, true)
+  const j = jugar(crearJuego(), 41, azar, true)
   assert.ok(j.monedas >= 25 && j.monedas <= 40, `monedas: ${j.monedas}`)
+})
+
+test('la dificultad sube despacio y se dispara en los últimos 25 segundos', () => {
+  assert.equal(progresoDificultad(0), 0)
+  assert.ok(progresoDificultad(14.9) < 0.26, 'antes del turbo, tranquilo')
+  assert.ok(progresoDificultad(27.5) > 0.6, 'a mitad del turbo ya está difícil')
+  assert.equal(progresoDificultad(40), 1)
+})
+
+test('cae bastante cantidad: más de 60 cosas por partida y varios dorados', () => {
+  let semilla = 11
+  const azar = () => ((semilla = (semilla * 16807) % 2147483647) / 2147483647)
+  let j = { ...crearJuego(), vidas: 999 }
+  let vistos = new Set(), dorados = 0
+  for (let t = 0; t < 40; t += 1 / 60) {
+    j = paso(j, 1 / 60, azar)
+    for (const it of j.items) if (!vistos.has(it.id)) { vistos.add(it.id); if (it.tipo === 'dorado') dorados++ }
+  }
+  assert.ok(vistos.size > 60, `cosas: ${vistos.size}`)
+  assert.ok(dorados >= 4, `dorados: ${dorados}`)
 })
