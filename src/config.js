@@ -2,10 +2,9 @@
 // Son valores de prototipo: cambialos libremente, el resto del código los lee de este archivo.
 
 export const ECONOMIA = {
-  // Monedas que da completar una tarea (las tareas no dan puntos: así inventar tareas no rompe
+  // Monedas que da completar cualquier tarea (las tareas no dan puntos: así inventar tareas no rompe
   // la economía). Solo las primeras TAREAS_CON_RECOMPENSA_POR_DIA de cada día dan monedas.
-  MONEDAS_TAREA_SIMPLE: 5,
-  MONEDAS_TAREA_GRANDE: 10,
+  MONEDAS_POR_TAREA: 10,
   TAREAS_CON_RECOMPENSA_POR_DIA: 5,
 
   // Estudio: cada bloque completo de minutos da puntos

@@ -3,14 +3,13 @@ import { LARGO_MAXIMO_TEXTO, monedasDeTarea } from '../logic/tareas.js'
 import './TaskForm.css'
 
 const TIPOS = [
-  { id: 'simple', texto: `Simple +${monedasDeTarea('simple')}🪙` },
-  { id: 'grande', texto: `Grande +${monedasDeTarea('grande')}🪙` },
-  { id: 'estudio', texto: 'Estudio ⏱' },
+  { id: 'tarea', texto: `Tarea +${monedasDeTarea()}🪙` },
+  { id: 'estudio', texto: 'Estudio 🍅' },
 ]
 
 function TaskForm({ onAgregar }) {
   const [texto, setTexto] = useState('')
-  const [tipo, setTipo] = useState('simple')
+  const [tipo, setTipo] = useState('tarea')
 
   function enviar(evento) {
     evento.preventDefault() // que el formulario no recargue la página

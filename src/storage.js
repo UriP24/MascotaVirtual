@@ -16,7 +16,7 @@ export function crearEstadoInicial() {
     puntos: 0,
     // Historial de todo lo ganado. Nunca baja: los puntos ganados no se restan ni vencen.
     puntosGanadosTotal: 0,
-    // { id, texto, tipo: 'simple' | 'grande' | 'estudio', fecha, hecha, obligatoria, estudio? }
+    // { id, texto, tipo: 'tarea' | 'estudio', fecha, hecha, obligatoria, estudio? } (las viejas 'simple'/'grande' valen como 'tarea')
     tareas: [],
     // Minutos de estudio acreditados por día: { 'AAAA-MM-DD': minutos }.
     // Sirve para el tope diario y para que Bolti se ponga triste si un día de semana no estudió.

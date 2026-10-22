@@ -26,31 +26,31 @@ test('agregar ignora texto vacío y corta textos largos', () => {
   assert.equal(e2.tareas[0].texto.length, 80)
 })
 
-test('completar da monedas según el tipo (no puntos) y no se puede repetir', () => {
-  let e = agregarTarea({ ...crearEstadoInicial(), monedas: 0 }, 'Barrer', 'simple')
-  e = agregarTarea(e, 'Limpiar el baño', 'grande')
-  const [simple, grande] = e.tareas
-  let r = completarTarea(e, simple.id, MARTES)
-  assert.equal(r.monedas, 5)
+test('cada tarea da 10 monedas (no puntos) y no se puede repetir', () => {
+  let e = agregarTarea({ ...crearEstadoInicial(), monedas: 0 }, 'Barrer', 'tarea')
+  e = agregarTarea(e, 'Tarea vieja', 'grande') // las viejas "grande" valen lo mismo
+  const [barrer, vieja] = e.tareas
+  let r = completarTarea(e, barrer.id, MARTES)
+  assert.equal(r.monedas, 10)
   assert.equal(r.estado.puntos, 0, 'las tareas no dan puntos')
-  r = completarTarea(r.estado, grande.id, MARTES)
-  assert.equal(r.estado.monedas, 15)
-  const otra = completarTarea(r.estado, grande.id, MARTES)
+  r = completarTarea(r.estado, vieja.id, MARTES)
+  assert.equal(r.estado.monedas, 20)
+  const otra = completarTarea(r.estado, vieja.id, MARTES)
   assert.equal(otra.completada, false)
-  assert.equal(otra.estado.monedas, 15)
+  assert.equal(otra.estado.monedas, 20)
 })
 
 test('solo las primeras 5 tareas del día dan monedas, aunque se borren', () => {
   let e = { ...crearEstadoInicial(), monedas: 0 }
   for (let i = 0; i < 7; i++) {
-    e = agregarTarea(e, `Tarea ${i}`, 'grande', MARTES)
+    e = agregarTarea(e, `Tarea ${i}`, 'tarea', MARTES)
     const id = e.tareas.at(-1).id
     e = completarTarea(e, id, MARTES).estado
     e = borrarTarea(e, id) // borrar no reinicia el tope
   }
-  assert.equal(e.monedas, 50)
+  assert.equal(e.monedas, 50, '5 tareas × 10')
   assert.equal(tareasConRecompensaRestantes(e, MARTES), 0)
-  const conUnaMas = agregarTarea(e, 'Una más', 'simple', MARTES)
+  const conUnaMas = agregarTarea(e, 'Una más', 'tarea', MARTES)
   const r = completarTarea(conUnaMas, conUnaMas.tareas.at(-1).id, MARTES)
   assert.equal(r.completada, true, 'se puede completar igual')
   assert.equal(r.monedas, 0, 'pero ya no da monedas')
@@ -59,7 +59,7 @@ test('solo las primeras 5 tareas del día dan monedas, aunque se borren', () => 
 })
 
 test('borrar nunca resta monedas ni puntos', () => {
-  let e = agregarTarea({ ...crearEstadoInicial(), monedas: 0 }, 'Barrer', 'grande')
+  let e = agregarTarea({ ...crearEstadoInicial(), monedas: 0 }, 'Barrer', 'tarea')
   e = completarTarea(e, e.tareas[0].id).estado
   e = borrarTarea(e, e.tareas[0].id)
   assert.equal(e.tareas.length, 0)

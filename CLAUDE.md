@@ -19,7 +19,7 @@ PWA instalable en el celular con cuatro pantallas:
 - **Jugar**: minijuego que da monedas.
 
 ### Economía (valores provisorios, todos en `src/config.js`)
-- **Monedas 🪙**: se ganan con **tareas** (simple +5, grande +10; solo las **primeras 5 tareas del
+- **Monedas 🪙**: se ganan con **tareas** (**+10 cada una**, un solo tipo; solo las **primeras 5 tareas del
   día** dan monedas, el contador no baja si se borran) y con los **minijuegos** (cada uno da un
   puntaje que se convierte en monedas con la tabla de `JUEGOS.PUNTAJE_A_MONEDAS`, sin tope; los
   frena la energía de Bolti). Se gastan en comida

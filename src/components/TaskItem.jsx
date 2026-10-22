@@ -3,7 +3,7 @@ import './TaskItem.css'
 
 function TaskItem({ tarea, onCompletar, onBorrar, children }) {
   const puedeBorrar = !tarea.obligatoria || tarea.hecha
-  const etiqueta = tarea.tipo === 'estudio' ? '⏱' : `+${monedasDeTarea(tarea.tipo)}🪙`
+  const etiqueta = tarea.tipo === 'estudio' ? '🍅' : `+${monedasDeTarea()}🪙`
 
   return (
     <li className={`task-item ${tarea.hecha ? 'hecha' : ''} ${tarea.obligatoria ? 'obligatoria' : ''}`}>

@@ -40,8 +40,9 @@ export function agregarTarea(estado, texto, tipo, ahora = new Date()) {
   return { ...estado, tareas: [...estado.tareas, crearTarea(limpio, tipo, ahora)] }
 }
 
-export function monedasDeTarea(tipo) {
-  return tipo === 'grande' ? ECONOMIA.MONEDAS_TAREA_GRANDE : ECONOMIA.MONEDAS_TAREA_SIMPLE
+// Todas las tareas dan lo mismo (las viejas "simple" y "grande" también)
+export function monedasDeTarea() {
+  return ECONOMIA.MONEDAS_POR_TAREA
 }
 
 // Cuántas tareas más pueden dar monedas hoy (el contador no baja si se borran tareas)
@@ -99,7 +100,7 @@ export function completarTarea(estado, id, ahora = new Date()) {
 
   if (tarea.tipo !== 'estudio') {
     const conRecompensa = tareasConRecompensaRestantes(estado, ahora) > 0
-    const monedas = conRecompensa ? monedasDeTarea(tarea.tipo) : 0
+    const monedas = conRecompensa ? monedasDeTarea() : 0
     let nuevo = acreditar(estado, id, 0, fechaLocal(ahora), 0, ahora)
     if (conRecompensa) nuevo = contarRecompensa({ ...nuevo, monedas: nuevo.monedas + monedas }, ahora)
     nuevo = reemplazarTarea(nuevo, id, () => ({ monedasGanadas: monedas }))
