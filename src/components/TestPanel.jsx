@@ -3,6 +3,9 @@ import {
   adelantarBolti,
   cambiarBolti,
   llenarBandeja,
+  liberarCanjeDelMes,
+  borrarCupones,
+  liberarCambioDelDia,
   reiniciarTodo,
   simularQueNoEstudio,
   sumarEstudio,
@@ -44,7 +47,16 @@ function TestPanel({ estado, setEstado }) {
       acciones: [
         ['+50 🪙', (e) => sumarMonedas(e, 50)],
         ['+10 ⭐', (e) => sumarPuntos(e, 10)],
+        ['+100 🪙', (e) => sumarMonedas(e, 100)],
         ['Llenar bandeja', (e) => llenarBandeja(e)],
+      ],
+    },
+    {
+      titulo: '🎁 Canjes',
+      acciones: [
+        ['Liberar canje del mes', (e) => liberarCanjeDelMes(e)],
+        ['Liberar cambio de hoy', (e) => liberarCambioDelDia(e)],
+        ['Borrar cupones', (e) => borrarCupones(e)],
       ],
     },
   ]

@@ -94,6 +94,29 @@ export function llenarBandeja(estado) {
   return { ...estado, inventario }
 }
 
+// Mueve los cupones de este mes al mes pasado: libera el canje del mes para volver a probar.
+export function liberarCanjeDelMes(estado, ahora = new Date()) {
+  const esteMes = fechaLocal(ahora).slice(0, 7)
+  return {
+    ...estado,
+    cupones: estado.cupones.map((c) => {
+      const fecha = new Date(c.fecha)
+      if (fechaLocal(fecha).slice(0, 7) !== esteMes) return c
+      fecha.setMonth(fecha.getMonth() - 1)
+      return { ...c, fecha: fecha.toISOString() }
+    }),
+  }
+}
+
+export function borrarCupones(estado) {
+  return { ...estado, cupones: [] }
+}
+
+// Permite volver a cambiar monedas por puntos hoy
+export function liberarCambioDelDia(estado) {
+  return { ...estado, conversiones: { fecha: null, cantidad: 0 } }
+}
+
 export function reiniciarTodo() {
   return actualizarDia(crearEstadoInicial())
 }
