@@ -57,3 +57,10 @@ test('"Dormida" de día dura 1 h', async () => {
   e = cambiarBolti(e, { durmiendo: true }, tarde)
   assert.equal(adelantarBolti(e, 0, tarde + 30 * 60 * 1000).perrita.durmiendo, true)
 })
+
+test('llenar bandeja suma 2 de cada comida', async () => {
+  const { llenarBandeja } = await import('../src/logic/prueba.js')
+  const e = llenarBandeja(crearEstadoInicial())
+  assert.equal(e.inventario.croquetas, 2)
+  assert.equal(e.inventario.torta, 2)
+})

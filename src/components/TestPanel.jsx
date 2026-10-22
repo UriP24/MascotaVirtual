@@ -2,6 +2,7 @@ import { useState } from 'react'
 import {
   adelantarBolti,
   cambiarBolti,
+  llenarBandeja,
   reiniciarTodo,
   simularQueNoEstudio,
   sumarEstudio,
@@ -32,6 +33,7 @@ function TestPanel({ estado, setEstado }) {
         ['Adelantar 6 h', (e) => adelantarBolti(e, 6)],
         ['Con hambre', (e) => cambiarBolti(e, { saciedad: 15 })],
         ['Triste', (e) => cambiarBolti(e, { carino: 15, saciedad: Math.max(e.perrita.saciedad, 50) })],
+        ['Cansada', (e) => cambiarBolti(e, { energia: 15 })],
         ['Dormida', (e) => cambiarBolti(e, { durmiendo: true })],
         ['Todo lleno', (e) => cambiarBolti(e, { saciedad: 100, energia: 100, carino: 100 })],
         ['Contenta normal', (e) => cambiarBolti(e, { saciedad: 80, energia: 80, carino: 80 })],
@@ -42,6 +44,7 @@ function TestPanel({ estado, setEstado }) {
       acciones: [
         ['+50 🪙', (e) => sumarMonedas(e, 50)],
         ['+10 ⭐', (e) => sumarPuntos(e, 10)],
+        ['Llenar bandeja', (e) => llenarBandeja(e)],
       ],
     },
   ]

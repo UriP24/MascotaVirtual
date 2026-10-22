@@ -54,14 +54,20 @@ Si un día no llego, se recorta primero el minijuego; el resto del plan se corre
 - [x] Jadeo cada 10–20 s cuando está contenta (boca abierta + lengua), después boca cerrada
 - [x] Mimos mientras duerme (sube el cariño sin despertarla); dormida no muestra hambre ni cansancio
 
-## Vie 23 — Comida y sueño
-- [ ] **Recordatorio de Uri:** cuando Bolti jadea, que mueva la cola (más rápido, de contenta)
-- [ ] Botones de acción en Casa (al alcance del pulgar): Comer, Luz, Jugar
-- [ ] Tienda: comprar comida con 🪙 → inventario
-- [ ] Bandeja de inventario y **arrastrar la comida a la boca** (abre la boca al acercarse)
-- [ ] Botón de luz: apagarla desde las 22:00 (o siesta con energía < 20); prenderla la despierta
-- [ ] Bolti festeja cuando completa una tarea o termina de estudiar
-- [ ] Probar el cronómetro en un celular real con HTTPS (bloqueo de pantalla, cambiar de app)
+## Vie 23 — Comida y sueño ✅
+- [x] Bolti mueve la cola mientras jadea (recordatorio de Uri) y verificado que la mueve con mimos
+      (despierta rápido, dormida despacito)
+- [x] Comidas: croquetas, galletita, queso, patita de pollo, carnecita con hueso, asadito (+ torta)
+- [x] `logic/comida.js`: comprar con 🪙 (nunca puntos), dar de comer; llena o dormida no come.
+      Estado v4 con inventario y 30 🪙 de bienvenida
+- [x] Tienda (hoja que sube desde abajo)
+- [x] Bandeja de inventario y **arrastrar la comida a la boca**: abre la boca al acercarse, mastica
+      sin lengua, la rechaza si está llena
+- [x] Botón de luz: apagar desde las 22:00, siesta si energía < 20 (hasta 80), prender la despierta
+- [x] Barra de acciones: Tienda · Luz · Jugar
+- [x] Bolti festeja tareas y estudio (+5 cariño y saludo especial al entrar a Casa)
+- [x] Modo prueba: "Cansada" y "Llenar bandeja". 46 pruebas automáticas
+- [ ] Probar el cronómetro en un celular real con HTTPS (bloqueo de pantalla, cambiar de app) — Uri
 
 ## Sáb 24 — Canjes
 - [ ] Tarjetas de planes con precio en puntos
@@ -101,22 +107,22 @@ Si un día no llego, se recorta primero el minijuego; el resto del plan se corre
 
 ---
 
-## Próxima sesión — Vie 23: Comida y sueño
+## Próxima sesión — Sáb 24: Canjes
 
 La app publicada: https://urip24.github.io/MascotaVirtual/ (se actualiza sola con cada push).
 
 Tareas concretas:
-0. **Primero (lo pidió Uri):** que Bolti mueva la cola mientras jadea (`.bolti.jadeando .cola` más
-   rápida en `Bolti.css`). Es un cambio chico para arrancar.
-1. Estado: `inventario: { croqueta: 0, … }` (estado v4). `logic/comida.js`: comprar (resta 🪙,
-   nunca puntos), dar de comer (suma panza/cariño, no gasta si está llena). Con pruebas.
-2. Pantalla de tienda simple (desde Casa) con las comidas de `COMIDAS`.
-3. Bandeja de inventario en Casa y **arrastrar la comida a la boca** (pointer events): Bolti abre
-   la boca cuando la comida se acerca y mastica sin lengua afuera.
-4. Botón de luz con las reglas de `bolti-personaje.md` (22:00, siesta con energía < 20).
-5. Bolti festeja cuando se completa una tarea o una sesión de estudio.
-6. Como todavía no hay minijuego, dar unas 🪙 de bienvenida (por ejemplo 30) para poder probar.
+1. `logic/canjes.js` + pruebas: canjear un plan (resta puntos del saldo; `puntosGanadosTotal` nunca
+   baja), genera cupón con fecha; **1 canje por mes calendario** validado con la fecha de los
+   cupones; fecha desde la que vuelve a estar disponible (día 1 del mes siguiente).
+2. Pantalla Canjes: tarjetas de planes (`PLANES` de `config.js`, precio = pesos / 500), cartel
+   "Canje del mes disponible ✅" o "Vuelve a estar disponible el 1 de noviembre", confirmación
+   dentro de la app antes de canjear.
+3. Lista "Mis cupones": cupón con el plan y la fecha; marcar como cumplido (queda tachado).
+4. Bolti festeja el canje (salto + frase al entrar a Casa).
+5. Modo prueba: "Simular canje el mes pasado" y "Borrar cupones".
+6. `/balance-check` de la economía: con 1 ⭐ = $500, ¿cuánto tarda cada plan?
 
 Prompt para arrancar:
 
-> Leé `CLAUDE.md`, `PLAN.md` y `docs/specs/bolti-personaje.md`. Hoy toca el día Vie 23: comida (tienda, inventario y arrastrar la comida a la boca) y el botón de la luz para dormir. Mostrame el plan antes de codear, hacé un commit por paso y al final actualizá `PLAN.md` y dejame la sección "Próxima sesión".
+> Leé `CLAUDE.md`, `PLAN.md` y `docs/specs/bolti-personaje.md`. Hoy toca el día Sáb 24: Canjes (planes con puntos, cupones con fecha, marcar cumplido y límite de 1 canje por mes). Mostrame el plan antes de codear, hacé un commit por paso y al final actualizá `PLAN.md` y dejame la sección "Próxima sesión".

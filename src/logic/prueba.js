@@ -2,6 +2,7 @@
 // Se activa abriendo la app con ?prueba al final del link, o con `npm run dev`.
 
 import { crearEstadoInicial } from '../storage.js'
+import { COMIDAS } from '../config.js'
 import { fechaLocal } from './fechas.js'
 import { actualizarDia } from './tareas.js'
 import { actualizarBolti } from './bolti.js'
@@ -84,6 +85,13 @@ export function sumarPuntos(estado, cantidad) {
     puntos: estado.puntos + cantidad,
     puntosGanadosTotal: estado.puntosGanadosTotal + cantidad,
   }
+}
+
+// Dos unidades de cada comida (incluida la torta, para probarla)
+export function llenarBandeja(estado) {
+  const inventario = { ...estado.inventario }
+  for (const c of COMIDAS) inventario[c.id] = (inventario[c.id] ?? 0) + 2
+  return { ...estado, inventario }
 }
 
 export function reiniciarTodo() {
