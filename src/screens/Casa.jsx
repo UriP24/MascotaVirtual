@@ -211,14 +211,29 @@ function Casa({ estado, setEstado, horasAusente = 0, onCambiarPantalla }) {
     }, 450)
   }
 
+  // Galletita o queso: después de comer, salta de alegría, mueve la cola y tira corazones
+  function festejarPremio(x, y) {
+    setSaltos((n) => n + 1)
+    setMimos(true)
+    clearTimeout(timers.current.mimos)
+    timers.current.mimos = setTimeout(() => setMimos(false), 1200)
+    soltarEmoji('💗', x - 20, y)
+    soltarEmoji('💖', x + 20, y)
+    soltarEmoji('✨', x, y - 10)
+    decir('¡Gracias, Mari! ¡Te quiero! 🐾💕')
+  }
+
   function alimentar(comida, x, y) {
     const r = darDeComer(estado, comida.id)
     setEstado(r.estado)
     if (r.resultado === 'comio') {
       setComiendo(true)
       clearTimeout(timers.current.comiendo)
-      timers.current.comiendo = setTimeout(() => setComiendo(false), DURACION_COMIENDO)
-      decir('¡Ñam ñam! 😋', DURACION_COMIENDO)
+      timers.current.comiendo = setTimeout(() => {
+        setComiendo(false)
+        if (comida.premio) festejarPremio(x, y)
+      }, DURACION_COMIENDO)
+      decir(comida.premio ? '¡Mi premio favorito! 💕' : '¡Ñam ñam! 😋', DURACION_COMIENDO)
       if (comida.carino > 0) soltarEmoji('💗', x, y)
       soltarEmoji(comida.emoji, x, y)
       navigator.vibrate?.(30)

@@ -28,7 +28,8 @@ real, aunque la app esté cerrada. **Nunca se enferma ni muere.**
    hace volar sola hasta la boca, o **se arrastra la comida hasta la boca**: Bolti abre la boca
    cuando la comida se acerca. Si la suelta en la boca, come (masticando **sin lengua afuera**); si
    la suelta en otro lado, la comida vuelve a la bandeja. Si está llena: "¡Estoy llena! 😋" y no se
-   gasta. El 28/10 se regala una 🎂 torta de cumple.
+   gasta. El 28/10 se regala una 🎂 torta de cumple. **Galletita y queso son "premios":** después de
+   comerlos Bolti festeja (salta, mueve la cola, corazones y "¡Gracias, Mari! ¡Te quiero!").
 5. **Dormir:**
    - Desde las **22:00** se le puede apagar la luz. Antes dice "No tengo sueño todavía 🐶", salvo
      que tenga menos de 20 de energía (siesta).
