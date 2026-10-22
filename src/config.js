@@ -94,11 +94,57 @@ export const JUEGOS = {
   HUESITOS_MONEDAS_POR_HUESITO: 1,
 }
 
-// Planes para canjear. El precio en puntos se calcula con precioEnPuntos().
+// Planes para canjear. El precio en puntos se calcula con precioEnPuntos() (pesos / PESOS_POR_PUNTO).
 export const PLANES = [
-  { id: 'comer-afuera', nombre: 'Salir a comer', emoji: '🍝', costoPesos: 40000 },
-  { id: 'dia-de-parque', nombre: 'Día de parque', emoji: '🌳', costoPesos: 10000 },
-  { id: 'masaje', nombre: 'Una hora de masaje', emoji: '💆', costoPesos: 15000 },
+  {
+    id: 'comer-afuera',
+    nombre: 'Salir a comer',
+    emoji: '🍝',
+    costoPesos: 40000,
+    descripcion: 'Elegís el lugar y pedís lo que quieras, invito yo',
+  },
+  {
+    id: 'dia-de-parque',
+    nombre: 'Día de parque',
+    emoji: '🌳',
+    costoPesos: 10000,
+    descripcion: 'Mate, facturas y una tarde al sol en el parque que elijas',
+  },
+  {
+    id: 'masaje',
+    nombre: 'Una hora de masaje',
+    emoji: '💆',
+    costoPesos: 15000,
+    descripcion: 'Una hora entera de masajes, sin apuro y con aceite',
+  },
+  {
+    id: 'cine',
+    nombre: 'Ir al cine',
+    emoji: '🎬',
+    costoPesos: 20000,
+    descripcion: 'La película que vos elijas, con pochoclos incluidos',
+  },
+  {
+    id: 'helado',
+    nombre: 'Salida por helado',
+    emoji: '🍦',
+    costoPesos: 8000,
+    descripcion: 'Un helado del tamaño que quieras, en tu heladería favorita',
+  },
+  {
+    id: 'cena-casera',
+    nombre: 'Cena casera',
+    emoji: '🍲',
+    costoPesos: 12000,
+    descripcion: 'Te cocino lo que me pidas y después lavo todo yo',
+  },
+  {
+    id: 'cafe',
+    nombre: 'Salir a tomar un café',
+    emoji: '☕',
+    costoPesos: 10000,
+    descripcion: 'Un cafecito con algo rico, en el lugar que elijas',
+  },
 ]
 
 export function precioEnPuntos(plan) {
