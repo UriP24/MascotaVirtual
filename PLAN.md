@@ -107,7 +107,9 @@ Si un día no llego, se recorta primero el minijuego; el resto del plan se corre
 - [x] Pantalla Jugar con la energía de Bolti y por qué no se puede jugar (dormida o cansada)
 - [x] La cola se mueve con mimos en cualquier estado de ánimo (también al tocarla)
 - [x] Modo prueba: "Energía llena". 69 pruebas automáticas
-- [ ] Elegir el próximo minijuego (ideas: Bolti vaquera, Bolti aventuras…) — Uri
+- [x] Huesitos más difícil: 40 s, más cantidad y dorados, "¡Más rápido! 🔥" en los últimos 25 s
+- [x] Minijuego **"Memoria de Bolti"**: límite por tiempo con bonus por nivel (3 → 4 → 6 → 8 pares,
+      vistazo 2 s → 1,5 → 1 → 0), +1 🪙 por par, +2 por nivel, tope 40
 
 ## Lun 26 — Pulido
 - [ ] Bienvenida con mensaje de cumpleaños y 🎂 torta de regalo el 28/10
@@ -129,8 +131,14 @@ Si un día no llego, se recorta primero el minijuego; el resto del plan se corre
 - [ ] Bolti repite lo que dice Mari con ladridos (como Tom)
 - [ ] Habitaciones: cocina, baño (bañarla), patio
 - [ ] Ropa y accesorios para Bolti (gacha con puntos)
-- [ ] Más minijuegos: 🐄 Bolti vaquera (arrear las vacas al corral, como en la vida real),
-      🏃 Bolti aventuras (esquivar obstáculos para encontrarse con sus amigos perros), y otros
+- [ ] **Más minijuegos** (contenido extra, a Uri le gustan todos):
+  - [ ] 🐄 **Bolti vaquera:** vista desde arriba, las vacas se alejan de Bolti y hay que arrearlas al
+        corral sin que se escapen por los bordes (como hacía Bolti de verdad). Rondas con más vacas
+  - [ ] 🏃 **Bolti aventuras:** corre de costado, tocar para saltar troncos, charcos y gatos; se van
+        sumando amigos perros hasta encontrarse con todos (hay que dibujar a Bolti de perfil)
+  - [ ] 🎾 **Tirale la pelota:** deslizar el dedo para tirar; Bolti la atrapa en el aire
+  - [ ] 🕳️ **¿Dónde está el hueso?:** Bolti lo entierra en uno de 3 pozos, se mezclan y hay que adivinar
+  - [ ] 🐦 **Bolti y las palomas:** tocar las palomas de la plaza antes de que se vuelen
 - [ ] Sincronización en la nube
 - [ ] **Notificaciones** (pedido de Uri): si a cierta hora (ej. 19:00) no completó el estudio del día,
       una notificación suave de Bolti ("¿Estudiamos un ratito? 📚"), como mucho 1–2 por día.

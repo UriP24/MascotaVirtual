@@ -47,6 +47,9 @@ real, aunque la app esté cerrada. **Nunca se enferma ni muere.**
    - "Atrapá los huesitos": 40 s (a los 25 s del final se pone más rápido y cae más), Bolti sigue el dedo. 🦴 +1 🪙, 🍖 dorado +3 🪙 (raro),
      🍫 chocolate saca una de las 3 vidas (nunca resta monedas). Cada vez cae más rápido y seguido.
      Tope de 40 🪙 por partida. Se pausa sola si la app pasa a segundo plano.
+   - "Memoria de Bolti": pares de cosas de su vida. Límite por tiempo (40 s), cada nivel superado
+     suma tiempo; los niveles van de 3 a 8 pares y el "vistazo" inicial se acorta. +1 🪙 por par,
+     +2 por nivel, tope 40.
    - Después: más minijuegos.
 7. **Frases** en una burbuja cuando cambia el humor, al tocarla y en momentos especiales
    (completó una tarea, terminó de estudiar, cumpleaños).
