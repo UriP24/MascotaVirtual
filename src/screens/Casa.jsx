@@ -3,7 +3,10 @@ import Bolti from '../components/Bolti.jsx'
 import NeedsBars from '../components/NeedsBars.jsx'
 import SpeechBubble from '../components/SpeechBubble.jsx'
 import FloatingEmoji from '../components/FloatingEmoji.jsx'
+import ActionBar from '../components/ActionBar.jsx'
+import Shop from '../components/Shop.jsx'
 import { darMimos, extranaElEstudio, humor } from '../logic/bolti.js'
+import { comprar } from '../logic/comida.js'
 import './Casa.css'
 
 const DISTANCIA_POR_MIMO = 45 // px que hay que frotar para cada corazón
@@ -44,6 +47,7 @@ function Casa({ estado, setEstado, horasAusente = 0 }) {
   const [saltos, setSaltos] = useState(0)
   const [frase, setFrase] = useState(() => saludoInicial(horasAusente, animo, ahora))
   const [flotantes, setFlotantes] = useState([])
+  const [tiendaAbierta, setTiendaAbierta] = useState(false)
   const habitacionRef = useRef(null)
   const toque = useRef({ apretado: false, recorrido: 0, ultimo: null, huboMimos: false })
   const timers = useRef({})
@@ -142,11 +146,20 @@ function Casa({ estado, setEstado, horasAusente = 0 }) {
         />
         <FloatingEmoji items={flotantes} />
       </div>
+      <ActionBar acciones={[{ id: 'tienda', icono: '🛒', texto: 'Tienda', onClick: () => setTiendaAbierta(true) }]} />
       <p className="ayuda">
         {animo === 'dormida'
           ? 'Está durmiendo 💤 · Frotala suave para hacerle mimos sin despertarla'
           : 'Tocala para que salte · Frotala con el dedo para hacerle mimos'}
       </p>
+      {tiendaAbierta && (
+        <Shop
+          monedas={estado.monedas}
+          inventario={estado.inventario}
+          onComprar={(id) => setEstado((e) => comprar(e, id).estado)}
+          onCerrar={() => setTiendaAbierta(false)}
+        />
+      )}
     </section>
   )
 }
