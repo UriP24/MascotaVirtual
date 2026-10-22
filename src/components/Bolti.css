@@ -140,6 +140,9 @@
   transform-origin: 50% 0%;
   animation: bolti-lengua-jadeo 0.3s ease-in-out infinite;
 }
+.bolti.jadeando .cola {
+  animation-duration: 0.4s; /* mueve la cola de contenta mientras jadea */
+}
 .bolti.jadeando .torso {
   animation: bolti-jadeo 0.3s ease-in-out infinite;
 }
