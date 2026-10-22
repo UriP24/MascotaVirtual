@@ -25,9 +25,13 @@ PWA instalable en el celular con cuatro pantallas:
 - **Puntos ⭐** (premium): 1 punto = $500 de un plan real, tienen que costar. Salen sobre todo del
   **estudio** (1 cada 30 min, tope 4 h/día) y del cambio diario de monedas. Las tareas **no** dan
   puntos (si no, inventar tareas rompería la economía). Máximo realista: ~95–105 ⭐ por mes.
-- **Precio de canjes**: costo del plan en pesos / 500 (salida a comer $40.000 = 80 puntos).
-- **Límite**: 1 canje por mes calendario, sea cual sea; se renueva el día 1. La pantalla de
-  canjes muestra si está disponible o desde qué fecha vuelve a estarlo.
+- **Precio de canjes** (los puntos cubren la **parte de Mari**): costo para los dos / 2 / 500, +5 de
+  margen en los precios investigados; si la unidad queda en 5 o más, se redondea a la decena de
+  arriba (67 → 70). Salir a comer 100 ⭐, cine 70, cena casera 50, helado 30, café 30, masaje 40,
+  parque 10.
+- **Rotación por plan** (no hay límite general): se pueden canjear varios planes en el mismo mes,
+  pero cada uno 1 vez por mes y los grandes (salir a comer, cine, cena casera) 1 vez cada 3 meses,
+  por meses calendario (octubre → enero). Se valida con la fecha de los cupones.
 
 ### Estudio
 - De lunes a viernes aparece sola una tarea **"Estudiar" obligatoria** (no se puede borrar hasta
@@ -94,7 +98,7 @@ Las pantallas reciben `estado` y `setEstado` como props desde `App`.
 ### Reglas del juego (nunca se rompen)
 - La perrita **nunca se enferma ni muere**. Sin comida o atención se pone triste; cuando ella la
   cuida, vuelve a estar contenta.
-- El límite de 1 canje por mes calendario se valida con la fecha de los cupones.
+- La rotación de cada plan (1 vez por mes, los grandes cada 3 meses) se valida con la fecha de los cupones.
 - **Nunca se restan puntos ya ganados** (no hay penalizaciones; gastar en un canje sí descuenta
   del saldo, pero `puntosGanadosTotal` nunca baja).
 - Los puntos **no vencen**.

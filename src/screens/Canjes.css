@@ -15,22 +15,14 @@
   color: var(--color-texto-suave);
 }
 
-.canjes .cartel-mes {
+.canjes .cartel-reglas {
   display: flex;
   flex-direction: column;
   gap: 2px;
   padding: 12px 14px;
   border-radius: 16px;
-}
-
-.canjes .cartel-mes.disponible {
   background: var(--color-secundario-claro);
   color: var(--color-secundario-oscuro);
-}
-
-.canjes .cartel-mes.usado {
-  background: var(--color-terciario-claro);
-  color: #5e43a8;
 }
 
 .canjes .lista {

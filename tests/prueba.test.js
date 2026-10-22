@@ -65,13 +65,12 @@ test('llenar bandeja suma 2 de cada comida', async () => {
   assert.equal(e.inventario.torta, 2)
 })
 
-test('liberar el canje del mes permite canjear de nuevo', async () => {
-  const { liberarCanjeDelMes } = await import('../src/logic/prueba.js')
-  const { canjear, puedeCanjearEsteMes } = await import('../src/logic/canjes.js')
+test('liberar canjes permite volver a canjear un plan grande', async () => {
+  const { liberarCanjes } = await import('../src/logic/prueba.js')
+  const { canjear } = await import('../src/logic/canjes.js')
   const oct = new Date('2026-10-24T18:00:00')
-  let e = canjear({ ...crearEstadoInicial(), puntos: 100 }, 'helado', oct).estado
-  assert.equal(puedeCanjearEsteMes(e, oct), false)
-  e = liberarCanjeDelMes(e, oct)
-  assert.equal(puedeCanjearEsteMes(e, oct), true)
-  assert.equal(e.cupones.length, 1, 'el cupón sigue estando')
+  let e = canjear({ ...crearEstadoInicial(), puntos: 300 }, 'comer-afuera', oct).estado
+  assert.equal(canjear(e, 'comer-afuera', oct).resultado, 'en-rotacion')
+  e = liberarCanjes(e)
+  assert.equal(canjear(e, 'comer-afuera', oct).resultado, 'ok')
 })

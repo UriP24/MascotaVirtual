@@ -94,15 +94,13 @@ export function llenarBandeja(estado) {
   return { ...estado, inventario }
 }
 
-// Mueve los cupones de este mes al mes pasado: libera el canje del mes para volver a probar.
-export function liberarCanjeDelMes(estado, ahora = new Date()) {
-  const esteMes = fechaLocal(ahora).slice(0, 7)
+// Corre todos los cupones 3 meses para atrás: libera todos los planes para volver a probar.
+export function liberarCanjes(estado) {
   return {
     ...estado,
     cupones: estado.cupones.map((c) => {
       const fecha = new Date(c.fecha)
-      if (fechaLocal(fecha).slice(0, 7) !== esteMes) return c
-      fecha.setMonth(fecha.getMonth() - 1)
+      fecha.setMonth(fecha.getMonth() - 3)
       return { ...c, fecha: fecha.toISOString() }
     }),
   }

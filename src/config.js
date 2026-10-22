@@ -19,8 +19,8 @@ export const ECONOMIA = {
   // Precio de los canjes: 1 punto equivale a esta cantidad de pesos de un plan real
   PESOS_POR_PUNTO: 500,
 
-  // Cuántos canjes se pueden hacer por mes calendario (se renueva el día 1)
-  CANJES_POR_MES: 1,
+  // Margen de puntos que se suma a los planes con precio investigado (por si suben los precios)
+  MARGEN_PUNTOS_PLAN: 5,
 
   // Monedas con las que arranca la app (para poder comprarle comida desde el primer día)
   MONEDAS_DE_BIENVENIDA: 30,
@@ -94,59 +94,84 @@ export const JUEGOS = {
   HUESITOS_MONEDAS_POR_HUESITO: 1,
 }
 
-// Planes para canjear. El precio en puntos se calcula con precioEnPuntos() (pesos / PESOS_POR_PUNTO).
+// Planes para canjear. Cada plan se puede canjear 1 vez cada `rotacionMeses` meses calendario
+// (los grandes, cada 3 meses). Se pueden canjear varios planes distintos en el mismo mes.
+//
+// Precio en puntos (ver precioEnPuntos):
+// - Salidas de a dos: los puntos cubren la parte de Mari = costo para los dos / 2 / PESOS_POR_PUNTO.
+// - `margen: true`: suma MARGEN_PUNTOS_PLAN (precios investigados en octubre 2026, por si suben).
+// - Redondeo: si la unidad queda en 5 o más, sube a la decena siguiente (67 → 70); si no, queda.
+// - `puntosFijos`: planes que no son plata (el masaje).
 export const PLANES = [
   {
     id: 'comer-afuera',
     nombre: 'Salir a comer',
     emoji: '🍝',
-    costoPesos: 40000,
+    costoParaDos: 90000, // ~$45.000 por persona en un restaurante medio, con propina
+    margen: true,
+    rotacionMeses: 3,
     descripcion: 'Elegís el lugar y pedís lo que quieras, invito yo',
-  },
-  {
-    id: 'dia-de-parque',
-    nombre: 'Día de parque',
-    emoji: '🌳',
-    costoPesos: 10000,
-    descripcion: 'Mate, facturas y una tarde al sol en el parque que elijas',
-  },
-  {
-    id: 'masaje',
-    nombre: 'Una hora de masaje',
-    emoji: '💆',
-    costoPesos: 15000,
-    descripcion: 'Una hora entera de masajes, sin apuro y con aceite',
   },
   {
     id: 'cine',
     nombre: 'Ir al cine',
     emoji: '🎬',
-    costoPesos: 20000,
+    costoParaDos: 62000, // 2 entradas 2D (~$21.000 c/u) + combo grande (~$20.000)
+    margen: true,
+    rotacionMeses: 3,
     descripcion: 'La película que vos elijas, con pochoclos incluidos',
-  },
-  {
-    id: 'helado',
-    nombre: 'Salida por helado',
-    emoji: '🍦',
-    costoPesos: 8000,
-    descripcion: 'Un helado del tamaño que quieras, en tu heladería favorita',
   },
   {
     id: 'cena-casera',
     nombre: 'Cena casera',
     emoji: '🍲',
-    costoPesos: 12000,
+    costoParaDos: 40000,
+    margen: true,
+    rotacionMeses: 3,
     descripcion: 'Te cocino lo que me pidas y después lavo todo yo',
+  },
+  {
+    id: 'helado',
+    nombre: 'Salida por helado',
+    emoji: '🍦',
+    costoParaDos: 25000, // 1 kg de Cremolati
+    margen: true,
+    rotacionMeses: 1,
+    descripcion: 'Un kilo de Cremolati para compartir, de los gustos que quieras',
   },
   {
     id: 'cafe',
     nombre: 'Salir a tomar un café',
     emoji: '☕',
-    costoPesos: 10000,
-    descripcion: 'Un cafecito con algo rico, en el lugar que elijas',
+    costoParaDos: 20000, // café con cookie, $8.000–$10.000 c/u
+    margen: true,
+    rotacionMeses: 1,
+    descripcion: 'Un cafecito con una cookie, en el lugar que elijas',
+  },
+  {
+    id: 'masaje',
+    nombre: 'Media hora de masaje',
+    emoji: '💆',
+    puntosFijos: 35,
+    rotacionMeses: 1,
+    descripcion: 'Media hora de masajes, sin apuro y con aceite',
+  },
+  {
+    id: 'dia-de-parque',
+    nombre: 'Día de parque',
+    emoji: '🌳',
+    costoParaDos: 10000,
+    rotacionMeses: 1,
+    descripcion: 'Salir a pasear, caminar o patinar juntos, con mate y facturas',
   },
 ]
 
+// Si la unidad es 5 o más, sube a la decena siguiente; si no, queda igual (67 → 70, 30 → 30).
+function redondear(puntos) {
+  return puntos % 10 >= 5 ? Math.ceil(puntos / 10) * 10 : puntos
+}
+
 export function precioEnPuntos(plan) {
-  return Math.ceil(plan.costoPesos / ECONOMIA.PESOS_POR_PUNTO)
+  const base = plan.puntosFijos ?? Math.ceil(plan.costoParaDos / 2 / ECONOMIA.PESOS_POR_PUNTO)
+  return redondear(base + (plan.margen ? ECONOMIA.MARGEN_PUNTOS_PLAN : 0))
 }

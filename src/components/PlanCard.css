@@ -54,3 +54,17 @@
   background: var(--color-borde);
   color: var(--color-texto-suave);
 }
+
+.plan-card .info .rotacion {
+  margin-top: 2px;
+  color: var(--color-secundario-oscuro);
+  font-weight: 600;
+}
+
+.plan-card.bloqueado .info .rotacion {
+  color: #5e43a8;
+}
+
+.plan-card.bloqueado .emoji {
+  opacity: 0.5;
+}

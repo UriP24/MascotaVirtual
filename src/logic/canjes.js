@@ -1,30 +1,33 @@
 // Lógica pura de los canjes: cambiar puntos por un plan juntos y guardar el cupón.
-// Límite: CANJES_POR_MES canjes por mes calendario (se renueva el día 1), validado con la fecha
-// de los cupones. Canjear resta del saldo, pero puntosGanadosTotal nunca baja.
+// Cada plan se puede canjear 1 vez cada `rotacionMeses` meses calendario (validado con la fecha
+// de sus cupones). Se pueden canjear planes distintos en el mismo mes.
+// Canjear resta del saldo, pero puntosGanadosTotal nunca baja.
 
-import { ECONOMIA, PLANES, precioEnPuntos } from '../config.js'
-import { fechaLocal } from './fechas.js'
-
-function mes(fecha) {
-  return fechaLocal(fecha).slice(0, 7) // 'AAAA-MM'
-}
+import { PLANES, precioEnPuntos } from '../config.js'
 
 export function buscarPlan(id) {
   return PLANES.find((p) => p.id === id)
 }
 
-export function canjesDelMes(estado, ahora = new Date()) {
-  const esteMes = mes(ahora)
-  return estado.cupones.filter((c) => mes(new Date(c.fecha)) === esteMes).length
+// Meses calendario entre dos fechas (octubre → enero = 3)
+function mesesEntre(desde, hasta) {
+  return (hasta.getFullYear() - desde.getFullYear()) * 12 + (hasta.getMonth() - desde.getMonth())
 }
 
-export function puedeCanjearEsteMes(estado, ahora = new Date()) {
-  return canjesDelMes(estado, ahora) < ECONOMIA.CANJES_POR_MES
+function ultimoCupon(estado, planId) {
+  const cupones = estado.cupones.filter((c) => c.planId === planId)
+  if (cupones.length === 0) return null
+  return cupones.reduce((ultimo, c) => (new Date(c.fecha) > new Date(ultimo.fecha) ? c : ultimo))
 }
 
-// El día 1 del mes que viene, a las 00:00
-export function proximoCanje(ahora = new Date()) {
-  return new Date(ahora.getFullYear(), ahora.getMonth() + 1, 1)
+// Fecha desde la que se puede volver a canjear el plan (día 1 del mes que corresponda),
+// o null si ya está disponible.
+export function disponibleDesde(estado, plan, ahora = new Date()) {
+  const ultimo = ultimoCupon(estado, plan.id)
+  if (!ultimo) return null
+  const fecha = new Date(ultimo.fecha)
+  if (mesesEntre(fecha, ahora) >= plan.rotacionMeses) return null
+  return new Date(fecha.getFullYear(), fecha.getMonth() + plan.rotacionMeses, 1)
 }
 
 export function puntosQueFaltan(estado, plan) {
@@ -35,11 +38,11 @@ function crearId() {
   return Date.now().toString(36) + Math.random().toString(36).slice(2, 8)
 }
 
-// Devuelve { estado, resultado }: 'ok' | 'sin-puntos' | 'limite-mes' | 'no-existe'
+// Devuelve { estado, resultado }: 'ok' | 'sin-puntos' | 'en-rotacion' | 'no-existe'
 export function canjear(estado, planId, ahora = new Date()) {
   const plan = buscarPlan(planId)
   if (!plan) return { estado, resultado: 'no-existe' }
-  if (!puedeCanjearEsteMes(estado, ahora)) return { estado, resultado: 'limite-mes' }
+  if (disponibleDesde(estado, plan, ahora)) return { estado, resultado: 'en-rotacion' }
   const costo = precioEnPuntos(plan)
   if (estado.puntos < costo) return { estado, resultado: 'sin-puntos' }
   const cupon = {
@@ -69,4 +72,12 @@ export function marcarCumplido(estado, cuponId, ahora = new Date()) {
 
 export function formatearFecha(fecha) {
   return new Date(fecha).toLocaleDateString('es-AR', { day: 'numeric', month: 'long' })
+}
+
+export function nombreDelMes(fecha) {
+  return new Date(fecha).toLocaleDateString('es-AR', { month: 'long' })
+}
+
+export function textoRotacion(plan) {
+  return plan.rotacionMeses === 1 ? '1 vez por mes' : `1 vez cada ${plan.rotacionMeses} meses`
 }

@@ -5,7 +5,7 @@ import CouponItem from '../components/CouponItem.jsx'
 import CoinExchange from '../components/CoinExchange.jsx'
 import ConfirmDialog from '../components/ConfirmDialog.jsx'
 import Toast from '../components/Toast.jsx'
-import { canjear, formatearFecha, marcarCumplido, proximoCanje, puedeCanjearEsteMes } from '../logic/canjes.js'
+import { canjear, disponibleDesde, marcarCumplido, nombreDelMes, textoRotacion } from '../logic/canjes.js'
 import { convertirMonedas, puntosConvertiblesHoy } from '../logic/economia.js'
 import { festejarLogro } from '../logic/festejo.js'
 import './Canjes.css'
@@ -22,8 +22,6 @@ function Canjes({ estado, setEstado }) {
 
   // "Ahora" = última actualización del estado (App lo refresca cada minuto)
   const ahora = new Date(estado.perrita.actualizadaEn)
-  const disponible = puedeCanjearEsteMes(estado, ahora)
-  const nombreMes = ahora.toLocaleDateString('es-AR', { month: 'long' })
   const pendientes = estado.cupones.filter((c) => !c.cumplido)
   const cumplidos = estado.cupones.filter((c) => c.cumplido)
 
@@ -46,18 +44,9 @@ function Canjes({ estado, setEstado }) {
     <section className="pantalla canjes">
       <h1>🎁 Canjes</h1>
 
-      <div className={`cartel-mes ${disponible ? 'disponible' : 'usado'}`}>
-        {disponible ? (
-          <>
-            <strong>✅ Tu canje de {nombreMes} está disponible</strong>
-            <small>Podés canjear un plan por mes. ¡Elegí con cuidado!</small>
-          </>
-        ) : (
-          <>
-            <strong>🗓️ Ya usaste el canje de {nombreMes}</strong>
-            <small>Vuelve a estar disponible el {formatearFecha(proximoCanje(ahora))}</small>
-          </>
-        )}
+      <div className="cartel-reglas">
+        <strong>🎁 Canjeá puntos por planes juntos</strong>
+        <small>Podés canjear varios. Cada plan, 1 vez por mes; los grandes 🍝 🎬 🍲, 1 vez cada 3 meses.</small>
       </div>
 
       <CoinExchange monedas={estado.monedas} quedanHoy={puntosConvertiblesHoy(estado, ahora)} onCambiar={cambiarMonedas} />
@@ -65,7 +54,13 @@ function Canjes({ estado, setEstado }) {
       <h2>Planes juntos</h2>
       <ul className="lista">
         {PLANES.map((plan) => (
-          <PlanCard key={plan.id} plan={plan} puntos={estado.puntos} disponibleEsteMes={disponible} onCanjear={setPlanElegido} />
+          <PlanCard
+            key={plan.id}
+            plan={plan}
+            puntos={estado.puntos}
+            vuelveEl={disponibleDesde(estado, plan, ahora)}
+            onCanjear={setPlanElegido}
+          />
         ))}
       </ul>
 
@@ -90,7 +85,10 @@ function Canjes({ estado, setEstado }) {
           <p>
             ¿Canjear por <strong>{precioEnPuntos(planElegido)} ⭐</strong>?
           </p>
-          <p>Es tu canje de {nombreMes}: hasta el {formatearFecha(proximoCanje(ahora))} no vas a poder canjear otro.</p>
+          <p>
+            Se canjea {textoRotacion(planElegido)}: lo vas a poder volver a canjear en{' '}
+            {nombreDelMes(new Date(ahora.getFullYear(), ahora.getMonth() + planElegido.rotacionMeses, 1))}.
+          </p>
         </ConfirmDialog>
       )}
 

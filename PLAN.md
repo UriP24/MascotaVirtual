@@ -72,15 +72,21 @@ Si un día no llego, se recorta primero el minijuego; el resto del plan se corre
 ## Sáb 24 — Canjes + economía nueva ✅
 - [x] Economía anti-trampas: las tareas dan **monedas** (simple +5, grande +10, solo las 5 primeras
       del día, el tope no se reinicia borrando tareas); cambio **100 🪙 → 1 ⭐, máx. 1 por día**
-- [x] 7 planes con descripción: salir a comer, parque, masaje, cine, helado, cena casera, café
-- [x] `logic/canjes.js`: cupones con fecha, **1 canje por mes** (se renueva el día 1), marcar cumplido;
+- [x] 7 planes con descripción y **precios investigados**: los puntos cubren la parte de Mari
+      (costo para dos / 2 / 500, +5 de margen, redondeo a la decena si la unidad es ≥ 5):
+      salir a comer 100 ⭐, cine 70, cena casera 50, helado 30, café 30, media hora de masaje 40, parque 10
+- [x] **Rotación por plan** en vez de 1 canje por mes: varios planes en el mismo mes, cada uno
+      1 vez por mes; los grandes (comer, cine, cena casera) 1 vez cada 3 meses
+- [x] `logic/canjes.js`: cupones con fecha, rotación por plan, marcar cumplido;
       el saldo baja pero `puntosGanadosTotal` nunca
-- [x] Pantalla Canjes: cartel del mes ("disponible" o "vuelve el 1 de noviembre"), cambio de monedas,
+- [x] Pantalla Canjes: reglas, "🔒 Vuelve en enero" por plan, cambio de monedas,
       tarjetas de planes ("te faltan N ⭐"), confirmación en la app, "Mis cupones"
 - [x] Bolti festeja el canje ("¡Que disfruten el plan! 💕")
-- [x] Modo prueba: liberar canje del mes, liberar cambio de hoy, borrar cupones, +100 🪙
+- [x] Modo prueba: liberar canjes, liberar cambio de hoy, borrar cupones, +100 🪙
 - [x] `/balance-check`: SANO (minijuego sin evaluar). 55 pruebas automáticas
 - [ ] Decidir recomendaciones del balance (igualar "grande", festejo para premios) — Uri
+- [ ] Decidir: ¿estudio 1 ⭐ cada 30 o 45 min? (con 30, lo que pone Uri por Mari rinde ~$37–52 mil/mes máx.) — Uri
+- [ ] Decidir: blindar los topes diarios contra cambiar la fecha del celular (fechas futuras cuentan como usadas) — Uri
 
 ## Dom 25 — Jugar
 - [ ] Botón "Jugar" con lista de minijuegos (energía mínima, cuesta energía, da cariño)

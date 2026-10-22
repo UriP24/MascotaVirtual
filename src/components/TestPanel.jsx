@@ -3,7 +3,7 @@ import {
   adelantarBolti,
   cambiarBolti,
   llenarBandeja,
-  liberarCanjeDelMes,
+  liberarCanjes,
   borrarCupones,
   liberarCambioDelDia,
   reiniciarTodo,
@@ -54,7 +54,7 @@ function TestPanel({ estado, setEstado }) {
     {
       titulo: '🎁 Canjes',
       acciones: [
-        ['Liberar canje del mes', (e) => liberarCanjeDelMes(e)],
+        ['Liberar canjes', (e) => liberarCanjes(e)],
         ['Liberar cambio de hoy', (e) => liberarCambioDelDia(e)],
         ['Borrar cupones', (e) => borrarCupones(e)],
       ],
