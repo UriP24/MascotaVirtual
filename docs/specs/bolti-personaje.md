@@ -44,7 +44,9 @@ real, aunque la app esté cerrada. **Nunca se enferma ni muere.**
      "Una siestita… 😴", "No tengo sueño todavía 🐶", "¡Buen día! ☀️" / "¿Ya es de día? 🥱".
 6. **Jugar:** abre la lista de minijuegos. Cada partida da 🪙 y +8 de cariño, y cuesta −10 de
    energía. No juega con menos de 10 de energía o dormida ("Estoy cansada… 🥱").
-   - Antes del cumple: "Atrapá los huesitos" (45 s, 1 🪙 por huesito).
+   - "Atrapá los huesitos": 45 s, Bolti abajo sigue el dedo. 🦴 +1 🪙, 🍖 dorado +3 🪙 (raro),
+     🍫 chocolate saca una de las 3 vidas (nunca resta monedas). Cada vez cae más rápido y seguido.
+     Tope de 40 🪙 por partida. Se pausa sola si la app pasa a segundo plano.
    - Después: más minijuegos.
 7. **Frases** en una burbuja cuando cambia el humor, al tocarla y en momentos especiales
    (completó una tarea, terminó de estudiar, cumpleaños).

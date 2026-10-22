@@ -37,6 +37,7 @@ function TestPanel({ estado, setEstado }) {
         ['Con hambre', (e) => cambiarBolti(e, { saciedad: 15 })],
         ['Triste', (e) => cambiarBolti(e, { carino: 15, saciedad: Math.max(e.perrita.saciedad, 50) })],
         ['Cansada', (e) => cambiarBolti(e, { energia: 15 })],
+        ['Energía llena', (e) => cambiarBolti(e, { energia: 100 })],
         ['Dormida', (e) => cambiarBolti(e, { durmiendo: true })],
         ['Todo lleno', (e) => cambiarBolti(e, { saciedad: 100, energia: 100, carino: 100 })],
         ['Contenta normal', (e) => cambiarBolti(e, { saciedad: 80, energia: 80, carino: 80 })],
