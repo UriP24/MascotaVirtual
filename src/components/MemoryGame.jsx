@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Bolti from './Bolti.jsx'
 import { avanzar, configNivel, crearPartida, seVe, tocarCarta } from '../logic/memoria.js'
+import { formatearPuntaje } from '../logic/puntaje.js'
 import './MemoryGame.css'
 
 // Minijuego "Memoria de Bolti": encontrar los pares de cosas de su vida antes de que se acabe el tiempo.
@@ -18,7 +19,7 @@ function MemoryGame({ onTerminar }) {
   })
 
   function resultado(p) {
-    return { monedas: p.monedas, pares: p.pares, niveles: p.nivelesSuperados }
+    return { puntaje: p.puntos, pares: p.pares, niveles: p.nivelesSuperados }
   }
 
   // Si la app pasa a segundo plano, se pausa sola
@@ -77,21 +78,21 @@ function MemoryGame({ onTerminar }) {
       <div className="marcador">
         <span className={segundos <= 10 ? 'apurada' : ''}>⏱ {segundos}</span>
         <span>Nivel {partida.nivel}</span>
-        <span>🪙 {partida.monedas}</span>
+        <span>⭐ {formatearPuntaje(partida.puntos)}</span>
         <button className="pausa" onClick={() => setPausado(true)} aria-label="Pausar">
           ⏸️
         </button>
       </div>
 
-      <p className="consigna">{partida.vistazo > 0 ? '¡Memorizá! 👀' : 'Encontrá los pares'}</p>
+      <p className="consigna">{partida.evento === 'par' && partida.aLaPrimera ? '¡A la primera! +10 ✨' : 'Encontrá los pares'}</p>
 
       <div className="tablero" style={{ gridTemplateColumns: `repeat(${columnas}, 1fr)` }}>
         {partida.cartas.map((c, i) => (
           <button
             key={c.id}
-            className={`carta ${seVe(partida, c) ? 'dada-vuelta' : ''} ${c.estado === 'encontrada' ? 'encontrada' : ''}`}
+            className={`carta ${seVe(c) ? 'dada-vuelta' : ''} ${c.estado === 'encontrada' ? 'encontrada' : ''}`}
             onClick={() => tocar(i)}
-            aria-label={seVe(partida, c) ? c.simbolo : 'Carta tapada'}
+            aria-label={seVe(c) ? c.simbolo : 'Carta tapada'}
           >
             <span className="cara dorso" aria-hidden="true">
               🐾

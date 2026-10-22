@@ -3,6 +3,7 @@ import { JUEGOS } from '../config.js'
 import CatchBones from '../components/CatchBones.jsx'
 import MemoryGame from '../components/MemoryGame.jsx'
 import { empezarPartida, puedeJugar, terminarPartida } from '../logic/juegos.js'
+import { formatearPuntaje } from '../logic/puntaje.js'
 import './Jugar.css'
 
 const MOTIVOS = {
@@ -15,7 +16,7 @@ const MINIJUEGOS = [
     id: 'huesitos',
     emoji: '🦴',
     nombre: 'Atrapá los huesitos',
-    descripcion: 'Mové a Bolti con el dedo y atrapá los huesitos que caen. ¡Ojo con el chocolate 🍫!',
+    descripcion: 'Atrapá huesitos con Bolti: si no tocás chocolate 🍫, la racha multiplica los puntos.',
     detalle: `${JUEGOS.HUESITOS_DURACION_SEGUNDOS} s`,
     Componente: CatchBones,
   },
@@ -31,8 +32,9 @@ const MINIJUEGOS = [
 
 function textoResultado(r) {
   if (r.juego === 'memoria') {
-    const niveles = r.niveles === 1 ? '1 nivel' : `${r.niveles} niveles`
-    return `¡Encontraste ${r.pares} ${r.pares === 1 ? 'par' : 'pares'} y pasaste ${niveles}!`
+    const pares = `${r.pares} ${r.pares === 1 ? 'par' : 'pares'}`
+    if (r.niveles === 0) return `¡Encontraste ${pares}!`
+    return `¡Encontraste ${pares} y pasaste ${r.niveles === 1 ? '1 nivel' : `${r.niveles} niveles`}!`
   }
   return `¡Atrapaste ${r.huesos} ${r.huesos === 1 ? 'huesito' : 'huesitos'}!`
 }
@@ -51,8 +53,9 @@ function Jugar({ estado, setEstado }) {
   }
 
   function terminar(r) {
-    setEstado((e) => terminarPartida(e, r.monedas))
-    setResultado({ ...r, juego: jugando })
+    const fin = terminarPartida(estado, jugando, r.puntaje)
+    setEstado(fin.estado)
+    setResultado({ ...r, juego: jugando, monedas: fin.monedas, nuevoRecord: fin.nuevoRecord })
     setJugando(null)
   }
 
@@ -72,12 +75,13 @@ function Jugar({ estado, setEstado }) {
 
       {resultado && (
         <div className="resultado" role="status">
-          <span className="grande">🎉</span>
+          <span className="grande">{resultado.nuevoRecord ? '🏆' : '🎉'}</span>
           <strong>{textoResultado(resultado)}</strong>
+          <span className="puntaje">⭐ {formatearPuntaje(resultado.puntaje)} puntos</span>
+          {resultado.nuevoRecord && <span className="record">¡Nuevo récord! 🏆 +{JUEGOS.MONEDAS_POR_RECORD} 🪙</span>}
           <span>
             +{resultado.monedas} 🪙 · +{JUEGOS.CARINO_POR_PARTIDA} 💗 · −{JUEGOS.ENERGIA_POR_PARTIDA} ⚡
           </span>
-          {resultado.monedas >= JUEGOS.MONEDAS_MAXIMAS_POR_PARTIDA && <small>¡Llegaste al máximo de la partida!</small>}
         </div>
       )}
 
@@ -91,9 +95,9 @@ function Jugar({ estado, setEstado }) {
               <strong>{m.nombre}</strong>
               <small>{m.descripcion}</small>
               <small className="detalle">
-                {m.detalle} · cuesta {JUEGOS.ENERGIA_POR_PARTIDA} ⚡ · hasta {JUEGOS.MONEDAS_MAXIMAS_POR_PARTIDA} 🪙 y +
-                {JUEGOS.CARINO_POR_PARTIDA} 💗
+                {m.detalle} · cuesta {JUEGOS.ENERGIA_POR_PARTIDA} ⚡ · más puntos, más 🪙 · +{JUEGOS.CARINO_POR_PARTIDA} 💗
               </small>
+              {estado.records?.[m.id] > 0 && <small className="record-juego">🏆 Récord: {formatearPuntaje(estado.records[m.id])}</small>}
             </div>
             <button onClick={() => jugar(m.id)} disabled={!disponible.ok} aria-label={`Jugar ${m.nombre}`}>
               {resultado?.juego === m.id ? 'Otra vez' : 'Jugar'}

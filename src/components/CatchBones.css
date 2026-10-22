@@ -163,3 +163,7 @@
     transform: translateX(-50%) scale(1.1);
   }
 }
+
+.catch-bones .racha {
+  color: var(--color-principal-oscuro);
+}

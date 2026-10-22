@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Bolti from './Bolti.jsx'
-import { crearJuego, enTurbo, moverBolti, paso, segundosRestantes } from '../logic/huesitos.js'
+import { crearJuego, enTurbo, moverBolti, multiplicadorRacha, paso, puntajeFinal, segundosRestantes } from '../logic/huesitos.js'
+import { formatearPuntaje } from '../logic/puntaje.js'
 import { JUEGOS } from '../config.js'
 import './CatchBones.css'
 
@@ -59,7 +60,7 @@ function CatchBones({ onTerminar }) {
         const nuevos = j.eventos.map((ev) => ({
           id: `${j.t}-${ev.x}`,
           x: ev.x,
-          texto: ev.tipo === 'chocolate' ? '💔' : `+${ev.gana}`,
+          texto: ev.tipo === 'chocolate' ? '💔' : `+${ev.gana}${ev.multiplicador > 1 ? ` ×${ev.multiplicador}` : ''}`,
           dorado: ev.tipo === 'dorado',
         }))
         setTextos((lista) => [...lista, ...nuevos])
@@ -67,13 +68,17 @@ function CatchBones({ onTerminar }) {
       }
       setJuego(j)
       if (j.terminado) {
-        terminarRef.current({ monedas: j.monedas, huesos: j.huesos, vidas: j.vidas })
+        terminarRef.current(resultado(j))
         return
       }
       id = requestAnimationFrame(cuadro)
     })
     return () => cancelAnimationFrame(id)
   }, [cuenta, pausado])
+
+  function resultado(j) {
+    return { puntaje: puntajeFinal(j), huesos: j.huesos, vidas: j.vidas }
+  }
 
   function moverDedo(e) {
     const r = areaRef.current.getBoundingClientRect()
@@ -88,8 +93,8 @@ function CatchBones({ onTerminar }) {
       <div className="marcador">
         <span>⏱ {segundosRestantes(juego)}</span>
         <span>
-          🦴 {juego.huesos} · 🪙 {juego.monedas}
-          {juego.monedas >= JUEGOS.MONEDAS_MAXIMAS_POR_PARTIDA && ' (máx.)'}
+          ⭐ {formatearPuntaje(juego.puntos)}
+          {multiplicadorRacha(juego.racha) > 1 && <b className="racha"> 🔥×{multiplicadorRacha(juego.racha)}</b>}
         </span>
         <span className="vidas" aria-label={`${juego.vidas} vidas`}>
           {'❤️'.repeat(juego.vidas)}
@@ -133,7 +138,7 @@ function CatchBones({ onTerminar }) {
         <div className="cartel" onPointerDown={(e) => e.stopPropagation()}>
           <strong>⏸️ Pausa</strong>
           <button onClick={() => setPausado(false)}>▶ Seguir</button>
-          <button className="secundario" onClick={() => onTerminar({ monedas: juego.monedas, huesos: juego.huesos, vidas: juego.vidas })}>
+          <button className="secundario" onClick={() => onTerminar(resultado(juegoRef.current))}>
             Terminar acá
           </button>
         </div>

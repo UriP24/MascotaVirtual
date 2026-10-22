@@ -20,7 +20,9 @@ PWA instalable en el celular con cuatro pantallas:
 
 ### Economía (valores provisorios, todos en `src/config.js`)
 - **Monedas 🪙**: se ganan con **tareas** (simple +5, grande +10; solo las **primeras 5 tareas del
-  día** dan monedas, el contador no baja si se borran) y con el **minijuego**. Se gastan en comida
+  día** dan monedas, el contador no baja si se borran) y con los **minijuegos** (cada uno da un
+  puntaje que se convierte en monedas con la tabla de `JUEGOS.PUNTAJE_A_MONEDAS`, sin tope; los
+  frena la energía de Bolti). Se gastan en comida
   para Bolti o se cambian por puntos: **100 🪙 → 1 ⭐, máximo 1 ⭐ por día**.
 - **Puntos ⭐** (premium): 1 punto = $500 de un plan real, tienen que costar. Salen sobre todo del
   **estudio** (1 cada 30 min, tope 4 h/día) y del cambio diario de monedas. Las tareas **no** dan

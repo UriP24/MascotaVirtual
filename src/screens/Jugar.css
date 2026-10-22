@@ -125,3 +125,21 @@
 .jugar .pronto {
   font-size: 0.85rem;
 }
+
+.jugar .resultado .puntaje {
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+
+.jugar .resultado .record {
+  padding: 2px 12px;
+  border-radius: 999px;
+  background: #fff3c4;
+  color: #9a6a12;
+  font-weight: 700;
+}
+
+.jugar .juego .info .record-juego {
+  color: #9a6a12;
+  font-weight: 700;
+}

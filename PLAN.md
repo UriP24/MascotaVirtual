@@ -109,8 +109,11 @@ Si un día no llego, se recorta primero el minijuego; el resto del plan se corre
 - [x] Modo prueba: "Energía llena". 69 pruebas automáticas
 - [x] Huesitos más difícil: 40 s, más cantidad y dorados; velocidad por escalones (lenta 5 s, sube a
       los 5 y a los 15 s, "¡Más rápido! 🔥" en los últimos 15 s); área de atrape solo cabeza y boca
-- [x] Minijuego **"Memoria de Bolti"**: límite por tiempo con bonus por nivel (3 → 4 → 6 → 8 pares,
-      vistazo 2 s → 1,5 → 1 → 0), +1 🪙 por par, +2 por nivel, tope 40
+- [x] Minijuego **"Memoria de Bolti"**: cartas tapadas desde el principio, límite por tiempo con bonus
+      por nivel (3 → 4 → 6 → 8 pares), equivocarse no resta tiempo
+- [x] Huesitos: el doble de cosas cayendo (~160 por partida), a veces dos a la vez
+- [x] **Puntajes** en los dos juegos (racha ×2/×3, par a la primera, bonus por nivel y por corazones) →
+      monedas con una tabla única **sin tope**; **récords** por juego (+5 🪙 al superarlo)
 
 ## Lun 26 — Pulido
 - [ ] Bienvenida con mensaje de cumpleaños y 🎂 torta de regalo el 28/10
