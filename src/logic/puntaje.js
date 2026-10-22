@@ -16,3 +16,8 @@ export function monedasPorPuntaje(puntaje) {
 export function formatearPuntaje(puntaje) {
   return Math.round(puntaje).toLocaleString('es-AR')
 }
+
+// Premio por récord: crece con el puntaje (500 → +10, 1.000 → +20, 1.500 → +30…), mínimo 5
+export function monedasPorRecord(puntaje) {
+  return Math.max(JUEGOS.RECORD_MONEDAS_MINIMAS, Math.floor(puntaje / 500) * JUEGOS.RECORD_MONEDAS_CADA_500)
+}

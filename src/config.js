@@ -110,7 +110,9 @@ export const JUEGOS = {
   ],
   PUNTAJE_EXTRA_CADA: 300,
   MONEDAS_EXTRA: 5,
-  MONEDAS_POR_RECORD: 5, // premio por superar el récord del juego
+  // Premio por superar el récord del juego: +10 monedas cada 500 puntos del récord nuevo (mínimo 5)
+  RECORD_MONEDAS_MINIMAS: 5,
+  RECORD_MONEDAS_CADA_500: 10,
 
   // Minijuego "Atrapá los huesitos"
   HUESITOS_DURACION_SEGUNDOS: 40,

@@ -2,7 +2,7 @@ import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { crearEstadoInicial } from '../src/storage.js'
 import { crearJuego, etapa, moverBolti, paso, puntajeFinal, multiplicadorRacha } from '../src/logic/huesitos.js'
-import { monedasPorPuntaje } from '../src/logic/puntaje.js'
+import { monedasPorPuntaje, monedasPorRecord } from '../src/logic/puntaje.js'
 import { empezarPartida, puedeJugar, terminarPartida } from '../src/logic/juegos.js'
 
 const TARDE = new Date('2026-10-25T16:00:00').getTime()
@@ -40,9 +40,9 @@ test('empezar gasta 10 de energía; terminar convierte el puntaje en monedas, ca
   let e = empezarPartida(estado({ energia: 50, carino: 60 }), TARDE)
   assert.equal(e.perrita.energia, 40)
   const r = terminarPartida(e, 'huesitos', 850)
-  assert.equal(r.monedas, 25 + 5, '850 puntos = 25 monedas, +5 por ser el primer récord')
+  assert.equal(r.monedas, 25 + 10, '850 puntos = 25 monedas, +10 por ser récord de más de 500')
   assert.equal(r.nuevoRecord, true)
-  assert.equal(r.estado.monedas, 30)
+  assert.equal(r.estado.monedas, 35)
   assert.equal(r.estado.perrita.carino, 68)
   assert.equal(r.estado.records.huesitos, 850)
   assert.ok(r.estado.perrita.festejo.juegos > 0)
@@ -134,4 +134,8 @@ test('cae bastante cantidad: más de 120 cosas por partida y varios dorados', ()
   }
   assert.ok(vistos.size > 120, `cosas: ${vistos.size}`)
   assert.ok(dorados >= 10, `dorados: ${dorados}`)
+})
+
+test('el premio por récord crece con el puntaje: 500 → +10, 1.000 → +20, mínimo 5', () => {
+  assert.deepEqual([100, 499, 500, 999, 1000, 1500, 2300].map(monedasPorRecord), [5, 5, 10, 10, 20, 30, 40])
 })

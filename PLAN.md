@@ -112,12 +112,13 @@ Si un día no llego, se recorta primero el minijuego; el resto del plan se corre
 - [x] Minijuego **"Memoria de Bolti"**: cartas tapadas desde el principio, límite por tiempo con bonus
       por nivel (3 → 4 → 6 → 8 pares), equivocarse no resta tiempo
 - [x] Huesitos: el doble de cosas cayendo (~160 por partida), a veces dos a la vez
+- [x] Premio por récord según el puntaje: +10 🪙 cada 500 puntos (mínimo 5)
 - [x] **Puntajes** en los dos juegos (racha ×2/×3, par a la primera, bonus por nivel y por corazones) →
-      monedas con una tabla única **sin tope**; **récords** por juego (+5 🪙 al superarlo)
+      monedas con una tabla única **sin tope**; **récords** por juego (premio: +10 🪙 cada 500 puntos del récord, mínimo 5)
 
 ## Lun 26 — Pulido
 - [ ] Bienvenida con mensaje de cumpleaños y 🎂 torta de regalo el 28/10
-- [ ] Comidas favoritas reales de Bolti (Uri le pregunta a Mari)
+- [x] Comidas de Bolti: Mari dijo "comida de perro" → plato de croquetas (más premios que eligió Uri)
 - [ ] Ícono definitivo con Bolti
 - [ ] Aviso si falla el guardado; exportar/importar progreso (respaldo)
 - [ ] `/ux-review` de toda la app a 360 px
@@ -143,6 +144,17 @@ Si un día no llego, se recorta primero el minijuego; el resto del plan se corre
   - [ ] 🎾 **Tirale la pelota:** deslizar el dedo para tirar; Bolti la atrapa en el aire
   - [ ] 🕳️ **¿Dónde está el hueso?:** Bolti lo entierra en uno de 3 pozos, se mezclan y hay que adivinar
   - [ ] 🐦 **Bolti y las palomas:** tocar las palomas de la plaza antes de que se vuelen
+- [ ] **Potenciadores para romper récords** (idea de Uri, a futuro): objetos que se compran con 🪙 en
+      una tienda (o que aparecen dentro del juego) y se usan en una partida para tener más chances de
+      superar el récord. Ideas:
+  - [ ] ⏱️ **Reloj:** +10 s de partida (memoria o huesitos)
+  - [ ] 🧊 **Hielo:** en huesitos, cámara lenta unos segundos para agarrar mejor huesitos y carne
+  - [ ] 🛡️ **Escudo de hueso:** el primer chocolate no saca corazón
+  - [ ] 🧲 **Imán:** en huesitos, los huesitos cercanos van solos a la boca de Bolti unos segundos
+  - [ ] 🔍 **Lupa:** en memoria, muestra un par un segundo
+  - [ ] ✨ **Puntos dobles:** ×2 los primeros 10 s
+  - Decidir: precios (que no se coman todas las monedas de la comida), máximo 1 por partida, y si
+    la partida con potenciador cuenta igual para el récord
 - [ ] Sincronización en la nube
 - [ ] **Notificaciones** (pedido de Uri): si a cierta hora (ej. 19:00) no completó el estudio del día,
       una notificación suave de Bolti ("¿Estudiamos un ratito? 📚"), como mucho 1–2 por día.

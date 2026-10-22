@@ -55,7 +55,7 @@ function Jugar({ estado, setEstado }) {
   function terminar(r) {
     const fin = terminarPartida(estado, jugando, r.puntaje)
     setEstado(fin.estado)
-    setResultado({ ...r, juego: jugando, monedas: fin.monedas, nuevoRecord: fin.nuevoRecord })
+    setResultado({ ...r, juego: jugando, monedas: fin.monedas, nuevoRecord: fin.nuevoRecord, premioRecord: fin.premioRecord })
     setJugando(null)
   }
 
@@ -78,7 +78,7 @@ function Jugar({ estado, setEstado }) {
           <span className="grande">{resultado.nuevoRecord ? '🏆' : '🎉'}</span>
           <strong>{textoResultado(resultado)}</strong>
           <span className="puntaje">⭐ {formatearPuntaje(resultado.puntaje)} puntos</span>
-          {resultado.nuevoRecord && <span className="record">¡Nuevo récord! 🏆 +{JUEGOS.MONEDAS_POR_RECORD} 🪙</span>}
+          {resultado.nuevoRecord && <span className="record">¡Nuevo récord! 🏆 +{resultado.premioRecord} 🪙 de premio</span>}
           <span>
             +{resultado.monedas} 🪙 · +{JUEGOS.CARINO_POR_PARTIDA} 💗 · −{JUEGOS.ENERGIA_POR_PARTIDA} ⚡
           </span>

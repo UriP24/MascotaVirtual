@@ -53,7 +53,7 @@ real, aunque la app esté cerrada. **Nunca se enferma ni muere.**
    - **Puntajes → monedas** (sin tope): huesitos +10 / dorado +30, racha ×2 desde 10 seguidos y ×3
      desde 25 (el chocolate la corta), +100 por corazón que queda. Memoria +20 por par, +10 si es a la
      primera, +50 × nivel superado. Tabla: <200 → 5 🪙, 200 → 10, 400 → 15, 600 → 20, 800 → 25,
-     1.000 → 30, 1.300 → 35, 1.600 → 40 y +5 cada 300 más. Récord por juego: +5 🪙 al superarlo.
+     1.000 → 30, 1.300 → 35, 1.600 → 40 y +5 cada 300 más. Récord por juego: al superarlo, +10 🪙 cada 500 puntos del récord (mínimo 5).
    - Después: más minijuegos.
 7. **Frases** en una burbuja cuando cambia el humor, al tocarla y en momentos especiales
    (completó una tarea, terminó de estudiar, cumpleaños).
