@@ -107,7 +107,8 @@ Si un día no llego, se recorta primero el minijuego; el resto del plan se corre
 - [x] Pantalla Jugar con la energía de Bolti y por qué no se puede jugar (dormida o cansada)
 - [x] La cola se mueve con mimos en cualquier estado de ánimo (también al tocarla)
 - [x] Modo prueba: "Energía llena". 69 pruebas automáticas
-- [x] Huesitos más difícil: 40 s, más cantidad y dorados, "¡Más rápido! 🔥" en los últimos 25 s
+- [x] Huesitos más difícil: 40 s, más cantidad y dorados; velocidad por escalones (lenta 5 s, sube a
+      los 5 y a los 15 s, "¡Más rápido! 🔥" en los últimos 15 s); área de atrape solo cabeza y boca
 - [x] Minijuego **"Memoria de Bolti"**: límite por tiempo con bonus por nivel (3 → 4 → 6 → 8 pares,
       vistazo 2 s → 1,5 → 1 → 0), +1 🪙 por par, +2 por nivel, tope 40
 

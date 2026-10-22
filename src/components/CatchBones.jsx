@@ -100,7 +100,7 @@ function CatchBones({ onTerminar }) {
         </button>
       </div>
 
-      {enTurbo(juego) && juego.t < JUEGOS.HUESITOS_DURACION_SEGUNDOS - JUEGOS.HUESITOS_TURBO_SEGUNDOS_FINALES + 1.5 && (
+      {enTurbo(juego) && juego.t < JUEGOS.HUESITOS_ETAPAS.at(-1).desde + 1.5 && (
         <div className="turbo" aria-live="polite">
           ¡Más rápido! 🔥
         </div>

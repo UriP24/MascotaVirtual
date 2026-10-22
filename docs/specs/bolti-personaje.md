@@ -44,7 +44,8 @@ real, aunque la app esté cerrada. **Nunca se enferma ni muere.**
      "Una siestita… 😴", "No tengo sueño todavía 🐶", "¡Buen día! ☀️" / "¿Ya es de día? 🥱".
 6. **Jugar:** abre la lista de minijuegos. Cada partida da 🪙 y +8 de cariño, y cuesta −10 de
    energía. No juega con menos de 10 de energía o dormida ("Estoy cansada… 🥱").
-   - "Atrapá los huesitos": 40 s (a los 25 s del final se pone más rápido y cae más), Bolti sigue el dedo. 🦴 +1 🪙, 🍖 dorado +3 🪙 (raro),
+   - "Atrapá los huesitos": 40 s; velocidad por escalones (lenta 5 s, sube a los 5 y a los 15 s, mucho
+     más rápida los últimos 15 s). Bolti sigue el dedo y solo atrapa con la cabeza o la boca. 🦴 +1 🪙, 🍖 dorado +3 🪙 (raro),
      🍫 chocolate saca una de las 3 vidas (nunca resta monedas). Cada vez cae más rápido y seguido.
      Tope de 40 🪙 por partida. Se pausa sola si la app pasa a segundo plano.
    - "Memoria de Bolti": pares de cosas de su vida. Límite por tiempo (40 s), cada nivel superado

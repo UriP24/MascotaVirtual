@@ -4,27 +4,24 @@
 
 import { JUEGOS } from '../config.js'
 
-const ZONA_ATRAPE_ARRIBA = 0.76 // altura donde Bolti agarra las cosas
-const ZONA_ATRAPE_ABAJO = 0.9
-const ANCHO_ATRAPE = 0.12 // qué tan lejos del centro de Bolti cuenta como atrapado
+// Solo cuenta lo que le cae en la cabeza o la boca (no todo el ancho del cuerpo)
+const ZONA_ATRAPE_ARRIBA = 0.78 // altura donde Bolti agarra las cosas
+const ZONA_ATRAPE_ABAJO = 0.87
+const ANCHO_ATRAPE = 0.075 // qué tan lejos del centro de Bolti cuenta como atrapado (a cada lado)
 const BORDE = 0.08
 
-function mezclar(desde, hasta, progreso) {
-  return desde + (hasta - desde) * progreso
-}
-
-const PROGRESO_ANTES_DEL_TURBO = 0.25
-
-// Qué tan difícil está (de 0 a 1): sube despacio al principio y rápido en los últimos segundos
-export function progresoDificultad(t) {
-  const total = JUEGOS.HUESITOS_DURACION_SEGUNDOS
-  const inicioTurbo = total - JUEGOS.HUESITOS_TURBO_SEGUNDOS_FINALES
-  if (t < inicioTurbo) return PROGRESO_ANTES_DEL_TURBO * (t / inicioTurbo)
-  return Math.min(1, PROGRESO_ANTES_DEL_TURBO + (1 - PROGRESO_ANTES_DEL_TURBO) * ((t - inicioTurbo) / (total - inicioTurbo)))
+// En qué escalón de velocidad está (0 = lento … último = "¡Más rápido! 🔥")
+export function etapa(t) {
+  const etapas = JUEGOS.HUESITOS_ETAPAS
+  let indice = 0
+  etapas.forEach((e, i) => {
+    if (t >= e.desde) indice = i
+  })
+  return indice
 }
 
 export function enTurbo(juego) {
-  return juego.t >= JUEGOS.HUESITOS_DURACION_SEGUNDOS - JUEGOS.HUESITOS_TURBO_SEGUNDOS_FINALES
+  return etapa(juego.t) === JUEGOS.HUESITOS_ETAPAS.length - 1
 }
 
 export function crearJuego() {
@@ -46,9 +43,8 @@ export function moverBolti(juego, x) {
   return { ...juego, boltiX: Math.max(BORDE, Math.min(1 - BORDE, x)) }
 }
 
-function elegirTipo(azar, progreso) {
+function elegirTipo(azar, { probChocolate }) {
   const r = azar()
-  const probChocolate = mezclar(JUEGOS.HUESITOS_PROB_CHOCOLATE_INICIO, JUEGOS.HUESITOS_PROB_CHOCOLATE_FIN, progreso)
   if (r < probChocolate) return 'chocolate'
   if (r < probChocolate + JUEGOS.HUESITOS_PROB_DORADO) return 'dorado'
   return 'hueso'
@@ -57,7 +53,7 @@ function elegirTipo(azar, progreso) {
 export function paso(juego, dt, azar = Math.random) {
   if (juego.terminado) return juego
   const t = juego.t + dt
-  const progreso = progresoDificultad(t)
+  const config = JUEGOS.HUESITOS_ETAPAS[etapa(t)]
   let { proximaCosa, siguienteId, monedas, huesos, vidas } = juego
   const eventos = []
 
@@ -66,13 +62,13 @@ export function paso(juego, dt, azar = Math.random) {
   if (t >= proximaCosa) {
     const nueva = {
       id: siguienteId++,
-      tipo: elegirTipo(azar, progreso),
+      tipo: elegirTipo(azar, config),
       x: BORDE + azar() * (1 - 2 * BORDE),
       y: -0.05,
-      vy: mezclar(JUEGOS.HUESITOS_VELOCIDAD_INICIO, JUEGOS.HUESITOS_VELOCIDAD_FIN, progreso),
+      vy: config.velocidad,
     }
     items = [...items, nueva]
-    proximaCosa = t + mezclar(JUEGOS.HUESITOS_INTERVALO_INICIO, JUEGOS.HUESITOS_INTERVALO_FIN, progreso)
+    proximaCosa = t + config.intervalo
   }
 
   // Caen, y Bolti agarra lo que llega a su boca

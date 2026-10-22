@@ -1,7 +1,7 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { crearEstadoInicial } from '../src/storage.js'
-import { crearJuego, moverBolti, paso, progresoDificultad } from '../src/logic/huesitos.js'
+import { crearJuego, etapa, moverBolti, paso } from '../src/logic/huesitos.js'
 import { empezarPartida, puedeJugar, terminarPartida } from '../src/logic/juegos.js'
 
 const TARDE = new Date('2026-10-25T16:00:00').getTime()
@@ -82,11 +82,20 @@ test('balance: jugando bien da cerca del tope, sin pasar de 40', () => {
   assert.ok(j.monedas >= 25 && j.monedas <= 40, `monedas: ${j.monedas}`)
 })
 
-test('la dificultad sube despacio y se dispara en los últimos 25 segundos', () => {
-  assert.equal(progresoDificultad(0), 0)
-  assert.ok(progresoDificultad(14.9) < 0.26, 'antes del turbo, tranquilo')
-  assert.ok(progresoDificultad(27.5) > 0.6, 'a mitad del turbo ya está difícil')
-  assert.equal(progresoDificultad(40), 1)
+test('la velocidad sube por escalones: 5 s lenta, cada 10 s más, últimos 15 s mucho más rápida', () => {
+  assert.deepEqual([0, 4.9, 5, 14.9, 15, 24.9, 25, 39].map(etapa), [0, 0, 1, 1, 2, 2, 3, 3])
+  const velocidad = (t) => {
+    const j = paso({ ...crearJuego(), t, proximaCosa: t }, 0.001, () => 0.5)
+    return j.items.at(-1).vy
+  }
+  assert.ok(velocidad(1) < velocidad(10) && velocidad(10) < velocidad(20) && velocidad(20) < velocidad(30))
+  assert.ok(velocidad(30) > velocidad(1) * 2, 'al final, más del doble de rápido')
+})
+
+test('el área de Bolti es chica: lo que cae al costado de la cabeza no cuenta', () => {
+  const caeA = (x) => paso({ ...crearJuego(), proximaCosa: 999, boltiX: 0.5, items: [{ id: 1, tipo: 'hueso', x, y: 0.8, vy: 0.3 }] }, 0.01)
+  assert.equal(caeA(0.55).monedas, 1, 'en la cabeza sí')
+  assert.equal(caeA(0.6).monedas, 0, 'al costado no')
 })
 
 test('cae bastante cantidad: más de 60 cosas por partida y varios dorados', () => {

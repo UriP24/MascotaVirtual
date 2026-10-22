@@ -100,17 +100,19 @@ export const JUEGOS = {
 
   // Minijuego "Atrapá los huesitos"
   HUESITOS_DURACION_SEGUNDOS: 40,
-  HUESITOS_TURBO_SEGUNDOS_FINALES: 25, // a los 25 s del final se pone más rápido y cae más cantidad
   HUESITOS_VIDAS: 3, // el chocolate saca una vida (nunca resta monedas)
   HUESITOS_MONEDAS_HUESO: 1,
   HUESITOS_MONEDAS_DORADO: 3,
   HUESITOS_PROB_DORADO: 0.11,
-  HUESITOS_PROB_CHOCOLATE_INICIO: 0.15, // va subiendo durante la partida
-  HUESITOS_PROB_CHOCOLATE_FIN: 0.32,
-  HUESITOS_INTERVALO_INICIO: 0.8, // segundos entre cosa y cosa (cada vez más seguido)
-  HUESITOS_INTERVALO_FIN: 0.38,
-  HUESITOS_VELOCIDAD_INICIO: 0.32, // alto de pantalla por segundo (cada vez más rápido)
-  HUESITOS_VELOCIDAD_FIN: 0.78,
+  // La velocidad sube por escalones: lenta los primeros 5 s, sube cada 10 s y los últimos 15 s
+  // es mucho más rápida (el último escalón es el "¡Más rápido! 🔥").
+  // velocidad: alto de pantalla por segundo · intervalo: segundos entre cosa y cosa
+  HUESITOS_ETAPAS: [
+    { desde: 0, velocidad: 0.4, intervalo: 0.75, probChocolate: 0.15 },
+    { desde: 5, velocidad: 0.5, intervalo: 0.62, probChocolate: 0.2 },
+    { desde: 15, velocidad: 0.62, intervalo: 0.52, probChocolate: 0.25 },
+    { desde: 25, velocidad: 0.88, intervalo: 0.36, probChocolate: 0.32 }, // últimos 15 s
+  ],
 
   // Minijuego "Memoria de Bolti": límite por tiempo, cada nivel superado suma tiempo
   MEMORIA_TIEMPO_INICIAL: 40, // segundos
