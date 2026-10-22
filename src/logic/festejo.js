@@ -3,7 +3,7 @@
 
 import { PERRITA } from '../config.js'
 
-// tipo: 'tarea' | 'estudio'
+// tipo: 'tarea' | 'estudio' | 'canje'
 export function festejarLogro(estado, tipo) {
   const p = estado.perrita
   const anterior = p.festejo
@@ -15,6 +15,7 @@ export function festejarLogro(estado, tipo) {
       festejo: {
         tareas: (anterior?.tareas ?? 0) + (tipo === 'tarea' ? 1 : 0),
         estudio: (anterior?.estudio ?? 0) + (tipo === 'estudio' ? 1 : 0),
+        canjes: (anterior?.canjes ?? 0) + (tipo === 'canje' ? 1 : 0),
       },
     },
   }
@@ -22,6 +23,7 @@ export function festejarLogro(estado, tipo) {
 
 export function fraseDeFestejo(festejo) {
   if (!festejo) return null
+  if (festejo.canjes > 0) return '¡Que disfruten el plan! 💕'
   if (festejo.estudio > 0) return '¡Estudiaste un montón! Estoy orgullosa 📚💕'
   if (festejo.tareas > 1) return `¡Terminaste ${festejo.tareas} tareas! 🎉`
   return '¡Vi que terminaste una tarea! 🎉'

@@ -1,0 +1,60 @@
+.confirm-fondo {
+  position: fixed;
+  inset: 0;
+  z-index: 26;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgb(63 53 64 / 0.45);
+}
+
+.confirm {
+  width: 100%;
+  max-width: 340px;
+  padding: 20px;
+  border-radius: 20px;
+  background: var(--color-superficie);
+  text-align: center;
+  animation: confirm-aparecer 0.2s ease-out;
+}
+
+@keyframes confirm-aparecer {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+}
+
+.confirm h2 {
+  margin: 0 0 8px;
+  font-size: 1.2rem;
+}
+
+.confirm .cuerpo {
+  color: var(--color-texto-suave);
+}
+
+.confirm .botones {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.confirm .botones button {
+  flex: 1;
+  height: 48px;
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.confirm .cancelar {
+  background: var(--color-borde);
+}
+
+.confirm .confirmar {
+  background: var(--color-principal);
+  color: white;
+}
