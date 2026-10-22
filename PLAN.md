@@ -69,18 +69,22 @@ Si un día no llego, se recorta primero el minijuego; el resto del plan se corre
 - [x] Modo prueba: "Cansada" y "Llenar bandeja". 46 pruebas automáticas
 - [ ] Probar el cronómetro en un celular real con HTTPS (bloqueo de pantalla, cambiar de app) — Uri
 
-## Sáb 24 — Canjes
-- [ ] Tarjetas de planes con precio en puntos
-- [ ] Comprar plan → genera cupón con fecha
-- [ ] Lista de cupones y marcar cupón como cumplido
-- [ ] Límite de 1 canje por mes calendario (validado con la fecha de los cupones)
-- [ ] Mostrar si el canje del mes está disponible o desde qué fecha vuelve a estarlo
-- [ ] `/balance-check` de la economía
+## Sáb 24 — Canjes + economía nueva ✅
+- [x] Economía anti-trampas: las tareas dan **monedas** (simple +5, grande +10, solo las 5 primeras
+      del día, el tope no se reinicia borrando tareas); cambio **100 🪙 → 1 ⭐, máx. 1 por día**
+- [x] 7 planes con descripción: salir a comer, parque, masaje, cine, helado, cena casera, café
+- [x] `logic/canjes.js`: cupones con fecha, **1 canje por mes** (se renueva el día 1), marcar cumplido;
+      el saldo baja pero `puntosGanadosTotal` nunca
+- [x] Pantalla Canjes: cartel del mes ("disponible" o "vuelve el 1 de noviembre"), cambio de monedas,
+      tarjetas de planes ("te faltan N ⭐"), confirmación en la app, "Mis cupones"
+- [x] Bolti festeja el canje ("¡Que disfruten el plan! 💕")
+- [x] Modo prueba: liberar canje del mes, liberar cambio de hoy, borrar cupones, +100 🪙
+- [x] `/balance-check`: SANO (minijuego sin evaluar). 55 pruebas automáticas
+- [ ] Decidir recomendaciones del balance (igualar "grande", festejo para premios) — Uri
 
 ## Dom 25 — Jugar
 - [ ] Botón "Jugar" con lista de minijuegos (energía mínima, cuesta energía, da cariño)
 - [ ] Minijuego "Atrapá los huesitos" (45 s, 1 🪙 por huesito) — *se recorta primero si falta tiempo*
-- [ ] Botón para convertir 50 monedas en 1 punto
 
 ## Lun 26 — Pulido
 - [ ] Bienvenida con mensaje de cumpleaños y 🎂 torta de regalo el 28/10
@@ -107,22 +111,21 @@ Si un día no llego, se recorta primero el minijuego; el resto del plan se corre
 
 ---
 
-## Próxima sesión — Sáb 24: Canjes
+## Próxima sesión — Dom 25: Jugar
 
 La app publicada: https://urip24.github.io/MascotaVirtual/ (se actualiza sola con cada push).
 
 Tareas concretas:
-1. `logic/canjes.js` + pruebas: canjear un plan (resta puntos del saldo; `puntosGanadosTotal` nunca
-   baja), genera cupón con fecha; **1 canje por mes calendario** validado con la fecha de los
-   cupones; fecha desde la que vuelve a estar disponible (día 1 del mes siguiente).
-2. Pantalla Canjes: tarjetas de planes (`PLANES` de `config.js`, precio = pesos / 500), cartel
-   "Canje del mes disponible ✅" o "Vuelve a estar disponible el 1 de noviembre", confirmación
-   dentro de la app antes de canjear.
-3. Lista "Mis cupones": cupón con el plan y la fecha; marcar como cumplido (queda tachado).
-4. Bolti festeja el canje (salto + frase al entrar a Casa).
-5. Modo prueba: "Simular canje el mes pasado" y "Borrar cupones".
-6. `/balance-check` de la economía: con 1 ⭐ = $500, ¿cuánto tarda cada plan?
+1. Pantalla Jugar: lista de minijuegos (por ahora uno). Para jugar: Bolti despierta y energía ≥ 10;
+   cada partida gasta 10 de energía y da +8 de cariño (`JUEGOS` en `config.js`).
+2. Minijuego **"Atrapá los huesitos"** (45 s): caen huesitos (y alguna cosa que no hay que agarrar),
+   Bolti abajo se mueve con el dedo, 1 🪙 por huesito. Objetivo del balance: **15–30 🪙 por partida**.
+   Canvas o divs con `requestAnimationFrame`, sin librerías.
+3. Pantalla de resultado: "¡Atrapaste 23 huesitos! +23 🪙", jugar de nuevo / volver.
+4. Pausa si la app pasa a segundo plano.
+5. Modo prueba: "Energía llena" para jugar seguido.
+6. Si sobra tiempo: aplicar las recomendaciones del balance que elija Uri.
 
 Prompt para arrancar:
 
-> Leé `CLAUDE.md`, `PLAN.md` y `docs/specs/bolti-personaje.md`. Hoy toca el día Sáb 24: Canjes (planes con puntos, cupones con fecha, marcar cumplido y límite de 1 canje por mes). Mostrame el plan antes de codear, hacé un commit por paso y al final actualizá `PLAN.md` y dejame la sección "Próxima sesión".
+> Leé `CLAUDE.md`, `PLAN.md` y `docs/specs/bolti-personaje.md`. Hoy toca el día Dom 25: Jugar (pantalla de minijuegos y "Atrapá los huesitos" que da monedas). Mostrame el plan antes de codear, hacé un commit por paso y al final actualizá `PLAN.md` y dejame la sección "Próxima sesión".
