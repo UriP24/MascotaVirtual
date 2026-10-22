@@ -19,9 +19,12 @@ PWA instalable en el celular con cuatro pantallas:
 - **Jugar**: minijuego que da monedas.
 
 ### Economía (valores provisorios, todos en `src/config.js`)
-- **Monedas**: se ganan en el minijuego, se gastan en comida para la perrita.
-- **Puntos** (premium): 1 punto = $500 de un plan real, tienen que costar. Tarea simple: 1,
-  grande: 2. Estudio: 1 cada 30 min. 50 monedas → 1 punto.
+- **Monedas 🪙**: se ganan con **tareas** (simple +5, grande +10; solo las **primeras 5 tareas del
+  día** dan monedas, el contador no baja si se borran) y con el **minijuego**. Se gastan en comida
+  para Bolti o se cambian por puntos: **100 🪙 → 1 ⭐, máximo 1 ⭐ por día**.
+- **Puntos ⭐** (premium): 1 punto = $500 de un plan real, tienen que costar. Salen sobre todo del
+  **estudio** (1 cada 30 min, tope 4 h/día) y del cambio diario de monedas. Las tareas **no** dan
+  puntos (si no, inventar tareas rompería la economía). Máximo realista: ~95–105 ⭐ por mes.
 - **Precio de canjes**: costo del plan en pesos / 500 (salida a comer $40.000 = 80 puntos).
 - **Límite**: 1 canje por mes calendario, sea cual sea; se renueva el día 1. La pantalla de
   canjes muestra si está disponible o desde qué fecha vuelve a estarlo.

@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import { LARGO_MAXIMO_TEXTO, puntosDeTarea } from '../logic/tareas.js'
+import { LARGO_MAXIMO_TEXTO, monedasDeTarea } from '../logic/tareas.js'
 import './TaskForm.css'
 
 const TIPOS = [
-  { id: 'simple', texto: `Simple +${puntosDeTarea('simple')}⭐` },
-  { id: 'grande', texto: `Grande +${puntosDeTarea('grande')}⭐` },
+  { id: 'simple', texto: `Simple +${monedasDeTarea('simple')}🪙` },
+  { id: 'grande', texto: `Grande +${monedasDeTarea('grande')}🪙` },
   { id: 'estudio', texto: 'Estudio ⏱' },
 ]
 

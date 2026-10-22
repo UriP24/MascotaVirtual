@@ -9,6 +9,7 @@ import {
   borrarTarea,
   completarTarea,
   msDisponibles,
+  tareasConRecompensaRestantes,
 } from '../logic/tareas.js'
 import { festejarLogro } from '../logic/festejo.js'
 import './Tareas.css'
@@ -33,10 +34,12 @@ function Tareas({ estado, setEstado }) {
 
   function completar(id) {
     const resultado = completarTarea(estado, id)
-    if (resultado.puntos === 0) return
+    if (!resultado.completada) return
     const tarea = estado.tareas.find((t) => t.id === id)
     setEstado(festejarLogro(resultado.estado, tarea.tipo === 'estudio' ? 'estudio' : 'tarea'))
-    avisar(`¡Bien! +${resultado.puntos} ⭐ · Bolti está orgullosa 🐶`)
+    if (resultado.puntos > 0) avisar(`¡Bien! +${resultado.puntos} ⭐ · Bolti está orgullosa 🐶`)
+    else if (resultado.monedas > 0) avisar(`¡Bien! +${resultado.monedas} 🪙 · Bolti está orgullosa 🐶`)
+    else avisar('Ya juntaste las monedas de hoy · Bolti igual te festeja 💕')
   }
 
   function borrar(tarea) {
@@ -66,6 +69,11 @@ function Tareas({ estado, setEstado }) {
     <section className="pantalla tareas">
       <h1>📝 Tareas</h1>
       <TaskForm onAgregar={agregar} />
+      <p className="recompensas">
+        {tareasConRecompensaRestantes(estado) > 0
+          ? `Hoy ${tareasConRecompensaRestantes(estado) === 1 ? 'te queda 1 tarea' : `te quedan ${tareasConRecompensaRestantes(estado)} tareas`} con monedas 🪙`
+          : 'Ya juntaste las monedas de tareas de hoy 🪙 · mañana hay más'}
+      </p>
 
       <h2>Pendientes</h2>
       {pendientes.length === 0 ? (

@@ -2,16 +2,19 @@
 // Son valores de prototipo: cambialos libremente, el resto del código los lee de este archivo.
 
 export const ECONOMIA = {
-  // Puntos que da completar una tarea
-  PUNTOS_TAREA_SIMPLE: 1,
-  PUNTOS_TAREA_GRANDE: 2,
+  // Monedas que da completar una tarea (las tareas no dan puntos: así inventar tareas no rompe
+  // la economía). Solo las primeras TAREAS_CON_RECOMPENSA_POR_DIA de cada día dan monedas.
+  MONEDAS_TAREA_SIMPLE: 5,
+  MONEDAS_TAREA_GRANDE: 10,
+  TAREAS_CON_RECOMPENSA_POR_DIA: 5,
 
   // Estudio: cada bloque completo de minutos da puntos
   MINUTOS_POR_BLOQUE_ESTUDIO: 30,
   PUNTOS_POR_BLOQUE_ESTUDIO: 1,
 
-  // Conversión de monedas a puntos
-  MONEDAS_POR_PUNTO: 50,
+  // Conversión de monedas a puntos, con tope diario
+  MONEDAS_POR_PUNTO: 100,
+  PUNTOS_CONVERTIBLES_POR_DIA: 1,
 
   // Precio de los canjes: 1 punto equivale a esta cantidad de pesos de un plan real
   PESOS_POR_PUNTO: 500,

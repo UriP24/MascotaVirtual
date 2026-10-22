@@ -10,7 +10,9 @@ import {
   actualizarCronometro,
   retomarCronometros,
   estudioElDia,
+  tareasConRecompensaRestantes,
 } from '../src/logic/tareas.js'
+import { convertirMonedas } from '../src/logic/economia.js'
 import * as crono from '../src/logic/estudio.js'
 
 const MIN = 60 * 1000
@@ -24,26 +26,57 @@ test('agregar ignora texto vacío y corta textos largos', () => {
   assert.equal(e2.tareas[0].texto.length, 80)
 })
 
-test('completar suma puntos según el tipo y no se puede repetir', () => {
-  let e = agregarTarea(crearEstadoInicial(), 'Barrer', 'simple')
+test('completar da monedas según el tipo (no puntos) y no se puede repetir', () => {
+  let e = agregarTarea({ ...crearEstadoInicial(), monedas: 0 }, 'Barrer', 'simple')
   e = agregarTarea(e, 'Limpiar el baño', 'grande')
   const [simple, grande] = e.tareas
-  let r = completarTarea(e, simple.id)
-  assert.equal(r.puntos, 1)
-  r = completarTarea(r.estado, grande.id)
-  assert.equal(r.estado.puntos, 3)
-  const otra = completarTarea(r.estado, grande.id)
-  assert.equal(otra.puntos, 0)
-  assert.equal(otra.estado.puntos, 3)
+  let r = completarTarea(e, simple.id, MARTES)
+  assert.equal(r.monedas, 5)
+  assert.equal(r.estado.puntos, 0, 'las tareas no dan puntos')
+  r = completarTarea(r.estado, grande.id, MARTES)
+  assert.equal(r.estado.monedas, 15)
+  const otra = completarTarea(r.estado, grande.id, MARTES)
+  assert.equal(otra.completada, false)
+  assert.equal(otra.estado.monedas, 15)
 })
 
-test('borrar nunca resta puntos', () => {
-  let e = agregarTarea(crearEstadoInicial(), 'Barrer', 'grande')
+test('solo las primeras 5 tareas del día dan monedas, aunque se borren', () => {
+  let e = { ...crearEstadoInicial(), monedas: 0 }
+  for (let i = 0; i < 7; i++) {
+    e = agregarTarea(e, `Tarea ${i}`, 'grande', MARTES)
+    const id = e.tareas.at(-1).id
+    e = completarTarea(e, id, MARTES).estado
+    e = borrarTarea(e, id) // borrar no reinicia el tope
+  }
+  assert.equal(e.monedas, 50)
+  assert.equal(tareasConRecompensaRestantes(e, MARTES), 0)
+  const conUnaMas = agregarTarea(e, 'Una más', 'simple', MARTES)
+  const r = completarTarea(conUnaMas, conUnaMas.tareas.at(-1).id, MARTES)
+  assert.equal(r.completada, true, 'se puede completar igual')
+  assert.equal(r.monedas, 0, 'pero ya no da monedas')
+  const miercoles = new Date('2026-10-21T10:00:00')
+  assert.equal(tareasConRecompensaRestantes(e, miercoles), 5, 'al otro día se renueva')
+})
+
+test('borrar nunca resta monedas ni puntos', () => {
+  let e = agregarTarea({ ...crearEstadoInicial(), monedas: 0 }, 'Barrer', 'grande')
   e = completarTarea(e, e.tareas[0].id).estado
   e = borrarTarea(e, e.tareas[0].id)
   assert.equal(e.tareas.length, 0)
-  assert.equal(e.puntos, 2)
-  assert.equal(e.puntosGanadosTotal, 2)
+  assert.equal(e.monedas, 10)
+})
+
+test('cambio: 100 monedas por 1 punto, máximo 1 por día', () => {
+  let e = { ...crearEstadoInicial(), monedas: 250 }
+  let r = convertirMonedas(e, MARTES)
+  assert.equal(r.resultado, 'ok')
+  assert.equal(r.estado.monedas, 150)
+  assert.equal(r.estado.puntos, 1)
+  assert.equal(r.estado.puntosGanadosTotal, 1)
+  assert.equal(convertirMonedas(r.estado, MARTES).resultado, 'tope-diario')
+  const miercoles = new Date('2026-10-21T10:00:00')
+  assert.equal(convertirMonedas(r.estado, miercoles).resultado, 'ok')
+  assert.equal(convertirMonedas({ ...crearEstadoInicial(), monedas: 99 }, MARTES).resultado, 'sin-monedas')
 })
 
 test('de lunes a viernes aparece una sola tarea obligatoria, que no se puede borrar', () => {

@@ -40,8 +40,22 @@ export function agregarTarea(estado, texto, tipo, ahora = new Date()) {
   return { ...estado, tareas: [...estado.tareas, crearTarea(limpio, tipo, ahora)] }
 }
 
-export function puntosDeTarea(tipo) {
-  return tipo === 'grande' ? ECONOMIA.PUNTOS_TAREA_GRANDE : ECONOMIA.PUNTOS_TAREA_SIMPLE
+export function monedasDeTarea(tipo) {
+  return tipo === 'grande' ? ECONOMIA.MONEDAS_TAREA_GRANDE : ECONOMIA.MONEDAS_TAREA_SIMPLE
+}
+
+// Cuántas tareas más pueden dar monedas hoy (el contador no baja si se borran tareas)
+export function tareasConRecompensaRestantes(estado, ahora = new Date()) {
+  const r = estado.recompensasTareas
+  const usadas = r && r.fecha === fechaLocal(ahora) ? r.cantidad : 0
+  return Math.max(0, ECONOMIA.TAREAS_CON_RECOMPENSA_POR_DIA - usadas)
+}
+
+function contarRecompensa(estado, ahora) {
+  const hoy = fechaLocal(ahora)
+  const r = estado.recompensasTareas
+  const cantidad = r && r.fecha === hoy ? r.cantidad + 1 : 1
+  return { ...estado, recompensasTareas: { fecha: hoy, cantidad } }
 }
 
 // Cuánto tiempo de estudio le queda disponible hoy a una tarea, sin pasarse del tope diario.
@@ -75,22 +89,31 @@ function acreditar(estado, id, puntos, fecha, minutosEstudio, ahora) {
   }))
 }
 
-// Devuelve { estado, puntos }. Si no se puede completar, puntos es 0 y el estado no cambia.
+// Devuelve { estado, completada, puntos, monedas }.
+// Tareas comunes: dan monedas (si no se llegó al tope del día). Estudio: da puntos.
+// Si no se puede completar, completada es false y el estado no cambia.
 export function completarTarea(estado, id, ahora = new Date()) {
   const tarea = estado.tareas.find((t) => t.id === id)
-  if (!tarea || tarea.hecha) return { estado, puntos: 0 }
+  const nada = { estado, completada: false, puntos: 0, monedas: 0 }
+  if (!tarea || tarea.hecha) return nada
 
   if (tarea.tipo !== 'estudio') {
-    const puntos = puntosDeTarea(tarea.tipo)
-    return { estado: acreditar(estado, id, puntos, fechaLocal(ahora), 0, ahora), puntos }
+    const conRecompensa = tareasConRecompensaRestantes(estado, ahora) > 0
+    const monedas = conRecompensa ? monedasDeTarea(tarea.tipo) : 0
+    let nuevo = acreditar(estado, id, 0, fechaLocal(ahora), 0, ahora)
+    if (conRecompensa) nuevo = contarRecompensa({ ...nuevo, monedas: nuevo.monedas + monedas }, ahora)
+    nuevo = reemplazarTarea(nuevo, id, () => ({ monedasGanadas: monedas }))
+    return { estado: nuevo, completada: true, puntos: 0, monedas }
   }
 
   const ms = Math.min(crono.msContados(tarea.estudio, ahora.getTime()), msDisponibles(estado, id, ahora))
-  if (!crono.llegoAlMinimo(ms)) return { estado, puntos: 0 }
+  if (!crono.llegoAlMinimo(ms)) return nada
   const puntos = crono.puntosPorTiempo(ms)
   return {
     estado: acreditar(estado, id, puntos, fechaLocal(ahora), crono.aMinutos(ms), ahora),
+    completada: true,
     puntos,
+    monedas: 0,
   }
 }
 

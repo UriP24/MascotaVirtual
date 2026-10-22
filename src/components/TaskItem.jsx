@@ -1,9 +1,9 @@
-import { puntosDeTarea } from '../logic/tareas.js'
+import { monedasDeTarea } from '../logic/tareas.js'
 import './TaskItem.css'
 
 function TaskItem({ tarea, onCompletar, onBorrar, children }) {
   const puedeBorrar = !tarea.obligatoria || tarea.hecha
-  const etiqueta = tarea.tipo === 'estudio' ? '⏱' : `+${puntosDeTarea(tarea.tipo)}⭐`
+  const etiqueta = tarea.tipo === 'estudio' ? '⏱' : `+${monedasDeTarea(tarea.tipo)}🪙`
 
   return (
     <li className={`task-item ${tarea.hecha ? 'hecha' : ''} ${tarea.obligatoria ? 'obligatoria' : ''}`}>
@@ -22,6 +22,8 @@ function TaskItem({ tarea, onCompletar, onBorrar, children }) {
           <span>{tarea.texto}</span>
           {tarea.obligatoria && !tarea.hecha && <small>Obligatoria de hoy 📚</small>}
           {tarea.hecha && tarea.puntosGanados > 0 && <small>+{tarea.puntosGanados}⭐ ganados</small>}
+          {tarea.hecha && tarea.monedasGanadas > 0 && <small>+{tarea.monedasGanadas}🪙 ganadas</small>}
+          {tarea.hecha && tarea.tipo !== 'estudio' && tarea.monedasGanadas === 0 && <small>Sin monedas (tope del día)</small>}
         </div>
         {!tarea.hecha && <span className="etiqueta">{etiqueta}</span>}
         {puedeBorrar && (

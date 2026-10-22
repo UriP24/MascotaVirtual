@@ -6,7 +6,7 @@ import { fechaLocal } from './logic/fechas.js'
 import { esHorarioDeDormir } from './logic/bolti.js'
 
 const CLAVE = 'patitas:estado'
-const VERSION_ACTUAL = 4
+const VERSION_ACTUAL = 5
 
 export function crearEstadoInicial() {
   const ahora = new Date().toISOString()
@@ -21,6 +21,10 @@ export function crearEstadoInicial() {
     // Minutos de estudio acreditados por día: { 'AAAA-MM-DD': minutos }.
     // Sirve para el tope diario y para que Bolti se ponga triste si un día de semana no estudió.
     historialEstudio: {},
+    // Cuántas tareas dieron monedas hoy (tope diario). No baja si se borran tareas.
+    recompensasTareas: { fecha: null, cantidad: 0 },
+    // Cuántos puntos se cambiaron por monedas hoy (tope diario)
+    conversiones: { fecha: null, cantidad: 0 },
     // Último día en que se creó la tarea de estudio obligatoria (para no crearla dos veces)
     ultimoDiaObligatorio: null,
     // { id, planId, costo, fecha (ISO), cumplido }. La fecha sirve para el límite mensual.

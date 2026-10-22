@@ -18,3 +18,8 @@
   border-radius: 14px;
   background: var(--color-superficie);
 }
+
+.tareas .recompensas {
+  margin: -8px 0 4px;
+  font-size: 0.85rem;
+}
