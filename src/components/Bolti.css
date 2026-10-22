@@ -157,8 +157,19 @@
     transform: scale(1.02, 1.035);
   }
 }
-.bolti.mimos .cola {
-  animation-duration: 0.35s;
+/* Mimos: mueve la cola rápido y bien amplio, esté como esté (le gana a cualquier ánimo) */
+.bolti.mimos .cola,
+.bolti.mimos[data-animo] .cola {
+  animation: bolti-menear-feliz 0.3s ease-in-out infinite;
+}
+@keyframes bolti-menear-feliz {
+  0%,
+  100% {
+    transform: rotate(-12deg);
+  }
+  50% {
+    transform: rotate(24deg);
+  }
 }
 
 .bolti[data-animo='hambre'] .cabeza {

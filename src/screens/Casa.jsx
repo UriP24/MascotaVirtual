@@ -160,6 +160,9 @@ function Casa({ estado, setEstado, horasAusente = 0, onCambiarPantalla }) {
     }
     setSaltos((s) => s + 1)
     setEstado((est) => darMimos(est, 1))
+    setMimos(true) // mueve la cola de contenta
+    clearTimeout(timers.current.mimos)
+    timers.current.mimos = setTimeout(() => setMimos(false), 900)
     soltarEmoji('💗', e.clientX, e.clientY)
     decir(azar(FRASES_AL_TOCARLA))
   }
