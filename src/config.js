@@ -95,7 +95,7 @@ export const JUEGOS = {
 }
 
 // Planes para canjear. Cada plan se puede canjear 1 vez cada `rotacionMeses` meses calendario
-// (los grandes, cada 3 meses). Se pueden canjear varios planes distintos en el mismo mes.
+// (los de más de $50.000 para los dos, cada 3 meses). Se pueden canjear varios planes en el mismo mes.
 //
 // Precio en puntos (ver precioEnPuntos):
 // - Salidas de a dos: los puntos cubren la parte de Mari = costo para los dos / 2 / PESOS_POR_PUNTO.
@@ -127,7 +127,7 @@ export const PLANES = [
     emoji: '🍲',
     costoParaDos: 40000,
     margen: true,
-    rotacionMeses: 3,
+    rotacionMeses: 2, // más barata que las salidas: cada 2 meses
     descripcion: 'Te cocino lo que me pidas y después lavo todo yo',
   },
   {
@@ -152,7 +152,7 @@ export const PLANES = [
     id: 'masaje',
     nombre: 'Media hora de masaje',
     emoji: '💆',
-    puntosFijos: 35,
+    puntosFijos: 20,
     rotacionMeses: 1,
     descripcion: 'Media hora de masajes, sin apuro y con aceite',
   },

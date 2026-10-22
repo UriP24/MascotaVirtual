@@ -46,7 +46,7 @@ function Canjes({ estado, setEstado }) {
 
       <div className="cartel-reglas">
         <strong>🎁 Canjeá puntos por planes juntos</strong>
-        <small>Podés canjear varios. Cada plan, 1 vez por mes; los grandes 🍝 🎬 🍲, 1 vez cada 3 meses.</small>
+        <small>Podés canjear varios. Cada plan tiene su espera: la mayoría 1 vez por mes, la cena casera cada 2 meses y las salidas grandes 🍝 🎬 cada 3 meses.</small>
       </div>
 
       <CoinExchange monedas={estado.monedas} quedanHoy={puntosConvertiblesHoy(estado, ahora)} onCambiar={cambiarMonedas} />

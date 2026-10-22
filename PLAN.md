@@ -74,9 +74,9 @@ Si un día no llego, se recorta primero el minijuego; el resto del plan se corre
       del día, el tope no se reinicia borrando tareas); cambio **100 🪙 → 1 ⭐, máx. 1 por día**
 - [x] 7 planes con descripción y **precios investigados**: los puntos cubren la parte de Mari
       (costo para dos / 2 / 500, +5 de margen, redondeo a la decena si la unidad es ≥ 5):
-      salir a comer 100 ⭐, cine 70, cena casera 50, helado 30, café 30, media hora de masaje 40, parque 10
+      salir a comer 100 ⭐, cine 70, cena casera 50, helado 30, café 30, media hora de masaje 20, parque 10
 - [x] **Rotación por plan** en vez de 1 canje por mes: varios planes en el mismo mes, cada uno
-      1 vez por mes; los grandes (comer, cine, cena casera) 1 vez cada 3 meses
+      1 vez por mes; cena casera cada 2 meses; salir a comer y cine (más de $50.000) cada 3 meses
 - [x] `logic/canjes.js`: cupones con fecha, rotación por plan, marcar cumplido;
       el saldo baja pero `puntosGanadosTotal` nunca
 - [x] Pantalla Canjes: reglas, "🔒 Vuelve en enero" por plan, cambio de monedas,

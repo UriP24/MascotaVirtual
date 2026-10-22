@@ -27,11 +27,11 @@ PWA instalable en el celular con cuatro pantallas:
   puntos (si no, inventar tareas rompería la economía). Máximo realista: ~95–105 ⭐ por mes.
 - **Precio de canjes** (los puntos cubren la **parte de Mari**): costo para los dos / 2 / 500, +5 de
   margen en los precios investigados; si la unidad queda en 5 o más, se redondea a la decena de
-  arriba (67 → 70). Salir a comer 100 ⭐, cine 70, cena casera 50, helado 30, café 30, masaje 40,
-  parque 10.
+  arriba (67 → 70). Salir a comer 100 ⭐, cine 70, cena casera 50, helado 30, café 30, media hora
+  de masaje 20 (fijo), parque 10.
 - **Rotación por plan** (no hay límite general): se pueden canjear varios planes en el mismo mes,
-  pero cada uno 1 vez por mes y los grandes (salir a comer, cine, cena casera) 1 vez cada 3 meses,
-  por meses calendario (octubre → enero). Se valida con la fecha de los cupones.
+  pero cada uno con su espera por meses calendario: 1 vez por mes la mayoría, cena casera cada 2
+  meses, y las salidas de más de $50.000 para los dos (salir a comer, cine) cada 3 meses. Se valida con la fecha de los cupones.
 
 ### Estudio
 - De lunes a viernes aparece sola una tarea **"Estudiar" obligatoria** (no se puede borrar hasta
@@ -98,7 +98,7 @@ Las pantallas reciben `estado` y `setEstado` como props desde `App`.
 ### Reglas del juego (nunca se rompen)
 - La perrita **nunca se enferma ni muere**. Sin comida o atención se pone triste; cuando ella la
   cuida, vuelve a estar contenta.
-- La rotación de cada plan (1 vez por mes, los grandes cada 3 meses) se valida con la fecha de los cupones.
+- La rotación de cada plan se valida con la fecha de sus cupones.
 - **Nunca se restan puntos ya ganados** (no hay penalizaciones; gastar en un canje sí descuenta
   del saldo, pero `puntosGanadosTotal` nunca baja).
 - Los puntos **no vencen**.

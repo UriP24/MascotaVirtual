@@ -18,7 +18,7 @@ test('precios: mitad de Mari / 500 + 5 de margen, redondeando si la unidad es 5 
     'cena-casera': 50, // 40 + 5 = 45 → 50
     helado: 30, // 25 + 5 = 30
     cafe: 30, // 20 + 5 = 25 → 30
-    masaje: 40, // 35 → 40
+    masaje: 20, // fijo
     'dia-de-parque': 10, // 10
   })
 })
@@ -62,6 +62,12 @@ test('los grandes: 1 vez cada 3 meses (octubre → enero, cruzando el año)', ()
   assert.equal(disponibleDesde(e, buscarPlan('comer-afuera'), OCT).getTime(), new Date('2027-01-01T00:00:00').getTime())
   assert.equal(canjear(e, 'comer-afuera', new Date('2027-01-01T00:00:00')).resultado, 'ok')
   assert.equal(canjear(e, 'cine', OCT).resultado, 'ok', 'otro plan grande sí se puede')
+})
+
+test('la cena casera: 1 vez cada 2 meses', () => {
+  const e = canjear(conPuntos(100), 'cena-casera', OCT).estado
+  assert.equal(canjear(e, 'cena-casera', new Date('2026-11-20T12:00:00')).resultado, 'en-rotacion')
+  assert.equal(canjear(e, 'cena-casera', new Date('2026-12-01T00:00:00')).resultado, 'ok')
 })
 
 test('marcar cupón como cumplido', () => {
