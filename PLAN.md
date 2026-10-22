@@ -98,9 +98,16 @@ Si un día no llego, se recorta primero el minijuego; el resto del plan se corre
 - [ ] Decidir: ¿estudio 1 ⭐ cada 30 o 45 min? (con 30, lo que pone Uri por Mari rinde ~$37–52 mil/mes máx.) — Uri
 - [ ] Decidir: blindar los topes diarios contra cambiar la fecha del celular (fechas futuras cuentan como usadas) — Uri
 
-## Dom 25 — Jugar
-- [ ] Botón "Jugar" con lista de minijuegos (energía mínima, cuesta energía, da cariño)
-- [ ] Minijuego "Atrapá los huesitos" (45 s, 1 🪙 por huesito) — *se recorta primero si falta tiempo*
+## Dom 25 — Jugar ✅
+- [x] `logic/juegos.js`: se juega despierta y con energía ≥ 10; cuesta 10 ⚡ al empezar; da 🪙 (tope 40)
+      y +8 💗 al terminar; Bolti festeja en Casa ("¡Qué lindo jugar con vos! 🦴")
+- [x] `logic/huesitos.js`: simulación pura con pruebas (aparición, caída, atrapar, vidas, dificultad)
+- [x] Minijuego **"Atrapá los huesitos"**: 45 s, cuenta regresiva, Bolti sigue el dedo, 🦴 +1, 🍖 dorado +3,
+      🍫 chocolate saca una de 3 vidas (nunca resta monedas), pausa manual y automática, resultado
+- [x] Pantalla Jugar con la energía de Bolti y por qué no se puede jugar (dormida o cansada)
+- [x] La cola se mueve con mimos en cualquier estado de ánimo (también al tocarla)
+- [x] Modo prueba: "Energía llena". 69 pruebas automáticas
+- [ ] Elegir el próximo minijuego (ideas: Bolti vaquera, Bolti aventuras…) — Uri
 
 ## Lun 26 — Pulido
 - [ ] Bienvenida con mensaje de cumpleaños y 🎂 torta de regalo el 28/10
@@ -122,7 +129,8 @@ Si un día no llego, se recorta primero el minijuego; el resto del plan se corre
 - [ ] Bolti repite lo que dice Mari con ladridos (como Tom)
 - [ ] Habitaciones: cocina, baño (bañarla), patio
 - [ ] Ropa y accesorios para Bolti (gacha con puntos)
-- [ ] Más minijuegos
+- [ ] Más minijuegos: 🐄 Bolti vaquera (arrear las vacas al corral, como en la vida real),
+      🏃 Bolti aventuras (esquivar obstáculos para encontrarse con sus amigos perros), y otros
 - [ ] Sincronización en la nube
 - [ ] **Notificaciones** (pedido de Uri): si a cierta hora (ej. 19:00) no completó el estudio del día,
       una notificación suave de Bolti ("¿Estudiamos un ratito? 📚"), como mucho 1–2 por día.
@@ -132,21 +140,21 @@ Si un día no llego, se recorta primero el minijuego; el resto del plan se corre
 
 ---
 
-## Próxima sesión — Dom 25: Jugar
+## Próxima sesión — Lun 26: Bienvenida de cumpleaños y pulido
 
 La app publicada: https://urip24.github.io/MascotaVirtual/ (se actualiza sola con cada push).
 
+Antes de arrancar, Uri trae: **el mensaje de cumpleaños** para Mari (y si quiere, una firma).
+
 Tareas concretas:
-1. Pantalla Jugar: lista de minijuegos (por ahora uno). Para jugar: Bolti despierta y energía ≥ 10;
-   cada partida gasta 10 de energía y da +8 de cariño (`JUEGOS` en `config.js`).
-2. Minijuego **"Atrapá los huesitos"** (45 s): caen huesitos (y alguna cosa que no hay que agarrar),
-   Bolti abajo se mueve con el dedo, 1 🪙 por huesito. Objetivo del balance: **15–30 🪙 por partida**.
-   Canvas o divs con `requestAnimationFrame`, sin librerías.
-3. Pantalla de resultado: "¡Atrapaste 23 huesitos! +23 🪙", jugar de nuevo / volver.
-4. Pausa si la app pasa a segundo plano.
-5. Modo prueba: "Energía llena" para jugar seguido.
-6. Si sobra tiempo: aplicar las recomendaciones del balance que elija Uri.
+1. **Bienvenida** la primera vez que abre la app: pantalla con el mensaje de Uri, Bolti que aparece de
+   a poco (la sorpresa) y un botón "Conocer a Bolti". Se guarda que ya la vio (`bienvenidaVista`).
+2. **El 28/10:** 🎂 torta de regalo en la mochila y Bolti con gorrito de cumpleaños ese día.
+3. Aviso si falla el guardado y **respaldo** (exportar / importar el progreso como texto).
+4. Ícono definitivo (¿la carita de Bolti? ojo: el ícono se ve antes de abrir la app → ¿huellita?).
+5. `/ux-review` de toda la app a 360 px, borrar `public/prototipo-bolti.html`, decidir el modo prueba.
+6. Si sobra tiempo: el segundo minijuego que elija Uri.
 
 Prompt para arrancar:
 
-> Leé `CLAUDE.md`, `PLAN.md` y `docs/specs/bolti-personaje.md`. Hoy toca el día Dom 25: Jugar (pantalla de minijuegos y "Atrapá los huesitos" que da monedas). Mostrame el plan antes de codear, hacé un commit por paso y al final actualizá `PLAN.md` y dejame la sección "Próxima sesión".
+> Leé `CLAUDE.md`, `PLAN.md` y `docs/specs/bolti-personaje.md`. Hoy toca el día Lun 26: bienvenida de cumpleaños (con el mensaje que te paso), la torta del 28/10, respaldo del progreso y pulido. Mostrame el plan antes de codear, hacé un commit por paso y al final actualizá `PLAN.md` y dejame la sección "Próxima sesión".
