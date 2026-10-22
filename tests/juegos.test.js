@@ -98,7 +98,7 @@ test('el área de Bolti es chica: lo que cae al costado de la cabeza no cuenta',
   assert.equal(caeA(0.6).monedas, 0, 'al costado no')
 })
 
-test('cae bastante cantidad: más de 60 cosas por partida y varios dorados', () => {
+test('cae bastante cantidad: más de 120 cosas por partida y varios dorados', () => {
   let semilla = 11
   const azar = () => ((semilla = (semilla * 16807) % 2147483647) / 2147483647)
   let j = { ...crearJuego(), vidas: 999 }
@@ -107,6 +107,6 @@ test('cae bastante cantidad: más de 60 cosas por partida y varios dorados', () 
     j = paso(j, 1 / 60, azar)
     for (const it of j.items) if (!vistos.has(it.id)) { vistos.add(it.id); if (it.tipo === 'dorado') dorados++ }
   }
-  assert.ok(vistos.size > 60, `cosas: ${vistos.size}`)
-  assert.ok(dorados >= 4, `dorados: ${dorados}`)
+  assert.ok(vistos.size > 120, `cosas: ${vistos.size}`)
+  assert.ok(dorados >= 10, `dorados: ${dorados}`)
 })

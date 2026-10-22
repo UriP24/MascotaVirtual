@@ -57,17 +57,17 @@ export function paso(juego, dt, azar = Math.random) {
   let { proximaCosa, siguienteId, monedas, huesos, vidas } = juego
   const eventos = []
 
-  // Aparecen cosas arriba
+  // Aparecen cosas arriba (a veces dos a la vez, separadas)
   let items = juego.items
   if (t >= proximaCosa) {
-    const nueva = {
-      id: siguienteId++,
-      tipo: elegirTipo(azar, config),
-      x: BORDE + azar() * (1 - 2 * BORDE),
-      y: -0.05,
-      vy: config.velocidad,
+    const cantidad = azar() < config.probDoble ? 2 : 1
+    const nuevas = []
+    for (let n = 0; n < cantidad; n++) {
+      let x = BORDE + azar() * (1 - 2 * BORDE)
+      if (n === 1 && Math.abs(x - nuevas[0].x) < 0.25) x = nuevas[0].x > 0.5 ? nuevas[0].x - 0.3 : nuevas[0].x + 0.3
+      nuevas.push({ id: siguienteId++, tipo: elegirTipo(azar, config), x, y: -0.05 - n * 0.06, vy: config.velocidad })
     }
-    items = [...items, nueva]
+    items = [...items, ...nuevas]
     proximaCosa = t + config.intervalo
   }
 
