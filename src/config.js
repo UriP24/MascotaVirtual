@@ -18,6 +18,9 @@ export const ECONOMIA = {
 
   // Cuántos canjes se pueden hacer por mes calendario (se renueva el día 1)
   CANJES_POR_MES: 1,
+
+  // Monedas con las que arranca la app (para poder comprarle comida desde el primer día)
+  MONEDAS_DE_BIENVENIDA: 30,
 }
 
 export const ESTUDIO = {
@@ -56,14 +59,21 @@ export const PERRITA = {
   HORA_SE_DUERME_SOLA: 0, // a medianoche se duerme sola aunque la luz siga prendida
   HORA_SE_DESPIERTA: 10, // se despierta sola
   ENERGIA_PARA_SIESTA: 20, // con menos energía puede dormir siesta a cualquier hora
+  SIESTA_HASTA_ENERGIA: 80, // la siesta termina sola cuando recupera esta energía
+
+  // Con la panza en este valor o más, está llena y no quiere comer
+  SACIEDAD_LLENA: 95,
 }
 
 // Comida: se compra con monedas, va al inventario y se le da arrastrándola a la boca.
 // precio null = no se vende (regalo).
 export const COMIDAS = [
-  { id: 'croqueta', nombre: 'Croqueta', emoji: '🦴', precio: 5, saciedad: 10, carino: 0 },
-  { id: 'hueso', nombre: 'Hueso', emoji: '🍖', precio: 12, saciedad: 25, carino: 0 },
-  { id: 'pollito', nombre: 'Pollito', emoji: '🍗', precio: 20, saciedad: 40, carino: 5 },
+  { id: 'croquetas', nombre: 'Plato de croquetas', emoji: '🥣', precio: 5, saciedad: 15, carino: 0 },
+  { id: 'galletita', nombre: 'Galletita de perro', emoji: '🍪', precio: 3, saciedad: 5, carino: 3 },
+  { id: 'queso', nombre: 'Pedacito de queso', emoji: '🧀', precio: 4, saciedad: 5, carino: 5 },
+  { id: 'patita', nombre: 'Patita de pollo', emoji: '🍗', precio: 10, saciedad: 20, carino: 2 },
+  { id: 'carne', nombre: 'Carnecita con hueso', emoji: '🍖', precio: 15, saciedad: 30, carino: 5 },
+  { id: 'asado', nombre: 'Asadito', emoji: '🥩', precio: 25, saciedad: 50, carino: 10 },
   // Se regala una el día del cumple (28/10)
   { id: 'torta', nombre: 'Torta de cumple', emoji: '🎂', precio: null, saciedad: 100, carino: 20 },
 ]

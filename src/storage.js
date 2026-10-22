@@ -1,18 +1,18 @@
 // Único módulo que toca localStorage. Todo acceso pasa por acá, envuelto en try/catch,
 // porque localStorage puede fallar (modo incógnito, almacenamiento lleno, datos corruptos).
 
-import { PERRITA } from './config.js'
+import { COMIDAS, ECONOMIA, PERRITA } from './config.js'
 import { fechaLocal } from './logic/fechas.js'
 import { esHorarioDeDormir } from './logic/bolti.js'
 
 const CLAVE = 'patitas:estado'
-const VERSION_ACTUAL = 3
+const VERSION_ACTUAL = 4
 
 export function crearEstadoInicial() {
   const ahora = new Date().toISOString()
   return {
     version: VERSION_ACTUAL,
-    monedas: 0,
+    monedas: ECONOMIA.MONEDAS_DE_BIENVENIDA,
     puntos: 0,
     // Historial de todo lo ganado. Nunca baja: los puntos ganados no se restan ni vencen.
     puntosGanadosTotal: 0,
@@ -25,6 +25,8 @@ export function crearEstadoInicial() {
     ultimoDiaObligatorio: null,
     // { id, planId, costo, fecha (ISO), cumplido }. La fecha sirve para el límite mensual.
     cupones: [],
+    // Cuántas unidades tiene de cada comida: { croquetas: 0, galletita: 0, … }
+    inventario: Object.fromEntries(COMIDAS.map((c) => [c.id, 0])),
     // Día en que se empezó a usar la app (para no ponerla triste por días anteriores)
     instaladaEn: fechaLocal(),
     // Sin salud ni vida: Bolti nunca se enferma ni muere, como mucho se pone triste.
@@ -48,6 +50,7 @@ function completarEstado(datos) {
     ...inicial,
     ...datos,
     perrita: { ...inicial.perrita, ...datos.perrita },
+    inventario: { ...inicial.inventario, ...datos.inventario },
     version: VERSION_ACTUAL,
   }
 }
