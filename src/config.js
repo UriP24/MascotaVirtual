@@ -92,12 +92,23 @@ export const COMIDAS = [
 export const FECHA_REGALO_TORTA = '10-28' // MM-DD
 
 export const JUEGOS = {
-  ENERGIA_POR_PARTIDA: 10,
+  ENERGIA_POR_PARTIDA: 10, // se gasta al empezar
   ENERGIA_MINIMA_PARA_JUGAR: 10,
   CARINO_POR_PARTIDA: 8,
+
   // Minijuego "Atrapá los huesitos"
   HUESITOS_DURACION_SEGUNDOS: 45,
-  HUESITOS_MONEDAS_POR_HUESITO: 1,
+  HUESITOS_VIDAS: 3, // el chocolate saca una vida (nunca resta monedas)
+  HUESITOS_MONEDAS_MAXIMAS: 40, // tope de monedas por partida
+  HUESITOS_MONEDAS_HUESO: 1,
+  HUESITOS_MONEDAS_DORADO: 3,
+  HUESITOS_PROB_DORADO: 0.07,
+  HUESITOS_PROB_CHOCOLATE_INICIO: 0.12, // va subiendo durante la partida
+  HUESITOS_PROB_CHOCOLATE_FIN: 0.28,
+  HUESITOS_INTERVALO_INICIO: 1.1, // segundos entre cosa y cosa (cada vez más seguido)
+  HUESITOS_INTERVALO_FIN: 0.65,
+  HUESITOS_VELOCIDAD_INICIO: 0.28, // alto de pantalla por segundo (cada vez más rápido)
+  HUESITOS_VELOCIDAD_FIN: 0.55,
 }
 
 // Planes para canjear. Se pueden canjear varios planes distintos en el mismo mes, pero cada uno
