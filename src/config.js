@@ -107,10 +107,11 @@ export const PLANES = [
     id: 'comer-afuera',
     nombre: 'Salir a comer algo rico y caro',
     emoji: '🍝',
-    costoParaDos: 90000, // ~$45.000 por persona en un restaurante medio, con propina
-    margen: true,
+    // Referencia: un ramen caro con entrada y postre ronda $66.000 por persona; 150 deja margen
+    // para un lugar caro de verdad
+    puntosFijos: 150,
     rotacionMeses: 3,
-    descripcion: 'Un lugar especial que elijas, pedís lo que quieras y no mirás los precios',
+    descripcion: 'Elegís el lugar y pedís lo que quieras, invito yo',
   },
   {
     id: 'cine',

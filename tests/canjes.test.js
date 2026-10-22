@@ -13,7 +13,7 @@ function conPuntos(puntos) {
 test('precios: mitad de Mari / 500 + 5 de margen, redondeando si la unidad es 5 o más', () => {
   const precios = Object.fromEntries(PLANES.map((p) => [p.id, precioEnPuntos(p)]))
   assert.deepEqual(precios, {
-    'comer-afuera': 100, // 90 + 5 = 95 → 100
+    'comer-afuera': 150, // fijo
     cine: 90, // fijo
     'cena-casera': 50, // 40 + 5 = 45 → 50
     helado: 30, // 25 + 5 = 30
@@ -30,17 +30,17 @@ test('precios: mitad de Mari / 500 + 5 de margen, redondeando si la unidad es 5 
 })
 
 test('canjear resta puntos del saldo pero no del total ganado, y genera cupón con fecha', () => {
-  const r = canjear(conPuntos(120), 'comer-afuera', OCT)
+  const r = canjear(conPuntos(170), 'comer-afuera', OCT)
   assert.equal(r.resultado, 'ok')
   assert.equal(r.estado.puntos, 20)
-  assert.equal(r.estado.puntosGanadosTotal, 120, 'los puntos ganados nunca bajan')
+  assert.equal(r.estado.puntosGanadosTotal, 170, 'los puntos ganados nunca bajan')
   const [cupon] = r.estado.cupones
-  assert.equal(cupon.costo, 100)
+  assert.equal(cupon.costo, 150)
   assert.equal(cupon.fecha, OCT.toISOString())
 })
 
 test('sin puntos suficientes no canjea y dice cuántos faltan', () => {
-  const e = conPuntos(90)
+  const e = conPuntos(140)
   assert.equal(canjear(e, 'comer-afuera', OCT).resultado, 'sin-puntos')
   assert.equal(puntosQueFaltan(e, buscarPlan('comer-afuera')), 10)
 })
