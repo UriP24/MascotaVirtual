@@ -30,7 +30,8 @@ export function crearJuego() {
     items: [], // { id, tipo: 'hueso' | 'dorado' | 'chocolate', x, y, vy }
     boltiX: 0.5,
     huesos: 0, // cuántas cosas ricas atrapó
-    monedas: 0,
+    puntos: 0,
+    racha: 0, // cosas ricas atrapadas seguidas sin tocar chocolate
     vidas: JUEGOS.HUESITOS_VIDAS,
     proximaCosa: 0.4,
     siguienteId: 1,
@@ -54,7 +55,7 @@ export function paso(juego, dt, azar = Math.random) {
   if (juego.terminado) return juego
   const t = juego.t + dt
   const config = JUEGOS.HUESITOS_ETAPAS[etapa(t)]
-  let { proximaCosa, siguienteId, monedas, huesos, vidas } = juego
+  let { proximaCosa, siguienteId, puntos, racha, huesos, vidas } = juego
   const eventos = []
 
   // Aparecen cosas arriba (a veces dos a la vez, separadas)
@@ -79,12 +80,16 @@ export function paso(juego, dt, azar = Math.random) {
     if (enLaBoca) {
       if (item.tipo === 'chocolate') {
         vidas -= 1
+        racha = 0 // el chocolate corta la racha (no resta puntos)
         eventos.push({ tipo: 'chocolate', x: item.x })
       } else {
-        const gana = item.tipo === 'dorado' ? JUEGOS.HUESITOS_MONEDAS_DORADO : JUEGOS.HUESITOS_MONEDAS_HUESO
-        monedas = Math.min(JUEGOS.MONEDAS_MAXIMAS_POR_PARTIDA, monedas + gana)
+        racha += 1
+        const multiplicador = multiplicadorRacha(racha)
+        const base = item.tipo === 'dorado' ? JUEGOS.HUESITOS_PUNTOS_DORADO : JUEGOS.HUESITOS_PUNTOS_HUESO
+        const gana = base * multiplicador
+        puntos += gana
         huesos += 1
-        eventos.push({ tipo: item.tipo, x: item.x, gana })
+        eventos.push({ tipo: item.tipo, x: item.x, gana, multiplicador })
       }
     } else if (y < 1.05) {
       quedan.push({ ...item, y })
@@ -92,7 +97,18 @@ export function paso(juego, dt, azar = Math.random) {
   }
 
   const terminado = t >= JUEGOS.HUESITOS_DURACION_SEGUNDOS || vidas <= 0
-  return { ...juego, t, items: quedan, monedas, huesos, vidas, proximaCosa, siguienteId, eventos, terminado }
+  return { ...juego, t, items: quedan, puntos, racha, huesos, vidas, proximaCosa, siguienteId, eventos, terminado }
+}
+
+export function multiplicadorRacha(racha) {
+  if (racha >= JUEGOS.HUESITOS_RACHA_X3) return 3
+  if (racha >= JUEGOS.HUESITOS_RACHA_X2) return 2
+  return 1
+}
+
+// Puntaje final: lo atrapado + 100 por cada corazón que quedó
+export function puntajeFinal(juego) {
+  return juego.puntos + Math.max(0, juego.vidas) * JUEGOS.HUESITOS_PUNTOS_POR_VIDA
 }
 
 export function segundosRestantes(juego) {

@@ -1,7 +1,8 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { crearEstadoInicial } from '../src/storage.js'
-import { crearJuego, etapa, moverBolti, paso } from '../src/logic/huesitos.js'
+import { crearJuego, etapa, moverBolti, paso, puntajeFinal, multiplicadorRacha } from '../src/logic/huesitos.js'
+import { monedasPorPuntaje } from '../src/logic/puntaje.js'
 import { empezarPartida, puedeJugar, terminarPartida } from '../src/logic/juegos.js'
 
 const TARDE = new Date('2026-10-25T16:00:00').getTime()
@@ -35,34 +36,58 @@ test('puede jugar despierta y con energía; no dormida ni cansada', () => {
   assert.equal(puedeJugar(estado({ energia: 5 }), TARDE).motivo, 'cansada')
 })
 
-test('empezar gasta 10 de energía; terminar da monedas, cariño y festejo', () => {
+test('empezar gasta 10 de energía; terminar convierte el puntaje en monedas, cariño y festejo', () => {
   let e = empezarPartida(estado({ energia: 50, carino: 60 }), TARDE)
   assert.equal(e.perrita.energia, 40)
-  e = terminarPartida(e, 23)
-  assert.equal(e.monedas, 23)
-  assert.equal(e.perrita.carino, 68)
-  assert.ok(e.perrita.festejo.juegos > 0)
+  const r = terminarPartida(e, 'huesitos', 850)
+  assert.equal(r.monedas, 25 + 5, '850 puntos = 25 monedas, +5 por ser el primer récord')
+  assert.equal(r.nuevoRecord, true)
+  assert.equal(r.estado.monedas, 30)
+  assert.equal(r.estado.perrita.carino, 68)
+  assert.equal(r.estado.records.huesitos, 850)
+  assert.ok(r.estado.perrita.festejo.juegos > 0)
 })
 
-test('nunca da más de 40 monedas por partida', () => {
-  assert.equal(terminarPartida(estado(), 99).monedas, 40)
+test('récord: solo da el premio si supera el anterior', () => {
+  const e = { ...estado(), records: { huesitos: 900 } }
+  const peor = terminarPartida(e, 'huesitos', 850)
+  assert.equal(peor.nuevoRecord, false)
+  assert.equal(peor.monedas, 25)
+  assert.equal(peor.estado.records.huesitos, 900)
 })
 
-test('Bolti atrapa lo que le cae en la boca; el chocolate saca una vida', () => {
-  let j = { ...crearJuego(), proximaCosa: 999, items: [{ id: 1, tipo: 'hueso', x: 0.5, y: 0.75, vy: 0.3 }] }
-  j = paso(j, 0.1)
-  assert.equal(j.monedas, 1)
-  assert.equal(j.items.length, 0)
-  j = { ...j, items: [{ id: 2, tipo: 'chocolate', x: 0.5, y: 0.75, vy: 0.3 }] }
-  j = paso(j, 0.1)
+test('tabla puntaje → monedas, sin tope', () => {
+  const casos = [[0, 5], [199, 5], [200, 10], [650, 20], [999, 25], [1000, 30], [1599, 35], [1600, 40], [1899, 40], [1900, 45], [3100, 65]]
+  for (const [puntaje, monedas] of casos) assert.equal(monedasPorPuntaje(puntaje), monedas, `${puntaje} puntos`)
+})
+
+test('atrapar suma puntos; el chocolate saca una vida y corta la racha sin restar puntos', () => {
+  let j = { ...crearJuego(), proximaCosa: 999, items: [{ id: 1, tipo: 'hueso', x: 0.5, y: 0.78, vy: 0.3 }] }
+  j = paso(j, 0.01)
+  assert.equal(j.puntos, 10)
+  assert.equal(j.racha, 1)
+  j = { ...j, items: [{ id: 2, tipo: 'dorado', x: 0.5, y: 0.78, vy: 0.3 }] }
+  j = paso(j, 0.01)
+  assert.equal(j.puntos, 40)
+  j = { ...j, items: [{ id: 3, tipo: 'chocolate', x: 0.5, y: 0.78, vy: 0.3 }] }
+  j = paso(j, 0.01)
   assert.equal(j.vidas, 2)
-  assert.equal(j.monedas, 1, 'el chocolate no resta monedas')
+  assert.equal(j.racha, 0)
+  assert.equal(j.puntos, 40, 'el chocolate no resta puntos')
+})
+
+test('racha: ×2 desde 10 seguidos y ×3 desde 25; corazones al final suman 100 c/u', () => {
+  assert.deepEqual([1, 9, 10, 24, 25, 40].map(multiplicadorRacha), [1, 1, 2, 2, 3, 3])
+  let j = { ...crearJuego(), proximaCosa: 999, racha: 9, items: [{ id: 1, tipo: 'hueso', x: 0.5, y: 0.78, vy: 0.3 }] }
+  j = paso(j, 0.01)
+  assert.equal(j.puntos, 20, 'el décimo seguido ya vale doble')
+  assert.equal(puntajeFinal({ ...j, vidas: 2 }), 220)
 })
 
 test('si no está debajo, se le escapa', () => {
   let j = { ...crearJuego(), proximaCosa: 999, boltiX: 0.1, items: [{ id: 1, tipo: 'hueso', x: 0.8, y: 0.75, vy: 0.3 }] }
   j = jugar(j, 2, Math.random)
-  assert.equal(j.monedas, 0)
+  assert.equal(j.puntos, 0)
   assert.equal(j.items.length, 0, 'se cayó de la pantalla')
 })
 
@@ -75,11 +100,11 @@ test('termina a los 40 segundos o sin vidas', () => {
   assert.ok(conChocolates.t < 40, 'terminó antes por perder las vidas')
 })
 
-test('balance: jugando bien da cerca del tope, sin pasar de 40', () => {
+test('balance: jugando perfecto da un puntaje alto (más de 1.600 → 40 monedas o más)', () => {
   let semilla = 7
   const azar = () => ((semilla = (semilla * 16807) % 2147483647) / 2147483647)
   const j = jugar(crearJuego(), 41, azar, true)
-  assert.ok(j.monedas >= 25 && j.monedas <= 40, `monedas: ${j.monedas}`)
+  assert.ok(monedasPorPuntaje(puntajeFinal(j)) >= 40, `puntaje: ${puntajeFinal(j)}`)
 })
 
 test('la velocidad sube por escalones: 5 s lenta, cada 10 s más, últimos 15 s mucho más rápida', () => {
@@ -94,8 +119,8 @@ test('la velocidad sube por escalones: 5 s lenta, cada 10 s más, últimos 15 s 
 
 test('el área de Bolti es chica: lo que cae al costado de la cabeza no cuenta', () => {
   const caeA = (x) => paso({ ...crearJuego(), proximaCosa: 999, boltiX: 0.5, items: [{ id: 1, tipo: 'hueso', x, y: 0.8, vy: 0.3 }] }, 0.01)
-  assert.equal(caeA(0.55).monedas, 1, 'en la cabeza sí')
-  assert.equal(caeA(0.6).monedas, 0, 'al costado no')
+  assert.equal(caeA(0.55).puntos, 10, 'en la cabeza sí')
+  assert.equal(caeA(0.6).puntos, 0, 'al costado no')
 })
 
 test('cae bastante cantidad: más de 120 cosas por partida y varios dorados', () => {

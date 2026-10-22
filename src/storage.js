@@ -6,7 +6,7 @@ import { fechaLocal } from './logic/fechas.js'
 import { esHorarioDeDormir } from './logic/bolti.js'
 
 const CLAVE = 'patitas:estado'
-const VERSION_ACTUAL = 5
+const VERSION_ACTUAL = 6
 
 export function crearEstadoInicial() {
   const ahora = new Date().toISOString()
@@ -25,6 +25,8 @@ export function crearEstadoInicial() {
     recompensasTareas: { fecha: null, cantidad: 0 },
     // Cuántos puntos se cambiaron por monedas hoy (tope diario)
     conversiones: { fecha: null, cantidad: 0 },
+    // Mejor puntaje de cada minijuego: { huesitos: 1240, memoria: 860 }
+    records: {},
     // Último día en que se creó la tarea de estudio obligatoria (para no crearla dos veces)
     ultimoDiaObligatorio: null,
     // { id, planId, costo, fecha (ISO), cumplido }. La fecha sirve para el límite mensual.
@@ -57,6 +59,7 @@ function completarEstado(datos) {
     ...datos,
     perrita: { ...inicial.perrita, ...datos.perrita },
     inventario: { ...inicial.inventario, ...datos.inventario },
+    records: { ...inicial.records, ...datos.records },
     version: VERSION_ACTUAL,
   }
 }

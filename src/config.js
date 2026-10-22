@@ -96,13 +96,30 @@ export const JUEGOS = {
   ENERGIA_MINIMA_PARA_JUGAR: 10,
   CARINO_POR_PARTIDA: 8,
 
-  MONEDAS_MAXIMAS_POR_PARTIDA: 40, // tope de monedas por partida, en cualquier minijuego
+  // Cada juego da un puntaje, y el puntaje se convierte en monedas con esta tabla (sin tope).
+  // De 1.600 en adelante: 40 monedas y +5 cada 300 puntos más.
+  PUNTAJE_A_MONEDAS: [
+    { desde: 0, monedas: 5 }, // premio consuelo
+    { desde: 200, monedas: 10 },
+    { desde: 400, monedas: 15 },
+    { desde: 600, monedas: 20 },
+    { desde: 800, monedas: 25 },
+    { desde: 1000, monedas: 30 },
+    { desde: 1300, monedas: 35 },
+    { desde: 1600, monedas: 40 },
+  ],
+  PUNTAJE_EXTRA_CADA: 300,
+  MONEDAS_EXTRA: 5,
+  MONEDAS_POR_RECORD: 5, // premio por superar el récord del juego
 
   // Minijuego "Atrapá los huesitos"
   HUESITOS_DURACION_SEGUNDOS: 40,
   HUESITOS_VIDAS: 3, // el chocolate saca una vida (nunca resta monedas)
-  HUESITOS_MONEDAS_HUESO: 1,
-  HUESITOS_MONEDAS_DORADO: 3,
+  HUESITOS_PUNTOS_HUESO: 10,
+  HUESITOS_PUNTOS_DORADO: 30,
+  HUESITOS_RACHA_X2: 10, // atrapando seguido sin tocar chocolate: ×2 desde 10, ×3 desde 25
+  HUESITOS_RACHA_X3: 25,
+  HUESITOS_PUNTOS_POR_VIDA: 100, // por cada corazón que queda al final
   HUESITOS_PROB_DORADO: 0.12,
   // La velocidad sube por escalones: lenta los primeros 5 s, sube cada 10 s y los últimos 15 s
   // es mucho más rápida (el último escalón es el "¡Más rápido! 🔥").
@@ -115,16 +132,18 @@ export const JUEGOS = {
     { desde: 25, velocidad: 0.88, intervalo: 0.24, probDoble: 0.4, probChocolate: 0.33 }, // últimos 15 s
   ],
 
-  // Minijuego "Memoria de Bolti": límite por tiempo, cada nivel superado suma tiempo
+  // Minijuego "Memoria de Bolti": límite por tiempo, cada nivel superado suma tiempo.
+  // No se muestran las cartas al empezar: se van dando vuelta. Equivocarse no resta tiempo.
   MEMORIA_TIEMPO_INICIAL: 40, // segundos
   MEMORIA_NIVELES: [
-    { pares: 3, columnas: 3, vistazo: 2, bonusTiempo: 10 }, // vistazo: segundos que se ven todas al empezar
-    { pares: 4, columnas: 4, vistazo: 1.5, bonusTiempo: 10 },
-    { pares: 6, columnas: 4, vistazo: 1, bonusTiempo: 10 },
-    { pares: 8, columnas: 4, vistazo: 0, bonusTiempo: 8 }, // del 4 en adelante se repite este
+    { pares: 3, columnas: 3, bonusTiempo: 10 },
+    { pares: 4, columnas: 4, bonusTiempo: 10 },
+    { pares: 6, columnas: 4, bonusTiempo: 10 },
+    { pares: 8, columnas: 4, bonusTiempo: 8 }, // del 4 en adelante se repite este
   ],
-  MEMORIA_MONEDAS_POR_PAR: 1,
-  MEMORIA_MONEDAS_POR_NIVEL: 2,
+  MEMORIA_PUNTOS_PAR: 20,
+  MEMORIA_PUNTOS_PAR_A_LA_PRIMERA: 10, // extra si no se equivocó desde el par anterior
+  MEMORIA_PUNTOS_POR_NIVEL: 50, // × el número de nivel superado
   MEMORIA_ESPERA_ERROR: 0.8, // segundos que se ven las dos cartas que no coinciden
   // Cosas de la vida de Bolti
   MEMORIA_SIMBOLOS: ['🦴', '🎾', '🥣', '🐄', '🧀', '🍗', '🌳', '🏠', '☀️', '💗'],

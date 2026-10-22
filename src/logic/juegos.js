@@ -3,6 +3,7 @@
 import { JUEGOS, PERRITA } from '../config.js'
 import { avanzarTiempo } from './bolti.js'
 import { festejarLogro } from './festejo.js'
+import { monedasPorPuntaje } from './puntaje.js'
 
 // Devuelve { ok, motivo }: motivo 'durmiendo' | 'cansada' | null
 export function puedeJugar(estado, ahora = Date.now()) {
@@ -22,14 +23,18 @@ export function empezarPartida(estado, ahora = Date.now()) {
   }
 }
 
-// Al terminar: monedas (con tope por partida), cariño y festejo de Bolti
-export function terminarPartida(estado, monedasGanadas) {
-  const monedas = Math.max(0, Math.min(JUEGOS.MONEDAS_MAXIMAS_POR_PARTIDA, Math.floor(monedasGanadas)))
+// Al terminar: el puntaje se convierte en monedas (sin tope), +5 si es récord, cariño y festejo.
+// Devuelve { estado, monedas, nuevoRecord, recordAnterior }
+export function terminarPartida(estado, juegoId, puntaje) {
+  const recordAnterior = estado.records?.[juegoId] ?? 0
+  const nuevoRecord = puntaje > recordAnterior && puntaje > 0
+  const monedas = monedasPorPuntaje(puntaje) + (nuevoRecord ? JUEGOS.MONEDAS_POR_RECORD : 0)
   const p = estado.perrita
   const conPremio = {
     ...estado,
     monedas: estado.monedas + monedas,
+    records: nuevoRecord ? { ...estado.records, [juegoId]: puntaje } : estado.records,
     perrita: { ...p, carino: Math.min(PERRITA.NECESIDAD_MAXIMA, p.carino + JUEGOS.CARINO_POR_PARTIDA) },
   }
-  return festejarLogro(conPremio, 'juego', { sumarCarino: false })
+  return { estado: festejarLogro(conPremio, 'juego', { sumarCarino: false }), monedas, nuevoRecord, recordAnterior }
 }
