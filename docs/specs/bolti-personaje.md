@@ -15,9 +15,11 @@ real, aunque la app esté cerrada. **Nunca se enferma ni muere.**
 2. **Humor** (se calcula, no se guarda), primera regla que se cumpla:
    1. Dormida (si está durmiendo).
    2. Con hambre (panza < 30).
-   3. Triste (cariño < 30, energía < 30, o **no estudió el último día obligatorio**; esto último
-      se le pasa en cuanto completa el estudio de hoy).
-   4. Contenta.
+   3. Triste (cariño < 30 o energía < 30): lagrimita, orejas caídas, "¿Me hacés mimos? 🥺".
+   4. **Extraña el estudio** (no estudió el último día obligatorio): cara pensativa con una
+      nubecita 📚, sin lagrimita. Le recuerda estudiar unos segundos cada 7 minutos (no queda fijo).
+      Se le pasa en cuanto completa el estudio de hoy.
+   5. Contenta.
 3. **Mimos:** tocarla la hace saltar y hablar (+1 cariño). Frotarla con el dedo da corazones
    (+3 cariño cada tanto). **Dormida:** tocarla dice "zzz… 😴"; frotarla da corazones y cariño pero
    sigue durmiendo (ojos cerrados, mueve la cola despacito). Dormida no muestra hambre ni cansancio.

@@ -21,11 +21,11 @@ test('adelantar a Bolti baja sus necesidades', () => {
   assert.ok(despues.perrita.saciedad < e.perrita.saciedad)
 })
 
-test('"ayer no estudió" la pone triste', () => {
+test('"ayer no estudió" hace que extrañe el estudio', () => {
   const inicial = crearEstadoInicial()
   // despierta, para no depender de la hora real en que se corren las pruebas
   const e = simularQueNoEstudio({ ...inicial, perrita: { ...inicial.perrita, durmiendo: false } }, MARTES)
-  assert.equal(humor(e, MARTES), 'triste')
+  assert.equal(humor(e, MARTES), 'estudio')
 })
 
 test('sumar puntos también suma al total ganado', () => {

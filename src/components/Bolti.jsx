@@ -205,6 +205,13 @@ function Bolti({
                 <path fill="#7a2f3a" stroke="#5a3a2a" strokeWidth="3" strokeLinejoin="round" d="M137 149 Q150 165 163 149 Q150 154 137 149 Z" />
                 <path className="lengua-jadeo" fill="#f08aa0" stroke="#c9566f" strokeWidth="2" d="M143 155 L157 155 L157 167 C157 175 143 175 143 167 Z" />
               </g>
+              {/* Extraña el estudio: nubecita de pensamiento con un librito */}
+              <g className="nube-estudio">
+                <circle cx="88" cy="70" r="4" fill="#fff" stroke="#a488ec" strokeWidth="2" />
+                <circle cx="74" cy="60" r="6" fill="#fff" stroke="#a488ec" strokeWidth="2" />
+                <ellipse cx="44" cy="44" rx="26" ry="19" fill="#fff" stroke="#a488ec" strokeWidth="2.5" />
+                <text x="44" y="51" fontSize="20" textAnchor="middle">📚</text>
+              </g>
               <g className="zzz">
                 <text x="210" y="60" fontSize="22">z</text>
                 <text x="226" y="44" fontSize="18">z</text>

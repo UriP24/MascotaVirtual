@@ -101,12 +101,14 @@ export function extranaElEstudio(estado, ahora = new Date()) {
 }
 
 // El humor no se guarda: se calcula. Gana la primera regla que se cumple.
+// 'dormida' | 'hambre' | 'triste' | 'estudio' | 'contenta'
 export function humor(estado, ahora = new Date()) {
   const p = estado.perrita
   if (p.durmiendo) return 'dormida'
   if (p.saciedad < PERRITA.NIVEL_BAJO) return 'hambre'
   if (p.carino < PERRITA.NIVEL_BAJO || p.energia < PERRITA.NIVEL_BAJO) return 'triste'
-  if (extranaElEstudio(estado, ahora)) return 'triste'
+  // Distinto de "triste": extraña el estudio (cara pensativa con un librito, sin lagrimita)
+  if (extranaElEstudio(estado, ahora)) return 'estudio'
   return 'contenta'
 }
 

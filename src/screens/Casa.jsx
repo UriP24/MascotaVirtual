@@ -6,7 +6,8 @@ import FloatingEmoji from '../components/FloatingEmoji.jsx'
 import ActionBar from '../components/ActionBar.jsx'
 import Shop from '../components/Shop.jsx'
 import FoodTray from '../components/FoodTray.jsx'
-import { apagarLuz, darMimos, extranaElEstudio, humor, prenderLuz } from '../logic/bolti.js'
+import { apagarLuz, darMimos, humor, prenderLuz } from '../logic/bolti.js'
+import { PERRITA } from '../config.js'
 import { comprar, darDeComer } from '../logic/comida.js'
 import { festejoVisto, fraseDeFestejo } from '../logic/festejo.js'
 import './Casa.css'
@@ -15,6 +16,12 @@ const DISTANCIA_POR_MIMO = 45 // px que hay que frotar para cada corazón
 const RADIO_BOCA = 0.2 // qué tan cerca de la boca (en proporción al ancho de Bolti) cuenta como "en la boca"
 const DURACION_COMIENDO = 1800
 const FRASES_AL_TOCARLA = ['¡Guau! 🐾', '¡Hola, Mari! 💕', '¿Jugamos?', '¡Te quiero!', '¡Más mimos!']
+const RECORDATORIOS_ESTUDIO = [
+  '¿Estudiamos un ratito? 📚',
+  'Te espero para estudiar juntas 🐶📚',
+  'Con 30 minutitos de estudio me pongo contenta 💕',
+  '¿Hoy toca estudiar? Yo te acompaño 📚',
+]
 
 function azar(lista) {
   return lista[Math.floor(Math.random() * lista.length)]
@@ -35,10 +42,10 @@ function fraseDeHumor(estado, animo, ahora) {
   if (animo === 'dormida') return ahora.getHours() === 0 ? 'Vamos a dormir, Mari 💤' : null
   if (animo === 'hambre') return 'Tengo hambre… 🥺'
   if (animo === 'triste') {
-    if (extranaElEstudio(estado, ahora)) return '¿Hoy estudiamos juntas? 📚'
-    if (estado.perrita.energia < 30) return 'Estoy cansadita… 🥱'
+    if (estado.perrita.energia < PERRITA.NIVEL_BAJO) return 'Estoy cansadita… 🥱'
     return '¿Me hacés mimos? 🥺'
   }
+  // 'estudio' no tiene frase fija: le recuerda cada tanto (ver RECORDATORIO_ESTUDIO_MINUTOS)
   return null
 }
 
@@ -77,6 +84,24 @@ function Casa({ estado, setEstado, horasAusente = 0, onCambiarPantalla }) {
       clearTimeout(t.rechaza)
     }
   }, [setEstado]) // setEstado nunca cambia: corre solo al entrar a Casa
+
+  // Si extraña el estudio: se lo recuerda un ratito al entrar y después cada tanto (no queda fijo)
+  const extranaEstudio = animo === 'estudio'
+  useEffect(() => {
+    if (!extranaEstudio) return
+    const t = timers.current
+    const recordar = () => {
+      setFrase(azar(RECORDATORIOS_ESTUDIO))
+      clearTimeout(t.frase)
+      t.frase = setTimeout(() => setFrase(null), 5000)
+    }
+    const primero = setTimeout(recordar, 4000)
+    const cadaTanto = setInterval(recordar, PERRITA.RECORDATORIO_ESTUDIO_MINUTOS * 60 * 1000)
+    return () => {
+      clearTimeout(primero)
+      clearInterval(cadaTanto)
+    }
+  }, [extranaEstudio])
 
   function decir(texto, duracion = 1800) {
     setFrase(texto)
