@@ -109,10 +109,10 @@ export const JUEGOS = {
 // Precio en puntos (ver precioEnPuntos):
 // - Salidas de a dos: los puntos cubren la parte de Mari = costo para los dos / 2 / PESOS_POR_PUNTO.
 // - `margen: true`: suma MARGEN_PUNTOS_PLAN (precios investigados en octubre 2026, por si suben).
-// - Redondeo: si la unidad queda en 5 o más, sube a la decena siguiente (67 → 70); si no, queda.
+// - Redondeo a número redondo: si la unidad es 5 o más, sube a la decena (67 → 70); si no, baja (192 → 190).
 // - `puntosFijos`: puntos elegidos a mano (planes que no son plata o con precio decidido); sin redondeo.
 // - `usdMaximo` (jueguitos): regalo para Mari sola, precio completo = dólares × DOLAR_EN_PESOS,
-//   redondeado para arriba a los mil pesos (7.100 → 8.000), / PESOS_POR_PUNTO.
+//   redondeado para arriba a los mil pesos (7.100 → 8.000), / PESOS_POR_PUNTO, y a número redondo.
 export const PLANES = [
   {
     id: 'comer-afuera',
@@ -269,9 +269,9 @@ export const PLANES = [
   },
 ]
 
-// Si la unidad es 5 o más, sube a la decena siguiente; si no, queda igual (67 → 70, 30 → 30).
+// Número redondo: si la unidad es 5 o más, sube a la decena siguiente; si no, baja (67 → 70, 192 → 190).
 function redondear(puntos) {
-  return puntos % 10 >= 5 ? Math.ceil(puntos / 10) * 10 : puntos
+  return Math.round(puntos / 10) * 10
 }
 
 export function precioEnPesosDeJuego(usd) {
@@ -280,7 +280,7 @@ export function precioEnPesosDeJuego(usd) {
 
 export function precioEnPuntos(plan) {
   if (plan.puntosFijos) return plan.puntosFijos // elegidos a mano: sin redondeo
-  if (plan.usdMaximo) return Math.ceil(precioEnPesosDeJuego(plan.usdMaximo) / ECONOMIA.PESOS_POR_PUNTO)
+  if (plan.usdMaximo) return redondear(precioEnPesosDeJuego(plan.usdMaximo) / ECONOMIA.PESOS_POR_PUNTO)
   const base = Math.ceil(plan.costoParaDos / 2 / ECONOMIA.PESOS_POR_PUNTO)
   return redondear(base + (plan.margen ? ECONOMIA.MARGEN_PUNTOS_PLAN : 0))
 }

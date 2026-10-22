@@ -91,7 +91,7 @@ Si un día no llego, se recorta primero el minijuego; el resto del plan se corre
 - [x] Planes sin plata hasta 2 veces por mes; pedir comida rica 40 ⭐ cada 2 meses
 - [x] Tristeza por estudio distinta de la de cariño: cara pensativa con nubecita 📚 (sin lagrimita) y
       recordatorio de unos segundos cada 7 min, con frases que van cambiando
-- [x] Canjes de jueguitos (chico 16 ⭐ / 3 meses, mediano 48 / 6, grande 96 / 8, enorme 192 / 12),
+- [x] Canjes de jueguitos (chico 20 ⭐ / 3 meses, mediano 50 / 6, grande 100 / 8, enorme 190 / 12),
       en una sola tarjeta "Un jueguito" que abre un selector
 - [x] **Mochila 🎒** en vez de la bandeja: tocar una comida la hace volar a la boca, o arrastrarla
 - [ ] Decidir recomendaciones del balance (igualar "grande", festejo para premios) — Uri

@@ -10,7 +10,7 @@ function conPuntos(puntos) {
   return { ...crearEstadoInicial(), puntos, puntosGanadosTotal: puntos }
 }
 
-test('precios: mitad de Mari / 500 + 5 de margen, redondeando si la unidad es 5 o más', () => {
+test('precios: números redondos (unidad 5 o más sube a la decena, si no baja)', () => {
   const precios = Object.fromEntries(PLANES.map((p) => [p.id, precioEnPuntos(p)]))
   assert.deepEqual(precios, {
     'comer-afuera': 150, // fijo
@@ -26,10 +26,10 @@ test('precios: mitad de Mari / 500 + 5 de margen, redondeando si la unidad es 5 
     desayuno: 15,
     'noche-de-peli': 10,
     'elegis-la-serie': 10,
-    'juego-chico': 16,
-    'juego-mediano': 48,
-    'juego-grande': 96,
-    'juego-enorme': 192,
+    'juego-chico': 20, // 16 → 20
+    'juego-mediano': 50, // 48 → 50
+    'juego-grande': 100, // 96 → 100
+    'juego-enorme': 190, // 192 → 190
   })
 })
 

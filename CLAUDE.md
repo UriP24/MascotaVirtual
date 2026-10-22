@@ -26,8 +26,8 @@ PWA instalable en el celular con cuatro pantallas:
   **estudio** (1 cada 30 min, tope 4 h/día) y del cambio diario de monedas. Las tareas **no** dan
   puntos (si no, inventar tareas rompería la economía). Máximo realista: ~95–105 ⭐ por mes.
 - **Precio de canjes** (los puntos cubren la **parte de Mari**): costo para los dos / 2 / 500, +5 de
-  margen en los precios investigados; si la unidad queda en 5 o más, se redondea a la decena de
-  arriba (67 → 70). Los que tienen `puntosFijos` se eligieron a mano y no se redondean.
+  margen en los precios investigados, y a número redondo: unidad 5 o más sube a la decena, si no
+  baja (67 → 70, 192 → 190). Los que tienen `puntosFijos` se eligieron a mano y no se redondean.
   Salir a comer algo rico y caro 150 ⭐, cine 90, cena casera 50, pedir comida rica 40, helado 30,
   café 30, picnic 20, media hora de masaje 20, "hoy no hacés nada" 20, desayuno en la cama 15,
   parque 10, noche de peli 10, "vos elegís la serie" 10.
@@ -38,8 +38,8 @@ PWA instalable en el celular con cuatro pantallas:
   - Poca plata (helado, café, picnic, parque): 1 vez por mes.
   - Sin plata (masaje, hoy no hacés nada, desayuno, peli, serie): hasta 2 veces por mes, no se acumulan.
   - **Jueguitos** (regalo para Mari sola, precio completo: USD × 1.600 redondeado para arriba a los mil,
-    / 500): chico hasta 5 USD 16 ⭐ cada 3 meses; mediano hasta 15 USD 48 ⭐ cada 6; grande hasta
-    30 USD 96 ⭐ cada 8; enorme hasta 60 USD 192 ⭐ cada 12.
+    / 500): chico hasta 5 USD 20 ⭐ cada 3 meses; mediano hasta 15 USD 50 ⭐ cada 6; grande hasta
+    30 USD 100 ⭐ cada 8; enorme hasta 60 USD 190 ⭐ cada 12 (redondeados a la decena).
 - **Cupones:** "Mis cupones" muestra solo los pendientes; al marcarlos cumplidos pasan al
   **historial de canjes** (todos, con fecha y hora de canje y de cumplido).
 
