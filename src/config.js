@@ -105,19 +105,19 @@ export const JUEGOS = {
 export const PLANES = [
   {
     id: 'comer-afuera',
-    nombre: 'Salir a comer',
+    nombre: 'Salir a comer algo rico y caro',
     emoji: '🍝',
     costoParaDos: 90000, // ~$45.000 por persona en un restaurante medio, con propina
     margen: true,
     rotacionMeses: 3,
-    descripcion: 'Elegís el lugar y pedís lo que quieras, invito yo',
+    descripcion: 'Un lugar especial que elijas, pedís lo que quieras y no mirás los precios',
   },
   {
     id: 'cine',
     nombre: 'Ir al cine',
     emoji: '🎬',
-    costoParaDos: 62000, // 2 entradas 2D (~$21.000 c/u) + combo grande (~$20.000)
-    margen: true,
+    // Referencia: 2 entradas 2D (~$21.000 c/u) + combo grande (~$20.000) = ~$62.000 para los dos
+    puntosFijos: 90,
     rotacionMeses: 3,
     descripcion: 'La película que vos elijas, con pochoclos incluidos',
   },

@@ -14,7 +14,7 @@ test('precios: mitad de Mari / 500 + 5 de margen, redondeando si la unidad es 5 
   const precios = Object.fromEntries(PLANES.map((p) => [p.id, precioEnPuntos(p)]))
   assert.deepEqual(precios, {
     'comer-afuera': 100, // 90 + 5 = 95 → 100
-    cine: 70, // 62 + 5 = 67 → 70
+    cine: 90, // fijo
     'cena-casera': 50, // 40 + 5 = 45 → 50
     helado: 30, // 25 + 5 = 30
     cafe: 30, // 20 + 5 = 25 → 30

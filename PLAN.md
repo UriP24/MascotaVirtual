@@ -74,7 +74,7 @@ Si un día no llego, se recorta primero el minijuego; el resto del plan se corre
       del día, el tope no se reinicia borrando tareas); cambio **100 🪙 → 1 ⭐, máx. 1 por día**
 - [x] 13 planes con descripción y **precios investigados**: los puntos cubren la parte de Mari
       (costo para dos / 2 / 500, +5 de margen, redondeo a la decena si la unidad es ≥ 5):
-      salir a comer 100 ⭐, cine 70, cena casera 50, delivery 50, helado 30, café 30, picnic 20,
+      salir a comer algo rico y caro 100 ⭐, cine 90, cena casera 50, delivery 50, helado 30, café 30, picnic 20,
       media hora de masaje 20, "hoy no hacés nada" 20, desayuno en la cama 15, parque 10, noche de peli 10,
       "vos elegís la serie" 10
 - [x] **Rotación por plan** en vez de 1 canje por mes: varios planes en el mismo mes, cada uno

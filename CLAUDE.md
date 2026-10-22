@@ -27,7 +27,7 @@ PWA instalable en el celular con cuatro pantallas:
   puntos (si no, inventar tareas rompería la economía). Máximo realista: ~95–105 ⭐ por mes.
 - **Precio de canjes** (los puntos cubren la **parte de Mari**): costo para los dos / 2 / 500, +5 de
   margen en los precios investigados; si la unidad queda en 5 o más, se redondea a la decena de
-  arriba (67 → 70). Salir a comer 100 ⭐, cine 70, cena casera 50, helado 30, café 30, media hora
+  arriba (67 → 70). Salir a comer algo rico y caro 100 ⭐, cine 90, cena casera 50, helado 30, café 30, media hora
   de masaje 20 (fijo), parque 10, delivery 50 (cada 2 meses), picnic 20, "hoy no hacés nada" 20,
   desayuno en la cama 15, noche de peli 10, "vos elegís la serie" 10.
 - **Rotación por plan** (no hay límite general): se pueden canjear varios planes en el mismo mes,
