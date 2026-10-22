@@ -21,5 +21,5 @@ Cómo trabajás:
 4. Presentá 2 o 3 opciones con pros y contras y una recomendación. Siempre en números
    concretos que se puedan pegar en `config.js`.
 
-Reglas que nunca se rompen: no se restan puntos ganados, los puntos no vencen, cada plan tiene su rotación (1 vez por mes, los grandes cada 3 meses)
-calendario, la perrita nunca se enferma ni muere.
+Reglas que nunca se rompen: no se restan puntos ganados, los puntos no vencen, cada plan tiene su rotación (1 vez por mes, los grandes cada 3 meses),
+la perrita nunca se enferma ni muere.
