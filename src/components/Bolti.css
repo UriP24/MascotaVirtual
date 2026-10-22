@@ -245,6 +245,42 @@
   animation: bolti-menear 2.5s ease-in-out infinite;
 }
 
+/* Comida: abre la boca cuando se acerca, mastica sin lengua, o da vuelta la cara si está llena */
+.bolti.esperando .boca-cerrada,
+.bolti.esperando .lengua,
+.bolti.esperando .jadeo,
+.bolti.comiendo .lengua,
+.bolti.comiendo .jadeo {
+  display: none;
+}
+.bolti.esperando .boca-abierta {
+  display: inline;
+}
+.bolti.esperando .cabeza {
+  transform: translateY(4px) scale(1.03);
+}
+.bolti.comiendo .boca-cerrada {
+  animation: bolti-masticar 0.32s steps(1) infinite;
+}
+.bolti.comiendo .boca-abierta {
+  display: inline;
+  animation: bolti-masticar 0.32s steps(1) infinite reverse;
+}
+.bolti.comiendo .cabeza {
+  transform: translateY(8px);
+}
+.bolti.comiendo .cola {
+  animation-duration: 0.4s;
+}
+.bolti.rechaza .cabeza {
+  transform: rotate(-14deg) translateX(-6px);
+}
+@keyframes bolti-masticar {
+  50% {
+    opacity: 0;
+  }
+}
+
 /* Con "reducir movimiento" se apagan los efectos, pero sigue respirando despacito */
 @media (prefers-reduced-motion: reduce) {
   .bolti .cola,

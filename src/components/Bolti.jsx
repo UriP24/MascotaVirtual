@@ -11,8 +11,20 @@ import './Bolti.css'
 // - saltos: un contador; cada vez que aumenta, Bolti da un saltito
 // - carino, energia, saciedad: cada necesidad se ve en la cara por separado
 //   (cariño = cachetes sonrojados, energía baja = ojeras, hambre = panza que gruñe)
+// - esperando: abre la boca porque se acerca comida; comiendo: mastica; rechaza: da vuelta la cara
 // - el resto (onPointerDown, etc.) se pasa al <svg>
-function Bolti({ animo, mimos = false, saltos = 0, carino = 70, energia = 80, saciedad = 80, ...resto }) {
+function Bolti({
+  animo,
+  mimos = false,
+  saltos = 0,
+  carino = 70,
+  energia = 80,
+  saciedad = 80,
+  esperando = false,
+  comiendo = false,
+  rechaza = false,
+  ...resto
+}) {
   const svgRef = useRef(null)
   const ojosRef = useRef(null)
   const [parpadeo, setParpadeo] = useState(false)
@@ -101,7 +113,10 @@ function Bolti({ animo, mimos = false, saltos = 0, carino = 70, energia = 80, sa
     parpadeo && 'parpadeo',
     ladea && 'ladea',
     mimos && 'mimos',
-    jadeando && animo === 'contenta' && !mimos && 'jadeando',
+    jadeando && animo === 'contenta' && !mimos && !esperando && !comiendo && 'jadeando',
+    esperando && !comiendo && 'esperando',
+    comiendo && 'comiendo',
+    rechaza && 'rechaza',
     cansada && 'cansada',
     hambrienta && 'hambrienta',
   ]

@@ -5,11 +5,14 @@ import SpeechBubble from '../components/SpeechBubble.jsx'
 import FloatingEmoji from '../components/FloatingEmoji.jsx'
 import ActionBar from '../components/ActionBar.jsx'
 import Shop from '../components/Shop.jsx'
+import FoodTray from '../components/FoodTray.jsx'
 import { darMimos, extranaElEstudio, humor } from '../logic/bolti.js'
-import { comprar } from '../logic/comida.js'
+import { comprar, darDeComer } from '../logic/comida.js'
 import './Casa.css'
 
 const DISTANCIA_POR_MIMO = 45 // px que hay que frotar para cada corazón
+const RADIO_BOCA = 0.2 // qué tan cerca de la boca (en proporción al ancho de Bolti) cuenta como "en la boca"
+const DURACION_COMIENDO = 1800
 const FRASES_AL_TOCARLA = ['¡Guau! 🐾', '¡Hola, Mari! 💕', '¿Jugamos?', '¡Te quiero!', '¡Más mimos!']
 
 function azar(lista) {
@@ -48,6 +51,9 @@ function Casa({ estado, setEstado, horasAusente = 0 }) {
   const [frase, setFrase] = useState(() => saludoInicial(horasAusente, animo, ahora))
   const [flotantes, setFlotantes] = useState([])
   const [tiendaAbierta, setTiendaAbierta] = useState(false)
+  const [arrastre, setArrastre] = useState(null) // { comida, x, y, cerca }
+  const [comiendo, setComiendo] = useState(false)
+  const [rechaza, setRechaza] = useState(false)
   const habitacionRef = useRef(null)
   const toque = useRef({ apretado: false, recorrido: 0, ultimo: null, huboMimos: false })
   const timers = useRef({})
@@ -59,6 +65,8 @@ function Casa({ estado, setEstado, horasAusente = 0 }) {
     return () => {
       clearTimeout(t.frase)
       clearTimeout(t.mimos)
+      clearTimeout(t.comiendo)
+      clearTimeout(t.rechaza)
     }
   }, [])
 
@@ -120,6 +128,51 @@ function Casa({ estado, setEstado, horasAusente = 0 }) {
     decir(azar(FRASES_AL_TOCARLA))
   }
 
+  // ¿El dedo con la comida está cerca de la boca de Bolti?
+  function cercaDeLaBoca(x, y) {
+    const svg = habitacionRef.current?.querySelector('svg.bolti')
+    if (!svg) return false
+    const r = svg.getBoundingClientRect()
+    const bocaX = r.left + r.width * (150 / 300)
+    const bocaY = r.top + r.height * (152 / 320)
+    return Math.hypot(x - bocaX, y - bocaY) < r.width * RADIO_BOCA
+  }
+
+  function empezarArrastre(comida, e) {
+    setArrastre({ comida, x: e.clientX, y: e.clientY, cerca: false })
+  }
+
+  function moverArrastre(e) {
+    if (!arrastre) return
+    setArrastre({ ...arrastre, x: e.clientX, y: e.clientY, cerca: cercaDeLaBoca(e.clientX, e.clientY) })
+  }
+
+  function soltarArrastre(e) {
+    if (!arrastre) return
+    const { comida } = arrastre
+    setArrastre(null)
+    if (!cercaDeLaBoca(e.clientX, e.clientY)) return // vuelve sola a la bandeja
+
+    const r = darDeComer(estado, comida.id)
+    setEstado(r.estado)
+    if (r.resultado === 'comio') {
+      setComiendo(true)
+      clearTimeout(timers.current.comiendo)
+      timers.current.comiendo = setTimeout(() => setComiendo(false), DURACION_COMIENDO)
+      decir('¡Ñam ñam! 😋', DURACION_COMIENDO)
+      if (comida.carino > 0) soltarEmoji('💗', e.clientX, e.clientY)
+      soltarEmoji(comida.emoji, e.clientX, e.clientY)
+      navigator.vibrate?.(30)
+    } else if (r.resultado === 'llena') {
+      setRechaza(true)
+      clearTimeout(timers.current.rechaza)
+      timers.current.rechaza = setTimeout(() => setRechaza(false), 1200)
+      decir('¡Estoy llena! 😋')
+    } else if (r.resultado === 'durmiendo') {
+      decir('Está durmiendo… 😴')
+    }
+  }
+
   const texto = frase ?? fraseDeHumor(estado, animo, ahora)
 
   return (
@@ -139,6 +192,9 @@ function Casa({ estado, setEstado, horasAusente = 0 }) {
           saciedad={estado.perrita.saciedad}
           mimos={mimos}
           saltos={saltos}
+          esperando={arrastre?.cerca && animo !== 'dormida'}
+          comiendo={comiendo}
+          rechaza={rechaza}
           onPointerDown={alApretar}
           onPointerMove={alMover}
           onPointerUp={alSoltar}
@@ -146,12 +202,26 @@ function Casa({ estado, setEstado, horasAusente = 0 }) {
         />
         <FloatingEmoji items={flotantes} />
       </div>
+      <FoodTray
+        estado={estado}
+        arrastrandoId={arrastre?.comida.id}
+        onEmpezar={empezarArrastre}
+        onMover={moverArrastre}
+        onSoltar={soltarArrastre}
+        onCancelar={() => setArrastre(null)}
+        onAbrirTienda={() => setTiendaAbierta(true)}
+      />
       <ActionBar acciones={[{ id: 'tienda', icono: '🛒', texto: 'Tienda', onClick: () => setTiendaAbierta(true) }]} />
       <p className="ayuda">
         {animo === 'dormida'
           ? 'Está durmiendo 💤 · Frotala suave para hacerle mimos sin despertarla'
           : 'Tocala para que salte · Frotala con el dedo para hacerle mimos'}
       </p>
+      {arrastre && (
+        <div className="comida-arrastrada" style={{ left: arrastre.x, top: arrastre.y }} aria-hidden="true">
+          {arrastre.comida.emoji}
+        </div>
+      )}
       {tiendaAbierta && (
         <Shop
           monedas={estado.monedas}
