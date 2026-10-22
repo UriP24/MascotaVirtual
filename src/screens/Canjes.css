@@ -39,3 +39,12 @@
   background: var(--color-superficie);
   text-align: center;
 }
+
+.canjes .ver-historial {
+  min-height: 44px;
+  border: 1px dashed var(--color-borde);
+  border-radius: 14px;
+  background: none;
+  color: var(--color-texto-suave);
+  font-weight: 600;
+}

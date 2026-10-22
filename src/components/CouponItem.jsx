@@ -1,4 +1,4 @@
-import { formatearFecha } from '../logic/canjes.js'
+import { formatearFechaHora } from '../logic/canjes.js'
 import './CouponItem.css'
 
 // Un cupón canjeado. Se marca como cumplido cuando hacen el plan.
@@ -11,8 +11,7 @@ function CouponItem({ cupon, onCumplido }) {
       <div className="info">
         <strong>{cupon.nombre}</strong>
         <small>
-          Canjeado el {formatearFecha(cupon.fecha)}
-          {cupon.cumplido && ` · cumplido el ${formatearFecha(cupon.cumplidoEn)} 💕`}
+          Canjeado el {formatearFechaHora(cupon.fecha)}
         </small>
       </div>
       {!cupon.cumplido && (

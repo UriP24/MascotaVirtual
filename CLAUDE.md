@@ -27,12 +27,18 @@ PWA instalable en el celular con cuatro pantallas:
   puntos (si no, inventar tareas rompería la economía). Máximo realista: ~95–105 ⭐ por mes.
 - **Precio de canjes** (los puntos cubren la **parte de Mari**): costo para los dos / 2 / 500, +5 de
   margen en los precios investigados; si la unidad queda en 5 o más, se redondea a la decena de
-  arriba (67 → 70). Salir a comer algo rico y caro 150 ⭐, cine 90, cena casera 50, helado 30, café 30, media hora
-  de masaje 20 (fijo), parque 10, delivery 50 (cada 2 meses), picnic 20, "hoy no hacés nada" 20,
-  desayuno en la cama 15, noche de peli 10, "vos elegís la serie" 10.
-- **Rotación por plan** (no hay límite general): se pueden canjear varios planes en el mismo mes,
-  pero cada uno con su espera por meses calendario: 1 vez por mes la mayoría, cena casera cada 2
-  meses, y las salidas de más de $50.000 para los dos (salir a comer, cine) cada 3 meses. Se valida con la fecha de los cupones.
+  arriba (67 → 70). Los que tienen `puntosFijos` se eligieron a mano y no se redondean.
+  Salir a comer algo rico y caro 150 ⭐, cine 90, cena casera 50, pedir comida rica 40, helado 30,
+  café 30, picnic 20, media hora de masaje 20, "hoy no hacés nada" 20, desayuno en la cama 15,
+  parque 10, noche de peli 10, "vos elegís la serie" 10.
+- **Frecuencia por plan** (no hay límite general, se pueden canjear varios en el mismo mes), por meses
+  calendario y validada con la fecha de los cupones:
+  - Mucha plata (salir a comer, cine): 1 vez cada 3 meses.
+  - Plata media (cena casera, pedir comida): 1 vez cada 2 meses.
+  - Poca plata (helado, café, picnic, parque): 1 vez por mes.
+  - Sin plata (masaje, hoy no hacés nada, desayuno, peli, serie): hasta 2 veces por mes, no se acumulan.
+- **Cupones:** "Mis cupones" muestra solo los pendientes; al marcarlos cumplidos pasan al
+  **historial de canjes** (todos, con fecha y hora de canje y de cumplido).
 
 ### Estudio
 - De lunes a viernes aparece sola una tarea **"Estudiar" obligatoria** (no se puede borrar hasta

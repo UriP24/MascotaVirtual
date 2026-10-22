@@ -94,8 +94,11 @@ export const JUEGOS = {
   HUESITOS_MONEDAS_POR_HUESITO: 1,
 }
 
-// Planes para canjear. Cada plan se puede canjear 1 vez cada `rotacionMeses` meses calendario
-// (los de más de $50.000 para los dos, cada 3 meses). Se pueden canjear varios planes en el mismo mes.
+// Planes para canjear. Se pueden canjear varios planes distintos en el mismo mes, pero cada uno
+// tiene su frecuencia (por meses calendario):
+// - Mucha plata (más de $50.000 para los dos): 1 vez cada 3 meses (`rotacionMeses: 3`)
+// - Plata media: 1 vez cada 2 meses. Poca plata: 1 vez por mes.
+// - Sin plata: hasta 2 veces por mes (`vecesPorMes: 2`), no se acumulan de un mes a otro.
 //
 // Precio en puntos (ver precioEnPuntos):
 // - Salidas de a dos: los puntos cubren la parte de Mari = costo para los dos / 2 / PESOS_POR_PUNTO.
@@ -132,13 +135,15 @@ export const PLANES = [
     descripcion: 'Te cocino lo que me pidas y después lavo todo yo',
   },
   {
-    id: 'delivery',
-    nombre: 'Pedir delivery',
-    emoji: '🍕',
-    puntosFijos: 50,
+    id: 'pedir-comida',
+    nombre: 'Pedir comida rica',
+    emoji: '🍔',
+    // Referencia: 2 lomitos o hamburguesas ≈ $35.000 → parte de Mari 17.500 → 35 + 5 → 40
+    puntosFijos: 40,
     rotacionMeses: 2,
-    descripcion: 'Pedimos lo que vos quieras, de donde quieras, y lo pago yo',
+    descripcion: 'Lomito, hamburguesa o lo que pinte: pedimos y lo pago yo',
   },
+
   {
     id: 'helado',
     nombre: 'Salida por helado',
@@ -171,6 +176,7 @@ export const PLANES = [
     emoji: '💆',
     puntosFijos: 20,
     rotacionMeses: 1,
+    vecesPorMes: 2, // no cuesta plata: hasta 2 veces por mes (no se acumulan)
     descripcion: 'Media hora de masajes, sin apuro y con aceite',
   },
   {
@@ -187,6 +193,7 @@ export const PLANES = [
     emoji: '🧹',
     puntosFijos: 20,
     rotacionMeses: 1,
+    vecesPorMes: 2, // no cuesta plata: hasta 2 veces por mes (no se acumulan)
     descripcion: 'Ese día me encargo yo de todas las tareas de la casa',
   },
   {
@@ -195,6 +202,7 @@ export const PLANES = [
     emoji: '🍳',
     puntosFijos: 15,
     rotacionMeses: 1,
+    vecesPorMes: 2, // no cuesta plata: hasta 2 veces por mes (no se acumulan)
     descripcion: 'Te despierto con el desayuno listo, sin moverte de la cama',
   },
   {
@@ -203,6 +211,7 @@ export const PLANES = [
     emoji: '🛋️',
     puntosFijos: 10,
     rotacionMeses: 1,
+    vecesPorMes: 2, // no cuesta plata: hasta 2 veces por mes (no se acumulan)
     descripcion: 'Vos elegís la peli y yo hago los pochoclos',
   },
   {
@@ -211,6 +220,7 @@ export const PLANES = [
     emoji: '📺',
     puntosFijos: 10,
     rotacionMeses: 1,
+    vecesPorMes: 2, // no cuesta plata: hasta 2 veces por mes (no se acumulan)
     descripcion: 'Elegís qué serie vemos y no hay discusión',
   },
 ]

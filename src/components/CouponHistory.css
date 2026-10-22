@@ -1,0 +1,53 @@
+.coupon-history {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.coupon-history li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: var(--color-superficie);
+}
+
+.coupon-history .emoji {
+  font-size: 1.5rem;
+}
+
+.coupon-history .info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.coupon-history .costo {
+  font-weight: 400;
+  color: var(--color-texto-suave);
+}
+
+.coupon-history small {
+  color: var(--color-texto-suave);
+}
+
+.coupon-history small.cumplido {
+  color: var(--color-secundario-oscuro);
+  font-weight: 600;
+}
+
+.coupon-history small.pendiente {
+  color: var(--color-principal-oscuro);
+  font-weight: 600;
+}
+
+.coupon-history.vacio {
+  padding: 12px;
+  border-radius: 14px;
+  background: var(--color-superficie);
+  text-align: center;
+}

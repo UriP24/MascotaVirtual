@@ -4,7 +4,7 @@ import './PlanCard.css'
 
 // Tarjeta de un plan para canjear. `vuelveEl` es la fecha desde la que se puede volver a canjear
 // (null si ya está disponible).
-function PlanCard({ plan, puntos, vuelveEl, onCanjear }) {
+function PlanCard({ plan, puntos, vuelveEl, usosRestantes, onCanjear }) {
   const precio = precioEnPuntos(plan)
   const faltan = Math.max(0, precio - puntos)
   let boton = 'Canjear'
@@ -21,6 +21,7 @@ function PlanCard({ plan, puntos, vuelveEl, onCanjear }) {
         <small>{plan.descripcion}</small>
         <small className="rotacion">
           {vuelveEl ? `🔒 Vuelve en ${nombreDelMes(vuelveEl)}` : `🔁 ${textoRotacion(plan)}`}
+          {!vuelveEl && plan.vecesPorMes > 1 && usosRestantes < plan.vecesPorMes && ` · te queda ${usosRestantes}`}
         </small>
       </div>
       <div className="lado">

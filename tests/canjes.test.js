@@ -2,7 +2,7 @@ import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { crearEstadoInicial } from '../src/storage.js'
 import { PLANES, precioEnPuntos } from '../src/config.js'
-import { canjear, disponibleDesde, marcarCumplido, puntosQueFaltan, buscarPlan } from '../src/logic/canjes.js'
+import { canjear, disponibleDesde, marcarCumplido, puntosQueFaltan, buscarPlan, usosRestantesEsteMes, cuponesPendientes, historialDeCupones, textoRotacion } from '../src/logic/canjes.js'
 
 const OCT = new Date('2026-10-24T18:00:00')
 
@@ -20,7 +20,7 @@ test('precios: mitad de Mari / 500 + 5 de margen, redondeando si la unidad es 5 
     cafe: 30, // 20 + 5 = 25 → 30
     masaje: 20, // fijo
     'dia-de-parque': 10, // 10
-    delivery: 50,
+    'pedir-comida': 40,
     picnic: 20,
     'hoy-no-haces-nada': 20,
     desayuno: 15,
@@ -81,4 +81,30 @@ test('marcar cupón como cumplido', () => {
   e = marcarCumplido(e, e.cupones[0].id, new Date('2026-10-26T20:00:00'))
   assert.equal(e.cupones[0].cumplido, true)
   assert.ok(e.cupones[0].cumplidoEn)
+})
+
+test('los que no cuestan plata: hasta 2 veces por mes, sin acumular', () => {
+  let e = conPuntos(200)
+  e = canjear(e, 'desayuno', OCT).estado
+  assert.equal(usosRestantesEsteMes(e, buscarPlan('desayuno'), OCT), 1)
+  e = canjear(e, 'desayuno', OCT).estado
+  assert.equal(canjear(e, 'desayuno', OCT).resultado, 'en-rotacion', 'la tercera no')
+  const nov = new Date('2026-11-05T10:00:00')
+  assert.equal(usosRestantesEsteMes(e, buscarPlan('desayuno'), nov), 2, 'en noviembre vuelven a ser 2, no 4')
+  assert.equal(textoRotacion(buscarPlan('desayuno')), '2 veces por mes')
+})
+
+test('pedir comida rica: 40 puntos, 1 vez cada 2 meses', () => {
+  const e = canjear(conPuntos(100), 'pedir-comida', OCT).estado
+  assert.equal(e.puntos, 60)
+  assert.equal(canjear(e, 'pedir-comida', new Date('2026-11-15T12:00:00')).resultado, 'en-rotacion')
+  assert.equal(canjear(e, 'pedir-comida', new Date('2026-12-01T00:00:00')).resultado, 'ok')
+})
+
+test('los cupones cumplidos salen de la lista y quedan en el historial', () => {
+  let e = canjear(conPuntos(200), 'helado', OCT).estado
+  e = canjear(e, 'cafe', new Date('2026-10-25T12:00:00')).estado
+  e = marcarCumplido(e, e.cupones.find((c) => c.planId === 'helado').id)
+  assert.deepEqual(cuponesPendientes(e).map((c) => c.planId), ['cafe'])
+  assert.deepEqual(historialDeCupones(e).map((c) => c.planId), ['cafe', 'helado'], 'del más nuevo al más viejo')
 })
