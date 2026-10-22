@@ -111,6 +111,20 @@ export const JUEGOS = {
   HUESITOS_INTERVALO_FIN: 0.38,
   HUESITOS_VELOCIDAD_INICIO: 0.32, // alto de pantalla por segundo (cada vez más rápido)
   HUESITOS_VELOCIDAD_FIN: 0.78,
+
+  // Minijuego "Memoria de Bolti": límite por tiempo, cada nivel superado suma tiempo
+  MEMORIA_TIEMPO_INICIAL: 40, // segundos
+  MEMORIA_NIVELES: [
+    { pares: 3, columnas: 3, vistazo: 2, bonusTiempo: 10 }, // vistazo: segundos que se ven todas al empezar
+    { pares: 4, columnas: 4, vistazo: 1.5, bonusTiempo: 10 },
+    { pares: 6, columnas: 4, vistazo: 1, bonusTiempo: 10 },
+    { pares: 8, columnas: 4, vistazo: 0, bonusTiempo: 8 }, // del 4 en adelante se repite este
+  ],
+  MEMORIA_MONEDAS_POR_PAR: 1,
+  MEMORIA_MONEDAS_POR_NIVEL: 2,
+  MEMORIA_ESPERA_ERROR: 0.8, // segundos que se ven las dos cartas que no coinciden
+  // Cosas de la vida de Bolti
+  MEMORIA_SIMBOLOS: ['🦴', '🎾', '🥣', '🐄', '🧀', '🍗', '🌳', '🏠', '☀️', '💗'],
 }
 
 // Planes para canjear. Se pueden canjear varios planes distintos en el mismo mes, pero cada uno
