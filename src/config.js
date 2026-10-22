@@ -63,6 +63,9 @@ export const PERRITA = {
 
   // Con la panza en este valor o más, está llena y no quiere comer
   SACIEDAD_LLENA: 95,
+
+  // Cariño que gana cuando Mari completa una tarea o una sesión de estudio (Bolti está orgullosa)
+  CARINO_POR_LOGRO: 5,
 }
 
 // Comida: se compra con monedas, va al inventario y se le da arrastrándola a la boca.

@@ -8,6 +8,7 @@ import Shop from '../components/Shop.jsx'
 import FoodTray from '../components/FoodTray.jsx'
 import { apagarLuz, darMimos, extranaElEstudio, humor, prenderLuz } from '../logic/bolti.js'
 import { comprar, darDeComer } from '../logic/comida.js'
+import { festejoVisto, fraseDeFestejo } from '../logic/festejo.js'
 import './Casa.css'
 
 const DISTANCIA_POR_MIMO = 45 // px que hay que frotar para cada corazón
@@ -47,8 +48,12 @@ function Casa({ estado, setEstado, horasAusente = 0, onCambiarPantalla }) {
   const ahora = new Date(estado.perrita.actualizadaEn)
   const animo = humor(estado, ahora)
   const [mimos, setMimos] = useState(false)
-  const [saltos, setSaltos] = useState(0)
-  const [frase, setFrase] = useState(() => saludoInicial(horasAusente, animo, ahora))
+  // Si hay un logro sin festejar (y está despierta), entra saltando y lo festeja
+  const festejando = animo !== 'dormida' && Boolean(estado.perrita.festejo)
+  const [saltos, setSaltos] = useState(festejando ? 1 : 0)
+  const [frase, setFrase] = useState(() =>
+    festejando ? fraseDeFestejo(estado.perrita.festejo) : saludoInicial(horasAusente, animo, ahora),
+  )
   const [flotantes, setFlotantes] = useState([])
   const [tiendaAbierta, setTiendaAbierta] = useState(false)
   const [arrastre, setArrastre] = useState(null) // { comida, x, y, cerca }
@@ -59,8 +64,11 @@ function Casa({ estado, setEstado, horasAusente = 0, onCambiarPantalla }) {
   const timers = useRef({})
 
   // El saludo se va solo después de un ratito. Al salir de la pantalla, se cancelan los timers.
+  const festejoAlEntrar = useRef(festejando)
+
   useEffect(() => {
     const t = timers.current
+    if (festejoAlEntrar.current) setEstado(festejoVisto) // ya lo festejó
     t.frase = setTimeout(() => setFrase(null), 3500)
     return () => {
       clearTimeout(t.frase)
@@ -68,7 +76,7 @@ function Casa({ estado, setEstado, horasAusente = 0, onCambiarPantalla }) {
       clearTimeout(t.comiendo)
       clearTimeout(t.rechaza)
     }
-  }, [])
+  }, [setEstado]) // setEstado nunca cambia: corre solo al entrar a Casa
 
   function decir(texto, duracion = 1800) {
     setFrase(texto)

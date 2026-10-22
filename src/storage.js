@@ -38,6 +38,7 @@ export function crearEstadoInicial() {
       actualizadaEn: Date.now(), // última vez que se calcularon las necesidades (ms)
       ultimaActividad: null, // último mimo (ms), para volver a dormirse de madrugada
       ultimaVisita: ahora, // para saludarla si hace mucho que no entra
+      festejo: null, // logros de Mari que Bolti todavía no festejó: { tareas, estudio }
       siesta: false, // durmiendo una siesta de día (termina sola al recuperar energía)
       forzado: null, // solo modo prueba: { durmiendo, hasta (ms) } ignora el horario de sueño
     },

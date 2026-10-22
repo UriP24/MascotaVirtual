@@ -10,6 +10,7 @@ import {
   completarTarea,
   msDisponibles,
 } from '../logic/tareas.js'
+import { festejarLogro } from '../logic/festejo.js'
 import './Tareas.css'
 
 function Tareas({ estado, setEstado }) {
@@ -33,8 +34,9 @@ function Tareas({ estado, setEstado }) {
   function completar(id) {
     const resultado = completarTarea(estado, id)
     if (resultado.puntos === 0) return
-    setEstado(resultado.estado)
-    avisar(`¡Bien! +${resultado.puntos} ⭐`)
+    const tarea = estado.tareas.find((t) => t.id === id)
+    setEstado(festejarLogro(resultado.estado, tarea.tipo === 'estudio' ? 'estudio' : 'tarea'))
+    avisar(`¡Bien! +${resultado.puntos} ⭐ · Bolti está orgullosa 🐶`)
   }
 
   function borrar(tarea) {
