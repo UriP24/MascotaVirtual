@@ -3,6 +3,7 @@ import TaskForm from '../components/TaskForm.jsx'
 import TaskItem from '../components/TaskItem.jsx'
 import Toast from '../components/Toast.jsx'
 import StudyTimer from '../components/StudyTimer.jsx'
+import StudyStats from '../components/StudyStats.jsx'
 import {
   actualizarCronometro,
   agregarTarea,
@@ -12,10 +13,14 @@ import {
   tareasConRecompensaRestantes,
 } from '../logic/tareas.js'
 import { festejarLogro } from '../logic/festejo.js'
+import { rachaActual } from '../logic/estadisticas.js'
 import './Tareas.css'
 
 function Tareas({ estado, setEstado }) {
   const [aviso, setAviso] = useState(null)
+  const [verEstadisticas, setVerEstadisticas] = useState(false)
+  const ahora = new Date(estado.perrita.actualizadaEn) // App lo actualiza cada minuto
+  const racha = rachaActual(estado, ahora)
 
   // El aviso se borra solo después de un ratito.
   useEffect(() => {
@@ -67,7 +72,12 @@ function Tareas({ estado, setEstado }) {
 
   return (
     <section className="pantalla tareas">
-      <h1>📝 Tareas</h1>
+      <div className="titulo">
+        <h1>📝 Tareas</h1>
+        <button className="ver-estadisticas" onClick={() => setVerEstadisticas(true)}>
+          🔥 {racha} {racha === 1 ? 'día' : 'días'} · 📊
+        </button>
+      </div>
       <TaskForm onAgregar={agregar} />
       <p className="recompensas">
         {tareasConRecompensaRestantes(estado) > 0
@@ -90,6 +100,7 @@ function Tareas({ estado, setEstado }) {
       )}
 
       <Toast mensaje={aviso} />
+      {verEstadisticas && <StudyStats estado={estado} ahora={ahora} onCerrar={() => setVerEstadisticas(false)} />}
     </section>
   )
 }

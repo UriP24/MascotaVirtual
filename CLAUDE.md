@@ -56,6 +56,9 @@ PWA instalable en el celular con cuatro pantallas:
   tiempo no cuenta; al volver el cronómetro sigue solo. La pantalla se mantiene encendida con
   la Wake Lock API mientras corre. Cada 20–30 min Bolti pregunta "¿Seguís estudiando?"; si no
   responde en 3 min, se pausa y no cuenta nada desde que preguntó.
+- **Racha y estadísticas** (botón "🔥 N días · 📊" en Tareas): días seguidos con al menos un
+  pomodoro (el finde sin estudio no la corta), mejor racha, tiempo total, pomodoros, promedio y
+  gráfico de los últimos 7 días. Salen de `historialEstudio` (`src/logic/estadisticas.js`).
 - Si no estudia un día obligatorio: **sin castigo**, la tarea desaparece a medianoche (si tenía
   ≥ 25 min se completa sola). Pero queda en `historialEstudio` y **Bolti se pone triste**.
 

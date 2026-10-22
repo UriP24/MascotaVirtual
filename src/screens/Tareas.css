@@ -23,3 +23,25 @@
   margin: -8px 0 4px;
   font-size: 0.85rem;
 }
+
+.tareas .titulo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.tareas .titulo h1 {
+  margin: 0;
+}
+
+.tareas .ver-estadisticas {
+  min-height: 40px;
+  padding: 0 14px;
+  border: none;
+  border-radius: 999px;
+  background: var(--color-superficie);
+  font-weight: 700;
+  box-shadow: 0 1px 3px rgb(63 53 64 / 0.12);
+}

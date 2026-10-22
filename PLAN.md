@@ -94,9 +94,7 @@ Si un día no llego, se recorta primero el minijuego; el resto del plan se corre
 - [x] Canjes de jueguitos (chico 20 ⭐ / 3 meses, mediano 50 / 6, grande 100 / 8, enorme 190 / 12),
       en una sola tarjeta "Un jueguito" que abre un selector
 - [x] **Mochila 🎒** en vez de la bandeja: tocar una comida la hace volar a la boca, o arrastrarla
-- [ ] Decidir recomendaciones del balance (igualar "grande", festejo para premios) — Uri
-- [ ] Decidir: ¿estudio 1 ⭐ cada 30 o 45 min? (con 30, lo que pone Uri por Mari rinde ~$37–52 mil/mes máx.) — Uri
-- [ ] Decidir: blindar los topes diarios contra cambiar la fecha del celular (fechas futuras cuentan como usadas) — Uri
+- [x] Decisiones de balance tomadas (pomodoro de 25 min, tareas a 10 🪙, premios festejados, sin blindaje de fecha)
 
 ## Dom 25 — Jugar ✅
 - [x] `logic/juegos.js`: se juega despierta y con energía ≥ 10; cuesta 10 ⚡ al empezar; da 🪙 (tope 40)
@@ -112,6 +110,13 @@ Si un día no llego, se recorta primero el minijuego; el resto del plan se corre
 - [x] Minijuego **"Memoria de Bolti"**: cartas tapadas desde el principio, límite por tiempo con bonus
       por nivel (3 → 4 → 6 → 8 pares), equivocarse no resta tiempo
 - [x] Huesitos: el doble de cosas cayendo (~160 por partida), a veces dos a la vez
+- [x] **Estudio pomodoro:** bloques de 25 min (1 ⭐ cada uno), máximo 8 por día; al terminar cada
+      bloque Bolti pregunta "¿Querés seguir estudiando?" con un mensaje de ánimo (seguir / descansar /
+      terminar)
+- [x] **Racha 🔥 y estadísticas de estudio** (tiempo total, pomodoros, días, promedio, gráfico de 7 días)
+- [x] Tareas de un solo tipo: +10 🪙 cada una (tope de 5 por día)
+- [x] Bolti festeja cuando le dan galletita o queso
+- [x] Decidido: no blindar el cambio de fecha del celular
 - [x] Premio por récord según el puntaje: +10 🪙 cada 500 puntos (mínimo 5)
 - [x] **Puntajes** en los dos juegos (racha ×2/×3, par a la primera, bonus por nivel y por corazones) →
       monedas con una tabla única **sin tope**; **récords** por juego (premio: +10 🪙 cada 500 puntos del récord, mínimo 5)
@@ -124,6 +129,11 @@ Si un día no llego, se recorta primero el minijuego; el resto del plan se corre
 - [ ] `/ux-review` de toda la app a 360 px
 - [ ] Borrar `public/prototipo-bolti.html`
 - [ ] Revisar que el modo prueba no aparezca sin `?prueba` (y decidir si se deja)
+- [ ] **Sonidos** (última fase, pulido): ladrido corto al tocarla, "ñam ñam" al comer, ronquidito
+      dormida, sonido al atrapar huesitos / chocolate / récord, campanita al terminar un pomodoro,
+      "cling" de monedas. Con Web Audio o archivos cortos (mp3/ogg chicos, que pesen poco offline).
+      Botón para silenciar 🔇 y que arranque en volumen bajo. En iPhone el sonido solo arranca después
+      del primer toque.
 
 ## Mar 27 — Prueba en el celular
 - [ ] `/smoke-check` + prueba completa en un celular real (instalar, usar sin internet)

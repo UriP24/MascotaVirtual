@@ -1,0 +1,56 @@
+.study-chart {
+  --color-grafico: #139e96; /* turquesa validado para barras (contraste y saturación) */
+  --color-grilla: #efe4ea;
+  margin: 0;
+}
+
+.study-chart svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.study-chart .grilla {
+  stroke: var(--color-grilla);
+  stroke-width: 1;
+}
+
+.study-chart .eje,
+.study-chart .letra {
+  fill: var(--color-texto-suave);
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+}
+
+.study-chart .letra.hoy {
+  fill: var(--color-texto);
+  font-weight: 700;
+}
+
+.study-chart .barra {
+  fill: var(--color-grafico);
+  opacity: 0.75;
+  transition: opacity 0.15s;
+}
+
+.study-chart .dia.elegido .barra {
+  opacity: 1;
+}
+
+.study-chart .dia {
+  cursor: pointer;
+}
+
+.study-chart .valor {
+  fill: var(--color-texto);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.study-chart figcaption {
+  margin-top: 4px;
+  font-size: 0.75rem;
+  text-align: center;
+  color: var(--color-texto-suave);
+}
