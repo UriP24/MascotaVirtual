@@ -88,6 +88,10 @@ Si un día no llego, se recorta primero el minijuego; el resto del plan se corre
 - [x] Bolti festeja el canje ("¡Que disfruten el plan! 💕")
 - [x] Modo prueba: liberar canjes, liberar cambio de hoy, borrar cupones, +100 🪙
 - [x] `/balance-check`: SANO (minijuego sin evaluar). 55 pruebas automáticas
+- [x] Planes sin plata hasta 2 veces por mes; pedir comida rica 40 ⭐ cada 2 meses
+- [x] Tristeza por estudio distinta de la de cariño: cara pensativa con nubecita 📚 (sin lagrimita) y
+      recordatorio de unos segundos cada 7 min, con frases que van cambiando
+- [x] **Mochila 🎒** en vez de la bandeja: tocar una comida la hace volar a la boca, o arrastrarla
 - [ ] Decidir recomendaciones del balance (igualar "grande", festejo para premios) — Uri
 - [ ] Decidir: ¿estudio 1 ⭐ cada 30 o 45 min? (con 30, lo que pone Uri por Mari rinde ~$37–52 mil/mes máx.) — Uri
 - [ ] Decidir: blindar los topes diarios contra cambiar la fecha del celular (fechas futuras cuentan como usadas) — Uri
@@ -118,6 +122,11 @@ Si un día no llego, se recorta primero el minijuego; el resto del plan se corre
 - [ ] Ropa y accesorios para Bolti (gacha con puntos)
 - [ ] Más minijuegos
 - [ ] Sincronización en la nube
+- [ ] **Notificaciones** (pedido de Uri): si a cierta hora (ej. 19:00) no completó el estudio del día,
+      una notificación suave de Bolti ("¿Estudiamos un ratito? 📚"), como mucho 1–2 por día.
+      Necesita un servidor chico de push (web-push, p. ej. un Cloudflare Worker gratis con un cron) y
+      pedir permiso; en iPhone solo anda con la app instalada (iOS 16.4+). Sin servidor no hay forma
+      confiable de avisar con la app cerrada.
 
 ---
 

@@ -94,6 +94,15 @@
   z-index: 2;
   width: min(80%, 300px);
   transform: translateX(-50%);
+  transition:
+    bottom 0.3s ease,
+    width 0.3s ease;
+}
+
+/* Con la mochila abierta, Bolti se acomoda más arriba para que se le vea la boca */
+.casa .habitacion.con-mochila .bolti {
+  bottom: 128px;
+  width: min(58%, 230px);
 }
 
 .casa .ayuda {

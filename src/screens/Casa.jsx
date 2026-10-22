@@ -5,7 +5,7 @@ import SpeechBubble from '../components/SpeechBubble.jsx'
 import FloatingEmoji from '../components/FloatingEmoji.jsx'
 import ActionBar from '../components/ActionBar.jsx'
 import Shop from '../components/Shop.jsx'
-import FoodTray from '../components/FoodTray.jsx'
+import Backpack from '../components/Backpack.jsx'
 import { apagarLuz, darMimos, humor, prenderLuz } from '../logic/bolti.js'
 import { PERRITA } from '../config.js'
 import { comprar, darDeComer } from '../logic/comida.js'
@@ -64,6 +64,8 @@ function Casa({ estado, setEstado, horasAusente = 0, onCambiarPantalla }) {
   const [flotantes, setFlotantes] = useState([])
   const [tiendaAbierta, setTiendaAbierta] = useState(false)
   const [arrastre, setArrastre] = useState(null) // { comida, x, y, cerca }
+  const [mochilaAbierta, setMochilaAbierta] = useState(false)
+  const [volando, setVolando] = useState(null) // comida que vuela hasta la boca: { comida, x, y, dx, dy }
   const [comiendo, setComiendo] = useState(false)
   const [rechaza, setRechaza] = useState(false)
   const habitacionRef = useRef(null)
@@ -82,6 +84,7 @@ function Casa({ estado, setEstado, horasAusente = 0, onCambiarPantalla }) {
       clearTimeout(t.mimos)
       clearTimeout(t.comiendo)
       clearTimeout(t.rechaza)
+      clearTimeout(t.volando)
     }
   }, [setEstado]) // setEstado nunca cambia: corre solo al entrar a Casa
 
@@ -161,14 +164,17 @@ function Casa({ estado, setEstado, horasAusente = 0, onCambiarPantalla }) {
     decir(azar(FRASES_AL_TOCARLA))
   }
 
+  function posicionBoca() {
+    const svg = habitacionRef.current?.querySelector('svg.bolti')
+    if (!svg) return null
+    const r = svg.getBoundingClientRect()
+    return { x: r.left + r.width * (150 / 300), y: r.top + r.height * (152 / 320), ancho: r.width }
+  }
+
   // ¿El dedo con la comida está cerca de la boca de Bolti?
   function cercaDeLaBoca(x, y) {
-    const svg = habitacionRef.current?.querySelector('svg.bolti')
-    if (!svg) return false
-    const r = svg.getBoundingClientRect()
-    const bocaX = r.left + r.width * (150 / 300)
-    const bocaY = r.top + r.height * (152 / 320)
-    return Math.hypot(x - bocaX, y - bocaY) < r.width * RADIO_BOCA
+    const boca = posicionBoca()
+    return Boolean(boca) && Math.hypot(x - boca.x, y - boca.y) < boca.ancho * RADIO_BOCA
   }
 
   function empezarArrastre(comida, e) {
@@ -184,8 +190,25 @@ function Casa({ estado, setEstado, horasAusente = 0, onCambiarPantalla }) {
     if (!arrastre) return
     const { comida } = arrastre
     setArrastre(null)
-    if (!cercaDeLaBoca(e.clientX, e.clientY)) return // vuelve sola a la bandeja
+    if (!cercaDeLaBoca(e.clientX, e.clientY)) return // vuelve sola a la mochila
+    alimentar(comida, e.clientX, e.clientY)
+  }
 
+  // Tocar una comida de la mochila: vuela sola hasta la boca y se la come
+  function darComida(comida, rectBoton) {
+    const boca = posicionBoca()
+    if (!boca || volando) return
+    const x = rectBoton.left + rectBoton.width / 2
+    const y = rectBoton.top + rectBoton.height / 2
+    setVolando({ comida, x, y, dx: boca.x - x, dy: boca.y - y })
+    clearTimeout(timers.current.volando)
+    timers.current.volando = setTimeout(() => {
+      setVolando(null)
+      alimentar(comida, boca.x, boca.y)
+    }, 450)
+  }
+
+  function alimentar(comida, x, y) {
     const r = darDeComer(estado, comida.id)
     setEstado(r.estado)
     if (r.resultado === 'comio') {
@@ -193,8 +216,8 @@ function Casa({ estado, setEstado, horasAusente = 0, onCambiarPantalla }) {
       clearTimeout(timers.current.comiendo)
       timers.current.comiendo = setTimeout(() => setComiendo(false), DURACION_COMIENDO)
       decir('¡Ñam ñam! 😋', DURACION_COMIENDO)
-      if (comida.carino > 0) soltarEmoji('💗', e.clientX, e.clientY)
-      soltarEmoji(comida.emoji, e.clientX, e.clientY)
+      if (comida.carino > 0) soltarEmoji('💗', x, y)
+      soltarEmoji(comida.emoji, x, y)
       navigator.vibrate?.(30)
     } else if (r.resultado === 'llena') {
       setRechaza(true)
@@ -229,7 +252,10 @@ function Casa({ estado, setEstado, horasAusente = 0, onCambiarPantalla }) {
   return (
     <section className="pantalla casa">
       <NeedsBars perrita={estado.perrita} />
-      <div ref={habitacionRef} className={`habitacion ${animo === 'dormida' ? 'noche' : ''}`}>
+      <div
+        ref={habitacionRef}
+        className={`habitacion ${animo === 'dormida' ? 'noche' : ''} ${mochilaAbierta ? 'con-mochila' : ''}`}
+      >
         <div className="ventana" aria-hidden="true" />
         <div className="cuadro" aria-hidden="true">
           BOLTI
@@ -243,7 +269,7 @@ function Casa({ estado, setEstado, horasAusente = 0, onCambiarPantalla }) {
           saciedad={estado.perrita.saciedad}
           mimos={mimos}
           saltos={saltos}
-          esperando={arrastre?.cerca && animo !== 'dormida'}
+          esperando={(arrastre?.cerca || Boolean(volando)) && animo !== 'dormida'}
           comiendo={comiendo}
           rechaza={rechaza}
           onPointerDown={alApretar}
@@ -252,22 +278,27 @@ function Casa({ estado, setEstado, horasAusente = 0, onCambiarPantalla }) {
           onPointerCancel={() => (toque.current.apretado = false)}
         />
         <FloatingEmoji items={flotantes} />
+        {mochilaAbierta && (
+          <Backpack
+            estado={estado}
+            arrastrandoId={arrastre?.comida.id}
+            onDar={darComida}
+            onEmpezar={empezarArrastre}
+            onMover={moverArrastre}
+            onSoltar={soltarArrastre}
+            onCancelar={() => setArrastre(null)}
+            onAbrirTienda={() => setTiendaAbierta(true)}
+            onCerrar={() => setMochilaAbierta(false)}
+          />
+        )}
       </div>
-      <FoodTray
-        estado={estado}
-        arrastrandoId={arrastre?.comida.id}
-        onEmpezar={empezarArrastre}
-        onMover={moverArrastre}
-        onSoltar={soltarArrastre}
-        onCancelar={() => setArrastre(null)}
-        onAbrirTienda={() => setTiendaAbierta(true)}
-      />
       <ActionBar
         acciones={[
+          { id: 'mochila', icono: '🎒', texto: 'Mochila', onClick: () => setMochilaAbierta((v) => !v) },
           { id: 'tienda', icono: '🛒', texto: 'Tienda', onClick: () => setTiendaAbierta(true) },
           estado.perrita.durmiendo
-            ? { id: 'luz', icono: '☀️', texto: 'Prender la luz', onClick: alternarLuz }
-            : { id: 'luz', icono: '💡', texto: 'Apagar la luz', onClick: alternarLuz },
+            ? { id: 'luz', icono: '☀️', texto: 'Prender luz', onClick: alternarLuz }
+            : { id: 'luz', icono: '💡', texto: 'Apagar luz', onClick: alternarLuz },
           { id: 'jugar', icono: '🎮', texto: 'Jugar', onClick: () => onCambiarPantalla?.('jugar') },
         ]}
       />
@@ -279,6 +310,15 @@ function Casa({ estado, setEstado, horasAusente = 0, onCambiarPantalla }) {
       {arrastre && (
         <div className="comida-arrastrada" style={{ left: arrastre.x, top: arrastre.y }} aria-hidden="true">
           {arrastre.comida.emoji}
+        </div>
+      )}
+      {volando && (
+        <div
+          className="comida-arrastrada comida-volando"
+          style={{ left: volando.x, top: volando.y, '--dx': `${volando.dx}px`, '--dy': `${volando.dy}px` }}
+          aria-hidden="true"
+        >
+          {volando.comida.emoji}
         </div>
       )}
       {tiendaAbierta && (

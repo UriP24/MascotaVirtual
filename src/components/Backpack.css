@@ -1,0 +1,153 @@
+/* La mochila aparece sobre la parte de abajo de la habitación, sin tapar la cara de Bolti */
+.backpack {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
+  z-index: 5;
+  padding: 8px 10px 6px;
+  border: 3px solid #d9a07a;
+  border-radius: 22px 22px 18px 18px;
+  background: linear-gradient(180deg, #f6c9a8 0%, #eeb48f 100%);
+  box-shadow: 0 6px 16px rgb(63 53 64 / 0.25);
+  animation: mochila-abrir 0.25s ease-out;
+}
+
+/* La "solapa" de la mochila */
+.backpack::before {
+  content: '';
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  width: 70px;
+  height: 18px;
+  margin-left: -35px;
+  border: 3px solid #d9a07a;
+  border-bottom: none;
+  border-radius: 14px 14px 0 0;
+  background: #f6c9a8;
+}
+
+@keyframes mochila-abrir {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+}
+
+.backpack .encabezado {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.backpack .encabezado strong {
+  flex: 1;
+  color: #7a4a2e;
+}
+
+.backpack .tienda {
+  height: 34px;
+  padding: 0 10px;
+  border: none;
+  border-radius: 10px;
+  background: var(--color-secundario);
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.backpack .cerrar {
+  width: 34px;
+  height: 34px;
+  border: none;
+  background: none;
+  color: #7a4a2e;
+  font-size: 1rem;
+}
+
+.backpack ul {
+  display: flex;
+  gap: 8px;
+  margin: 0;
+  padding: 2px 0 4px;
+  overflow-x: auto;
+  list-style: none;
+}
+
+.backpack li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  width: 62px;
+  gap: 2px;
+}
+
+.backpack li small {
+  font-size: 0.65rem;
+  line-height: 1.1;
+  text-align: center;
+  color: #7a4a2e;
+}
+
+.backpack .comida {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  border: 2px dashed #d9a07a;
+  border-radius: 14px;
+  background: #fff6ee;
+  touch-action: none; /* que arrastrar no haga scroll */
+  cursor: grab;
+}
+
+.backpack .comida .emoji {
+  font-size: 1.9rem;
+}
+
+.backpack .comida.arrastrando .emoji {
+  opacity: 0.3;
+}
+
+.backpack .cantidad {
+  position: absolute;
+  right: -4px;
+  top: -6px;
+  min-width: 20px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: var(--color-principal);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.backpack .vacia,
+.backpack .ayuda-mochila {
+  margin: 2px 0 0;
+  font-size: 0.72rem;
+  text-align: center;
+  color: #7a4a2e;
+}
+
+/* La comida que sigue al dedo o que vuela hasta la boca */
+.comida-arrastrada {
+  position: fixed;
+  z-index: 40;
+  font-size: 2.6rem;
+  pointer-events: none;
+  transform: translate(-50%, -60%);
+  filter: drop-shadow(0 4px 6px rgb(0 0 0 / 0.25));
+}
+
+.comida-volando {
+  animation: comida-volar 0.45s ease-in forwards;
+}
+
+@keyframes comida-volar {
+  to {
+    transform: translate(calc(-50% + var(--dx)), calc(-60% + var(--dy))) scale(0.7);
+  }
+}

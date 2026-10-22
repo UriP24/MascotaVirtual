@@ -23,8 +23,9 @@ real, aunque la app esté cerrada. **Nunca se enferma ni muere.**
 3. **Mimos:** tocarla la hace saltar y hablar (+1 cariño). Frotarla con el dedo da corazones
    (+3 cariño cada tanto). **Dormida:** tocarla dice "zzz… 😴"; frotarla da corazones y cariño pero
    sigue durmiendo (ojos cerrados, mueve la cola despacito). Dormida no muestra hambre ni cansancio.
-4. **Comer (como Pou):** la tienda vende comida por 🪙, que va al **inventario**. En Casa, una
-   bandeja muestra el inventario y **se arrastra la comida hasta la boca**: Bolti abre la boca
+4. **Comer (como Pou):** la tienda vende comida por 🪙, que va a la **mochila 🎒**. En Casa, el botón
+   Mochila la abre (Bolti se acomoda más arriba para que se le vea la boca); **tocar una comida** la
+   hace volar sola hasta la boca, o **se arrastra la comida hasta la boca**: Bolti abre la boca
    cuando la comida se acerca. Si la suelta en la boca, come (masticando **sin lengua afuera**); si
    la suelta en otro lado, la comida vuelve a la bandeja. Si está llena: "¡Estoy llena! 😋" y no se
    gasta. El 28/10 se regala una 🎂 torta de cumple.
