@@ -216,20 +216,28 @@ Mari tiene **Android**. Decisiones de Uri del 23/10 (todas cerradas):
 **A medida que vayamos terminando lo anterior** (quedan 7 días):
 
 14. **Gacha con ⭐** (pestaña nueva o dentro de Canjes):
-    - Tirada de 10 ⭐ (a confirmar con Uri). Sale sobre todo ropa: cabeza (gorritos, moño, corona, flor,
+    - Tirada de **10 ⭐** (confirmado). Sale sobre todo ropa: cabeza (gorritos, moño, corona, flor,
       vincha), cuello (bufanda, bandana, collar con chapita "Bolti"), cuerpo (pulover, buzo, impermeable,
       remera de Argentina), patitas (guantes, botitas, medias), cara (anteojos), disfraces enteros.
     - Rarezas: común ~70%, rara ~22%, épica ~7%, ultra rara ~1% (cupones que **solo** existen en el gacha,
       Uri elige cuáles; nunca planes sacados de Canjes). Premios de ⭐: 30 (5%), 50 (2%), 100 (0,5%).
-    - Sin repetidos (si ya la tiene, devuelve parte), garantía de rara o mejor cada 10 tiradas, chances
-      visibles.
+    - **Repetidas → piezas** (idea de Uri): una prenda repetida da 1 pieza de su rareza. Con piezas se
+      canjea una prenda **que no tenga** de esa misma rareza: 5 piezas comunes, 10 raras, 20 épicas
+      (también sirve para recuperar ropa de temporada pasada). Las ultra raras no se canjean.
+    - Garantía de rara o mejor cada 10 tiradas, chances visibles.
     - Rotación: base fija + colección de temporada que sale más seguido en su época (Navidad/verano dic–ene,
       San Valentín feb, otoño mar–may, invierno jun–ago, primavera sep–nov, Halloween y cumple en oct).
       Lo conseguido queda para siempre; lo de temporada vuelve al año siguiente.
 15. **Colección:** álbum con todas las prendas (las que faltan, en silueta con "?"), por colección, con
     barra de progreso. Recompensas: tirada gratis en hitos (10, 20, 30 prendas), prenda exclusiva al
     completar una colección (no sale en el gacha) y un cupón especial al completar todo.
-16. Bolti vaquera (último).
+16. **El puré de zapallo (secreto de cómplices):** de chica Mari no quería comer su puré de zapallo
+    anco, los papás no la dejaban levantarse, se fueron a dormir, Bolti se lo comió y la felicitaron por
+    el plato vacío. Propuesta: cada tanto, a la hora de la cena, aparece un platito de puré en la
+    habitación; si Mari se lo da, Bolti se lo come feliz, le **guiña un ojo** y dice "Shhh… nuestro
+    secreto 🤫". La primera vez da la prenda exclusiva "Babero de cómplice" para la colección. Sin
+    explicar la historia: Mari la va a reconocer. (Esperando OK de Uri.)
+17. Bolti vaquera (último).
 
 Mar 27: prueba en el celular Android de Uri y estado limpio para Mari. Mié 28: entrega.
 
