@@ -211,7 +211,7 @@ Mari tiene **Android**. Decisiones de Uri del 23/10 (todas cerradas):
 11. **QR** con el link de la app para imprimir en la tarjeta de cumpleaños.
 12. Limpieza: borrar `public/prototipo-bolti.html`, `/ux-review` a 360 px. El modo prueba (`?prueba`)
     queda oculto para usarlo más adelante.
-13. **Ícono:** en stand-by (Uri tiene 9 modelos de huellita para elegir).
+13. ~~Ícono~~ ✅ hecho el 23/10: modelo 9, fondo turquesa, huellita con almohadilla de corazón y corazón rosa.
 
 **A medida que vayamos terminando lo anterior** (quedan 7 días):
 
@@ -222,9 +222,17 @@ Mari tiene **Android**. Decisiones de Uri del 23/10 (todas cerradas):
     - Rarezas: común ~70%, rara ~22%, épica ~7%, ultra rara ~1% (cupones que **solo** existen en el gacha,
       Uri elige cuáles; nunca planes sacados de Canjes). Premios de ⭐: 30 (5%), 50 (2%), 100 (0,5%).
     - **Repetidas → piezas** (idea de Uri): una prenda repetida da 1 pieza de su rareza. Con piezas se
-      canjea una prenda **que no tenga** de esa misma rareza: 5 piezas comunes, 10 raras, 20 épicas
-      (también sirve para recuperar ropa de temporada pasada). Las ultra raras no se canjean.
-    - Garantía de rara o mejor cada 10 tiradas, chances visibles.
+      canjea una prenda **que no tenga** de esa misma rareza: 5 piezas comunes, 10 raras, 20 épicas,
+      3 ultra raras (conjunto ultra raro).
+    - **Garantías (pity):** rara o mejor cada 10 tiradas. Ultra rara: 1% base, desde la tirada 20 sube
+      +5% por tirada y en la 30 sale segura. El contador vuelve a 0 al salir una ultra rara y no se pierde
+      al cambiar de temporada.
+    - **50-50 con garantía:** cuando sale ultra rara, 50% es el conjunto destacado de la temporada y 50%
+      uno de la base; si "pierde", la próxima ultra rara es segura la destacada. Puede salir repetida:
+      da 1 pieza ultra rara. Los cupones exclusivos ultra raros se pueden repetir (cada uno es un cupón).
+    - **Temporada:** la ropa de temporada solo aparece (en el gacha y en el canje de piezas) mientras es
+      su temporada; fuera de ella no se muestra. Las piezas no vencen.
+    - Chances visibles y contador "faltan N para la ultra rara segura".
     - Rotación: base fija + colección de temporada que sale más seguido en su época (Navidad/verano dic–ene,
       San Valentín feb, otoño mar–may, invierno jun–ago, primavera sep–nov, Halloween y cumple en oct).
       Lo conseguido queda para siempre; lo de temporada vuelve al año siguiente.
