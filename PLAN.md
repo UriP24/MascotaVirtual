@@ -246,19 +246,26 @@ Mari tiene **Android**. Decisiones de Uri del 23/10 (todas cerradas):
     semana); si Mari se lo da, Bolti se lo come feliz, le **guiña un ojo** y dice "Shhh… nuestro
     secreto 🤫". La primera vez da la prenda exclusiva "Babero de cómplice" para la colección. Sin
     explicar la historia: Mari la va a reconocer.
-17. **Secretos (easter eggs)** con un apartado en Colección "Secretos descubiertos N/12" (los que faltan
+17. **Secretos (easter eggs)** con un apartado en Colección "Secretos descubiertos N/13" (los que faltan
     tapados con "?" y una **pista discreta** tipo adivinanza). Además, Bolti suelta **pistas** cada
     tanto entre sus frases normales (~1 de cada 10, ej.: "Me pica la nariz… 🤧", "Me encantaría salir
-    a pasear… si alguien lo anotara 📝"). Cada secreto da una prenda exclusiva o una tirada gratis.
-    - Tocarle la nariz 5 veces seguidas → estornuda y se sacude.
-    - Rascarle la panza un rato → mueve la patita trasera sola.
-    - Mantener el dedo apretado → se tira panza arriba.
-    - Sacudir el celu → se marea / se sacude como después del baño.
-    - Muy de vez en cuando: un gato pasa por la ventana y le ladra; pasa una vaca; alguna mañana
-      aparece con una media robada en la boca; de noche, tocar la ventana muestra una estrella fugaz.
-    - 14 de febrero: Bolti con moño rojo.
-    - El puré de zapallo (punto 16).
-    - **Paseo** y **INVENCIBLE** (punto 18).
+    a pasear… si alguien lo anotara 📝"). Cada secreto da una **prenda exclusiva** (no sale en el
+    gacha); si no hay prenda que le quede, una **multi gratis**.
+    | Secreto | Premio |
+    |---|---|
+    | Tocarle la nariz 5 veces seguidas → estornuda y se sacude | Pañuelo "¡Salud!" |
+    | Rascarle la panza un rato → patea con la patita trasera | Remerita corta "panza al aire" |
+    | Mantener el dedo apretado → se tira panza arriba | Pijama de ositos |
+    | Sacudir el celu → se sacude como después del baño | Bata de baño |
+    | Un gato pasa por la ventana (de vez en cuando) y le ladra | Vincha con orejitas de gato |
+    | Pasa una vaca por la ventana (de vez en cuando) | Sombrero de vaquera |
+    | **Medias:** cada mañana (al despertarse) ~15% de chance de que traiga una media en la boca; al tocarla se la da. La 1ª queda como "Media suelta"; con la 2ª completa el conjunto **"Par de medias"** (en las patitas). Después sigue trayendo alguna cada tanto (+10 🪙) | Par de medias |
+    | De noche, tocar la ventana: a veces estrella fugaz y Bolti pide un deseo | Multi gratis |
+    | 14 de febrero: Bolti con moño rojo | Moño rojo |
+    | **24 de marzo, aniversario de Uri y Mari** (todos los años): Bolti con corazones y una **cartita de Uri** que solo aparece ese día | Collar de corazón |
+    | El puré de zapallo (punto 16) | Babero de cómplice |
+    | Anotar "pasear a Bolti" → desbloquea el Paseo (punto 18) | Multi gratis |
+    | INVENCIBLE en el Paseo (punto 18) | Traje de superhéroe |
 18. **Minijuego "Paseo con Bolti"** (se desbloquea en secreto): si Mari anota una tarea que diga
     "pasear a Bolti" (sin importar mayúsculas ni tildes), Bolti se pone loca de contenta y aparece el
     juego nuevo en Jugar. Bolti camina de costado (hay que dibujarla de perfil), se toca para saltar
