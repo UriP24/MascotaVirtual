@@ -145,7 +145,6 @@ Si un día no llego, se recorta primero el minijuego; el resto del plan se corre
 - [ ] Tala y Lucky
 - [ ] Bolti repite lo que dice Mari con ladridos (como Tom)
 - [ ] Habitaciones: cocina, baño (bañarla), patio
-- [ ] Ropa y accesorios para Bolti (gacha con puntos)
 - [ ] **Más minijuegos** (contenido extra, a Uri le gustan todos):
   - [ ] 🐄 **Bolti vaquera:** vista desde arriba, las vacas se alejan de Bolti y hay que arrearlas al
         corral sin que se escapen por los bordes (como hacía Bolti de verdad). Rondas con más vacas
@@ -191,29 +190,52 @@ Mari tiene **Android**. Decisiones de Uri del 23/10 (todas cerradas):
    4. Botón **"Conocer a Bolti"** → Casa. El homenaje ya está en el mensaje, no hace falta más.
 2. **Tutorial:** después de la bienvenida, preguntar si quiere verlo. Siempre accesible desde Configuración.
 3. **Botón ⚙️ Configuración bien visible** (no escondido) con todo lo que no es central: ver tutorial,
-   **respaldo** (exportar/importar el progreso: compartir/descargar archivo y copiar código), silenciar
-   sonidos. Al abrir la app pedir `navigator.storage.persist()`. Aviso si falla el guardado.
-   (El guardado ya es instantáneo en cada cambio; un respaldo automático afuera necesita servidor → después.)
-4. **Cumpleaños todos los años el 28/10:** gorrito, confeti, "¡Feliz cumple, Mari!" y 🎂 torta en la mochila.
-   Ese día **no hay estudio obligatorio**.
-5. **Estudio sin culpa:** sacar el humor "extraña el estudio" (tristeza + nubecita por no haber estudiado
-   ayer). En su lugar, Bolti **de vez en cuando** (no siempre, que no sea pesado) tira una burbuja
-   recordando estudiar. En **diciembre** la tarea obligatoria sigue, pero sin recordatorios de extrañar.
-6. **Arranque:** 100 🪙 y 30 ⭐, lista de tareas vacía.
-7. **Ícono definitivo:** huellita con corazón (Uri elige entre la variante A, corazón adentro de la
-   almohadilla, o B, almohadilla con forma de corazón).
-8. **Sonidos antes del 28:** ladrido, ñam, ronquido, sonidos de los juegos, campanita del pomodoro,
-   monedas. Volumen bajo, arrancan después del primer toque, botón para silenciar (en Configuración).
-9. **QR** con el link de la app para imprimir en la tarjeta de cumpleaños.
-10. Limpieza: borrar `public/prototipo-bolti.html`, `/ux-review` a 360 px. El modo prueba (`?prueba`)
+   vacaciones y silenciar sonidos. Aviso si falla el guardado.
+4. **Respaldo automático** (Mari no hace nada): `navigator.storage.persist()` al abrir, una copia diaria
+   del progreso guardada aparte (las últimas 7) y si el guardado principal está roto, vuelve solo a la
+   última copia buena. Copia en la nube: después del cumple (necesita un servicio con cuenta).
+5. **Cumpleaños todos los años el 28/10:** confeti, "¡Feliz cumple, Mari!" y aparece un **regalo que se
+   sacude y brilla**; al tocarlo se abre y da el 🎩 **gorrito** (a la mochila → Ropa) y la 🎂 **torta**
+   (a la mochila → Comida). Ese día **no hay estudio obligatorio**.
+6. **Bolti se viste:** la mochila con pestañas Comida / Ropa; tocar una prenda se la pone o se la saca
+   (una por zona: cabeza, cuello, cuerpo, patitas, cara). Base para el gacha.
+7. **Estudio sin culpa:** sacar el humor "extraña el estudio" (tristeza + nubecita). Bolti **de vez en
+   cuando** (no siempre) tira una burbuja recordando estudiar.
+8. **Vacaciones:** si pasa una semana sin estudiar en días obligatorios, Bolti pregunta "¿Estás de
+   vacaciones? 🏖️". Sí → elige desde (por defecto el día que dejó de estudiar) y hasta; en ese período
+   no hay tarea obligatoria ni recordatorios y la racha no se corta. No → no vuelve a preguntar por una
+   semana. También se cargan / terminan desde Configuración. (Reemplaza la regla especial de diciembre.)
+9. **Arranque:** 100 🪙 y 30 ⭐, lista de tareas vacía.
+10. **Sonidos antes del 28:** ladrido, ñam, ronquido, sonidos de los juegos, campanita del pomodoro,
+    monedas. Volumen bajo, arrancan después del primer toque, botón para silenciar (en Configuración).
+11. **QR** con el link de la app para imprimir en la tarjeta de cumpleaños.
+12. Limpieza: borrar `public/prototipo-bolti.html`, `/ux-review` a 360 px. El modo prueba (`?prueba`)
     queda oculto para usarlo más adelante.
-11. **Último, solo si está todo lo demás:** el minijuego Bolti vaquera.
+13. **Ícono:** en stand-by (Uri tiene 9 modelos de huellita para elegir).
+
+**A medida que vayamos terminando lo anterior** (quedan 7 días):
+
+14. **Gacha con ⭐** (pestaña nueva o dentro de Canjes):
+    - Tirada de 10 ⭐ (a confirmar con Uri). Sale sobre todo ropa: cabeza (gorritos, moño, corona, flor,
+      vincha), cuello (bufanda, bandana, collar con chapita "Bolti"), cuerpo (pulover, buzo, impermeable,
+      remera de Argentina), patitas (guantes, botitas, medias), cara (anteojos), disfraces enteros.
+    - Rarezas: común ~70%, rara ~22%, épica ~7%, ultra rara ~1% (cupones que **solo** existen en el gacha,
+      Uri elige cuáles; nunca planes sacados de Canjes). Premios de ⭐: 30 (5%), 50 (2%), 100 (0,5%).
+    - Sin repetidos (si ya la tiene, devuelve parte), garantía de rara o mejor cada 10 tiradas, chances
+      visibles.
+    - Rotación: base fija + colección de temporada que sale más seguido en su época (Navidad/verano dic–ene,
+      San Valentín feb, otoño mar–may, invierno jun–ago, primavera sep–nov, Halloween y cumple en oct).
+      Lo conseguido queda para siempre; lo de temporada vuelve al año siguiente.
+15. **Colección:** álbum con todas las prendas (las que faltan, en silueta con "?"), por colección, con
+    barra de progreso. Recompensas: tirada gratis en hitos (10, 20, 30 prendas), prenda exclusiva al
+    completar una colección (no sale en el gacha) y un cupón especial al completar todo.
+16. Bolti vaquera (último).
 
 Mar 27: prueba en el celular Android de Uri y estado limpio para Mari. Mié 28: entrega.
 
 Prompt para arrancar:
 
-> Leé `CLAUDE.md`, `PLAN.md` y `docs/specs/bolti-personaje.md`. Hoy toca el día Lun 26: bienvenida de
-> cumpleaños, Configuración con respaldo y tutorial, cumpleaños anual, sacar "extraña el estudio",
-> arranque con 100 🪙 y 30 ⭐, ícono, sonidos y QR. Mostrame el plan antes de codear, hacé un commit por
-> paso y al final actualizá `PLAN.md` y dejame la sección "Próxima sesión".
+> Leé `CLAUDE.md`, `PLAN.md` y `docs/specs/bolti-personaje.md`. Seguimos con la "Próxima sesión" de
+> `PLAN.md` en orden (bienvenida, Configuración, respaldo automático, regalo de cumple con ropa,
+> vacaciones, sonidos, QR) y después el gacha y la colección. Mostrame el plan antes de codear, hacé un
+> commit por paso y al final actualizá `PLAN.md` y dejame la sección "Próxima sesión".
