@@ -148,7 +148,7 @@ Si un día no llego, se recorta primero el minijuego; el resto del plan se corre
 - [ ] **Más minijuegos** (contenido extra, a Uri le gustan todos):
   - [ ] 🐄 **Bolti vaquera:** vista desde arriba, las vacas se alejan de Bolti y hay que arrearlas al
         corral sin que se escapen por los bordes (como hacía Bolti de verdad). Rondas con más vacas
-  - [ ] 🏃 **Bolti aventuras:** corre de costado, tocar para saltar troncos, charcos y gatos; se van
+  - [ ] 🏃 ~~Bolti aventuras~~ → ahora es "Paseo con Bolti" (Próxima sesión, punto 18): corre de costado, tocar para saltar troncos, charcos y gatos; se van
         sumando amigos perros hasta encontrarse con todos (hay que dibujar a Bolti de perfil)
   - [ ] 🎾 **Tirale la pelota:** deslizar el dedo para tirar; Bolti la atrapa en el aire
   - [ ] 🕳️ **¿Dónde está el hueso?:** Bolti lo entierra en uno de 3 pozos, se mezclan y hay que adivinar
@@ -246,7 +246,32 @@ Mari tiene **Android**. Decisiones de Uri del 23/10 (todas cerradas):
     semana); si Mari se lo da, Bolti se lo come feliz, le **guiña un ojo** y dice "Shhh… nuestro
     secreto 🤫". La primera vez da la prenda exclusiva "Babero de cómplice" para la colección. Sin
     explicar la historia: Mari la va a reconocer.
-17. Bolti vaquera (último).
+17. **Secretos (easter eggs)** con un apartado en Colección "Secretos descubiertos N/12" (los que faltan
+    tapados con "?" y una **pista discreta** tipo adivinanza). Además, Bolti suelta **pistas** cada
+    tanto entre sus frases normales (~1 de cada 10, ej.: "Me pica la nariz… 🤧", "Me encantaría salir
+    a pasear… si alguien lo anotara 📝"). Cada secreto da una prenda exclusiva o una tirada gratis.
+    - Tocarle la nariz 5 veces seguidas → estornuda y se sacude.
+    - Rascarle la panza un rato → mueve la patita trasera sola.
+    - Mantener el dedo apretado → se tira panza arriba.
+    - Sacudir el celu → se marea / se sacude como después del baño.
+    - Muy de vez en cuando: un gato pasa por la ventana y le ladra; pasa una vaca; alguna mañana
+      aparece con una media robada en la boca; de noche, tocar la ventana muestra una estrella fugaz.
+    - 14 de febrero: Bolti con moño rojo.
+    - El puré de zapallo (punto 16).
+    - **Paseo** y **INVENCIBLE** (punto 18).
+18. **Minijuego "Paseo con Bolti"** (se desbloquea en secreto): si Mari anota una tarea que diga
+    "pasear a Bolti" (sin importar mayúsculas ni tildes), Bolti se pone loca de contenta y aparece el
+    juego nuevo en Jugar. Bolti camina de costado (hay que dibujarla de perfil), se toca para saltar
+    charcos, pozos, gatos y bicis, y junta huesitos (reemplaza a "Bolti aventuras").
+    - Con cierto puntaje: título **"Paseadora de perros"** y el **collar con chapita "Bolti"**
+      (exclusivo, no sale en el gacha).
+    - **INVENCIBLE** (anécdota real: un caballo la pateó, Bolti voló y se levantó como si nada): a veces
+      aparece un caballo. Si la patea, Bolti sale volando en dibujito (estrellitas, rebota, sin
+      lastimarse), se levanta moviendo la cola y dice "Soy…" → cartel **INVENCIBLE** en letras propias
+      gruesas al estilo de la serie, pero en rosa y turquesa (guiño a la serie que vieron juntos; no se
+      usa el logo oficial). Esa patada no saca vida: le da unos segundos de **modo invencible** (nada la
+      frena). La primera vez desbloquea el secreto y el **traje de superhéroe** (capa + antifaz).
+19. Bolti vaquera (último).
 
 Mar 27: prueba en el celular Android de Uri y estado limpio para Mari. Mié 28: entrega.
 
