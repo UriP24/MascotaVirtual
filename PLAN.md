@@ -241,10 +241,11 @@ Mari tiene **Android**. Decisiones de Uri del 23/10 (todas cerradas):
     completar una colección (no sale en el gacha) y un cupón especial al completar todo.
 16. **El puré de zapallo (secreto de cómplices):** de chica Mari no quería comer su puré de zapallo
     anco, los papás no la dejaban levantarse, se fueron a dormir, Bolti se lo comió y la felicitaron por
-    el plato vacío. Propuesta: cada tanto, a la hora de la cena, aparece un platito de puré en la
-    habitación; si Mari se lo da, Bolti se lo come feliz, le **guiña un ojo** y dice "Shhh… nuestro
+    el plato vacío. Aprobado: a la hora del **almuerzo (13 a 15 h)** aparece un platito de puré en la
+    habitación (la primera vez unos días después del cumple, para que lo descubra; después ~1 vez por
+    semana); si Mari se lo da, Bolti se lo come feliz, le **guiña un ojo** y dice "Shhh… nuestro
     secreto 🤫". La primera vez da la prenda exclusiva "Babero de cómplice" para la colección. Sin
-    explicar la historia: Mari la va a reconocer. (Esperando OK de Uri.)
+    explicar la historia: Mari la va a reconocer.
 17. Bolti vaquera (último).
 
 Mar 27: prueba en el celular Android de Uri y estado limpio para Mari. Mié 28: entrega.
