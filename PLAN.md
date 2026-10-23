@@ -209,7 +209,10 @@ Mari tiene **Android**. Decisiones de Uri del 23/10 (todas cerradas):
 10. **Sonidos antes del 28:** ladrido, ñam, ronquido, sonidos de los juegos, campanita del pomodoro,
     monedas. Volumen bajo, arrancan después del primer toque, botón para silenciar (en Configuración).
 11. **QR** con el link de la app para imprimir en la tarjeta de cumpleaños.
-12. Limpieza: borrar `public/prototipo-bolti.html`, `/ux-review` a 360 px. El modo prueba (`?prueba`)
+12. **Actualización sin cortes:** hoy, cuando se publica una versión nueva, la app se recarga sola al
+    instante; si Mari está en medio de un minijuego, pierde la partida. Cambiar a: si está jugando o
+    estudiando, esperar a que termine (o a que la app pase a segundo plano) para recargar.
+12b. Limpieza: borrar `public/prototipo-bolti.html`, `/ux-review` a 360 px. El modo prueba (`?prueba`)
     queda oculto para usarlo más adelante.
 13. ~~Ícono~~ ✅ hecho el 23/10: modelo 9, fondo turquesa, huellita con almohadilla de corazón y corazón rosa.
 
@@ -279,6 +282,8 @@ Mari tiene **Android**. Decisiones de Uri del 23/10 (todas cerradas):
       usa el logo oficial). Esa patada no saca vida: le da unos segundos de **modo invencible** (nada la
       frena). La primera vez desbloquea el secreto y el **traje de superhéroe** (capa + antifaz).
 19. Bolti vaquera (último).
+
+**Agenda de Uri:** escribir la **cartita del aniversario** (24/3) antes de marzo.
 
 Mar 27: prueba en el celular Android de Uri y estado limpio para Mari. Mié 28: entrega.
 
