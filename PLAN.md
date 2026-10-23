@@ -177,18 +177,43 @@ Si un día no llego, se recorta primero el minijuego; el resto del plan se corre
 ## Próxima sesión — Lun 26: Bienvenida de cumpleaños y pulido
 
 La app publicada: https://urip24.github.io/MascotaVirtual/ (se actualiza sola con cada push).
+Mari tiene **Android**. Decisiones de Uri del 23/10 (todas cerradas):
 
-Antes de arrancar, Uri trae: **el mensaje de cumpleaños** para Mari (y si quiere, una firma).
+1. **Bienvenida** (solo la primera vez, se guarda `bienvenidaVista`), pantallas en orden:
+   1. El mensaje de Uri, textual:
+      > Mi amor, feliz cumpleaños, esta vez decidí ser un poco mas creativo con tu regalo. Así q con
+      > mi amigo Claudio (Claude Code), decidimos hacerte un regalo. Tu propia mascota virtual. Espero
+      > que te guste, que lo disfrutes, que te entretengas y que te sirva sobre todas las cosas.
+      >
+      > Te Amo, Uri ❤️
+   2. Botón para seguir → "¿Estás lista para empezar?" con botón **"Sí"**.
+   3. Texto "¡Hola, Mari!, soy Bolti" (Bolti **todavía no se ve**, solo el mensaje).
+   4. Botón **"Conocer a Bolti"** → Casa. El homenaje ya está en el mensaje, no hace falta más.
+2. **Tutorial:** después de la bienvenida, preguntar si quiere verlo. Siempre accesible desde Configuración.
+3. **Botón ⚙️ Configuración bien visible** (no escondido) con todo lo que no es central: ver tutorial,
+   **respaldo** (exportar/importar el progreso: compartir/descargar archivo y copiar código), silenciar
+   sonidos. Al abrir la app pedir `navigator.storage.persist()`. Aviso si falla el guardado.
+   (El guardado ya es instantáneo en cada cambio; un respaldo automático afuera necesita servidor → después.)
+4. **Cumpleaños todos los años el 28/10:** gorrito, confeti, "¡Feliz cumple, Mari!" y 🎂 torta en la mochila.
+   Ese día **no hay estudio obligatorio**.
+5. **Estudio sin culpa:** sacar el humor "extraña el estudio" (tristeza + nubecita por no haber estudiado
+   ayer). En su lugar, Bolti **de vez en cuando** (no siempre, que no sea pesado) tira una burbuja
+   recordando estudiar. En **diciembre** la tarea obligatoria sigue, pero sin recordatorios de extrañar.
+6. **Arranque:** 100 🪙 y 30 ⭐, lista de tareas vacía.
+7. **Ícono definitivo:** huellita con corazón (Uri elige entre la variante A, corazón adentro de la
+   almohadilla, o B, almohadilla con forma de corazón).
+8. **Sonidos antes del 28:** ladrido, ñam, ronquido, sonidos de los juegos, campanita del pomodoro,
+   monedas. Volumen bajo, arrancan después del primer toque, botón para silenciar (en Configuración).
+9. **QR** con el link de la app para imprimir en la tarjeta de cumpleaños.
+10. Limpieza: borrar `public/prototipo-bolti.html`, `/ux-review` a 360 px. El modo prueba (`?prueba`)
+    queda oculto para usarlo más adelante.
+11. **Último, solo si está todo lo demás:** el minijuego Bolti vaquera.
 
-Tareas concretas:
-1. **Bienvenida** la primera vez que abre la app: pantalla con el mensaje de Uri, Bolti que aparece de
-   a poco (la sorpresa) y un botón "Conocer a Bolti". Se guarda que ya la vio (`bienvenidaVista`).
-2. **El 28/10:** 🎂 torta de regalo en la mochila y Bolti con gorrito de cumpleaños ese día.
-3. Aviso si falla el guardado y **respaldo** (exportar / importar el progreso como texto).
-4. Ícono definitivo (¿la carita de Bolti? ojo: el ícono se ve antes de abrir la app → ¿huellita?).
-5. `/ux-review` de toda la app a 360 px, borrar `public/prototipo-bolti.html`, decidir el modo prueba.
-6. Si sobra tiempo: el segundo minijuego que elija Uri.
+Mar 27: prueba en el celular Android de Uri y estado limpio para Mari. Mié 28: entrega.
 
 Prompt para arrancar:
 
-> Leé `CLAUDE.md`, `PLAN.md` y `docs/specs/bolti-personaje.md`. Hoy toca el día Lun 26: bienvenida de cumpleaños (con el mensaje que te paso), la torta del 28/10, respaldo del progreso y pulido. Mostrame el plan antes de codear, hacé un commit por paso y al final actualizá `PLAN.md` y dejame la sección "Próxima sesión".
+> Leé `CLAUDE.md`, `PLAN.md` y `docs/specs/bolti-personaje.md`. Hoy toca el día Lun 26: bienvenida de
+> cumpleaños, Configuración con respaldo y tutorial, cumpleaños anual, sacar "extraña el estudio",
+> arranque con 100 🪙 y 30 ⭐, ícono, sonidos y QR. Mostrame el plan antes de codear, hacé un commit por
+> paso y al final actualizá `PLAN.md` y dejame la sección "Próxima sesión".
