@@ -142,6 +142,7 @@ Si un día no llego, se recorta primero el minijuego; el resto del plan se corre
 ## Mié 28 — Entrega 🎂
 
 ## Después del cumple
+- [ ] **Sacar de `PLAN.md` los textos privados** (el mensaje de cumpleaños, la anécdota del puré y la del caballo) porque el repo es público
 - [ ] Tala y Lucky
 - [ ] Bolti repite lo que dice Mari con ladridos (como Tom)
 - [ ] Habitaciones: cocina, baño (bañarla), patio
