@@ -11,8 +11,11 @@ import {
   sumarEstudio,
   sumarMonedas,
   sumarPuntos,
+  ultraEnLaProxima,
+  vaciarRopa,
   volverAlHorarioNormal,
 } from '../logic/prueba.js'
+import { regalarTiradas } from '../logic/gacha.js'
 import './TestPanel.css'
 
 // Panel oculto del modo prueba. Solo aparece con ?prueba en el link (o con npm run dev).
@@ -58,6 +61,15 @@ function TestPanel({ estado, setEstado }) {
         ['Liberar canjes', (e) => liberarCanjes(e)],
         ['Liberar cambio de hoy', (e) => liberarCambioDelDia(e)],
         ['Borrar cupones', (e) => borrarCupones(e)],
+      ],
+    },
+    {
+      titulo: '✨ Gacha',
+      acciones: [
+        ['+10 tiradas gratis', (e) => regalarTiradas(e, 10)],
+        ['Ultra en la próxima', (e) => ultraEnLaProxima(e)],
+        ['+50 ⭐', (e) => sumarPuntos(e, 50)],
+        ['Vaciar ropa', (e) => vaciarRopa(e)],
       ],
     },
   ]

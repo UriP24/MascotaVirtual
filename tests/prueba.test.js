@@ -3,7 +3,8 @@ import assert from 'node:assert/strict'
 import { crearEstadoInicial } from '../src/storage.js'
 import { actualizarDia, completarTarea } from '../src/logic/tareas.js'
 import { humor } from '../src/logic/bolti.js'
-import { adelantarBolti, simularQueNoEstudio, sumarEstudio, sumarPuntos } from '../src/logic/prueba.js'
+import { adelantarBolti, simularQueNoEstudio, sumarEstudio, sumarPuntos, ultraEnLaProxima, vaciarRopa } from '../src/logic/prueba.js'
+import { tirar } from '../src/logic/gacha.js'
 
 const MARTES = new Date('2026-10-20T15:00:00')
 
@@ -73,4 +74,13 @@ test('liberar canjes permite volver a canjear un plan grande', async () => {
   assert.equal(canjear(e, 'comer-afuera', oct).resultado, 'en-rotacion')
   e = liberarCanjes(e)
   assert.equal(canjear(e, 'comer-afuera', oct).resultado, 'ok')
+})
+
+test('modo prueba: ultra rara en la próxima tirada y vaciar la ropa', () => {
+  const estado = ultraEnLaProxima({ ...crearEstadoInicial(), puntos: 5 })
+  const r = tirar(estado, 1, new Date('2026-10-25T18:00:00'), () => 0.5)
+  assert.equal(r.premios[0].rareza, 'ultra')
+  const vacio = vaciarRopa(r.estado)
+  assert.deepEqual(vacio.ropa.tiene, [])
+  assert.equal(vacio.gacha.tiradasDesdeUltra, 0)
 })

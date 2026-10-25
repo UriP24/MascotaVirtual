@@ -115,6 +115,17 @@ export function liberarCambioDelDia(estado) {
   return { ...estado, conversiones: { fecha: null, cantidad: 0 } }
 }
 
+// Gacha: la próxima tirada sale ultra rara (por la garantía de las 30)
+export function ultraEnLaProxima(estado) {
+  return { ...estado, gacha: { ...estado.gacha, tiradasDesdeUltra: 29 } }
+}
+
+// Gacha: saca toda la ropa, las piezas y los contadores
+export function vaciarRopa(estado) {
+  const inicial = crearEstadoInicial()
+  return { ...estado, gacha: inicial.gacha, piezas: inicial.piezas, ropa: inicial.ropa }
+}
+
 export function reiniciarTodo() {
   return actualizarDia(crearEstadoInicial())
 }
