@@ -8,6 +8,12 @@
   background: var(--color-degrade);
 }
 
+.welcome.encima {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+}
+
 .welcome-paso {
   display: flex;
   flex-direction: column;

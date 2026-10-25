@@ -27,3 +27,14 @@
   background: var(--color-superficie);
   color: var(--color-secundario-oscuro);
 }
+
+.top-bar .configuracion {
+  width: 40px;
+  height: 40px;
+  margin-right: auto; /* queda a la izquierda, los contadores a la derecha */
+  border: none;
+  border-radius: 50%;
+  background: var(--color-superficie);
+  font-size: 1.2rem;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.08);
+}

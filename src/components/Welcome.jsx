@@ -10,11 +10,12 @@ const FIRMA = 'Te Amo, Uri ❤️'
 
 // Bienvenida de la primera vez: el mensaje de Uri → "¿Estás lista?" → "¡Hola, Mari!, soy Bolti".
 // Bolti todavía no se ve: aparece recién al tocar "Conocer a Bolti".
-function Welcome({ onTerminar }) {
+// Con `soloCarta` muestra solo el mensaje (para volver a leerlo desde Configuración).
+function Welcome({ onTerminar, soloCarta = false }) {
   const [paso, setPaso] = useState(0)
 
   return (
-    <div className="welcome">
+    <div className={soloCarta ? 'welcome encima' : 'welcome'}>
       {/* La key reinicia la animación de entrada en cada paso */}
       <div className="welcome-paso" key={paso}>
         {paso === 0 && (
@@ -28,8 +29,8 @@ function Welcome({ onTerminar }) {
               ))}
               <p className="firma">{FIRMA}</p>
             </div>
-            <button className="principal" onClick={() => setPaso(1)}>
-              Seguir
+            <button className="principal" onClick={soloCarta ? onTerminar : () => setPaso(1)}>
+              {soloCarta ? 'Cerrar' : 'Seguir'}
             </button>
           </>
         )}

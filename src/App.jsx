@@ -3,6 +3,9 @@ import TopBar from './components/TopBar.jsx'
 import BottomNav from './components/BottomNav.jsx'
 import TestPanel from './components/TestPanel.jsx'
 import Welcome from './components/Welcome.jsx'
+import Tutorial from './components/Tutorial.jsx'
+import Settings from './components/Settings.jsx'
+import ConfirmDialog from './components/ConfirmDialog.jsx'
 import Casa from './screens/Casa.jsx'
 import Tareas from './screens/Tareas.jsx'
 import Canjes from './screens/Canjes.jsx'
@@ -36,6 +39,10 @@ function App() {
     }
   })
   const [estado, setEstado] = useState(inicio.estado)
+  const [configuracionAbierta, setConfiguracionAbierta] = useState(false)
+  const [tutorialAbierto, setTutorialAbierto] = useState(false)
+  const [mensajeAbierto, setMensajeAbierto] = useState(false)
+  const [preguntarTutorial, setPreguntarTutorial] = useState(false)
 
   // Cada minuto: revisa si cambió el día y avanza las necesidades de Bolti.
   useEffect(() => {
@@ -47,6 +54,20 @@ function App() {
   useEffect(() => {
     guardarEstado(estado)
   }, [estado])
+
+  // Después de la bienvenida, deja que vea a Bolti un ratito y le ofrece el tutorial (una sola vez)
+  const faltaPreguntarTutorial = estado.bienvenidaVista && !estado.tutorialPreguntado
+  useEffect(() => {
+    if (!faltaPreguntarTutorial) return
+    const timer = setTimeout(() => setPreguntarTutorial(true), 2500)
+    return () => clearTimeout(timer)
+  }, [faltaPreguntarTutorial])
+
+  function responderTutorial(quiere) {
+    setPreguntarTutorial(false)
+    setEstado((e) => ({ ...e, tutorialPreguntado: true }))
+    if (quiere) setTutorialAbierto(true)
+  }
 
   const Pantalla = PANTALLAS[pantallaActiva]
 
@@ -62,7 +83,11 @@ function App() {
 
   return (
     <div className="app">
-      <TopBar monedas={estado.monedas} puntos={estado.puntos} />
+      <TopBar
+        monedas={estado.monedas}
+        puntos={estado.puntos}
+        onAbrirConfiguracion={() => setConfiguracionAbierta(true)}
+      />
       <Pantalla
         estado={estado}
         setEstado={setEstado}
@@ -70,6 +95,32 @@ function App() {
         onCambiarPantalla={setPantallaActiva}
       />
       <BottomNav pantallaActiva={pantallaActiva} onCambiar={setPantallaActiva} />
+      {preguntarTutorial && (
+        <ConfirmDialog
+          titulo="🐾 ¿Te muestro cómo funciona?"
+          textoConfirmar="Sí, mostrame"
+          textoCancelar="Ahora no"
+          onConfirmar={() => responderTutorial(true)}
+          onCancelar={() => responderTutorial(false)}
+        >
+          <p>Son unos pasitos cortos. Lo podés volver a ver cuando quieras desde ⚙️.</p>
+        </ConfirmDialog>
+      )}
+      {configuracionAbierta && (
+        <Settings
+          onVerTutorial={() => {
+            setConfiguracionAbierta(false)
+            setTutorialAbierto(true)
+          }}
+          onVerMensaje={() => {
+            setConfiguracionAbierta(false)
+            setMensajeAbierto(true)
+          }}
+          onCerrar={() => setConfiguracionAbierta(false)}
+        />
+      )}
+      {tutorialAbierto && <Tutorial onCerrar={() => setTutorialAbierto(false)} />}
+      {mensajeAbierto && <Welcome soloCarta onTerminar={() => setMensajeAbierto(false)} />}
       {modoPrueba && <TestPanel estado={estado} setEstado={setEstado} />}
     </div>
   )
