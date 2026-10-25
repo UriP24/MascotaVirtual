@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import TopBar from './components/TopBar.jsx'
 import BottomNav from './components/BottomNav.jsx'
 import TestPanel from './components/TestPanel.jsx'
+import Welcome from './components/Welcome.jsx'
 import Casa from './screens/Casa.jsx'
 import Tareas from './screens/Tareas.jsx'
 import Canjes from './screens/Canjes.jsx'
@@ -48,6 +49,16 @@ function App() {
   }, [estado])
 
   const Pantalla = PANTALLAS[pantallaActiva]
+
+  // La primera vez: el mensaje de Uri antes de conocer a Bolti
+  if (!estado.bienvenidaVista) {
+    return (
+      <div className="app">
+        <Welcome onTerminar={() => setEstado((e) => ({ ...e, bienvenidaVista: true }))} />
+        {modoPrueba && <TestPanel estado={estado} setEstado={setEstado} />}
+      </div>
+    )
+  }
 
   return (
     <div className="app">
