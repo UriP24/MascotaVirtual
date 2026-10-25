@@ -24,8 +24,10 @@ export const ECONOMIA = {
   // Para los canjes de jueguitos (precio en dólares)
   DOLAR_EN_PESOS: 1600,
 
-  // Monedas con las que arranca la app (para poder comprarle comida desde el primer día)
-  MONEDAS_DE_BIENVENIDA: 30,
+  // Monedas con las que arranca la app (para comprarle comida desde el primer día)
+  MONEDAS_DE_BIENVENIDA: 100,
+  // Puntos de regalo para que pueda probar un canje o el gacha el primer día
+  PUNTOS_DE_BIENVENIDA: 30,
 }
 
 export const ESTUDIO = {

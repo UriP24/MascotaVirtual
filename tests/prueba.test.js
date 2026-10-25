@@ -30,7 +30,7 @@ test('"ayer no estudió" hace que extrañe el estudio', () => {
 })
 
 test('sumar puntos también suma al total ganado', () => {
-  const e = sumarPuntos(crearEstadoInicial(), 10)
+  const e = sumarPuntos({ ...crearEstadoInicial(), puntos: 0, puntosGanadosTotal: 0 }, 10)
   assert.equal(e.puntosGanadosTotal, 10)
 })
 

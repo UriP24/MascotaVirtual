@@ -13,9 +13,9 @@ export function crearEstadoInicial() {
   return {
     version: VERSION_ACTUAL,
     monedas: ECONOMIA.MONEDAS_DE_BIENVENIDA,
-    puntos: 0,
+    puntos: ECONOMIA.PUNTOS_DE_BIENVENIDA,
     // Historial de todo lo ganado. Nunca baja: los puntos ganados no se restan ni vencen.
-    puntosGanadosTotal: 0,
+    puntosGanadosTotal: ECONOMIA.PUNTOS_DE_BIENVENIDA,
     // { id, texto, tipo: 'tarea' | 'estudio', fecha, hecha, obligatoria, estudio? } (las viejas 'simple'/'grande' valen como 'tarea')
     tareas: [],
     // Minutos de estudio acreditados por día: { 'AAAA-MM-DD': minutos }.

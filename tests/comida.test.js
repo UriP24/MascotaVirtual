@@ -1,6 +1,7 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { crearEstadoInicial } from '../src/storage.js'
+import { ECONOMIA } from '../src/config.js'
 import { comprar, darDeComer, comidasEnInventario, comidasALaVenta } from '../src/logic/comida.js'
 
 const TARDE = new Date('2026-10-23T15:00:00').getTime()
@@ -10,14 +11,14 @@ function estado(perrita = {}, extra = {}) {
   return { ...e, perrita: { ...e.perrita, durmiendo: false, actualizadaEn: TARDE, forzado: null, ...perrita }, ...extra }
 }
 
-test('arranca con 30 monedas de bienvenida y el inventario vacío', () => {
+test('arranca con las monedas de bienvenida y el inventario vacío', () => {
   const e = crearEstadoInicial()
-  assert.equal(e.monedas, 30)
+  assert.equal(e.monedas, ECONOMIA.MONEDAS_DE_BIENVENIDA)
   assert.equal(comidasEnInventario(e).length, 0)
 })
 
 test('comprar resta monedas (nunca puntos) y suma al inventario', () => {
-  const e = estado({}, { puntos: 7 })
+  const e = estado({}, { monedas: 30, puntos: 7 })
   const r = comprar(e, 'carne')
   assert.ok(r.ok)
   assert.equal(r.estado.monedas, 15)

@@ -16,18 +16,20 @@ import { convertirMonedas } from '../src/logic/economia.js'
 import * as crono from '../src/logic/estudio.js'
 
 const MIN = 60 * 1000
+// Estado inicial sin los puntos de bienvenida, para contar solo lo que se gana en cada test
+const sinPuntos = () => ({ ...crearEstadoInicial(), puntos: 0, puntosGanadosTotal: 0 })
 const MARTES = new Date('2026-10-20T10:00:00')
 const SABADO = new Date('2026-10-24T10:00:00')
 
 test('agregar ignora texto vacío y corta textos largos', () => {
-  const e = crearEstadoInicial()
+  const e = sinPuntos()
   assert.equal(agregarTarea(e, '   ', 'simple'), e)
   const e2 = agregarTarea(e, 'x'.repeat(200), 'simple')
   assert.equal(e2.tareas[0].texto.length, 80)
 })
 
 test('cada tarea da 10 monedas (no puntos) y no se puede repetir', () => {
-  let e = agregarTarea({ ...crearEstadoInicial(), monedas: 0 }, 'Barrer', 'tarea')
+  let e = agregarTarea({ ...sinPuntos(), monedas: 0 }, 'Barrer', 'tarea')
   e = agregarTarea(e, 'Tarea vieja', 'grande') // las viejas "grande" valen lo mismo
   const [barrer, vieja] = e.tareas
   let r = completarTarea(e, barrer.id, MARTES)
@@ -41,7 +43,7 @@ test('cada tarea da 10 monedas (no puntos) y no se puede repetir', () => {
 })
 
 test('solo las primeras 5 tareas del día dan monedas, aunque se borren', () => {
-  let e = { ...crearEstadoInicial(), monedas: 0 }
+  let e = { ...sinPuntos(), monedas: 0 }
   for (let i = 0; i < 7; i++) {
     e = agregarTarea(e, `Tarea ${i}`, 'tarea', MARTES)
     const id = e.tareas.at(-1).id
@@ -59,7 +61,7 @@ test('solo las primeras 5 tareas del día dan monedas, aunque se borren', () => 
 })
 
 test('borrar nunca resta monedas ni puntos', () => {
-  let e = agregarTarea({ ...crearEstadoInicial(), monedas: 0 }, 'Barrer', 'tarea')
+  let e = agregarTarea({ ...sinPuntos(), monedas: 0 }, 'Barrer', 'tarea')
   e = completarTarea(e, e.tareas[0].id).estado
   e = borrarTarea(e, e.tareas[0].id)
   assert.equal(e.tareas.length, 0)
@@ -67,7 +69,7 @@ test('borrar nunca resta monedas ni puntos', () => {
 })
 
 test('cambio: 100 monedas por 1 punto, máximo 1 por día', () => {
-  let e = { ...crearEstadoInicial(), monedas: 250 }
+  let e = { ...sinPuntos(), monedas: 250 }
   let r = convertirMonedas(e, MARTES)
   assert.equal(r.resultado, 'ok')
   assert.equal(r.estado.monedas, 150)
@@ -76,20 +78,20 @@ test('cambio: 100 monedas por 1 punto, máximo 1 por día', () => {
   assert.equal(convertirMonedas(r.estado, MARTES).resultado, 'tope-diario')
   const miercoles = new Date('2026-10-21T10:00:00')
   assert.equal(convertirMonedas(r.estado, miercoles).resultado, 'ok')
-  assert.equal(convertirMonedas({ ...crearEstadoInicial(), monedas: 99 }, MARTES).resultado, 'sin-monedas')
+  assert.equal(convertirMonedas({ ...sinPuntos(), monedas: 99 }, MARTES).resultado, 'sin-monedas')
 })
 
 test('de lunes a viernes aparece una sola tarea obligatoria, que no se puede borrar', () => {
-  let e = actualizarDia(crearEstadoInicial(), MARTES)
+  let e = actualizarDia(sinPuntos(), MARTES)
   assert.equal(e.tareas.length, 1)
   assert.ok(e.tareas[0].obligatoria)
   assert.equal(actualizarDia(e, MARTES), e, 'sin cambios devuelve el mismo objeto')
   assert.equal(borrarTarea(e, e.tareas[0].id), e)
-  assert.equal(actualizarDia(crearEstadoInicial(), SABADO).tareas.length, 0)
+  assert.equal(actualizarDia(sinPuntos(), SABADO).tareas.length, 0)
 })
 
 test('estudio: no se completa antes de 25 min y da 1 punto cada 25 (pomodoro)', () => {
-  let e = actualizarDia(crearEstadoInicial(), MARTES)
+  let e = actualizarDia(sinPuntos(), MARTES)
   const id = e.tareas[0].id
   const t0 = MARTES.getTime()
   e = actualizarCronometro(e, id, (c) => ({ ...crono.iniciar(c, t0), proximoChequeo: null }))
@@ -154,7 +156,7 @@ test('pomodoro: a los 25 min se pausa y espera que diga si sigue', () => {
 })
 
 test('el tope de 4 h se reparte entre todas las tareas de estudio del día', () => {
-  let e = actualizarDia(crearEstadoInicial(), MARTES)
+  let e = actualizarDia(sinPuntos(), MARTES)
   e = { ...e, historialEstudio: { '2026-10-20': 220 } }
   const id = e.tareas[0].id
   const t0 = MARTES.getTime()
@@ -164,7 +166,7 @@ test('el tope de 4 h se reparte entre todas las tareas de estudio del día', () 
 })
 
 test('solo un cronómetro corre a la vez', () => {
-  let e = actualizarDia(crearEstadoInicial(), MARTES)
+  let e = actualizarDia(sinPuntos(), MARTES)
   e = agregarTarea(e, 'Repasar', 'estudio', MARTES)
   const [a, b] = e.tareas
   e = actualizarCronometro(e, a.id, (c) => crono.iniciar(c, 0))
@@ -174,7 +176,7 @@ test('solo un cronómetro corre a la vez', () => {
 })
 
 test('día vencido: sin estudiar desaparece sin castigo; con 30+ min se completa sola', () => {
-  let e = actualizarDia(crearEstadoInicial(), MARTES)
+  let e = actualizarDia(sinPuntos(), MARTES)
   const miercoles = new Date('2026-10-21T09:00:00')
   let sinEstudiar = actualizarDia(e, miercoles)
   assert.equal(sinEstudiar.tareas.length, 1, 'solo queda la del miércoles')
@@ -189,7 +191,7 @@ test('día vencido: sin estudiar desaparece sin castigo; con 30+ min se completa
 })
 
 test('si la app se cerró con el cronómetro andando, solo cuenta hasta el último latido', () => {
-  let e = actualizarDia(crearEstadoInicial(), MARTES)
+  let e = actualizarDia(sinPuntos(), MARTES)
   const id = e.tareas[0].id
   e = actualizarCronometro(e, id, (c) => crono.registrarLatido(crono.iniciar(c, 0), 10 * MIN))
   e = retomarCronometros(e, 100 * MIN)
