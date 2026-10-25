@@ -1,0 +1,180 @@
+.gacha {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.gacha h2 {
+  margin: 4px 0 0;
+  font-size: 1rem;
+  color: var(--color-texto-suave);
+}
+
+.gacha-cartel {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px;
+  border-radius: 16px;
+  background: var(--color-degrade);
+  color: var(--color-texto);
+}
+
+.gacha-cartel strong {
+  color: var(--color-principal-oscuro);
+}
+
+.gacha-cartel small {
+  line-height: 1.35;
+}
+
+.gacha-cartel .temporadas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.gacha-cartel .temporadas span {
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.7);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.gacha .garantias {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: var(--color-superficie);
+}
+
+.gacha .garantias .fila {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.gacha .garantias strong {
+  color: var(--color-principal-oscuro);
+  white-space: nowrap;
+}
+
+.gacha .garantias small {
+  color: var(--color-texto-suave);
+}
+
+.gacha .barra {
+  height: 10px;
+  border-radius: 999px;
+  background: var(--color-principal-claro);
+  overflow: hidden;
+}
+
+.gacha .barra div {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--color-principal);
+  transition: width 0.4s ease;
+}
+
+.gacha .botones-tirar {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.gacha .tirar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  min-height: 64px;
+  border: none;
+  border-radius: 16px;
+  background: var(--color-secundario);
+  color: white;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.gacha .tirar.multi {
+  background: var(--color-principal);
+}
+
+.gacha .tirar strong {
+  font-size: 1.1rem;
+}
+
+.gacha .tirar:disabled {
+  background: var(--color-borde);
+  color: var(--color-texto-suave);
+}
+
+.gacha .gratis {
+  margin: 0;
+  text-align: center;
+  font-weight: 700;
+  color: var(--color-principal-oscuro);
+}
+
+.gacha .piezas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+}
+
+.gacha .piezas li {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 4px 8px;
+  padding: 10px 12px;
+  border-left: 4px solid var(--color-rareza);
+  border-radius: 14px;
+  background: var(--color-superficie);
+  list-style: none;
+}
+
+.gacha .piezas .nombre {
+  font-weight: 700;
+  color: var(--color-rareza);
+}
+
+.gacha .piezas .cantidad {
+  font-weight: 800;
+}
+
+.gacha .piezas button {
+  grid-column: 1 / -1;
+  min-height: 36px;
+  border: none;
+  border-radius: 10px;
+  background: var(--color-rareza);
+  color: white;
+  font-weight: 700;
+}
+
+.gacha .piezas button:disabled {
+  background: var(--color-borde);
+  color: var(--color-texto-suave);
+}
+
+.gacha .ayuda {
+  color: var(--color-texto-suave);
+  line-height: 1.35;
+}
+
+.gacha .coleccion {
+  margin: 0;
+  padding: 12px;
+  border-radius: 14px;
+  background: var(--color-terciario-claro);
+  text-align: center;
+  font-weight: 700;
+}

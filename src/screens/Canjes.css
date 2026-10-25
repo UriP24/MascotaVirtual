@@ -48,3 +48,27 @@
   color: var(--color-texto-suave);
   font-weight: 600;
 }
+
+.canjes .pestanas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 14px;
+  background: var(--color-principal-claro);
+}
+
+.canjes .pestanas button {
+  min-height: 44px;
+  border: none;
+  border-radius: 11px;
+  background: none;
+  color: var(--color-principal-oscuro);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.canjes .pestanas button[aria-selected='true'] {
+  background: var(--color-superficie);
+  box-shadow: 0 1px 4px rgb(63 53 64 / 0.12);
+}

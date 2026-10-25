@@ -1,0 +1,33 @@
+.gacha-odds {
+  padding: 12px 14px;
+  border: 1px dashed var(--color-borde);
+  border-radius: 14px;
+  color: var(--color-texto-suave);
+}
+
+.gacha-odds summary {
+  min-height: 24px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.gacha-odds ul {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 10px 0 0;
+  padding: 0;
+}
+
+.gacha-odds li {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+  list-style: none;
+}
+
+.gacha-odds p {
+  margin: 8px 0 0;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}

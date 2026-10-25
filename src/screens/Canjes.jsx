@@ -8,6 +8,7 @@ import GamePicker from '../components/GamePicker.jsx'
 import CoinExchange from '../components/CoinExchange.jsx'
 import ConfirmDialog from '../components/ConfirmDialog.jsx'
 import Toast from '../components/Toast.jsx'
+import Gacha from './Gacha.jsx'
 import {
   canjear,
   cuponesPendientes,
@@ -27,6 +28,7 @@ function Canjes({ estado, setEstado }) {
   const [aviso, setAviso] = useState(null)
   const [verHistorial, setVerHistorial] = useState(false)
   const [eligiendoJuego, setEligiendoJuego] = useState(false)
+  const [seccion, setSeccion] = useState('planes')
 
   useEffect(() => {
     if (!aviso) return
@@ -65,43 +67,60 @@ function Canjes({ estado, setEstado }) {
     <section className="pantalla canjes">
       <h1>🎁 Canjes</h1>
 
-      <div className="cartel-reglas">
-        <strong>🎁 Canjeá puntos por planes juntos</strong>
-        <small>Podés canjear varios. Cada plan tiene su frecuencia: lo que no cuesta plata, hasta 2 veces por mes; lo barato, 1 vez por mes; cena y comida pedida, cada 2 meses; las salidas grandes 🍝 🎬, cada 3 meses; y los jueguitos 🎮, de 3 a 12 meses según el precio.</small>
+      <div className="pestanas" role="tablist">
+        <button role="tab" aria-selected={seccion === 'planes'} onClick={() => setSeccion('planes')}>
+          🎁 Planes
+        </button>
+        <button role="tab" aria-selected={seccion === 'gacha'} onClick={() => setSeccion('gacha')}>
+          ✨ Gacha
+        </button>
       </div>
 
-      <CoinExchange monedas={estado.monedas} quedanHoy={puntosConvertiblesHoy(estado, ahora)} onCambiar={cambiarMonedas} />
-
-      <h2>Planes juntos</h2>
-      <ul className="lista">
-        <GameCard juegos={juegos.map((j) => j.plan)} onElegir={() => setEligiendoJuego(true)} />
-        {planesOrdenados.map((plan) => (
-          <PlanCard
-            key={plan.id}
-            plan={plan}
-            puntos={estado.puntos}
-            vuelveEl={disponibleDesde(estado, plan, ahora)}
-            usosRestantes={usosRestantesEsteMes(estado, plan, ahora)}
-            onCanjear={setPlanElegido}
-          />
-        ))}
-      </ul>
-
-      <h2>Mis cupones</h2>
-      {pendientes.length === 0 ? (
-        <p className="vacio">No tenés cupones pendientes 💕</p>
-      ) : (
-        <ul className="lista">
-          {pendientes.map((c) => (
-            <CouponItem key={c.id} cupon={c} onCumplido={(cupon) => setEstado((e) => marcarCumplido(e, cupon.id))} />
-          ))}
-        </ul>
+      {seccion === 'gacha' && (
+        <Gacha estado={estado} setEstado={setEstado} onAviso={(texto) => setAviso({ texto, id: Date.now() })} />
       )}
 
-      <button className="ver-historial" onClick={() => setVerHistorial((v) => !v)} aria-expanded={verHistorial}>
-        📜 {verHistorial ? 'Ocultar historial' : `Historial de canjes (${historial.length})`}
-      </button>
-      {verHistorial && <CouponHistory cupones={historial} />}
+      {seccion === 'planes' && (
+        <>
+          <div className="cartel-reglas">
+            <strong>🎁 Canjeá puntos por planes juntos</strong>
+            <small>Podés canjear varios. Cada plan tiene su frecuencia: lo que no cuesta plata, hasta 2 veces por mes; lo barato, 1 vez por mes; cena y comida pedida, cada 2 meses; las salidas grandes 🍝 🎬, cada 3 meses; y los jueguitos 🎮, de 3 a 12 meses según el precio.</small>
+          </div>
+
+          <CoinExchange monedas={estado.monedas} quedanHoy={puntosConvertiblesHoy(estado, ahora)} onCambiar={cambiarMonedas} />
+
+          <h2>Planes juntos</h2>
+          <ul className="lista">
+            <GameCard juegos={juegos.map((j) => j.plan)} onElegir={() => setEligiendoJuego(true)} />
+            {planesOrdenados.map((plan) => (
+              <PlanCard
+                key={plan.id}
+                plan={plan}
+                puntos={estado.puntos}
+                vuelveEl={disponibleDesde(estado, plan, ahora)}
+                usosRestantes={usosRestantesEsteMes(estado, plan, ahora)}
+                onCanjear={setPlanElegido}
+              />
+            ))}
+          </ul>
+
+          <h2>Mis cupones</h2>
+          {pendientes.length === 0 ? (
+            <p className="vacio">No tenés cupones pendientes 💕</p>
+          ) : (
+            <ul className="lista">
+              {pendientes.map((c) => (
+                <CouponItem key={c.id} cupon={c} onCumplido={(cupon) => setEstado((e) => marcarCumplido(e, cupon.id))} />
+              ))}
+            </ul>
+          )}
+
+          <button className="ver-historial" onClick={() => setVerHistorial((v) => !v)} aria-expanded={verHistorial}>
+            📜 {verHistorial ? 'Ocultar historial' : `Historial de canjes (${historial.length})`}
+          </button>
+          {verHistorial && <CouponHistory cupones={historial} />}
+        </>
+      )}
 
       {eligiendoJuego && (
         <GamePicker
