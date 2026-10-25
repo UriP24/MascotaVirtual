@@ -220,7 +220,7 @@ Mari tiene **Android**. Decisiones de Uri del 23/10 (todas cerradas):
 **A medida que vayamos terminando lo anterior** (quedan 7 días):
 
 14. **Gacha con ⭐** (pestaña nueva o dentro de Canjes):
-    - **Tirada: 5 ⭐** (1 premio). **Multi: 10 tiradas por 45 ⭐** (descuento de 5 ⭐), con rara o mejor asegurada. Sale sobre todo ropa: cabeza (gorritos, moño, corona, flor,
+    - **Tirada: 5 ⭐** (1 premio). **Multi: 10 tiradas por 50 ⭐** (sin descuento, justo), con rara o mejor asegurada. Sale sobre todo ropa: cabeza (gorritos, moño, corona, flor,
       vincha), cuello (bufanda, bandana, collar con chapita "Bolti"), cuerpo (pulover, buzo, impermeable,
       remera de Argentina), patitas (guantes, botitas, medias), cara (anteojos), disfraces enteros.
     - Rarezas: común ~70%, rara ~22%, épica ~7%, ultra rara ~1% (cupones que **solo** existen en el gacha,
