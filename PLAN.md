@@ -179,7 +179,7 @@ Si un día no llego, se recorta primero el minijuego; el resto del plan se corre
 La app publicada: https://urip24.github.io/MascotaVirtual/ (se actualiza sola con cada push).
 Mari tiene **Android**. Decisiones de Uri del 23/10 (todas cerradas):
 
-1. **Bienvenida** (solo la primera vez, se guarda `bienvenidaVista`), pantallas en orden:
+1. ✅ (25/10) **Bienvenida** (solo la primera vez, se guarda `bienvenidaVista`), pantallas en orden:
    1. El mensaje de Uri, textual:
       > Mi amor, feliz cumpleaños, esta vez decidí ser un poco mas creativo con tu regalo. Así q con
       > mi amigo Claudio (Claude Code), decidimos hacerte un regalo. Tu propia mascota virtual. Espero
@@ -189,16 +189,16 @@ Mari tiene **Android**. Decisiones de Uri del 23/10 (todas cerradas):
    2. Botón para seguir → "¿Estás lista para empezar?" con botón **"Sí"**.
    3. Texto "¡Hola, Mari!, soy Bolti" (Bolti **todavía no se ve**, solo el mensaje).
    4. Botón **"Conocer a Bolti"** → Casa. El homenaje ya está en el mensaje, no hace falta más.
-2. **Tutorial:** después de la bienvenida, preguntar si quiere verlo. Siempre accesible desde Configuración.
-3. **Botón ⚙️ Configuración bien visible** (no escondido) con todo lo que no es central: ver tutorial,
+2. ✅ (25/10) **Tutorial:** después de la bienvenida, preguntar si quiere verlo. Siempre accesible desde Configuración.
+3. 🟡 (25/10: hecho el botón con tutorial y "volver a leer el mensaje"; faltan vacaciones y sonido) **Botón ⚙️ Configuración bien visible** (no escondido) con todo lo que no es central: ver tutorial,
    vacaciones y silenciar sonidos. Aviso si falla el guardado.
 4. **Respaldo automático** (Mari no hace nada): `navigator.storage.persist()` al abrir, una copia diaria
    del progreso guardada aparte (las últimas 7) y si el guardado principal está roto, vuelve solo a la
    última copia buena. Copia en la nube: después del cumple (necesita un servicio con cuenta).
-5. **Cumpleaños todos los años el 28/10:** confeti, "¡Feliz cumple, Mari!" y aparece un **regalo que se
+5. ✅ (25/10, también da una multi gratis del gacha; en modo prueba: "Mostrar regalo de cumple") **Cumpleaños todos los años el 28/10:** confeti, "¡Feliz cumple, Mari!" y aparece un **regalo que se
    sacude y brilla**; al tocarlo se abre y da el 🎩 **gorrito** (a la mochila → Ropa) y la 🎂 **torta**
    (a la mochila → Comida). Ese día **no hay estudio obligatorio**.
-6. **Bolti se viste:** la mochila con pestañas Comida / Ropa; tocar una prenda se la pone o se la saca
+6. **Bolti se viste** (urgente: el gorrito del cumple queda puesto y hoy no hay cómo sacárselo; mientras tanto, las prendas sin dibujo se pueden mostrar con su emoji en la zona): la mochila con pestañas Comida / Ropa; tocar una prenda se la pone o se la saca
    (una por zona: cabeza, cuello, cuerpo, patitas, cara). Base para el gacha.
 7. **Estudio sin culpa:** sacar el humor "extraña el estudio" (tristeza + nubecita). Bolti **de vez en
    cuando** (no siempre) tira una burbuja recordando estudiar.
@@ -206,7 +206,7 @@ Mari tiene **Android**. Decisiones de Uri del 23/10 (todas cerradas):
    vacaciones? 🏖️". Sí → elige desde (por defecto el día que dejó de estudiar) y hasta; en ese período
    no hay tarea obligatoria ni recordatorios y la racha no se corta. No → no vuelve a preguntar por una
    semana. También se cargan / terminan desde Configuración. (Reemplaza la regla especial de diciembre.)
-9. **Arranque:** 100 🪙 y 30 ⭐, lista de tareas vacía.
+9. ✅ (25/10) **Arranque:** 100 🪙 y 30 ⭐, lista de tareas vacía.
 10. **Sonidos antes del 28:** ladrido, ñam, ronquido, sonidos de los juegos, campanita del pomodoro,
     monedas. Volumen bajo, arrancan después del primer toque, botón para silenciar (en Configuración).
 11. **QR** con el link de la app para imprimir en la tarjeta de cumpleaños.
