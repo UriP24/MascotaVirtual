@@ -126,6 +126,17 @@ export function vaciarRopa(estado) {
   return { ...estado, gacha: inicial.gacha, piezas: inicial.piezas, ropa: inicial.ropa }
 }
 
+// Cumple: hace aparecer el regalo aunque no sea 28/10
+export function mostrarRegaloDeCumple(estado) {
+  return { ...estado, cumpleDePrueba: true }
+}
+
+// Le saca a Bolti lo que tenga puesto en la cabeza (el gorrito)
+export function sacarGorrito(estado) {
+  const { cabeza: _sacada, ...resto } = estado.ropa.puesta
+  return { ...estado, ropa: { ...estado.ropa, puesta: resto } }
+}
+
 export function reiniciarTodo() {
   return actualizarDia(crearEstadoInicial())
 }

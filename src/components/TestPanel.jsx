@@ -12,6 +12,8 @@ import {
   sumarMonedas,
   sumarPuntos,
   ultraEnLaProxima,
+  mostrarRegaloDeCumple,
+  sacarGorrito,
   vaciarRopa,
   volverAlHorarioNormal,
 } from '../logic/prueba.js'
@@ -70,6 +72,13 @@ function TestPanel({ estado, setEstado }) {
         ['Ultra en la próxima', (e) => ultraEnLaProxima(e)],
         ['+50 ⭐', (e) => sumarPuntos(e, 50)],
         ['Vaciar ropa', (e) => vaciarRopa(e)],
+      ],
+    },
+    {
+      titulo: '🎂 Cumple',
+      acciones: [
+        ['Mostrar regalo de cumple', (e) => mostrarRegaloDeCumple(e)],
+        ['Sacar gorrito', (e) => sacarGorrito(e)],
       ],
     },
   ]

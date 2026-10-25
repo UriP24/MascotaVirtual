@@ -4,6 +4,7 @@ import { crearEstadoInicial } from '../src/storage.js'
 import { abrirRegaloDeCumple, hayRegaloDeCumple } from '../src/logic/cumple.js'
 import { esCumple, esDiaDeEstudioObligatorio } from '../src/logic/fechas.js'
 import { actualizarDia } from '../src/logic/tareas.js'
+import { mostrarRegaloDeCumple, sacarGorrito } from '../src/logic/prueba.js'
 
 const CUMPLE = new Date('2026-10-28T11:00:00') // miércoles
 const DIA_ANTES = new Date('2026-10-27T11:00:00')
@@ -44,4 +45,13 @@ test('al año siguiente hay otro regalo (sin repetir el gorrito)', () => {
   assert.equal(otro.ropa.tiene.filter((id) => id === 'gorrito-cumple').length, 1)
   assert.equal(otro.inventario.torta, 2)
   assert.equal(otro.gacha.tiradasGratis, 20)
+})
+
+test('modo prueba: el regalo aparece cualquier día y se puede sacar el gorrito', () => {
+  const conRegalo = mostrarRegaloDeCumple(crearEstadoInicial())
+  assert.equal(hayRegaloDeCumple(conRegalo, DIA_ANTES), true)
+  const abierto = abrirRegaloDeCumple(conRegalo, DIA_ANTES)
+  assert.equal(abierto.ropa.puesta.cabeza, 'gorrito-cumple')
+  assert.equal(hayRegaloDeCumple(abierto, DIA_ANTES), false)
+  assert.equal(sacarGorrito(abierto).ropa.puesta.cabeza, undefined)
 })
