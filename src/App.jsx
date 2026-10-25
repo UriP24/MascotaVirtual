@@ -14,6 +14,8 @@ import { cargarEstado, guardarEstado } from './storage.js'
 import { actualizarDia, retomarCronometros } from './logic/tareas.js'
 import { actualizarBolti, horasDesdeUltimaVisita, registrarVisita } from './logic/bolti.js'
 import { modoPruebaActivo } from './logic/prueba.js'
+import { hayRegaloDeCumple } from './logic/cumple.js'
+import { esCumple } from './logic/fechas.js'
 import './App.css'
 
 // Se decide una sola vez al abrir la app.
@@ -55,13 +57,17 @@ function App() {
     guardarEstado(estado)
   }, [estado])
 
-  // Después de la bienvenida, deja que vea a Bolti un ratito y le ofrece el tutorial (una sola vez)
-  const faltaPreguntarTutorial = estado.bienvenidaVista && !estado.tutorialPreguntado
+  // Después de la bienvenida, deja que vea a Bolti un ratito y le ofrece el tutorial (una sola vez).
+  // El día del cumple espera a que abra el regalo y a que lo vea tranquila.
+  const ahora = new Date(estado.perrita.actualizadaEn)
+  const faltaPreguntarTutorial =
+    estado.bienvenidaVista && !estado.tutorialPreguntado && !hayRegaloDeCumple(estado, ahora)
+  const esperaTutorial = esCumple(ahora) ? 8000 : 2500
   useEffect(() => {
     if (!faltaPreguntarTutorial) return
-    const timer = setTimeout(() => setPreguntarTutorial(true), 2500)
+    const timer = setTimeout(() => setPreguntarTutorial(true), esperaTutorial)
     return () => clearTimeout(timer)
-  }, [faltaPreguntarTutorial])
+  }, [faltaPreguntarTutorial, esperaTutorial])
 
   function responderTutorial(quiere) {
     setPreguntarTutorial(false)

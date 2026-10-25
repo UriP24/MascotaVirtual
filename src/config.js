@@ -91,7 +91,13 @@ export const COMIDAS = [
   // Se regala una el día del cumple (28/10)
   { id: 'torta', nombre: 'Torta de cumple', emoji: '🎂', precio: null, saciedad: 100, carino: 20 },
 ]
-export const FECHA_REGALO_TORTA = '10-28' // MM-DD
+// Cumpleaños de Mari (todos los años): aparece un regalo, no hay estudio obligatorio
+export const FECHA_CUMPLE = '10-28' // MM-DD
+export const REGALO_CUMPLE = {
+  prenda: 'gorrito-cumple', // se la pone sola al abrir el regalo
+  comida: 'torta', // va a la mochila
+  tiradasGratis: 10, // una multi gratis del gacha
+}
 
 export const JUEGOS = {
   ENERGIA_POR_PARTIDA: 10, // se gasta al empezar

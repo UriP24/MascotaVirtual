@@ -6,10 +6,15 @@ import FloatingEmoji from '../components/FloatingEmoji.jsx'
 import ActionBar from '../components/ActionBar.jsx'
 import Shop from '../components/Shop.jsx'
 import Backpack from '../components/Backpack.jsx'
+import GiftBox from '../components/GiftBox.jsx'
+import GiftReveal from '../components/GiftReveal.jsx'
+import Confetti from '../components/Confetti.jsx'
 import { apagarLuz, darMimos, humor, prenderLuz } from '../logic/bolti.js'
 import { PERRITA } from '../config.js'
 import { comprar, darDeComer } from '../logic/comida.js'
 import { festejoVisto, fraseDeFestejo } from '../logic/festejo.js'
+import { abrirRegaloDeCumple, hayRegaloDeCumple } from '../logic/cumple.js'
+import { esCumple } from '../logic/fechas.js'
 import './Casa.css'
 
 const DISTANCIA_POR_MIMO = 45 // px que hay que frotar para cada corazón
@@ -33,6 +38,7 @@ function saludoInicial(horasAusente, animo, ahora) {
   if (animo === 'dormida') {
     return ahora.getHours() < HORA_FIN_DE_LA_NOCHE ? 'Vamos a dormir, Mari 💤' : null
   }
+  if (esCumple(ahora)) return '¡Feliz cumple, Mari! 🎂💕'
   if (horasAusente >= 12) return '¡Te extrañé! 🥺'
   return '¡Hola, Mari! 🐾'
 }
@@ -68,6 +74,9 @@ function Casa({ estado, setEstado, horasAusente = 0, onCambiarPantalla }) {
   const [volando, setVolando] = useState(null) // comida que vuela hasta la boca: { comida, x, y, dx, dy }
   const [comiendo, setComiendo] = useState(false)
   const [rechaza, setRechaza] = useState(false)
+  // El día del cumple: confeti al entrar y al abrir el regalo
+  const [confeti, setConfeti] = useState(() => (esCumple(ahora) ? 1 : 0))
+  const [regaloAbierto, setRegaloAbierto] = useState(false)
   const habitacionRef = useRef(null)
   const toque = useRef({ apretado: false, recorrido: 0, ultimo: null, huboMimos: false })
   const timers = useRef({})
@@ -80,6 +89,7 @@ function Casa({ estado, setEstado, horasAusente = 0, onCambiarPantalla }) {
     if (festejoAlEntrar.current) setEstado(festejoVisto) // ya lo festejó
     t.frase = setTimeout(() => setFrase(null), 3500)
     return () => {
+      clearTimeout(t.confeti)
       clearTimeout(t.frase)
       clearTimeout(t.mimos)
       clearTimeout(t.comiendo)
@@ -223,6 +233,29 @@ function Casa({ estado, setEstado, horasAusente = 0, onCambiarPantalla }) {
     decir('¡Gracias, Mari! ¡Te quiero! 🐾💕')
   }
 
+  function tirarConfeti() {
+    setConfeti((n) => n + 1)
+    clearTimeout(timers.current.confeti)
+    timers.current.confeti = setTimeout(() => setConfeti(0), 5000)
+  }
+
+  function abrirRegalo() {
+    setEstado((e) => abrirRegaloDeCumple(e, new Date(e.perrita.actualizadaEn)))
+    setRegaloAbierto(true)
+    tirarConfeti()
+    navigator.vibrate?.([40, 60, 40])
+  }
+
+  function cerrarRegalo() {
+    setRegaloAbierto(false)
+    if (animo === 'dormida') return
+    setSaltos((n) => n + 1)
+    setMimos(true)
+    clearTimeout(timers.current.mimos)
+    timers.current.mimos = setTimeout(() => setMimos(false), 1500)
+    decir('¡Feliz cumple, Mari! ¡Te quiero! 🎂💕', 3500)
+  }
+
   function alimentar(comida, x, y) {
     const r = darDeComer(estado, comida.id)
     setEstado(r.estado)
@@ -290,12 +323,14 @@ function Casa({ estado, setEstado, horasAusente = 0, onCambiarPantalla }) {
           esperando={(arrastre?.cerca || Boolean(volando)) && animo !== 'dormida'}
           comiendo={comiendo}
           rechaza={rechaza}
+          ropa={estado.ropa.puesta}
           onPointerDown={alApretar}
           onPointerMove={alMover}
           onPointerUp={alSoltar}
           onPointerCancel={() => (toque.current.apretado = false)}
         />
         <FloatingEmoji items={flotantes} />
+        {hayRegaloDeCumple(estado, ahora) && !mochilaAbierta && <GiftBox onAbrir={abrirRegalo} />}
         {mochilaAbierta && (
           <Backpack
             estado={estado}
@@ -339,6 +374,8 @@ function Casa({ estado, setEstado, horasAusente = 0, onCambiarPantalla }) {
           {volando.comida.emoji}
         </div>
       )}
+      {regaloAbierto && <GiftReveal onCerrar={cerrarRegalo} />}
+      {confeti > 0 && <Confetti key={confeti} />}
       {tiendaAbierta && (
         <Shop
           monedas={estado.monedas}

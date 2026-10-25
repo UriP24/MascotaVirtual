@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { PERRITA } from '../config.js'
+import RopaBolti from './RopaBolti.jsx'
 import './Bolti.css'
 
 // Bolti dibujada en SVG por partes (cabeza, orejas, ojos, boca, cola…). Cada parte se anima
@@ -12,6 +13,7 @@ import './Bolti.css'
 // - carino, energia, saciedad: cada necesidad se ve en la cara por separado
 //   (cariño = cachetes sonrojados, energía baja = ojeras, hambre = panza que gruñe)
 // - esperando: abre la boca porque se acerca comida; comiendo: mastica; rechaza: da vuelta la cara
+// - ropa: la ropa puesta por zona ({ cabeza: 'gorrito-cumple' })
 // - el resto (onPointerDown, etc.) se pasa al <svg>
 function Bolti({
   animo,
@@ -23,6 +25,7 @@ function Bolti({
   esperando = false,
   comiendo = false,
   rechaza = false,
+  ropa,
   ...resto
 }) {
   const svgRef = useRef(null)
@@ -217,6 +220,7 @@ function Bolti({
                 <text x="226" y="44" fontSize="18">z</text>
                 <text x="240" y="30" fontSize="14">z</text>
               </g>
+              <RopaBolti puesta={ropa} />
             </g>
           </g>
         </g>

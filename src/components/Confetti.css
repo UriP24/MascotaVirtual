@@ -1,0 +1,36 @@
+.confetti {
+  position: fixed;
+  inset: 0;
+  z-index: 35;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.confetti span {
+  position: absolute;
+  top: -20px;
+  height: 12px;
+  border-radius: 2px;
+  opacity: 0;
+  animation: confetti-caer linear forwards;
+}
+
+@keyframes confetti-caer {
+  0% {
+    opacity: 1;
+    transform: translateY(0) rotate(var(--giro));
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(105vh) rotate(calc(var(--giro) + 540deg));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .confetti {
+    display: none;
+  }
+}
