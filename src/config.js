@@ -335,3 +335,116 @@ export function precioEnPuntos(plan) {
   const base = Math.ceil(plan.costoParaDos / 2 / ECONOMIA.PESOS_POR_PUNTO)
   return redondear(base + (plan.margen ? ECONOMIA.MARGEN_PUNTOS_PLAN : 0))
 }
+
+// ── Gacha de ropa (se paga con ⭐) ──────────────────────────────────────────────
+export const GACHA = {
+  PRECIO_TIRADA: 5, // ⭐ por 1 premio
+  TIRADAS_MULTI: 10,
+  PRECIO_MULTI: 50, // ⭐ por 10 premios (sin descuento: lo mismo que 10 sueltas)
+  GARANTIA_RARA: 10, // cada 10 tiradas, una rara o mejor asegurada (o sea, en cada multi)
+  GARANTIA_ULTRA: 30, // a las 30 tiradas, ultra rara asegurada
+  // Chance de cada rareza en una tirada normal
+  PROBABILIDADES: { comun: 0.7, rara: 0.22, epica: 0.07, ultra: 0.01 },
+  // Premios de ⭐ (chance sobre el total de tiradas). Devuelven en promedio ~30% de lo gastado.
+  PREMIOS_PUNTOS: {
+    comun: { puntos: 15, chance: 0.05 },
+    rara: { puntos: 25, chance: 0.02 },
+    epica: { puntos: 50, chance: 0.005 },
+  },
+  // La ropa de temporada sale más seguido que la de siempre mientras es su época
+  PESO_TEMPORADA: 2,
+  // Una prenda repetida da 1 pieza de su rareza. Con estas piezas se canjea una prenda que no tenga.
+  PIEZAS_PARA_CANJE: { comun: 5, rara: 10, epica: 20, ultra: 3 },
+}
+
+export const RAREZAS = [
+  { id: 'comun', nombre: 'Común', color: '#857682' },
+  { id: 'rara', nombre: 'Rara', color: '#2bb8b0' },
+  { id: 'epica', nombre: 'Épica', color: '#a488ec' },
+  { id: 'ultra', nombre: 'Ultra rara', color: '#ec6f9e' },
+]
+
+// Temporadas de Argentina (hemisferio sur). Puede haber dos a la vez (octubre: primavera y Halloween).
+export const TEMPORADAS = [
+  { id: 'navidad', nombre: 'Navidad y verano', emoji: '🎄', meses: [12, 1] },
+  { id: 'san-valentin', nombre: 'San Valentín', emoji: '💘', meses: [2] },
+  { id: 'otono', nombre: 'Otoño', emoji: '🍂', meses: [3, 4, 5] },
+  { id: 'invierno', nombre: 'Invierno', emoji: '❄️', meses: [6, 7, 8] },
+  { id: 'primavera', nombre: 'Primavera', emoji: '🌼', meses: [9, 10, 11] },
+  { id: 'halloween', nombre: 'Halloween', emoji: '🦇', meses: [10] },
+]
+
+// Zonas donde se pone cada prenda. "entero" es un disfraz o conjunto que la viste toda.
+export const ZONAS = ['cabeza', 'cara', 'cuello', 'cuerpo', 'patitas', 'entero']
+
+// Catálogo de ropa. Sin `temporada` = sale siempre. `exclusiva` = no sale en el gacha
+// (se consigue con el regalo de cumple o descubriendo secretos).
+export const PRENDAS = [
+  // De siempre
+  { id: 'mono-rosa', nombre: 'Moño rosa', emoji: '🎀', zona: 'cabeza', rareza: 'comun' },
+  { id: 'flor-oreja', nombre: 'Flor en la oreja', emoji: '🌸', zona: 'cabeza', rareza: 'comun' },
+  { id: 'panuelito-turquesa', nombre: 'Pañuelito turquesa', emoji: '💠', zona: 'cuello', rareza: 'comun' },
+  { id: 'collar-cascabel', nombre: 'Collar con cascabel', emoji: '🔔', zona: 'cuello', rareza: 'comun' },
+  { id: 'remerita-rayada', nombre: 'Remerita rayada', emoji: '👕', zona: 'cuerpo', rareza: 'comun' },
+  { id: 'medias-colores', nombre: 'Medias de colores', emoji: '🧦', zona: 'patitas', rareza: 'comun' },
+  { id: 'anteojitos', nombre: 'Anteojitos redondos', emoji: '👓', zona: 'cara', rareza: 'comun' },
+  { id: 'anteojos-sol', nombre: 'Anteojos de sol', emoji: '🕶️', zona: 'cara', rareza: 'rara' },
+  { id: 'buzo-capucha', nombre: 'Buzo con capucha', emoji: '🧥', zona: 'cuerpo', rareza: 'rara' },
+  { id: 'botitas-lluvia', nombre: 'Botitas de lluvia', emoji: '👢', zona: 'patitas', rareza: 'rara' },
+  { id: 'gorra', nombre: 'Gorra', emoji: '🧢', zona: 'cabeza', rareza: 'rara' },
+  { id: 'camiseta-argentina', nombre: 'Camiseta de Argentina', emoji: '⚽', zona: 'cuerpo', rareza: 'rara' },
+  { id: 'bufanda', nombre: 'Bufanda', emoji: '🧣', zona: 'cuello', rareza: 'rara' },
+  { id: 'corona', nombre: 'Corona', emoji: '👑', zona: 'cabeza', rareza: 'epica' },
+  { id: 'vincha-unicornio', nombre: 'Vincha de unicornio', emoji: '🦄', zona: 'cabeza', rareza: 'epica' },
+  { id: 'disfraz-abeja', nombre: 'Disfraz de abeja', emoji: '🐝', zona: 'entero', rareza: 'epica' },
+  { id: 'disfraz-dinosaurio', nombre: 'Disfraz de dinosaurio', emoji: '🦖', zona: 'entero', rareza: 'epica' },
+  { id: 'traje-astronauta', nombre: 'Traje de astronauta', emoji: '🚀', zona: 'entero', rareza: 'ultra' },
+  { id: 'conjunto-chef', nombre: 'Conjunto de chef', emoji: '👩‍🍳', zona: 'entero', rareza: 'ultra' },
+  { id: 'conjunto-princesa', nombre: 'Conjunto de princesa', emoji: '👸', zona: 'entero', rareza: 'ultra' },
+
+  // Navidad y verano (diciembre y enero)
+  { id: 'gorro-papa-noel', nombre: 'Gorro de Papá Noel', emoji: '🎅', zona: 'cabeza', rareza: 'comun', temporada: 'navidad' },
+  { id: 'flotador-patito', nombre: 'Flotador de patito', emoji: '🦆', zona: 'cuerpo', rareza: 'rara', temporada: 'navidad' },
+  { id: 'disfraz-reno', nombre: 'Disfraz de reno', emoji: '🦌', zona: 'entero', rareza: 'epica', temporada: 'navidad' },
+  { id: 'conjunto-mama-noel', nombre: 'Conjunto de Mamá Noel', emoji: '🤶', zona: 'entero', rareza: 'ultra', temporada: 'navidad' },
+  // San Valentín (febrero)
+  { id: 'vincha-corazones', nombre: 'Vincha de corazones', emoji: '💖', zona: 'cabeza', rareza: 'comun', temporada: 'san-valentin' },
+  { id: 'remera-corazones', nombre: 'Remera con corazones', emoji: '💌', zona: 'cuerpo', rareza: 'rara', temporada: 'san-valentin' },
+  { id: 'alitas-cupido', nombre: 'Alitas de cupido', emoji: '💘', zona: 'cuerpo', rareza: 'epica', temporada: 'san-valentin' },
+  { id: 'conjunto-cupido', nombre: 'Conjunto de Cupido', emoji: '🏹', zona: 'entero', rareza: 'ultra', temporada: 'san-valentin' },
+  // Otoño (marzo a mayo)
+  { id: 'boina', nombre: 'Boina', emoji: '🍂', zona: 'cabeza', rareza: 'comun', temporada: 'otono' },
+  { id: 'pulover-tejido', nombre: 'Pulóver tejido', emoji: '🧶', zona: 'cuerpo', rareza: 'rara', temporada: 'otono' },
+  { id: 'disfraz-ardilla', nombre: 'Disfraz de ardilla', emoji: '🐿️', zona: 'entero', rareza: 'epica', temporada: 'otono' },
+  { id: 'conjunto-exploradora', nombre: 'Conjunto de exploradora', emoji: '🧭', zona: 'entero', rareza: 'ultra', temporada: 'otono' },
+  // Invierno (junio a agosto)
+  { id: 'guantes', nombre: 'Guantes', emoji: '🧤', zona: 'patitas', rareza: 'comun', temporada: 'invierno' },
+  { id: 'orejeras', nombre: 'Orejeras', emoji: '🎧', zona: 'cabeza', rareza: 'rara', temporada: 'invierno' },
+  { id: 'campera-inflable', nombre: 'Campera inflable', emoji: '🧥', zona: 'cuerpo', rareza: 'epica', temporada: 'invierno' },
+  { id: 'traje-esqui', nombre: 'Traje de esquí', emoji: '⛷️', zona: 'entero', rareza: 'ultra', temporada: 'invierno' },
+  // Primavera (septiembre a noviembre)
+  { id: 'corona-flores', nombre: 'Corona de flores', emoji: '🌼', zona: 'cabeza', rareza: 'comun', temporada: 'primavera' },
+  { id: 'panuelo-floreado', nombre: 'Pañuelo floreado', emoji: '🌷', zona: 'cuello', rareza: 'rara', temporada: 'primavera' },
+  { id: 'disfraz-mariposa', nombre: 'Disfraz de mariposa', emoji: '🦋', zona: 'entero', rareza: 'epica', temporada: 'primavera' },
+  { id: 'conjunto-hada', nombre: 'Conjunto de hada de las flores', emoji: '🧚', zona: 'entero', rareza: 'ultra', temporada: 'primavera' },
+  // Halloween (octubre)
+  { id: 'vincha-murcielago', nombre: 'Vincha de murciélago', emoji: '🦇', zona: 'cabeza', rareza: 'comun', temporada: 'halloween' },
+  { id: 'capa-vampiro', nombre: 'Capa de vampiro', emoji: '🧛', zona: 'cuerpo', rareza: 'rara', temporada: 'halloween' },
+  { id: 'disfraz-calabaza', nombre: 'Disfraz de calabaza', emoji: '🎃', zona: 'entero', rareza: 'epica', temporada: 'halloween' },
+  { id: 'conjunto-bruja', nombre: 'Conjunto de bruja', emoji: '🧙', zona: 'entero', rareza: 'ultra', temporada: 'halloween' },
+
+  // Exclusivas: no salen en el gacha
+  { id: 'gorrito-cumple', nombre: 'Gorrito de cumpleaños', emoji: '🥳', zona: 'cabeza', rareza: 'exclusiva', exclusiva: true },
+  { id: 'panuelo-salud', nombre: 'Pañuelo "¡Salud!"', emoji: '🤧', zona: 'cuello', rareza: 'exclusiva', exclusiva: true },
+  { id: 'remerita-panza', nombre: 'Remerita panza al aire', emoji: '👚', zona: 'cuerpo', rareza: 'exclusiva', exclusiva: true },
+  { id: 'pijama-ositos', nombre: 'Pijama de ositos', emoji: '🧸', zona: 'entero', rareza: 'exclusiva', exclusiva: true },
+  { id: 'bata-bano', nombre: 'Bata de baño', emoji: '🛁', zona: 'cuerpo', rareza: 'exclusiva', exclusiva: true },
+  { id: 'orejitas-gato', nombre: 'Vincha con orejitas de gato', emoji: '🐱', zona: 'cabeza', rareza: 'exclusiva', exclusiva: true },
+  { id: 'sombrero-vaquera', nombre: 'Sombrero de vaquera', emoji: '🤠', zona: 'cabeza', rareza: 'exclusiva', exclusiva: true },
+  { id: 'par-medias', nombre: 'Par de medias', emoji: '🧦', zona: 'patitas', rareza: 'exclusiva', exclusiva: true },
+  { id: 'mono-rojo', nombre: 'Moño rojo', emoji: '❤️', zona: 'cabeza', rareza: 'exclusiva', exclusiva: true },
+  { id: 'collar-corazon', nombre: 'Collar de corazón', emoji: '💗', zona: 'cuello', rareza: 'exclusiva', exclusiva: true },
+  { id: 'babero-complice', nombre: 'Babero de cómplice', emoji: '🥣', zona: 'cuello', rareza: 'exclusiva', exclusiva: true },
+  { id: 'collar-bolti', nombre: 'Collar con chapita "Bolti"', emoji: '🦴', zona: 'cuello', rareza: 'exclusiva', exclusiva: true },
+  { id: 'traje-superheroe', nombre: 'Traje de superhéroe', emoji: '🦸', zona: 'entero', rareza: 'exclusiva', exclusiva: true },
+]

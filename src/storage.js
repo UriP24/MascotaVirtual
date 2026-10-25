@@ -6,7 +6,7 @@ import { fechaLocal } from './logic/fechas.js'
 import { esHorarioDeDormir } from './logic/bolti.js'
 
 const CLAVE = 'patitas:estado'
-const VERSION_ACTUAL = 6
+const VERSION_ACTUAL = 7
 
 export function crearEstadoInicial() {
   const ahora = new Date().toISOString()
@@ -33,6 +33,12 @@ export function crearEstadoInicial() {
     cupones: [],
     // Cuántas unidades tiene de cada comida: { croquetas: 0, galletita: 0, … }
     inventario: Object.fromEntries(COMIDAS.map((c) => [c.id, 0])),
+    // Gacha de ropa: contadores de las garantías y tiradas gratis que le regalaron
+    gacha: { tiradasDesdeUltra: 0, tiradasDesdeRara: 0, tiradasGratis: 0, tiradasTotales: 0 },
+    // Piezas que dan las prendas repetidas, por rareza (se canjean por prendas que no tenga)
+    piezas: { comun: 0, rara: 0, epica: 0, ultra: 0 },
+    // Ropa que tiene (ids de PRENDAS) y la que tiene puesta por zona: { cabeza: 'corona', … }
+    ropa: { tiene: [], puesta: {} },
     // Día en que se empezó a usar la app (para no ponerla triste por días anteriores)
     instaladaEn: fechaLocal(),
     // Sin salud ni vida: Bolti nunca se enferma ni muere, como mucho se pone triste.
@@ -60,6 +66,9 @@ function completarEstado(datos) {
     perrita: { ...inicial.perrita, ...datos.perrita },
     inventario: { ...inicial.inventario, ...datos.inventario },
     records: { ...inicial.records, ...datos.records },
+    gacha: { ...inicial.gacha, ...datos.gacha },
+    piezas: { ...inicial.piezas, ...datos.piezas },
+    ropa: { ...inicial.ropa, ...datos.ropa },
     version: VERSION_ACTUAL,
   }
 }
