@@ -220,20 +220,19 @@ Mari tiene **Android**. Decisiones de Uri del 23/10 (todas cerradas):
 **A medida que vayamos terminando lo anterior** (quedan 7 días):
 
 14. **Gacha con ⭐** (pestaña nueva o dentro de Canjes):
-    - Tirada de **10 ⭐** (confirmado). Sale sobre todo ropa: cabeza (gorritos, moño, corona, flor,
+    - **Tirada: 5 ⭐** (1 premio). **Multi: 10 tiradas por 45 ⭐** (descuento de 5 ⭐), con rara o mejor asegurada. Sale sobre todo ropa: cabeza (gorritos, moño, corona, flor,
       vincha), cuello (bufanda, bandana, collar con chapita "Bolti"), cuerpo (pulover, buzo, impermeable,
       remera de Argentina), patitas (guantes, botitas, medias), cara (anteojos), disfraces enteros.
     - Rarezas: común ~70%, rara ~22%, épica ~7%, ultra rara ~1% (cupones que **solo** existen en el gacha,
-      Uri elige cuáles; nunca planes sacados de Canjes). Premios de ⭐: 30 (5%), 50 (2%), 100 (0,5%).
+      Uri elige cuáles; nunca planes sacados de Canjes). Premios de ⭐: 15 (5%), 25 (2%), 50 (0,5%).
     - **Repetidas → piezas** (idea de Uri): una prenda repetida da 1 pieza de su rareza. Con piezas se
       canjea una prenda **que no tenga** de esa misma rareza: 5 piezas comunes, 10 raras, 20 épicas,
       3 ultra raras (conjunto ultra raro).
-    - **Garantías (pity):** rara o mejor cada 10 tiradas. Ultra rara: 1% base, desde la tirada 20 sube
-      +5% por tirada y en la 30 sale segura. El contador vuelve a 0 al salir una ultra rara y no se pierde
-      al cambiar de temporada.
-    - **50-50 con garantía:** cuando sale ultra rara, 50% es el conjunto destacado de la temporada y 50%
-      uno de la base; si "pierde", la próxima ultra rara es segura la destacada. Puede salir repetida:
-      da 1 pieza ultra rara. Los cupones exclusivos ultra raros se pueden repetir (cada uno es un cupón).
+    - **Garantías (pity):** rara o mejor cada 10 tiradas (o sea, en cada multi). **Ultra rara segura a
+      las 30 tiradas** (150 ⭐); el contador vuelve a 0 al salir una ultra rara y no se pierde al cambiar
+      de temporada. **Sin 50-50:** la ultra rara puede ser la de la temporada o una de la base. Si sale
+      repetida, da 1 pieza ultra rara (3 piezas → otro conjunto ultra raro). Los cupones exclusivos
+      ultra raros se pueden repetir (cada uno es un cupón).
     - **Temporada:** la ropa de temporada solo aparece (en el gacha y en el canje de piezas) mientras es
       su temporada; fuera de ella no se muestra. Las piezas no vencen.
     - Chances visibles y contador "faltan N para la ultra rara segura".
@@ -264,7 +263,7 @@ Mari tiene **Android**. Decisiones de Uri del 23/10 (todas cerradas):
     | Un gato pasa por la ventana (de vez en cuando) y le ladra | Vincha con orejitas de gato |
     | Pasa una vaca por la ventana (de vez en cuando) | Sombrero de vaquera |
     | **Medias:** cada mañana (al despertarse) ~15% de chance de que traiga una media en la boca; al tocarla se la da. La 1ª queda como "Media suelta"; con la 2ª completa el conjunto **"Par de medias"** (en las patitas). Después sigue trayendo alguna cada tanto (+10 🪙) | Par de medias |
-    | De noche, tocar la ventana: a veces estrella fugaz y Bolti pide un deseo | Multi gratis |
+    | De noche, tocar la ventana: a veces estrella fugaz y Bolti pide un deseo | Multi gratis (10 tiradas) |
     | 14 de febrero: Bolti con moño rojo | Moño rojo |
     | **24 de marzo, aniversario de Uri y Mari** (todos los años): Bolti con corazones y una **cartita de Uri** que solo aparece ese día | Collar de corazón |
     | El puré de zapallo (punto 16) | Babero de cómplice |
