@@ -219,7 +219,10 @@ Mari tiene **Android**. Decisiones de Uri del 23/10 (todas cerradas):
 
 **A medida que vayamos terminando lo anterior** (quedan 7 días):
 
-14. **Gacha con ⭐** (pestaña nueva o dentro de Canjes):
+14. **Gacha con ⭐** — ✅ **sistema hecho el 25/10** (pestaña "✨ Gacha" en Canjes, `src/logic/gacha.js`,
+    catálogo en `config.js`: 20 prendas de siempre, 24 de temporada y 13 exclusivas). Falta: dibujar cada
+    prenda puesta en Bolti (hoy se ven con emoji), los cupones ultra raros exclusivos (Uri elige cuáles),
+    la **multi gratis de regalo de cumpleaños** (va dentro del regalo del 28/10) y, más adelante, descuentos.
     - **Tirada: 5 ⭐** (1 premio). **Multi: 10 tiradas por 50 ⭐** (sin descuento, justo), con rara o mejor asegurada. Sale sobre todo ropa: cabeza (gorritos, moño, corona, flor,
       vincha), cuello (bufanda, bandana, collar con chapita "Bolti"), cuerpo (pulover, buzo, impermeable,
       remera de Argentina), patitas (guantes, botitas, medias), cara (anteojos), disfraces enteros.

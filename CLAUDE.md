@@ -42,6 +42,11 @@ PWA instalable en el celular con cuatro pantallas:
   - **Jueguitos** (regalo para Mari sola, precio completo: USD × 1.600 redondeado para arriba a los mil,
     / 500): chico hasta 5 USD 20 ⭐ cada 3 meses; mediano hasta 15 USD 50 ⭐ cada 6; grande hasta
     30 USD 100 ⭐ cada 8; enorme hasta 60 USD 190 ⭐ cada 12 (redondeados a la decena).
+- **Gacha de ropa** (pestaña "✨ Gacha" en Canjes, `src/logic/gacha.js`, valores en `GACHA` y
+  `PRENDAS` de `config.js`): tirada 5 ⭐, multi de 10 por 50 ⭐ con rara o mejor asegurada, ultra rara
+  segura a las 30 tiradas (sin 50-50). Repetidas dan piezas de su rareza para canjear prendas que falten.
+  La ropa de temporada (estaciones de Argentina, Navidad, San Valentín, Halloween) solo sale y se canjea
+  en su época. Premios de ⭐ que devuelven ~30% en promedio (nunca más de lo que cobra).
 - **Cupones:** "Mis cupones" muestra solo los pendientes; al marcarlos cumplidos pasan al
   **historial de canjes** (todos, con fecha y hora de canje y de cumplido).
 
