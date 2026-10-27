@@ -56,7 +56,11 @@ real, aunque la app esté cerrada. **Nunca se enferma ni muere.**
      primera, +50 × nivel superado. Tabla: <200 → 5 🪙, 200 → 10, 400 → 15, 600 → 20, 800 → 25,
      1.000 → 30, 1.300 → 35, 1.600 → 40 y +5 cada 300 más. Récord por juego: al superarlo, +10 🪙 cada 500 puntos del récord (mínimo 5).
    - Después: más minijuegos.
-7. **Frases** en una burbuja cuando cambia el humor, al tocarla y en momentos especiales
+7. **Ropa:** la mochila tiene pestañas Comida y Ropa. Tocar una prenda se la pone o se la saca
+   (una por zona: cabeza, cara, cuello, cuerpo, patitas; un disfraz entero saca lo demás). La ropa
+   sale del gacha, del regalo de cumple y de los secretos. Las prendas sin dibujo propio se ven con
+   su emoji en su lugar (`src/components/RopaBolti.jsx`).
+8. **Frases** en una burbuja cuando cambia el humor, al tocarla y en momentos especiales
    (completó una tarea, terminó de estudiar, cumpleaños).
 
 ## Cara según cada necesidad (se combinan)
