@@ -252,7 +252,7 @@ Mari tiene **Android**. Decisiones de Uri del 23/10 (todas cerradas):
     semana); si Mari se lo da, Bolti se lo come feliz, le **guiña un ojo** y dice "Shhh… nuestro
     secreto 🤫". La primera vez da la prenda exclusiva "Babero de cómplice" para la colección. Sin
     explicar la historia: Mari la va a reconocer.
-17. **Secretos (easter eggs)** con un apartado en Colección "Secretos descubiertos N/13" (los que faltan
+17. ✅ (27/10, del 1 al 11; faltan Paseo e INVENCIBLE) **Secretos (easter eggs)** con un apartado en Colección "Secretos descubiertos N/13" (los que faltan
     tapados con "?" y una **pista discreta** tipo adivinanza). Además, Bolti suelta **pistas** cada
     tanto entre sus frases normales (~1 de cada 10, ej.: "Me pica la nariz… 🤧", "Me encantaría salir
     a pasear… si alguien lo anotara 📝"). Cada secreto da una **prenda exclusiva** (no sale en el
@@ -286,7 +286,7 @@ Mari tiene **Android**. Decisiones de Uri del 23/10 (todas cerradas):
       frena). La primera vez desbloquea el secreto y el **traje de superhéroe** (capa + antifaz).
 19. Bolti vaquera (último).
 
-**Agenda de Uri:** escribir la **cartita del aniversario** (24/3) antes de marzo.
+**Agenda de Uri:** escribir la **cartita del aniversario** (24/3) antes de marzo: va en `CARTA_ANIVERSARIO` de `src/config.js` (hoy tiene un texto provisorio).
 
 Mar 27: prueba en el celular Android de Uri y estado limpio para Mari. Mié 28: entrega.
 
