@@ -125,7 +125,7 @@ export const DIBUJOS_ROPA = {
   ],
   // Halloween
   'vincha-murcielago': [cabeza('vincha', { color: NEGRO, adorno: 'murcielago', color2: NEGRO })],
-  'capa-vampiro': [atras('capa', { color: '#7a2f3a' }), cuerpo('hombros', { color: '#7a2f3a' }), cuerpo('broche')],
+  'capa-vampiro': [atras('capa', { color: '#7a2f3a' }), cuerpo('broche', { color: ROJO })],
   'disfraz-calabaza': [...prenda({ color: NARANJA, patron: 'calabaza' })],
   'conjunto-bruja': [
     ...prenda({ color: '#6b4fa0', vestido: true }),
@@ -151,7 +151,6 @@ export const DIBUJOS_ROPA = {
   'traje-superheroe': [
     atras('capa', { color: ROSA }),
     ...prenda({ color: TURQUESA, color2: AMARILLO, patron: 'emblema' }),
-    cuerpo('hombros', { color: ROSA }),
     cuerpo('broche', { color: AMARILLO }),
     cabeza('antifaz', { color: ROSA }),
   ],

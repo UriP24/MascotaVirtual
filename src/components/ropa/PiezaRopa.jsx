@@ -572,25 +572,18 @@ function Flotador({ mitad = 'adelante' }) {
   )
 }
 
+// La capa cuelga por detrás: sale de los hombros y se abre hasta el piso, así se ve a los costados
 function Capa({ color }) {
-  return <path fill={color} stroke={C} strokeWidth={T} strokeLinejoin="round" d="M104 176 C72 220 60 268 64 302 L236 302 C240 268 228 220 196 176 Z" />
+  return <path fill={color} stroke={C} strokeWidth={T} strokeLinejoin="round" d="M112 170 C74 196 48 256 42 304 L258 304 C252 256 226 196 188 170 Z" />
 }
 
-// Los bordes de la capa que caen sobre los hombros, por delante del cuerpo
-function Hombros({ color }) {
-  return (
-    <g fill={color} stroke={C} strokeWidth={T} strokeLinejoin="round">
-      <path d="M108 176 L126 184 C116 206 106 230 98 252 L90 248 C94 222 98 198 108 176 Z" />
-      <path d="M192 176 L174 184 C184 206 194 230 202 252 L210 248 C206 222 202 198 192 176 Z" />
-    </g>
-  )
-}
-
+// El cordón de la capa alrededor del cuello, con un broche adelante
 function Broche({ color = '#f2c14e' }) {
   return (
-    <g fill={color} stroke={C} strokeWidth="2">
-      <circle cx="112" cy="182" r="6" />
-      <circle cx="188" cy="182" r="6" />
+    <g>
+      <path fill="none" stroke={C} strokeWidth="7" strokeLinecap="round" d="M108 174 Q150 196 192 174" />
+      <path fill="none" stroke={color} strokeWidth="3.5" strokeLinecap="round" d="M108 174 Q150 196 192 174" />
+      <circle cx="150" cy="186" r="7" fill={color} stroke={C} strokeWidth="2.5" />
     </g>
   )
 }
@@ -686,7 +679,6 @@ const FORMAS = {
   mangas: Mangas,
   flotador: Flotador,
   capa: Capa,
-  hombros: Hombros,
   broche: Broche,
   alas: Alas,
   medias: Medias,
