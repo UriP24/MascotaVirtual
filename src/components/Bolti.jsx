@@ -13,7 +13,7 @@ import './Bolti.css'
 // - carino, energia, saciedad: cada necesidad se ve en la cara por separado
 //   (cariño = cachetes sonrojados, energía baja = ojeras, hambre = panza que gruñe)
 // - esperando: abre la boca porque se acerca comida; comiendo: mastica; rechaza: da vuelta la cara
-// - ropa: la ropa puesta por zona ({ cabeza: 'gorrito-cumple' })
+// - ropa: la ropa puesta por zona ({ cabeza: 'gorrito-cumple', cuello: 'bufanda' })
 // - el resto (onPointerDown, etc.) se pasa al <svg>
 function Bolti({
   animo,
@@ -151,6 +151,7 @@ function Bolti({
           <rect className="contorno" x="157" y="246" width="26" height="52" rx="13" fill="#e8c48f" />
           <ellipse className="contorno" cx="129" cy="298" rx="17" ry="9" fill="#efd3a5" />
           <ellipse className="contorno" cx="171" cy="298" rx="17" ry="9" fill="#efd3a5" />
+          <RopaBolti puesta={ropa} parte="cuerpo" />
 
           <g className="cabeza-respira">
             <g className="cabeza">
@@ -220,7 +221,7 @@ function Bolti({
                 <text x="226" y="44" fontSize="18">z</text>
                 <text x="240" y="30" fontSize="14">z</text>
               </g>
-              <RopaBolti puesta={ropa} />
+              <RopaBolti puesta={ropa} parte="cabeza" />
             </g>
           </g>
         </g>

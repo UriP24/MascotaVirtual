@@ -400,7 +400,7 @@ export const PRENDAS = [
   { id: 'buzo-capucha', nombre: 'Buzo con capucha', emoji: '🧥', zona: 'cuerpo', rareza: 'rara' },
   { id: 'botitas-lluvia', nombre: 'Botitas de lluvia', emoji: '👢', zona: 'patitas', rareza: 'rara' },
   { id: 'gorra', nombre: 'Gorra', emoji: '🧢', zona: 'cabeza', rareza: 'rara' },
-  { id: 'camiseta-argentina', nombre: 'Camiseta de Argentina', emoji: '⚽', zona: 'cuerpo', rareza: 'rara' },
+  { id: 'camiseta-argentina', nombre: 'Camiseta de Argentina', emoji: '🇦🇷', zona: 'cuerpo', rareza: 'rara' },
   { id: 'bufanda', nombre: 'Bufanda', emoji: '🧣', zona: 'cuello', rareza: 'rara' },
   { id: 'corona', nombre: 'Corona', emoji: '👑', zona: 'cabeza', rareza: 'epica' },
   { id: 'vincha-unicornio', nombre: 'Vincha de unicornio', emoji: '🦄', zona: 'cabeza', rareza: 'epica' },

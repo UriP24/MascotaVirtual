@@ -15,6 +15,7 @@ import { comprar, darDeComer } from '../logic/comida.js'
 import { festejoVisto, fraseDeFestejo } from '../logic/festejo.js'
 import { abrirRegaloDeCumple, hayRegaloDeCumple } from '../logic/cumple.js'
 import { esCumple } from '../logic/fechas.js'
+import { alternarPrenda } from '../logic/ropa.js'
 import './Casa.css'
 
 const DISTANCIA_POR_MIMO = 45 // px que hay que frotar para cada corazón
@@ -256,6 +257,16 @@ function Casa({ estado, setEstado, horasAusente = 0, onCambiarPantalla }) {
     decir('¡Feliz cumple, Mari! ¡Te quiero! 🎂💕', 3500)
   }
 
+  // Desde la pestaña Ropa de la mochila: se la pone o se la saca, y a Bolti le encanta
+  function ponerOSacar(id) {
+    setEstado((e) => alternarPrenda(e, id))
+    if (animo === 'dormida') return
+    setSaltos((n) => n + 1)
+    setMimos(true)
+    clearTimeout(timers.current.mimos)
+    timers.current.mimos = setTimeout(() => setMimos(false), 900)
+  }
+
   function alimentar(comida, x, y) {
     const r = darDeComer(estado, comida.id)
     setEstado(r.estado)
@@ -340,6 +351,7 @@ function Casa({ estado, setEstado, horasAusente = 0, onCambiarPantalla }) {
             onMover={moverArrastre}
             onSoltar={soltarArrastre}
             onCancelar={() => setArrastre(null)}
+            onAlternarPrenda={ponerOSacar}
             onAbrirTienda={() => setTiendaAbierta(true)}
             onCerrar={() => setMochilaAbierta(false)}
           />
