@@ -48,13 +48,13 @@ function Flor({ color, x = 104, y = 70, r = 7 }) {
 
 function Gorro({ color, color2 = '#fff8f2', pompon = true, rayas = false, punta = false, id }) {
   // El domo apoya sobre la cabeza y el borde es una banda curva que sigue la frente
-  const domo = 'M88 98 C86 20 214 20 212 98 Q150 56 88 98 Z'
+  // Con punta (Papá Noel), el domo y la punta son una sola forma: sube, dobla a la derecha y cae
+  const domo = punta
+    ? 'M88 98 C84 40 128 22 168 30 C202 36 222 60 228 92 L214 94 C210 78 202 66 192 60 C204 72 210 86 212 98 Q150 56 88 98 Z'
+    : 'M88 98 C86 20 214 20 212 98 Q150 56 88 98 Z'
   const borde = 'M86 100 Q150 58 214 100'
   return (
     <g>
-      {punta && (
-        <path fill={color} stroke={C} strokeWidth={T} strokeLinejoin="round" d="M164 36 C196 36 220 56 226 90 L212 88 C206 68 194 56 172 52 Z" />
-      )}
       <clipPath id={`domo${id}`}>
         <path d={domo} />
       </clipPath>
@@ -68,7 +68,7 @@ function Gorro({ color, color2 = '#fff8f2', pompon = true, rayas = false, punta 
       <path fill="none" stroke={C} strokeWidth="24" strokeLinecap="round" d={borde} />
       <path fill="none" stroke={color2} strokeWidth="18" strokeLinecap="round" d={borde} />
       {pompon && !punta && <circle cx="150" cy="36" r="11" fill={color2} stroke={C} strokeWidth={T} />}
-      {punta && <circle cx="222" cy="94" r="10" fill={color2} stroke={C} strokeWidth={T} />}
+      {punta && <circle cx="222" cy="96" r="10" fill={color2} stroke={C} strokeWidth={T} />}
     </g>
   )
 }
