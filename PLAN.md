@@ -198,7 +198,7 @@ Mari tiene **Android**. Decisiones de Uri del 23/10 (todas cerradas):
 5. ✅ (25/10, también da una multi gratis del gacha; en modo prueba: "Mostrar regalo de cumple") **Cumpleaños todos los años el 28/10:** confeti, "¡Feliz cumple, Mari!" y aparece un **regalo que se
    sacude y brilla**; al tocarlo se abre y da el 🎩 **gorrito** (a la mochila → Ropa) y la 🎂 **torta**
    (a la mochila → Comida). Ese día **no hay estudio obligatorio**.
-6. ✅ (27/10) **Bolti se viste** (pestaña Ropa en la mochila; el gorrito tiene dibujo propio y el resto se ve con su emoji en su zona; falta ir dibujando cada prenda): la mochila con pestañas Comida / Ropa; tocar una prenda se la pone o se la saca
+6. ✅ (27/10) **Bolti se viste** (pestaña Ropa en la mochila; las 57 prendas dibujadas en SVG con el estilo de Bolti, con ~25 formas base combinables): la mochila con pestañas Comida / Ropa; tocar una prenda se la pone o se la saca
    (una por zona: cabeza, cuello, cuerpo, patitas, cara). Base para el gacha.
 7. **Estudio sin culpa:** sacar el humor "extraña el estudio" (tristeza + nubecita). Bolti **de vez en
    cuando** (no siempre) tira una burbuja recordando estudiar.

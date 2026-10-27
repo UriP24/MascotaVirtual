@@ -58,8 +58,9 @@ real, aunque la app esté cerrada. **Nunca se enferma ni muere.**
    - Después: más minijuegos.
 7. **Ropa:** la mochila tiene pestañas Comida y Ropa. Tocar una prenda se la pone o se la saca
    (una por zona: cabeza, cara, cuello, cuerpo, patitas; un disfraz entero saca lo demás). La ropa
-   sale del gacha, del regalo de cumple y de los secretos. Las prendas sin dibujo propio se ven con
-   su emoji en su lugar (`src/components/RopaBolti.jsx`).
+   sale del gacha, del regalo de cumple y de los secretos. Cada prenda está dibujada en SVG con el
+   mismo estilo que Bolti, en tres capas (atrás: capas y alas; cuerpo; cabeza): formas base en
+   `src/components/ropa/PiezaRopa.jsx` y qué usa cada prenda en `src/components/ropa/dibujos.js`.
 8. **Frases** en una burbuja cuando cambia el humor, al tocarla y en momentos especiales
    (completó una tarea, terminó de estudiar, cumpleaños).
 

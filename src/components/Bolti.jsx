@@ -132,6 +132,7 @@ function Bolti({
       {/* Saltito: al cambiar la key, React vuelve a crear el grupo y la animación arranca de nuevo */}
       <g key={saltos} className={saltos > 0 ? 'saltito' : undefined}>
         <g className="cuerpo">
+          <RopaBolti puesta={ropa} parte="atras" />
           <path className="cola contorno" fill="#e8c48f" d="M200 252 C246 246 274 210 268 166 C266 152 252 152 252 166 C255 200 238 226 198 234 Z" />
           <ellipse className="contorno" cx="104" cy="266" rx="38" ry="34" fill="#e2b97f" />
           <ellipse className="contorno" cx="196" cy="266" rx="38" ry="34" fill="#e2b97f" />
