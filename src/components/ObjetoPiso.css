@@ -1,0 +1,51 @@
+.objeto-piso {
+  position: absolute;
+  bottom: 8%;
+  z-index: 3;
+  padding: 0;
+  border: none;
+  background: none;
+  filter: drop-shadow(0 3px 4px rgb(63 53 64 / 0.2));
+  animation: objeto-aparecer 0.5s ease-out;
+}
+
+.objeto-piso.media {
+  right: 7%;
+}
+
+.objeto-piso.pure {
+  left: 6%;
+}
+
+.objeto-piso svg {
+  display: block;
+  animation: objeto-llamar 2s ease-in-out infinite;
+}
+
+@keyframes objeto-aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes objeto-llamar {
+  0%,
+  80%,
+  100% {
+    transform: none;
+  }
+  88% {
+    transform: rotate(-8deg);
+  }
+  94% {
+    transform: rotate(6deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .objeto-piso,
+  .objeto-piso svg {
+    animation: none;
+  }
+}

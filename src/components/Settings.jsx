@@ -1,7 +1,7 @@
 import './Settings.css'
 
 // Configuración: todo lo que no es central. Se abre con el botón ⚙️ de la barra de arriba.
-function Settings({ onVerTutorial, onVerMensaje, onCerrar }) {
+function Settings({ secretos, onVerTutorial, onVerMensaje, onVerSecretos, onCerrar }) {
   return (
     <div className="settings-fondo" onClick={onCerrar}>
       <div className="settings" role="dialog" aria-modal="true" aria-label="Configuración" onClick={(e) => e.stopPropagation()}>
@@ -16,6 +16,14 @@ function Settings({ onVerTutorial, onVerMensaje, onCerrar }) {
             <button onClick={onVerTutorial}>
               <span aria-hidden="true">📖</span>
               <span>Ver cómo funciona</span>
+            </button>
+          </li>
+          <li>
+            <button onClick={onVerSecretos}>
+              <span aria-hidden="true">🔍</span>
+              <span>
+                Secretos descubiertos ({secretos.descubiertos}/{secretos.total})
+              </span>
             </button>
           </li>
           <li>

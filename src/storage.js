@@ -52,6 +52,8 @@ export function crearEstadoInicial() {
     mediaEsperando: false,
     ultimoSorteoMedia: null, // día del último sorteo de la media (una vez por día)
     ultimoPure: null, // día en que comió el puré por última vez (aparece una vez por semana)
+    // Día en que vio por última vez la cartita de cada fecha especial: { aniversario: '2027-03-24' }
+    cartasVistas: {},
     // Día en que se empezó a usar la app (para no ponerla triste por días anteriores)
     instaladaEn: fechaLocal(),
     // Sin salud ni vida: Bolti nunca se enferma ni muere, como mucho se pone triste.
@@ -83,6 +85,7 @@ function completarEstado(datos) {
     piezas: { ...inicial.piezas, ...datos.piezas },
     ropa: { ...inicial.ropa, ...datos.ropa },
     secretos: { ...inicial.secretos, ...datos.secretos },
+    cartasVistas: { ...inicial.cartasVistas, ...datos.cartasVistas },
     version: VERSION_ACTUAL,
   }
 }

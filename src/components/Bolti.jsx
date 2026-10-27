@@ -13,6 +13,7 @@ import './Bolti.css'
 // - carino, energia, saciedad: cada necesidad se ve en la cara por separado
 //   (cariño = cachetes sonrojados, energía baja = ojeras, hambre = panza que gruñe)
 // - esperando: abre la boca porque se acerca comida; comiendo: mastica; rechaza: da vuelta la cara
+// - gesto: un gesto especial de los secretos ('estornuda', 'patea', 'rueda', 'sacude', 'guino')
 // - ropa: la ropa puesta por zona ({ cabeza: 'gorrito-cumple', cuello: 'bufanda' })
 // - el resto (onPointerDown, etc.) se pasa al <svg>
 function Bolti({
@@ -26,6 +27,7 @@ function Bolti({
   comiendo = false,
   rechaza = false,
   ropa,
+  gesto = null,
   ...resto
 }) {
   const svgRef = useRef(null)
@@ -122,6 +124,7 @@ function Bolti({
     rechaza && 'rechaza',
     cansada && 'cansada',
     hambrienta && 'hambrienta',
+    gesto && `gesto-${gesto}`,
   ]
     .filter(Boolean)
     .join(' ')
@@ -130,12 +133,14 @@ function Bolti({
     <svg ref={svgRef} className={clases} viewBox="0 0 300 320" data-animo={animo} role="img" aria-label={`Bolti, ${animo}`} {...resto}>
       <ellipse cx="150" cy="304" rx="92" ry="11" fill="rgb(63 53 64 / 0.12)" />
       {/* Saltito: al cambiar la key, React vuelve a crear el grupo y la animación arranca de nuevo */}
+      {/* Grupo de todo el cuerpo, para los gestos que la mueven entera (rodar, sacudirse) */}
+      <g className="entera">
       <g key={saltos} className={saltos > 0 ? 'saltito' : undefined}>
         <g className="cuerpo">
           <RopaBolti puesta={ropa} parte="atras" />
           <path className="cola contorno" fill="#e8c48f" d="M200 252 C246 246 274 210 268 166 C266 152 252 152 252 166 C255 200 238 226 198 234 Z" />
           <ellipse className="contorno" cx="104" cy="266" rx="38" ry="34" fill="#e2b97f" />
-          <ellipse className="contorno" cx="196" cy="266" rx="38" ry="34" fill="#e2b97f" />
+          <ellipse className="contorno muslo-der" cx="196" cy="266" rx="38" ry="34" fill="#e2b97f" />
           <g className="torso">
             <ellipse className="contorno" cx="150" cy="232" rx="62" ry="68" fill="#e8c48f" />
             <ellipse cx="150" cy="222" rx="34" ry="50" fill="#fbf4e8" />
@@ -175,7 +180,7 @@ function Bolti({
                     <circle cx="118" cy="114" r="1.6" fill="#fff" />
                     <path className="parpado" fill="#e8c48f" stroke="#5a3a2a" strokeWidth="2" d="M109 111 Q109 96 121 96 Q133 96 133 111 Q121 105 109 111 Z" />
                   </g>
-                  <g className="ojo">
+                  <g className="ojo ojo-der">
                     <ellipse cx="179" cy="110" rx="10" ry="12" fill="#2a2022" />
                     <circle cx="182.5" cy="105.5" r="3.6" fill="#fff" />
                     <circle cx="176" cy="114" r="1.6" fill="#fff" />
@@ -183,6 +188,8 @@ function Bolti({
                   </g>
                 </g>
               </g>
+              {/* Guiño de cómplice: el ojo derecho cerrado */}
+              <path className="guino" fill="none" stroke="#2a2022" strokeWidth="4.5" strokeLinecap="round" d="M168 112 Q179 102 190 112" />
               <g className="ojeras" fill="none" stroke="#8a6aae" strokeWidth="3.5" strokeLinecap="round" opacity="0.85">
                 <path d="M110 126 Q121 132 132 126" />
                 <path d="M168 126 Q179 132 190 126" />
@@ -227,6 +234,7 @@ function Bolti({
             </g>
           </g>
         </g>
+      </g>
       </g>
     </svg>
   )

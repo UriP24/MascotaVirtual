@@ -2,7 +2,7 @@
 // Se activa abriendo la app con ?prueba al final del link, o con `npm run dev`.
 
 import { crearEstadoInicial } from '../storage.js'
-import { COMIDAS } from '../config.js'
+import { COMIDAS, SECRETOS } from '../config.js'
 import { fechaLocal } from './fechas.js'
 import { actualizarDia } from './tareas.js'
 import { actualizarBolti } from './bolti.js'
@@ -135,6 +135,28 @@ export function mostrarRegaloDeCumple(estado) {
 export function sacarGorrito(estado) {
   const { cabeza: _sacada, ...resto } = estado.ropa.puesta
   return { ...estado, ropa: { ...estado.ropa, puesta: resto } }
+}
+
+// Secretos: deja un evento que Casa dispara (pasa un gato, trae una media, aparece el puré…)
+export function lanzarEvento(estado, tipo) {
+  return { ...estado, eventoPrueba: { tipo, id: Date.now() } }
+}
+
+// Secretos: los olvida todos (y saca sus premios) para volver a descubrirlos
+export function borrarSecretos(estado) {
+  const premios = SECRETOS.map((s) => s.premio?.prenda).filter(Boolean)
+  const puesta = Object.fromEntries(Object.entries(estado.ropa.puesta).filter(([, id]) => !premios.includes(id)))
+  return {
+    ...estado,
+    secretos: {},
+    medias: 0,
+    mediaEsperando: false,
+    ultimoSorteoMedia: null,
+    ultimoPure: null,
+    purePrueba: false,
+    cartasVistas: {},
+    ropa: { tiene: estado.ropa.tiene.filter((id) => !premios.includes(id)), puesta },
+  }
 }
 
 export function reiniciarTodo() {

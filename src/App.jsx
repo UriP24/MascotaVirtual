@@ -6,6 +6,7 @@ import Welcome from './components/Welcome.jsx'
 import Tutorial from './components/Tutorial.jsx'
 import Settings from './components/Settings.jsx'
 import ConfirmDialog from './components/ConfirmDialog.jsx'
+import SecretsList from './components/SecretsList.jsx'
 import Casa from './screens/Casa.jsx'
 import Tareas from './screens/Tareas.jsx'
 import Canjes from './screens/Canjes.jsx'
@@ -16,6 +17,7 @@ import { actualizarBolti, horasDesdeUltimaVisita, registrarVisita } from './logi
 import { modoPruebaActivo } from './logic/prueba.js'
 import { hayRegaloDeCumple } from './logic/cumple.js'
 import { esCumple } from './logic/fechas.js'
+import { progresoSecretos } from './logic/secretos.js'
 import './App.css'
 
 // Se decide una sola vez al abrir la app.
@@ -44,6 +46,7 @@ function App() {
   const [configuracionAbierta, setConfiguracionAbierta] = useState(false)
   const [tutorialAbierto, setTutorialAbierto] = useState(false)
   const [mensajeAbierto, setMensajeAbierto] = useState(false)
+  const [secretosAbiertos, setSecretosAbiertos] = useState(false)
   const [preguntarTutorial, setPreguntarTutorial] = useState(false)
 
   // Cada minuto: revisa si cambió el día y avanza las necesidades de Bolti.
@@ -114,6 +117,11 @@ function App() {
       )}
       {configuracionAbierta && (
         <Settings
+          secretos={progresoSecretos(estado)}
+          onVerSecretos={() => {
+            setConfiguracionAbierta(false)
+            setSecretosAbiertos(true)
+          }}
           onVerTutorial={() => {
             setConfiguracionAbierta(false)
             setTutorialAbierto(true)
@@ -125,6 +133,7 @@ function App() {
           onCerrar={() => setConfiguracionAbierta(false)}
         />
       )}
+      {secretosAbiertos && <SecretsList estado={estado} onCerrar={() => setSecretosAbiertos(false)} />}
       {tutorialAbierto && <Tutorial onCerrar={() => setTutorialAbierto(false)} />}
       {mensajeAbierto && <Welcome soloCarta onTerminar={() => setMensajeAbierto(false)} />}
       {modoPrueba && <TestPanel estado={estado} setEstado={setEstado} />}

@@ -1,0 +1,75 @@
+.special-card-fondo {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgb(63 53 64 / 0.5);
+}
+
+.special-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  max-width: 380px;
+  padding: 36px 22px 20px;
+  border-radius: 22px;
+  background: var(--color-superficie);
+  box-shadow: 0 6px 24px rgb(201 79 128 / 0.25);
+  animation: special-card-abrir 0.5s ease-out;
+}
+
+.special-card .sobre {
+  position: absolute;
+  top: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2.8rem;
+}
+
+.special-card h2 {
+  margin: 0;
+  font-size: 1.4rem;
+  text-align: center;
+  color: var(--color-principal-oscuro);
+}
+
+.special-card p {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.5;
+}
+
+.special-card .firma {
+  text-align: right;
+  font-weight: 700;
+  color: var(--color-principal-oscuro);
+}
+
+.special-card button {
+  align-self: center;
+  min-width: 120px;
+  min-height: 48px;
+  border: none;
+  border-radius: 14px;
+  background: var(--color-principal);
+  color: white;
+  font-size: 1.2rem;
+}
+
+@keyframes special-card-abrir {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .special-card {
+    animation: none;
+  }
+}

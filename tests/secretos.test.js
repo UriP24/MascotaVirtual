@@ -12,6 +12,7 @@ import {
   progresoSecretos,
   sortearMedia,
 } from '../src/logic/secretos.js'
+import { borrarSecretos, lanzarEvento } from '../src/logic/prueba.js'
 
 const MANANA = new Date('2026-11-05T11:00:00')
 const TEMPRANO = new Date('2026-11-05T08:00:00')
@@ -94,4 +95,14 @@ test('las pistas son de secretos que todavía no descubrió', () => {
   for (const s of SECRETOS) e = descubrir(e, s.id, MANANA).estado
   assert.equal(pistaAlAzar(e), null)
   assert.equal(typeof pistaAlAzar(estado(), () => 0), 'string')
+})
+
+test('modo prueba: borrar secretos los olvida y saca sus premios', () => {
+  let e = descubrir(estado(), 'estornudo', MANANA).estado
+  e = { ...e, ropa: { ...e.ropa, puesta: { cuello: 'panuelo-salud' } } }
+  const limpio = borrarSecretos(e)
+  assert.deepEqual(limpio.secretos, {})
+  assert.ok(!limpio.ropa.tiene.includes('panuelo-salud'))
+  assert.deepEqual(limpio.ropa.puesta, {})
+  assert.equal(lanzarEvento(estado(), 'gato').eventoPrueba.tipo, 'gato')
 })

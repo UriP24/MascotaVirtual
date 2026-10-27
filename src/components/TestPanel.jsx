@@ -14,6 +14,8 @@ import {
   ultraEnLaProxima,
   mostrarRegaloDeCumple,
   sacarGorrito,
+  lanzarEvento,
+  borrarSecretos,
   vaciarRopa,
   volverAlHorarioNormal,
 } from '../logic/prueba.js'
@@ -72,6 +74,20 @@ function TestPanel({ estado, setEstado }) {
         ['Ultra en la próxima', (e) => ultraEnLaProxima(e)],
         ['+50 ⭐', (e) => sumarPuntos(e, 50)],
         ['Vaciar ropa', (e) => vaciarRopa(e)],
+      ],
+    },
+    {
+      titulo: '🔍 Secretos (cerrá el panel para verlos)',
+      acciones: [
+        ['Pasa un gato', (e) => lanzarEvento(e, 'gato')],
+        ['Pasa una vaca', (e) => lanzarEvento(e, 'vaca')],
+        ['Trae una media', (e) => lanzarEvento(e, 'media')],
+        ['Aparece el puré', (e) => lanzarEvento(e, 'pure')],
+        ['Estrella fugaz', (e) => lanzarEvento(e, 'estrella')],
+        ['Sacudir el celu', (e) => lanzarEvento(e, 'sacudida')],
+        ['Hoy es San Valentín', (e) => lanzarEvento(e, 'san-valentin')],
+        ['Hoy es aniversario', (e) => lanzarEvento(e, 'aniversario')],
+        ['Borrar secretos', (e) => borrarSecretos(e)],
       ],
     },
     {

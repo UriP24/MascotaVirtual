@@ -322,6 +322,92 @@
   }
 }
 
+/* Gestos de los secretos */
+.bolti .entera {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+}
+.bolti .guino {
+  display: none;
+}
+.bolti.gesto-guino .ojo-der {
+  opacity: 0;
+}
+.bolti.gesto-guino .guino {
+  display: inline;
+}
+.bolti.gesto-estornuda .cabeza {
+  animation: bolti-estornudo 0.7s ease-out;
+}
+.bolti .muslo-der {
+  transform-box: fill-box;
+  transform-origin: 30% 30%;
+}
+.bolti.gesto-patea .muslo-der {
+  animation: bolti-patear 0.18s ease-in-out infinite alternate;
+}
+.bolti.gesto-patea .cola {
+  animation-duration: 0.3s;
+}
+.bolti.gesto-rueda .entera {
+  animation: bolti-rodar 1.1s ease-in-out;
+}
+.bolti.gesto-sacude .entera {
+  animation: bolti-sacudirse 0.9s ease-in-out;
+}
+@keyframes bolti-estornudo {
+  0% {
+    transform: none;
+  }
+  25% {
+    transform: translateY(-6px) rotate(-6deg) scale(1.04);
+  }
+  45% {
+    transform: translateY(6px) rotate(4deg) scale(0.97);
+  }
+  70% {
+    transform: rotate(-3deg);
+  }
+}
+@keyframes bolti-patear {
+  from {
+    transform: rotate(-4deg) translateY(0);
+  }
+  to {
+    transform: rotate(10deg) translateY(-6px);
+  }
+}
+@keyframes bolti-rodar {
+  0% {
+    transform: none;
+  }
+  45% {
+    transform: rotate(180deg);
+  }
+  60% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes bolti-sacudirse {
+  0%,
+  100% {
+    transform: none;
+  }
+  15%,
+  45%,
+  75% {
+    transform: rotate(-6deg) translateX(-6px);
+  }
+  30%,
+  60%,
+  90% {
+    transform: rotate(6deg) translateX(6px);
+  }
+}
+
 /* Con "reducir movimiento" se apagan los efectos, pero sigue respirando despacito */
 @media (prefers-reduced-motion: reduce) {
   .bolti .cola,
