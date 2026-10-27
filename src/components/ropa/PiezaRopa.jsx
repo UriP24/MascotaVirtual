@@ -8,10 +8,6 @@ import { useId } from 'react'
 const C = '#5a3a2a' // contorno, igual que Bolti
 const T = 3 // grosor del contorno
 
-const ROPA_CUERPO =
-  'M112 178 Q150 194 188 178 C200 196 206 222 210 254 Q150 272 90 254 C94 222 100 196 112 178 Z'
-const VESTIDO =
-  'M114 178 Q150 194 186 178 C196 200 206 228 222 264 Q150 286 78 264 C94 228 104 200 114 178 Z'
 
 function PiezaRopa({ pieza }) {
   const id = useId().replace(/[^a-zA-Z0-9]/g, '')
@@ -370,48 +366,86 @@ function Babero() {
 
 // ── Cuerpo ────────────────────────────────────────────────────────────────
 
-function Prenda({ color, color2 = '#fff8f2', patron, vestido = false, mangas = true, id }) {
-  const d = vestido ? VESTIDO : ROPA_CUERPO
+// La silueta de Bolti donde va la ropa: el torso (y para los vestidos, también los muslos).
+// La prenda se recorta con esta silueta, así su borde sigue exactamente la curva del cuerpo.
+function SiluetaCuerpo({ vestido }) {
+  return (
+    <>
+      <ellipse cx="150" cy="232" rx="63" ry="69" />
+      {vestido && <ellipse cx="104" cy="266" rx="39" ry="35" />}
+      {vestido && <ellipse cx="196" cy="266" rx="39" ry="35" />}
+    </>
+  )
+}
+
+// La franja del cuerpo que cubre la prenda: del escote (bajo el mentón) hasta el ruedo
+const FRANJA = 'M30 160 L102 170 Q150 200 198 170 L270 160 L270 246 Q150 278 30 246 Z'
+const FRANJA_VESTIDO = 'M30 160 L102 170 Q150 200 198 170 L270 160 L270 292 L30 292 Z'
+const RUEDO = 'M30 246 Q150 278 270 246'
+
+// El cuerpo de la prenda (remera, pulóver, vestido…). Va adentro del torso de Bolti: respira con
+// ella y las patas delanteras quedan por delante.
+function Prenda({ color, color2 = '#fff8f2', patron, vestido = false, id }) {
+  const franja = vestido ? FRANJA_VESTIDO : FRANJA
   return (
     <g>
-      <clipPath id={`ropa${id}`}>
-        <path d={d} />
+      <clipPath id={`silueta${id}`}>
+        <SiluetaCuerpo vestido={vestido} />
       </clipPath>
-      {mangas && (
-        <g fill={patron === 'pelaje' ? '#fff8f2' : color} stroke={C} strokeWidth={T}>
-          <rect x="115" y="236" width="30" height="38" rx="11" />
-          <rect x="155" y="236" width="30" height="38" rx="11" />
-        </g>
-      )}
-      <path fill={color} stroke={C} strokeWidth={T} strokeLinejoin="round" d={d} />
-      <g clipPath={`url(#ropa${id})`}>
-        <Patron patron={patron} color2={color2} />
+      <clipPath id={`franja${id}`}>
+        <path d={franja} />
+      </clipPath>
+      {/* Contorno exterior: un trazo doble debajo del relleno, así solo queda la mitad de afuera
+          (sin líneas adentro donde el torso se junta con los muslos en los vestidos) */}
+      <g clipPath={`url(#franja${id})`} fill="none" stroke={C} strokeWidth={T * 2}>
+        <SiluetaCuerpo vestido={vestido} />
       </g>
-      {patron === 'bolsillo' && <path fill={color} stroke={C} strokeWidth="2.5" d="M124 226 L176 226 L170 248 L130 248 Z" />}
+      <g clipPath={`url(#silueta${id})`}>
+        <path d={franja} fill={color} />
+        <g clipPath={`url(#franja${id})`}>
+          <Patron patron={patron} color2={color2} />
+          {patron === 'pelaje' && (
+            <path fill="none" stroke="#fff8f2" strokeWidth="12" d={vestido ? 'M30 286 L270 286' : RUEDO} />
+          )}
+        </g>
+        {/* Escote y ruedo */}
+        <path d={franja} fill="none" stroke={C} strokeWidth={T} />
+      </g>
+      {patron === 'bolsillo' && <path fill={color} stroke={C} strokeWidth="2.5" d="M126 204 L174 204 L168 226 L132 226 Z" />}
       {patron === 'botones' && (
         <g fill={color2} stroke={C} strokeWidth="2">
-          <circle cx="150" cy="206" r="4" />
-          <circle cx="150" cy="224" r="4" />
-          <circle cx="150" cy="242" r="4" />
+          <circle cx="150" cy="204" r="4" />
+          <circle cx="150" cy="222" r="4" />
+          <circle cx="150" cy="240" r="4" />
         </g>
       )}
       {patron === 'emblema' && (
         <g>
-          <path fill={color2} stroke={C} strokeWidth="2.5" d="M150 198 L172 210 L164 238 L150 246 L136 238 L128 210 Z" />
-          <text x="150" y="232" fontSize="24" fontWeight="900" textAnchor="middle" fill={color}>
+          <path fill={color2} stroke={C} strokeWidth="2.5" d="M150 194 L170 205 L163 231 L150 238 L137 231 L130 205 Z" />
+          <text x="150" y="225" fontSize="22" fontWeight="900" textAnchor="middle" fill={color}>
             B
           </text>
         </g>
       )}
       {patron === 'cinturon' && (
-        <g>
-          <path fill="none" stroke={color2} strokeWidth="8" d="M96 238 Q150 252 204 238" />
-          <path fill={color2} stroke={C} strokeWidth="2" d="M146 246 L136 266 L144 266 L150 252 L156 266 L164 266 L154 246 Z" />
+        <g clipPath={`url(#silueta${id})`}>
+          <path fill="none" stroke={color2} strokeWidth="8" d="M80 232 Q150 248 220 232" />
         </g>
       )}
-      {patron === 'pelaje' && (
-        <path fill="none" stroke="#fff8f2" strokeWidth="10" strokeLinecap="round" d={vestido ? 'M82 262 Q150 284 218 262' : 'M92 252 Q150 270 208 252'} />
-      )}
+    </g>
+  )
+}
+
+// Las mangas, sobre la parte de arriba de las patas delanteras
+function Mangas({ color, patron }) {
+  return (
+    <g>
+      {[115, 155].map((x) => (
+        <g key={x}>
+          <rect x={x} y="244" width="30" height="22" rx="12" fill={color} stroke={C} strokeWidth={T} />
+          {patron === 'pelaje' && <rect x={x + 1} y="258" width="28" height="8" rx="4" fill="#fff8f2" stroke={C} strokeWidth="2" />}
+        </g>
+      ))}
     </g>
   )
 }
@@ -636,6 +670,7 @@ const FORMAS = {
   panuelo: Panuelo,
   babero: Babero,
   prenda: Prenda,
+  mangas: Mangas,
   flotador: Flotador,
   capa: Capa,
   hombros: Hombros,

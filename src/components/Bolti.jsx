@@ -140,6 +140,7 @@ function Bolti({
             <ellipse className="contorno" cx="150" cy="232" rx="62" ry="68" fill="#e8c48f" />
             <ellipse cx="150" cy="222" rx="34" ry="50" fill="#fbf4e8" />
             <ellipse cx="150" cy="168" rx="44" ry="16" fill="#fbf4e8" />
+            <RopaBolti puesta={ropa} parte="torso" />
             {/* Hambre: la panza gruñe */}
             <g className="panza-hambre" fill="none" stroke="#a8743f" strokeWidth="3" strokeLinecap="round">
               <path d="M150 232 m-9 0 a9 9 0 1 1 9 9 a5 5 0 1 1 -4 -6" />

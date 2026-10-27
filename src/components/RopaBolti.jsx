@@ -1,9 +1,10 @@
 import PiezaRopa from './ropa/PiezaRopa.jsx'
 import { DIBUJOS_ROPA } from './ropa/dibujos.js'
 
-// La ropa que Bolti tiene puesta, dibujada en su SVG. Se usa tres veces, en distintas capas:
+// La ropa que Bolti tiene puesta, dibujada en su SVG. Se usa cuatro veces, en distintas capas:
 // - parte="atras": detrás del cuerpo (capas, alas)
-// - parte="cuerpo": sobre el cuerpo (ropa, cuello, patitas)
+// - parte="torso": adentro del torso (remeras, vestidos), con las patas delanteras por delante
+// - parte="cuerpo": sobre el cuerpo (mangas, cuello, patitas)
 // - parte="cabeza": adentro del grupo de la cabeza (gorros, anteojos), así se mueve con ella
 // Recibe `puesta`: { cabeza: 'gorrito-cumple', cuello: 'bufanda', … }
 
