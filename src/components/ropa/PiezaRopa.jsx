@@ -47,25 +47,28 @@ function Flor({ color, x = 104, y = 70, r = 7 }) {
 }
 
 function Gorro({ color, color2 = '#fff8f2', pompon = true, rayas = false, punta = false, id }) {
-  const domo = 'M84 96 C82 34 218 34 216 96 Z'
+  // El domo apoya sobre la cabeza y el borde es una banda curva que sigue la frente
+  const domo = 'M88 98 C86 20 214 20 212 98 Q150 56 88 98 Z'
+  const borde = 'M86 100 Q150 58 214 100'
   return (
-    <g transform="translate(0 -9)">
+    <g>
       {punta && (
-        <path fill={color} stroke={C} strokeWidth={T} strokeLinejoin="round" d="M170 44 C206 46 226 70 236 104 L214 96 C206 76 194 64 176 58 Z" />
+        <path fill={color} stroke={C} strokeWidth={T} strokeLinejoin="round" d="M164 36 C196 36 220 56 226 90 L212 88 C206 68 194 56 172 52 Z" />
       )}
       <clipPath id={`domo${id}`}>
         <path d={domo} />
       </clipPath>
-      <path fill={color} stroke={C} strokeWidth={T} d={domo} />
+      <path fill={color} stroke={C} strokeWidth={T} strokeLinejoin="round" d={domo} />
       {rayas && (
-        <g clipPath={`url(#domo${id})`} stroke={color2} strokeWidth="7">
-          <line x1="70" y1="78" x2="230" y2="78" />
-          <line x1="70" y1="60" x2="230" y2="60" />
+        <g clipPath={`url(#domo${id})`} fill="none" stroke={color2} strokeWidth="7">
+          <path d="M80 62 Q150 30 220 62" />
+          <path d="M80 46 Q150 14 220 46" />
         </g>
       )}
-      <rect x="78" y="84" width="144" height="18" rx="9" fill={color2} stroke={C} strokeWidth={T} />
-      {pompon && !punta && <circle cx="150" cy="34" r="11" fill={color2} stroke={C} strokeWidth={T} />}
-      {punta && <circle cx="234" cy="106" r="10" fill={color2} stroke={C} strokeWidth={T} />}
+      <path fill="none" stroke={C} strokeWidth="24" strokeLinecap="round" d={borde} />
+      <path fill="none" stroke={color2} strokeWidth="18" strokeLinecap="round" d={borde} />
+      {pompon && !punta && <circle cx="150" cy="36" r="11" fill={color2} stroke={C} strokeWidth={T} />}
+      {punta && <circle cx="222" cy="94" r="10" fill={color2} stroke={C} strokeWidth={T} />}
     </g>
   )
 }
@@ -167,7 +170,7 @@ function Vincha({ color, adorno, color2 = color }) {
         </>
       )}
       {adorno !== 'flores' && (
-        <path fill="none" stroke={color} strokeWidth="7" strokeLinecap="round" d="M88 100 C92 48 208 48 212 100" />
+        <path fill="none" stroke={color} strokeWidth="7" strokeLinecap="round" d="M92 82 C96 38 204 38 208 82" />
       )}
     </g>
   )
@@ -248,9 +251,9 @@ function NarizReno() {
 function Antiparras({ color }) {
   return (
     <g>
-      <path fill="none" stroke={color} strokeWidth="6" d="M86 76 C110 64 190 64 214 76" />
-      <rect x="112" y="58" width="34" height="24" rx="11" fill="#9fe3dd" stroke={C} strokeWidth={T} />
-      <rect x="154" y="58" width="34" height="24" rx="11" fill="#9fe3dd" stroke={C} strokeWidth={T} />
+      <path fill="none" stroke={color} strokeWidth="6" d="M88 92 Q150 56 212 92" />
+      <rect x="114" y="62" width="32" height="22" rx="10" fill="#9fe3dd" stroke={C} strokeWidth={T} />
+      <rect x="154" y="62" width="32" height="22" rx="10" fill="#9fe3dd" stroke={C} strokeWidth={T} />
     </g>
   )
 }
@@ -358,8 +361,8 @@ function Panuelo({ color, color2 = '#fff8f2' }) {
 function Babero() {
   return (
     <g>
-      <path fill="#fff8f2" stroke="#ec6f9e" strokeWidth="4" d="M112 182 Q150 198 188 182 C192 214 174 238 150 238 C126 238 108 214 112 182 Z" />
-      <path fill="#f59a3c" d="M138 214 C134 206 146 202 150 208 C156 202 166 210 160 218 C156 224 140 222 138 214 Z" />
+      <path fill="#fff8f2" stroke="#ec6f9e" strokeWidth="4" d="M110 168 Q150 188 190 168 C196 206 176 234 150 234 C124 234 104 206 110 168 Z" />
+      <path fill="#f59a3c" d="M138 210 C134 202 146 198 150 204 C156 198 166 206 160 214 C156 220 140 218 138 210 Z" />
     </g>
   )
 }
