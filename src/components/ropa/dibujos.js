@@ -71,7 +71,7 @@ export const DIBUJOS_ROPA = {
 
   // Navidad y verano
   'gorro-papa-noel': [cabeza('gorro', { color: ROJO, punta: true })],
-  'flotador-patito': [cuerpo('flotador')],
+  'flotador-patito': [atras('flotador', { mitad: 'atras' }), cuerpo('flotador')],
   'disfraz-reno': [
     ...prenda({ color: MARRON }),
     cabeza('vincha', { color: MARRON, adorno: 'cuernos-reno' }),

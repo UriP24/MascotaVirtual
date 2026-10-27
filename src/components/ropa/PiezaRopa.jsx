@@ -546,15 +546,22 @@ function Patron({ patron, color2 }) {
   return null
 }
 
-function Flotador() {
+// Flotador alrededor de la panza: la mitad de atrás va detrás del cuerpo y la de adelante por
+// delante, así parece que Bolti está adentro. Las rayas rosas se reparten igual en las dos mitades.
+function Flotador({ mitad = 'adelante' }) {
+  const arco = mitad === 'atras' ? 'M78 224 A72 18 0 0 1 222 224' : 'M78 224 A72 18 0 0 0 222 224'
   return (
-    <g>
-      <ellipse cx="150" cy="258" rx="74" ry="20" fill="none" stroke={C} strokeWidth="24" />
-      <ellipse cx="150" cy="258" rx="74" ry="20" fill="none" stroke="#ffd666" strokeWidth="18" />
-      <path fill="none" stroke="#ec6f9e" strokeWidth="18" strokeDasharray="22 40" d="M76 258 A74 20 0 0 0 224 258" />
-      <circle cx="80" cy="244" r="12" fill="#ffd666" stroke={C} strokeWidth="2.5" />
-      <path fill="#f59a3c" stroke={C} strokeWidth="2" d="M68 244 L60 247 L68 250 Z" />
-      <circle cx="77" cy="241" r="2" fill={C} />
+    <g fill="none">
+      <path stroke={C} strokeWidth="22" strokeLinecap="round" d={arco} />
+      <path stroke="#ffd666" strokeWidth="16" strokeLinecap="round" d={arco} />
+      <path stroke="#ec6f9e" strokeWidth="16" pathLength="100" strokeDasharray="12 13" strokeDashoffset="-6" d={arco} />
+      {mitad === 'adelante' && (
+        <g>
+          <circle cx="86" cy="208" r="13" fill="#ffd666" stroke={C} strokeWidth="2.5" />
+          <path fill="#f59a3c" stroke={C} strokeWidth="2" strokeLinejoin="round" d="M74 208 L63 212 L74 215 Z" />
+          <circle cx="82" cy="204" r="2.2" fill={C} />
+        </g>
+      )}
     </g>
   )
 }
