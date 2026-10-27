@@ -6,7 +6,7 @@ import { fechaLocal } from './logic/fechas.js'
 import { esHorarioDeDormir } from './logic/bolti.js'
 
 const CLAVE = 'patitas:estado'
-const VERSION_ACTUAL = 8
+const VERSION_ACTUAL = 9
 
 export function crearEstadoInicial() {
   const ahora = new Date().toISOString()
@@ -45,6 +45,13 @@ export function crearEstadoInicial() {
     tutorialPreguntado: false,
     // Año en que abrió el regalo de cumpleaños (el 28/10 de cada año aparece uno nuevo)
     regaloCumpleAbierto: null,
+    // Secretos descubiertos: { estornudo: '2026-11-02T…' } (fecha en que lo descubrió)
+    secretos: {},
+    // Medias que trajo Bolti (con 2 completa el par) y si hay una esperando en la habitación
+    medias: 0,
+    mediaEsperando: false,
+    ultimoSorteoMedia: null, // día del último sorteo de la media (una vez por día)
+    ultimoPure: null, // día en que comió el puré por última vez (aparece una vez por semana)
     // Día en que se empezó a usar la app (para no ponerla triste por días anteriores)
     instaladaEn: fechaLocal(),
     // Sin salud ni vida: Bolti nunca se enferma ni muere, como mucho se pone triste.
@@ -75,6 +82,7 @@ function completarEstado(datos) {
     gacha: { ...inicial.gacha, ...datos.gacha },
     piezas: { ...inicial.piezas, ...datos.piezas },
     ropa: { ...inicial.ropa, ...datos.ropa },
+    secretos: { ...inicial.secretos, ...datos.secretos },
     version: VERSION_ACTUAL,
   }
 }

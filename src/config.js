@@ -456,3 +456,51 @@ export const PRENDAS = [
   { id: 'collar-bolti', nombre: 'Collar con chapita "Bolti"', emoji: '🦴', zona: 'cuello', rareza: 'exclusiva', exclusiva: true },
   { id: 'traje-superheroe', nombre: 'Traje de superhéroe', emoji: '🦸', zona: 'entero', rareza: 'exclusiva', exclusiva: true },
 ]
+
+// ── Secretos ────────────────────────────────────────────────────────────────
+// `pista`: la adivinanza que se ve en la lista de secretos. `frase`: lo que Bolti dice cada tanto
+// como pista. `premio`: una prenda exclusiva o tiradas gratis del gacha.
+export const SECRETOS = [
+  { id: 'estornudo', nombre: '¡Salud!', pista: 'A Bolti le pica la nariz…', frase: 'Me pica la nariz… 🤧', premio: { prenda: 'panuelo-salud' } },
+  { id: 'patita', nombre: 'La patita loca', pista: 'Hay un lugar donde le encanta que la rasquen', frase: '¿Me rascás la pancita? 🐾', premio: { prenda: 'remerita-panza' } },
+  { id: 'panza-arriba', nombre: 'Panza arriba', pista: 'Dejá el dedo quieto sobre ella un ratito…', frase: 'A veces quiero un mimo largo, largo 💕', premio: { prenda: 'pijama-ositos' } },
+  { id: 'sacudida', nombre: '¡Brrr!', pista: '¿Qué pasa si la sacudís?', frase: 'Me encanta sacudirme después del baño 💦', premio: { prenda: 'bata-bano' } },
+  { id: 'gato', nombre: 'El gato de la ventana', pista: 'Alguien se asoma por la ventana de vez en cuando', frase: 'Me pareció ver un gato… 👀', premio: { prenda: 'orejitas-gato' } },
+  { id: 'vaca', nombre: '¡Una vaca!', pista: 'A veces pasa alguien muy grande por la ventana', frase: '¿Sabías que yo arreaba vacas? 🐄', premio: { prenda: 'sombrero-vaquera' } },
+  { id: 'medias', nombre: 'Ladrona de medias', pista: 'Algunas mañanas Bolti trae regalitos', frase: 'Hoy me levanté con ganas de robar algo… 🧦', premio: { prenda: 'par-medias' } },
+  { id: 'estrella', nombre: 'Estrella fugaz', pista: 'De noche, mirá bien por la ventana', frase: '¿Viste las estrellas de noche? ✨', premio: { tiradas: 10 } },
+  { id: 'san-valentin', nombre: 'San Valentín', pista: 'Un día de febrero lleno de amor', premio: { prenda: 'mono-rojo' } },
+  { id: 'aniversario', nombre: 'Aniversario', pista: 'Un día de marzo muy importante para ustedes dos', premio: { prenda: 'collar-corazon' } },
+  { id: 'pure', nombre: 'Cómplices', pista: 'A la hora del almuerzo, a veces sobra algo naranja…', frase: '¿Hoy hay puré? 👀', premio: { prenda: 'babero-complice' } },
+  { id: 'paseo', nombre: 'A pasear', pista: 'Bolti quiere salir… si alguien lo anotara', proximamente: true },
+  { id: 'invencible', nombre: 'INVENCIBLE', pista: 'Algunos golpes no la frenan', proximamente: true },
+]
+
+export const REGLAS_SECRETOS = {
+  NARIZ_TOQUES: 5, // toques seguidos en la nariz para que estornude
+  NARIZ_SEGUNDOS_ENTRE_TOQUES: 3,
+  PANZA_RECORRIDO: 700, // px frotando la panza para que patee
+  APRETADO_MS: 1800, // dedo quieto sobre Bolti para que se ponga panza arriba
+  SACUDIDA_FUERZA: 22, // aceleración (m/s²) para que cuente como sacudir el celu
+  VISITA_CADA_SEGUNDOS: 40, // cada cuánto puede pasar alguien por la ventana
+  CHANCE_GATO: 0.12,
+  CHANCE_VACA: 0.06,
+  VISITA_DURACION_SEGUNDOS: 7,
+  CHANCE_ESTRELLA: 0.35, // al tocar la ventana de noche
+  CHANCE_MEDIA: 0.15, // cada mañana
+  HORA_MEDIA: 10, // la media aparece desde que se despierta
+  MONEDAS_POR_MEDIA_EXTRA: 10, // después del par
+  PURE_DESDE: 13,
+  PURE_HASTA: 15,
+  PURE_DIAS_DESDE_INSTALACION: 3, // la primera vez, unos días después de empezar a usar la app
+  PURE_CADA_DIAS: 7,
+  CHANCE_PISTA: 0.18, // al tocarla, a veces dice una pista
+  FECHA_SAN_VALENTIN: '02-14',
+  FECHA_ANIVERSARIO: '03-24',
+}
+
+// La cartita del aniversario (24/3). Uri la escribe antes de marzo; mientras tanto va este texto.
+export const CARTA_ANIVERSARIO = [
+  'Feliz aniversario, mi amor.',
+  'Gracias por cada día juntos. Te amo ❤️',
+]
