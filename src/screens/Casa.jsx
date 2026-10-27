@@ -318,7 +318,12 @@ function Casa({ estado, setEstado, horasAusente = 0, onCambiarPantalla }) {
         ref={habitacionRef}
         className={`habitacion ${animo === 'dormida' ? 'noche' : ''} ${mochilaAbierta ? 'con-mochila' : ''}`}
       >
-        <div className="ventana" aria-hidden="true" />
+        <div className="ventana" aria-hidden="true">
+          <span className="vidrio" />
+          <span className="cortina izquierda" />
+          <span className="cortina derecha" />
+          <span className="alfeizar" />
+        </div>
         <div className="cuadro" aria-hidden="true">
           BOLTI
         </div>

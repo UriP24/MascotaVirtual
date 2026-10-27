@@ -74,19 +74,20 @@ function Gorro({ color, color2 = '#fff8f2', pompon = true, rayas = false, punta 
 }
 
 function Gorra({ color, color2 }) {
+  // Como el gorro: la base sigue la curva de la frente, y la visera sale de adelante a la derecha
   return (
-    <g transform="translate(0 -16)">
-      <path fill={color} stroke={C} strokeWidth={T} d="M88 92 C86 42 214 42 212 92 Z" />
-      <path fill={color2} stroke={C} strokeWidth={T} strokeLinejoin="round" d="M150 84 C186 80 218 84 236 96 C218 104 184 102 150 96 Z" />
-      <circle cx="150" cy="46" r="5" fill={color2} stroke={C} strokeWidth="2" />
+    <g>
+      <path fill={color} stroke={C} strokeWidth={T} strokeLinejoin="round" d="M90 94 C88 26 212 26 210 94 Q150 58 90 94 Z" />
+      <path fill={color2} stroke={C} strokeWidth={T} strokeLinejoin="round" d="M150 76 C182 70 214 74 238 88 C220 98 186 94 158 86 Z" />
+      <circle cx="150" cy="36" r="5" fill={color2} stroke={C} strokeWidth="2" />
     </g>
   )
 }
 
 function Corona({ color = '#f2c14e', chica = false }) {
   const d = chica
-    ? 'M126 64 L126 48 L138 56 L150 42 L162 56 L174 48 L174 64 Z'
-    : 'M112 64 L112 32 L131 48 L150 24 L169 48 L188 32 L188 64 Z'
+    ? 'M126 62 L126 46 L138 54 L150 40 L162 54 L174 46 L174 62 Q150 70 126 62 Z'
+    : 'M112 62 L112 30 L131 46 L150 22 L169 46 L188 30 L188 62 Q150 74 112 62 Z'
   return (
     <g>
       <path fill={color} stroke={C} strokeWidth={T} strokeLinejoin="round" d={d} />
@@ -199,10 +200,11 @@ function Orejeras({ color, color2 }) {
 }
 
 function Boina({ color }) {
+  // Apoyada y abombada, caída hacia un costado; la base sigue la curva de la cabeza
   return (
-    <g transform="rotate(-8 150 60)">
-      <ellipse cx="150" cy="60" rx="58" ry="18" fill={color} stroke={C} strokeWidth={T} />
-      <path fill="none" stroke={C} strokeWidth="3" strokeLinecap="round" d="M150 42 L154 32" />
+    <g>
+      <path fill={color} stroke={C} strokeWidth={T} strokeLinejoin="round" d="M90 86 C76 58 112 30 162 30 C214 30 236 56 214 82 Q150 54 90 86 Z" />
+      <path fill="none" stroke={C} strokeWidth="3" strokeLinecap="round" d="M156 30 L160 20" />
     </g>
   )
 }
@@ -221,7 +223,8 @@ function Sombrero({ tipo, color, color2 }) {
     return (
       <g>
         <path fill="#fff8f2" stroke={C} strokeWidth={T} d="M112 74 C96 66 98 40 118 40 C118 18 146 12 152 28 C160 12 190 18 184 40 C204 40 206 66 188 74 Z" />
-        <rect x="112" y="64" width="76" height="16" rx="6" fill="#fff8f2" stroke={C} strokeWidth={T} />
+        <path fill="none" stroke={C} strokeWidth="22" strokeLinecap="round" d="M116 76 Q150 60 184 76" />
+        <path fill="none" stroke="#fff8f2" strokeWidth="16" strokeLinecap="round" d="M116 76 Q150 60 184 76" />
       </g>
     )
   }
@@ -596,18 +599,18 @@ function Alas({ tipo, color, color2 = color }) {
   if (tipo === 'mariposa') {
     return (
       <g stroke={C} strokeWidth={T} strokeLinejoin="round">
-        <path fill={color} d="M110 200 C70 150 30 170 40 210 C46 232 80 236 110 222 Z" />
-        <path fill={color} d="M190 200 C230 150 270 170 260 210 C254 232 220 236 190 222 Z" />
-        <path fill={color2} d="M108 226 C80 236 60 262 76 274 C90 284 106 262 112 238 Z" />
-        <path fill={color2} d="M192 226 C220 236 240 262 224 274 C210 284 194 262 188 238 Z" />
+        <path fill={color} d="M116 196 C84 140 30 128 20 164 C12 194 50 214 112 216 Z" />
+        <path fill={color} d="M184 196 C216 140 270 128 280 164 C288 194 250 214 188 216 Z" />
+        <path fill={color2} d="M112 214 C70 222 40 250 54 270 C68 288 100 262 116 232 Z" />
+        <path fill={color2} d="M188 214 C230 222 260 250 246 270 C232 288 200 262 184 232 Z" />
       </g>
     )
   }
-  // plumas (cupido) o transparentes (abeja, hada)
+  // Plumas (cupido) o transparentes (abeja, hada): salen de la espalda hacia arriba y afuera
   return (
     <g stroke={C} strokeWidth="2.5" strokeLinejoin="round">
-      <path fill={color} d="M106 200 C80 170 54 172 50 190 C66 192 60 204 74 208 C64 214 74 226 90 222 C96 226 104 222 108 214 Z" />
-      <path fill={color} d="M194 200 C220 170 246 172 250 190 C234 192 240 204 226 208 C236 214 226 226 210 222 C204 226 196 222 192 214 Z" />
+      <path fill={color} d="M114 200 C88 150 44 140 28 160 C46 166 36 180 52 188 C38 196 50 212 70 210 C66 224 88 230 112 218 Z" />
+      <path fill={color} d="M186 200 C212 150 256 140 272 160 C254 166 264 180 248 188 C262 196 250 212 230 210 C234 224 212 230 188 218 Z" />
     </g>
   )
 }

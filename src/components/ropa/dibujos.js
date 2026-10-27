@@ -151,6 +151,7 @@ export const DIBUJOS_ROPA = {
   'traje-superheroe': [
     atras('capa', { color: ROSA }),
     ...prenda({ color: TURQUESA, color2: AMARILLO, patron: 'emblema' }),
+    cuerpo('hombros', { color: ROSA }),
     cuerpo('broche', { color: AMARILLO }),
     cabeza('antifaz', { color: ROSA }),
   ],
