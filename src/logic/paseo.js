@@ -42,7 +42,8 @@ export function crearJuego(azar = Math.random, caballoSeguro = false) {
     saltados: 0,
     patadas: 0,
     proximo: 1.2,
-    caballoEn: hayCaballo ? (caballoSeguro ? 6 : momento) : null,
+    caballoEn: hayCaballo ? (caballoSeguro ? 6 : momento) : null, // cuándo aparece (null: este paseo no)
+    caballoSalio: false,
     golpeHasta: 0, // después de chocar, un ratito sin poder volver a chocar (titila)
     vueloHasta: 0, // volando por la patada del caballo
     invencibleHasta: 0,
@@ -94,7 +95,8 @@ export function paso(juego, dt, azar = Math.random) {
   if (juego.terminado) return juego
   const t = juego.t + dt
   const config = JUEGOS.PASEO_ETAPAS[etapa(t)]
-  let { proximo, siguienteId, puntos, huesos, saltados, vidas, golpeHasta, vueloHasta, invencibleHasta, patadas, caballoEn } = juego
+  let { proximo, siguienteId, puntos, huesos, saltados, vidas, golpeHasta, vueloHasta, invencibleHasta, patadas, caballoSalio } = juego
+  const { caballoEn } = juego
   const eventos = []
   const doble = t < invencibleHasta ? 2 : 1
 
@@ -106,17 +108,18 @@ export function paso(juego, dt, azar = Math.random) {
     vy = 0
   }
 
-  // Aparecen cosas nuevas por la derecha
+  // Aparecen cosas nuevas por la derecha (un rato antes y después del caballo, el camino queda libre)
   let items = juego.items
-  if (t >= proximo && !(caballoEn !== null && t >= caballoEn - 1.5 && t < caballoEn + 2.5)) {
+  const cercaDelCaballo = caballoEn !== null && t >= caballoEn - 1.5 && t < caballoEn + 2.5
+  if (t >= proximo && !cercaDelCaballo) {
     const tanda = crearTanda({ siguienteId }, azar)
     items = [...items, ...tanda.nuevos]
     siguienteId = tanda.siguienteId
     proximo = t + config.intervalo
   }
-  if (caballoEn !== null && t >= caballoEn) {
+  if (caballoEn !== null && !caballoSalio && t >= caballoEn) {
     items = [...items, { id: siguienteId++, tipo: 'caballo', x: 1.25, altura: 0 }]
-    caballoEn = null
+    caballoSalio = true
   }
 
   // Todo avanza hacia la izquierda; se ve qué agarra, qué salta y con qué choca
@@ -182,7 +185,7 @@ export function paso(juego, dt, azar = Math.random) {
     vueloHasta,
     invencibleHasta,
     patadas,
-    caballoEn,
+    caballoSalio,
     eventos,
     terminado,
   }

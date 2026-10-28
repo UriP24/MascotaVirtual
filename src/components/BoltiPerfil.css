@@ -1,0 +1,123 @@
+.bolti-perfil {
+  display: block;
+  width: 100%;
+  overflow: visible;
+}
+
+.bolti-perfil .pata {
+  transform-box: fill-box;
+  transform-origin: 50% 10%;
+}
+
+.bolti-perfil .cola-perfil {
+  transform-box: fill-box;
+  transform-origin: 95% 90%;
+  animation: perfil-cola 0.5s ease-in-out infinite alternate;
+}
+
+.bolti-perfil .oreja-perfil {
+  transform-box: fill-box;
+  transform-origin: 60% 10%;
+}
+
+.bolti-perfil .ojo-feliz-perfil {
+  display: none;
+}
+
+/* Corriendo: las patas van y vienen, el cuerpo rebota y la oreja se sacude */
+.bolti-perfil.corriendo .cuerpo-perfil {
+  animation: perfil-rebote 0.32s ease-in-out infinite alternate;
+}
+.bolti-perfil.corriendo .pata-atras-cerca,
+.bolti-perfil.corriendo .pata-adelante-lejos {
+  animation: perfil-pata 0.32s ease-in-out infinite alternate;
+}
+.bolti-perfil.corriendo .pata-atras-lejos,
+.bolti-perfil.corriendo .pata-adelante-cerca {
+  animation: perfil-pata 0.32s ease-in-out infinite alternate-reverse;
+}
+.bolti-perfil.corriendo .oreja-perfil {
+  animation: perfil-oreja 0.32s ease-in-out infinite alternate;
+}
+
+/* Saltando: patas recogidas y la oreja para arriba */
+.bolti-perfil.saltando .pata-adelante-cerca,
+.bolti-perfil.saltando .pata-adelante-lejos {
+  transform: rotate(-35deg);
+}
+.bolti-perfil.saltando .pata-atras-cerca,
+.bolti-perfil.saltando .pata-atras-lejos {
+  transform: rotate(35deg);
+}
+.bolti-perfil.saltando .oreja-perfil {
+  transform: rotate(-25deg);
+}
+
+/* Volando por la patada: da vueltas, con ojitos felices (no se lastima) */
+.bolti-perfil.volando {
+  animation: perfil-girar 0.7s linear infinite;
+}
+.bolti-perfil.volando .ojo-perfil {
+  display: none;
+}
+.bolti-perfil.volando .ojo-feliz-perfil,
+.bolti-perfil.invencible .ojo-feliz-perfil {
+  display: inline;
+}
+.bolti-perfil.invencible .ojo-perfil {
+  display: none;
+}
+
+.bolti-perfil.invencible {
+  filter: drop-shadow(0 0 6px #ffd666) drop-shadow(0 0 12px #ffd666);
+}
+
+.bolti-perfil.golpe {
+  animation: perfil-titilar 0.2s steps(2) infinite;
+}
+
+@keyframes perfil-rebote {
+  to {
+    transform: translateY(-3px);
+  }
+}
+@keyframes perfil-pata {
+  from {
+    transform: rotate(-28deg);
+  }
+  to {
+    transform: rotate(28deg);
+  }
+}
+@keyframes perfil-oreja {
+  to {
+    transform: rotate(-12deg);
+  }
+}
+@keyframes perfil-cola {
+  from {
+    transform: rotate(-8deg);
+  }
+  to {
+    transform: rotate(10deg);
+  }
+}
+@keyframes perfil-girar {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+@keyframes perfil-titilar {
+  50% {
+    opacity: 0.3;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bolti-perfil .cola-perfil,
+  .bolti-perfil.corriendo .cuerpo-perfil,
+  .bolti-perfil.corriendo .pata,
+  .bolti-perfil.corriendo .oreja-perfil {
+    animation: none;
+  }
+}

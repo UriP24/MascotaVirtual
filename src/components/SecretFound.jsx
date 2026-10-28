@@ -3,7 +3,7 @@ import { buscarSecreto } from '../logic/secretos.js'
 import './SecretFound.css'
 
 // "¡Descubriste un secreto!" con su premio.
-function SecretFound({ id, onCerrar }) {
+function SecretFound({ id, extra, onCerrar }) {
   const secreto = buscarSecreto(id)
   const prenda = secreto.premio.prenda && PRENDAS.find((p) => p.id === secreto.premio.prenda)
   return (
@@ -23,6 +23,7 @@ function SecretFound({ id, onCerrar }) {
             <small>{prenda ? 'Ya está en tu mochila 👗' : `${secreto.premio.tiradas} tiradas en Canjes → Gacha`}</small>
           </span>
         </div>
+        {extra && <p className="extra">{extra}</p>}
         <button onClick={onCerrar}>¡Qué lindo! 🐾</button>
       </div>
     </div>

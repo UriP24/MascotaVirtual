@@ -78,6 +78,19 @@ test('invencible, los puntos valen doble', () => {
   assert.ok(doble.puntos > normal.puntos * 1.9)
 })
 
+test('el caballo sale una sola vez y alrededor suyo no aparecen obstáculos', () => {
+  let j = { ...crearJuego(() => 0.2, true), proximo: 0, invencibleHasta: 99 } // sin perder vidas en el camino
+  let caballos = 0
+  for (let i = 0; i < 12 / DT; i++) {
+    j = paso(j, DT, () => 0.2)
+    caballos = Math.max(caballos, j.items.filter((it) => it.tipo === 'caballo').length)
+    if (j.t > j.caballoEn - 1.5 && j.t < j.caballoEn + 2.5) {
+      assert.ok(!j.items.some((it) => it.tipo !== 'caballo' && it.x > 1.05), 'no salen cosas nuevas cerca del caballo')
+    }
+  }
+  assert.equal(caballos, 1)
+})
+
 test('el caballo aparece una vez por paseo si toca (o seguro, en modo prueba)', () => {
   assert.equal(crearJuego(() => 0.9).caballoEn, null)
   assert.ok(crearJuego(() => 0.1).caballoEn >= JUEGOS.PASEO_CABALLO_DESDE)

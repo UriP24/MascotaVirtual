@@ -16,6 +16,8 @@ import {
   sacarGorrito,
   lanzarEvento,
   borrarSecretos,
+  desbloquearPaseo,
+  caballoEnElProximoPaseo,
   vaciarRopa,
   volverAlHorarioNormal,
 } from '../logic/prueba.js'
@@ -87,6 +89,8 @@ function TestPanel({ estado, setEstado }) {
         ['Sacudir el celu', (e) => lanzarEvento(e, 'sacudida')],
         ['Hoy es San Valentín', (e) => lanzarEvento(e, 'san-valentin')],
         ['Hoy es aniversario', (e) => lanzarEvento(e, 'aniversario')],
+        ['Desbloquear paseo', (e) => desbloquearPaseo(e)],
+        ['Caballo en el próximo paseo', (e) => caballoEnElProximoPaseo(e)],
         ['Borrar secretos', (e) => borrarSecretos(e)],
       ],
     },

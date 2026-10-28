@@ -252,7 +252,7 @@ Mari tiene **Android**. Decisiones de Uri del 23/10 (todas cerradas):
     semana); si Mari se lo da, Bolti se lo come feliz, le **guiña un ojo** y dice "Shhh… nuestro
     secreto 🤫". La primera vez da la prenda exclusiva "Babero de cómplice" para la colección. Sin
     explicar la historia: Mari la va a reconocer.
-17. ✅ (27/10, del 1 al 11; faltan Paseo e INVENCIBLE) **Secretos (easter eggs)** con un apartado en Colección "Secretos descubiertos N/13" (los que faltan
+17. ✅ (27–28/10, los 13) **Secretos (easter eggs)** con un apartado en Colección "Secretos descubiertos N/13" (los que faltan
     tapados con "?" y una **pista discreta** tipo adivinanza). Además, Bolti suelta **pistas** cada
     tanto entre sus frases normales (~1 de cada 10, ej.: "Me pica la nariz… 🤧", "Me encantaría salir
     a pasear… si alguien lo anotara 📝"). Cada secreto da una **prenda exclusiva** (no sale en el
@@ -272,7 +272,7 @@ Mari tiene **Android**. Decisiones de Uri del 23/10 (todas cerradas):
     | El puré de zapallo (punto 16) | Babero de cómplice |
     | Anotar "pasear a Bolti" → desbloquea el Paseo (punto 18) | Multi gratis |
     | INVENCIBLE en el Paseo (punto 18) | Traje de superhéroe |
-18. **Minijuego "Paseo con Bolti"** (se desbloquea en secreto): si Mari anota una tarea que diga
+18. ✅ (28/10) **Minijuego "Paseo con Bolti"** (se desbloquea en secreto): si Mari anota una tarea que diga
     "pasear a Bolti" (sin importar mayúsculas ni tildes), Bolti se pone loca de contenta y aparece el
     juego nuevo en Jugar. Bolti camina de costado (hay que dibujarla de perfil), se toca para saltar
     charcos, pozos, gatos y bicis, y junta huesitos (reemplaza a "Bolti aventuras").

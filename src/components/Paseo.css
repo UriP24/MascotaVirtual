@@ -1,0 +1,293 @@
+.paseo {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  overflow: hidden;
+  touch-action: none;
+  user-select: none;
+  background: linear-gradient(180deg, #bfe6ff 0%, #e8f6ff 45%, var(--color-principal-claro) 80%);
+}
+
+/* El barrio: sol, nubes que pasan despacio, árboles a lo lejos y la vereda que se mueve */
+.paseo .fondo span {
+  position: absolute;
+}
+
+.paseo .sol {
+  top: 12%;
+  right: 10%;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: #ffd666;
+  box-shadow: 0 0 0 10px rgb(255 214 102 / 0.3);
+}
+
+.paseo .nube {
+  width: 110px;
+  height: 34px;
+  border-radius: 20px;
+  background: white;
+  box-shadow:
+    22px -14px 0 4px white,
+    56px -6px 0 2px white;
+  animation: paseo-nube 30s linear infinite;
+}
+.paseo .nube.n1 {
+  top: 20%;
+  left: 100%;
+}
+.paseo .nube.n2 {
+  top: 32%;
+  left: 100%;
+  animation-delay: -15s;
+  animation-duration: 38s;
+  transform: scale(0.7);
+}
+
+/* Árboles redondos a lo lejos, repetidos y moviéndose más lento que la vereda */
+.paseo .arboles {
+  left: 0;
+  right: 0;
+  bottom: 20%;
+  height: 90px;
+  background:
+    radial-gradient(circle at 50% 40%, #8fd3b0 0 32px, transparent 33px) 0 0 / 120px 90px repeat-x,
+    linear-gradient(#a8743f, #a8743f) 58px 50px / 6px 40px repeat-x;
+  background-repeat: repeat-x;
+  opacity: 0.7;
+  animation: paseo-arboles 8s linear infinite;
+}
+
+.paseo .vereda {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    linear-gradient(90deg, #d8cfc6 0 46px, #cbbfb4 46px 50px) 0 0 / 50px 34% repeat-x,
+    linear-gradient(#9fdcc4, #8fd0b6);
+  border-top: 4px solid #b9ad9f;
+  animation: paseo-vereda 0.9s linear infinite;
+}
+
+.paseo .fondo.quieto span {
+  animation-play-state: paused;
+}
+
+@keyframes paseo-nube {
+  to {
+    transform: translateX(calc(-100vw - 220px));
+  }
+}
+@keyframes paseo-arboles {
+  to {
+    background-position:
+      -120px 0,
+      -62px 50px;
+  }
+}
+@keyframes paseo-vereda {
+  to {
+    background-position:
+      -50px 0,
+      0 0;
+  }
+}
+
+.paseo .marcador {
+  position: absolute;
+  top: calc(8px + env(safe-area-inset-top));
+  left: 8px;
+  right: 8px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 6px 6px 12px;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.85);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.paseo .marcador span:nth-child(2) {
+  flex: 1;
+  text-align: center;
+}
+.paseo .marcador .doble {
+  color: #c98a00;
+}
+.paseo .vidas {
+  letter-spacing: -2px;
+}
+.paseo .pausa {
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;
+  background: var(--color-principal-claro);
+}
+
+.paseo .cosa-paseo {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+}
+.paseo .cosa-paseo.hueso,
+.paseo .cosa-paseo.dorado {
+  animation: paseo-flotar 0.6s ease-in-out infinite alternate;
+}
+.paseo .hueso-dorado {
+  filter: drop-shadow(0 0 5px gold);
+}
+
+/* El caballo patea: la pata de atrás se estira hacia Bolti */
+.paseo .caballo .pata-patada {
+  transform-box: fill-box;
+  transform-origin: 50% 5%;
+  transition: transform 0.15s ease-out;
+}
+.paseo .caballo.pateando .pata-patada {
+  transform: rotate(70deg);
+}
+
+.paseo .bolti-paseo {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.paseo .globo-soy {
+  position: absolute;
+  top: -46px;
+  left: 50%;
+  padding: 6px 14px;
+  border-radius: 16px;
+  background: white;
+  font-size: 1.2rem;
+  font-weight: 800;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgb(63 53 64 / 0.2);
+  transform: translateX(-50%);
+}
+
+.paseo .texto-paseo {
+  position: absolute;
+  z-index: 2;
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--color-secundario-oscuro);
+  transform: translateX(-50%);
+  animation: paseo-texto 0.7s ease-out forwards;
+  pointer-events: none;
+}
+.paseo .texto-paseo.dorado {
+  color: #c98a00;
+  font-size: 1.6rem;
+}
+
+/* INVENCIBLE: letras gruesas e inclinadas, en rosa con borde y sombra turquesa
+   (guiño a la serie que vieron juntos, con letras propias) */
+.paseo .cartel-invencible {
+  position: absolute;
+  top: 26%;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+.paseo .cartel-invencible span {
+  display: inline-block;
+  padding: 6px 4px;
+  font-family: Impact, 'Arial Black', system-ui, sans-serif;
+  font-size: clamp(2.4rem, 13vw, 4rem);
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: 1px;
+  color: #ffd9e7;
+  background: linear-gradient(180deg, #ffb3d1, #ec6f9e);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 2.5px #3a2230;
+  filter: drop-shadow(4px 4px 0 #2bb8b0) drop-shadow(2px 3px 0 #3a2230);
+  transform: skewX(-8deg) scaleY(1.25);
+  animation: paseo-invencible 2.2s ease-out forwards;
+}
+
+.paseo .cartel {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 24px;
+  background: rgb(63 53 64 / 0.35);
+  color: white;
+  text-align: center;
+}
+.paseo .cartel .numero {
+  font-size: 6rem;
+  font-weight: 800;
+  text-shadow: 0 4px 12px rgb(0 0 0 / 0.3);
+}
+.paseo .cartel strong {
+  font-size: 1.8rem;
+}
+.paseo .cartel button {
+  min-width: 200px;
+  height: 52px;
+  border: none;
+  border-radius: 14px;
+  background: var(--color-principal);
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+.paseo .cartel button.secundario {
+  background: rgb(255 255 255 / 0.9);
+  color: var(--color-texto);
+}
+
+@keyframes paseo-flotar {
+  to {
+    transform: translateY(-4px);
+  }
+}
+@keyframes paseo-texto {
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50px);
+  }
+}
+@keyframes paseo-invencible {
+  0% {
+    opacity: 0;
+    transform: skewX(-8deg) scaleY(1.25) scale(0.3);
+  }
+  20% {
+    opacity: 1;
+    transform: skewX(-8deg) scaleY(1.25) scale(1.12);
+  }
+  30% {
+    transform: skewX(-8deg) scaleY(1.25) scale(1);
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: skewX(-8deg) scaleY(1.25) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .paseo .fondo span,
+  .paseo .cosa-paseo {
+    animation: none;
+  }
+}

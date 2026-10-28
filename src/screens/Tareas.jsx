@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react'
 import TaskForm from '../components/TaskForm.jsx'
 import TaskItem from '../components/TaskItem.jsx'
 import Toast from '../components/Toast.jsx'
+import SecretFound from '../components/SecretFound.jsx'
+import { esTareaDePaseo } from '../logic/paseo.js'
+import { descubrir, estaDescubierto } from '../logic/secretos.js'
 import StudyTimer from '../components/StudyTimer.jsx'
 import StudyStats from '../components/StudyStats.jsx'
 import {
@@ -19,6 +22,7 @@ import './Tareas.css'
 function Tareas({ estado, setEstado }) {
   const [aviso, setAviso] = useState(null)
   const [verEstadisticas, setVerEstadisticas] = useState(false)
+  const [secretoPaseo, setSecretoPaseo] = useState(false)
   const ahora = new Date(estado.perrita.actualizadaEn) // App lo actualiza cada minuto
   const racha = rachaActual(estado, ahora)
 
@@ -34,7 +38,14 @@ function Tareas({ estado, setEstado }) {
   }
 
   function agregar(texto, tipo) {
-    setEstado(agregarTarea(estado, texto, tipo))
+    let nuevo = agregarTarea(estado, texto, tipo)
+    // Secreto: anotar "pasear a Bolti" desbloquea el minijuego del paseo
+    if (esTareaDePaseo(texto) && !estaDescubierto(nuevo, 'paseo')) {
+      nuevo = descubrir(nuevo, 'paseo', new Date()).estado
+      setSecretoPaseo(true)
+      navigator.vibrate?.([30, 50, 30])
+    }
+    setEstado(nuevo)
   }
 
   function completar(id) {
@@ -100,6 +111,13 @@ function Tareas({ estado, setEstado }) {
       )}
 
       <Toast mensaje={aviso} />
+      {secretoPaseo && (
+        <SecretFound
+          id="paseo"
+          extra="¡Bolti se puso loca de contenta! Hay un juego nuevo en 🎮 Jugar: Paseo con Bolti 🐾"
+          onCerrar={() => setSecretoPaseo(false)}
+        />
+      )}
       {verEstadisticas && <StudyStats estado={estado} ahora={ahora} onCerrar={() => setVerEstadisticas(false)} />}
     </section>
   )

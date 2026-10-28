@@ -159,6 +159,16 @@ export function borrarSecretos(estado) {
   }
 }
 
+// Paseo: desbloquea el juego sin anotar la tarea
+export function desbloquearPaseo(estado) {
+  return { ...estado, secretos: { ...estado.secretos, paseo: estado.secretos.paseo ?? new Date().toISOString() } }
+}
+
+// Paseo: el caballo aparece seguro en la próxima partida (para probar INVENCIBLE)
+export function caballoEnElProximoPaseo(estado) {
+  return { ...estado, caballoSeguro: true }
+}
+
 export function reiniciarTodo() {
   return actualizarDia(crearEstadoInicial())
 }

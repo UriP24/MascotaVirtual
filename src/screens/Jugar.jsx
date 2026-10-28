@@ -2,6 +2,9 @@ import { useState } from 'react'
 import { JUEGOS } from '../config.js'
 import CatchBones from '../components/CatchBones.jsx'
 import MemoryGame from '../components/MemoryGame.jsx'
+import Paseo from '../components/Paseo.jsx'
+import SecretFound from '../components/SecretFound.jsx'
+import { descubrir, estaDescubierto } from '../logic/secretos.js'
 import { empezarPartida, puedeJugar, terminarPartida } from '../logic/juegos.js'
 import { formatearPuntaje } from '../logic/puntaje.js'
 import './Jugar.css'
@@ -28,9 +31,23 @@ const MINIJUEGOS = [
     detalle: `arranca con ${JUEGOS.MEMORIA_TIEMPO_INICIAL} s`,
     Componente: MemoryGame,
   },
+  {
+    id: 'paseo',
+    emoji: '🐕',
+    nombre: 'Paseo con Bolti',
+    descripcion: 'Bolti sale a pasear: tocá para saltar charcos, gatos y bicis, y juntá huesitos.',
+    detalle: `${JUEGOS.PASEO_DURACION_SEGUNDOS} s`,
+    Componente: Paseo,
+    secreto: 'paseo', // aparece cuando descubre el secreto de anotar "pasear a Bolti"
+  },
 ]
 
+const COLLAR_PASEADORA = 'collar-bolti'
+
 function textoResultado(r) {
+  if (r.juego === 'paseo') {
+    return `¡Juntaste ${r.huesos} ${r.huesos === 1 ? 'huesito' : 'huesitos'} y saltaste ${r.saltados} ${r.saltados === 1 ? 'obstáculo' : 'obstáculos'}!`
+  }
   if (r.juego === 'memoria') {
     const pares = `${r.pares} ${r.pares === 1 ? 'par' : 'pares'}`
     if (r.niveles === 0) return `¡Encontraste ${pares}!`
@@ -42,6 +59,7 @@ function textoResultado(r) {
 function Jugar({ estado, setEstado }) {
   const [jugando, setJugando] = useState(null) // id del minijuego en curso
   const [resultado, setResultado] = useState(null)
+  const [secretoNuevo, setSecretoNuevo] = useState(null)
   const disponible = puedeJugar(estado, estado.perrita.actualizadaEn)
   const energia = Math.round(estado.perrita.energia)
 
@@ -54,13 +72,29 @@ function Jugar({ estado, setEstado }) {
 
   function terminar(r) {
     const fin = terminarPartida(estado, jugando, r.puntaje)
-    setEstado(fin.estado)
-    setResultado({ ...r, juego: jugando, monedas: fin.monedas, nuevoRecord: fin.nuevoRecord, premioRecord: fin.premioRecord })
+    let nuevo = fin.estado
+    let paseadora = false
+    if (jugando === 'paseo') {
+      nuevo = { ...nuevo, caballoSeguro: false }
+      // Secreto INVENCIBLE: la primera vez que la patea el caballo
+      if (r.patadas > 0 && !estaDescubierto(nuevo, 'invencible')) {
+        nuevo = descubrir(nuevo, 'invencible', new Date()).estado
+        setSecretoNuevo('invencible')
+      }
+      // Paseadora de perros: con buen puntaje, el collar con chapita "Bolti"
+      if (r.puntaje >= JUEGOS.PASEO_PUNTAJE_PASEADORA && !nuevo.ropa.tiene.includes(COLLAR_PASEADORA)) {
+        nuevo = { ...nuevo, ropa: { ...nuevo.ropa, tiene: [...nuevo.ropa.tiene, COLLAR_PASEADORA] } }
+        paseadora = true
+      }
+    }
+    setEstado(nuevo)
+    setResultado({ ...r, juego: jugando, monedas: fin.monedas, nuevoRecord: fin.nuevoRecord, premioRecord: fin.premioRecord, paseadora })
     setJugando(null)
   }
 
   const enCurso = MINIJUEGOS.find((m) => m.id === jugando)
-  if (enCurso) return <enCurso.Componente onTerminar={terminar} />
+  if (enCurso) return <enCurso.Componente onTerminar={terminar} caballoSeguro={Boolean(estado.caballoSeguro)} />
+  const juegos = MINIJUEGOS.filter((m) => !m.secreto || estaDescubierto(estado, m.secreto))
 
   return (
     <section className="pantalla jugar">
@@ -79,6 +113,9 @@ function Jugar({ estado, setEstado }) {
           <strong>{textoResultado(resultado)}</strong>
           <span className="puntaje">⭐ {formatearPuntaje(resultado.puntaje)} puntos</span>
           {resultado.nuevoRecord && <span className="record">¡Nuevo récord! 🏆 +{resultado.premioRecord} 🪙 de premio</span>}
+          {resultado.paseadora && (
+            <span className="record">🏅 ¡Sos Paseadora de perros! Te ganaste el collar con chapita "Bolti" (está en tu mochila)</span>
+          )}
           <span>
             +{resultado.monedas} 🪙 · +{JUEGOS.CARINO_POR_PARTIDA} 💗 · −{JUEGOS.ENERGIA_POR_PARTIDA} ⚡
           </span>
@@ -86,7 +123,7 @@ function Jugar({ estado, setEstado }) {
       )}
 
       <ul className="juegos">
-        {MINIJUEGOS.map((m) => (
+        {juegos.map((m) => (
           <li key={m.id} className="juego">
             <span className="emoji" aria-hidden="true">
               {m.emoji}
@@ -98,6 +135,13 @@ function Jugar({ estado, setEstado }) {
                 {m.detalle} · cuesta {JUEGOS.ENERGIA_POR_PARTIDA} ⚡ · más puntos, más 🪙 · +{JUEGOS.CARINO_POR_PARTIDA} 💗
               </small>
               {estado.records?.[m.id] > 0 && <small className="record-juego">🏆 Récord: {formatearPuntaje(estado.records[m.id])}</small>}
+              {m.id === 'paseo' && (
+                <small className="record-juego">
+                  {estado.ropa.tiene.includes(COLLAR_PASEADORA)
+                    ? '🏅 Paseadora de perros'
+                    : `🏅 Con ${formatearPuntaje(JUEGOS.PASEO_PUNTAJE_PASEADORA)} puntos: Paseadora de perros`}
+                </small>
+              )}
             </div>
             <button onClick={() => jugar(m.id)} disabled={!disponible.ok} aria-label={`Jugar ${m.nombre}`}>
               {resultado?.juego === m.id ? 'Otra vez' : 'Jugar'}
@@ -107,6 +151,7 @@ function Jugar({ estado, setEstado }) {
       </ul>
       {!disponible.ok && <p className="motivo">{MOTIVOS[disponible.motivo]}</p>}
       <p className="pronto">Pronto: más juegos con Bolti 🐾</p>
+      {secretoNuevo && <SecretFound id={secretoNuevo} onCerrar={() => setSecretoNuevo(null)} />}
     </section>
   )
 }

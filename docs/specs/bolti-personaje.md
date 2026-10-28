@@ -54,6 +54,10 @@ real, aunque la app esté cerrada. **Nunca se enferma ni muere.**
      desde 25 (el chocolate la corta), +100 por corazón que queda. Memoria +20 por par, +10 si es a la
      primera, +50 × nivel superado. Tabla: <200 → 5 🪙, 200 → 10, 400 → 15, 600 → 20, 800 → 25,
      1.000 → 30, 1.300 → 35, 1.600 → 40 y +5 cada 300 más. Récord por juego: al superarlo, +10 🪙 cada 500 puntos del récord (mínimo 5).
+   - "Paseo con Bolti" (se desbloquea anotando la tarea "pasear a Bolti"): Bolti de perfil corre por
+     la vereda, se toca para saltar charcos, gatos y bicis y junta huesitos. 45 s, 3 vidas. A veces
+     aparece un caballo que la patea: vuela diciendo "Soy…", cae y aparece el cartel INVENCIBLE
+     (5 s sin que nada la frene, puntos ×2). Con 1.500 puntos: "Paseadora de perros" y el collar "Bolti".
    - Después: más minijuegos.
 7. **Ropa:** la mochila tiene pestañas Comida y Ropa. Tocar una prenda se la pone o se la saca
    (una por zona: cabeza, cara, cuello, cuerpo, patitas; un disfraz entero saca lo demás). La ropa
