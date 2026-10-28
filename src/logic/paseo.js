@@ -88,9 +88,18 @@ export function invencible(juego) {
 }
 
 // Tocar la pantalla: salta (solo si está en el piso)
+// La física del salto según la velocidad del camino: siempre sube lo mismo y, en el aire, avanza
+// siempre la misma distancia (más lento el juego → más tiempo en el aire)
+export function fisicaDelSalto(t) {
+  const duracion = JUEGOS.PASEO_SALTO_DISTANCIA / JUEGOS.PASEO_ETAPAS[etapa(t)].velocidad
+  const altura = JUEGOS.PASEO_SALTO_ALTURA
+  return { impulso: (4 * altura) / duracion, gravedad: (8 * altura) / duracion ** 2 }
+}
+
 export function saltar(juego) {
   if (juego.terminado || !enElPiso(juego)) return juego
-  return { ...juego, vy: JUEGOS.PASEO_SALTO }
+  const { impulso, gravedad } = fisicaDelSalto(juego.t)
+  return { ...juego, vy: impulso, gravedad }
 }
 
 function crearTanda(juego, azar) {
@@ -123,7 +132,8 @@ export function paso(juego, dt, azar = Math.random) {
   const doble = t < invencibleHasta ? 2 : 1
 
   // Salto y gravedad
-  let vy = juego.vy - JUEGOS.PASEO_GRAVEDAD * dt
+  const gravedad = juego.gravedad ?? fisicaDelSalto(t).gravedad
+  let vy = juego.vy - gravedad * dt
   let y = juego.y + vy * dt
   if (y <= 0) {
     y = 0
@@ -176,8 +186,14 @@ export function paso(juego, dt, azar = Math.random) {
         }
       }
     } else if (!item.pasado && !item.chocado) {
-      const protegida = t < golpeHasta || t < invencibleHasta
-      if (tocaABolti(caja, y) && !protegida) {
+      const protegida = t < golpeHasta || t < invencibleHasta || item.rebote
+      const cayendoEncima = vy < 0 && y >= MEDIDAS[item.tipo].alto * 0.4
+      if (tocaABolti(caja, y) && !protegida && cayendoEncima) {
+        // Cae encima: rebota y sigue, sin lastimarse
+        actualizado.rebote = true
+        vy = fisicaDelSalto(t).impulso * JUEGOS.PASEO_REBOTE
+        eventos.push({ tipo: 'rebote' })
+      } else if (tocaABolti(caja, y) && !protegida) {
         actualizado.chocado = true
         vidas -= 1
         golpeHasta = t + 1

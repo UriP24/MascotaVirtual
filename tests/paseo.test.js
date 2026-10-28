@@ -35,7 +35,7 @@ test('saltar solo desde el piso, y vuelve a caer', () => {
   j = paso(j, 0.1, nunca)
   assert.ok(j.y > 0)
   assert.equal(saltar(j).vy, j.vy, 'en el aire no vuelve a saltar')
-  j = correr(j, 1)
+  j = correr(j, 1.5)
   assert.ok(enElPiso(j))
 })
 
@@ -134,4 +134,31 @@ test('los huesitos se agarran tocándolos con cualquier parte (también con la c
   const enElAire = { ...juegoVacio(), items: [{ id: 1, tipo: 'hueso', x: 0.6, altura: 0.22 }] }
   const j = correr(enElAire, 1.5, { saltarCuando: (jj) => jj.items[0] && jj.items[0].x - X_BOLTI < 0.3 })
   assert.equal(j.huesos, 1)
+})
+
+test('el salto avanza siempre la misma distancia: al principio (lento) dura más en el aire', () => {
+  const lento = saltar(juegoVacio())
+  const rapido = saltar({ ...juegoVacio(), t: JUEGOS.PASEO_ETAPAS.at(-1).desde + 1 })
+  const aire = (j) => {
+    let n = 0
+    for (let k = paso(j, DT, nunca); !enElPiso(k); k = paso(k, DT, nunca)) n++
+    return n * DT
+  }
+  const distLento = aire(lento) * JUEGOS.PASEO_ETAPAS[0].velocidad
+  const distRapido = aire(rapido) * JUEGOS.PASEO_ETAPAS.at(-1).velocidad
+  assert.ok(aire(lento) > aire(rapido))
+  assert.ok(Math.abs(distLento - distRapido) < 0.03, `${distLento} vs ${distRapido}`)
+})
+
+test('si salta antes de tiempo y cae encima de la bici, rebota sin perder vidas', () => {
+  const conBici = { ...juegoVacio(), items: [{ id: 1, tipo: 'bici', x: 0.62, altura: 0 }] }
+  // Salta muy temprano: cuando baja, la bici está justo debajo
+  const j = correr(conBici, 2.5, { saltarCuando: (jj) => jj.t < 0.05 })
+  assert.equal(j.vidas, JUEGOS.PASEO_VIDAS)
+  assert.equal(j.saltados, 1)
+})
+
+test('llevarse puesto un obstáculo de frente sí saca una vida', () => {
+  const conBici = { ...juegoVacio(), items: [{ id: 1, tipo: 'bici', x: 0.5, altura: 0 }] }
+  assert.equal(correr(conBici, 1.5).vidas, JUEGOS.PASEO_VIDAS - 1)
 })
