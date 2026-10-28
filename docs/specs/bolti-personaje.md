@@ -62,8 +62,9 @@ real, aunque la app esté cerrada. **Nunca se enferma ni muere.**
      con zoom a Bolti tirada en un cráter (mareada, sin lastimarse), se levanta con aura dorada y dice
      "SOY…", y aparece el cartel INVENCIBLE como el de la serie (5 s sin que nada la frene, puntos ×2).
      Con 1.500 puntos: "Paseadora de perros" y el collar "Bolti".
-   - La tarea "pasear a Bolti" se puede anotar una vez por día y se completa jugando un paseo
-     (+1 ⭐ y las 🪙 de una tarea).
+   - La tarea "pasear a Bolti" es única: se anota una sola vez en la vida (desbloquea el juego) y
+     se completa jugando el primer paseo (+1 ⭐ y las 🪙 de una tarea). Si la quiere anotar de
+     nuevo, Bolti avisa que ya la anotó.
    - Después: más minijuegos.
 7. **Ropa:** la mochila tiene pestañas Comida y Ropa. Tocar una prenda se la pone o se la saca
    (una por zona: cabeza, cara, cuello, cuerpo, patitas; un disfraz entero saca lo demás). La ropa

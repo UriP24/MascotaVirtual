@@ -41,10 +41,10 @@ function Tareas({ estado, setEstado }) {
   function agregar(texto, tipo) {
     let nuevo
     if (esTareaDePaseo(texto)) {
-      // "Pasear a Bolti": una por día, y se completa jugando al Paseo
+      // "Pasear a Bolti": tarea única, se anota una sola vez y se completa jugando al Paseo
       const r = agregarTareaDePaseo(estado, texto)
       if (r.resultado === 'repetida') {
-        avisar('Ya anotaste el paseo de Bolti hoy 🐾 ¡Mañana la volvés a sacar!')
+        avisar('Esa tarea ya la anotaste 🐾 El paseo ya está en 🎮 Jugar')
         return
       }
       nuevo = r.estado

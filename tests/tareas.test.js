@@ -202,12 +202,14 @@ test('si la app se cerró con el cronómetro andando, solo cuenta hasta el últi
   assert.ok(crono.estaCorriendo(c))
 })
 
-test('la tarea del paseo: una por día, en cualquiera de sus variantes', () => {
+test('la tarea del paseo es única: se anota una sola vez, en cualquiera de sus variantes', () => {
   const r = agregarTareaDePaseo(sinPuntos(), 'Pasear a Bolti', MARTES)
   assert.equal(r.resultado, 'ok')
   assert.equal(r.estado.tareas.at(-1).tipo, 'paseo')
   assert.equal(agregarTareaDePaseo(r.estado, 'sacar a pasear a bolti', MARTES).resultado, 'repetida')
-  assert.equal(agregarTareaDePaseo(r.estado, 'Paseo con Bolti', new Date('2026-10-21T10:00:00')).resultado, 'ok', 'al otro día sí')
+  assert.equal(agregarTareaDePaseo(r.estado, 'Paseo con Bolti', new Date('2026-12-01T10:00:00')).resultado, 'repetida', 'tampoco otro día')
+  const borrada = { ...r.estado, tareas: [], secretos: { paseo: '2026-10-20T10:00:00.000Z' } }
+  assert.equal(agregarTareaDePaseo(borrada, 'Pasear a Bolti', MARTES).resultado, 'repetida', 'aunque la haya borrado')
 })
 
 test('la tarea del paseo no se tilda a mano: se completa jugando, con monedas y un punto', () => {

@@ -41,17 +41,18 @@ export function agregarTarea(estado, texto, tipo, ahora = new Date()) {
 }
 
 // ── Tarea del paseo ─────────────────────────────────────────────────────
-// "Pasear a Bolti" (en cualquiera de sus variantes) es una tarea especial: se puede anotar una
-// sola vez por día y no se tilda a mano, se completa jugando al Paseo con Bolti.
+// "Pasear a Bolti" (en cualquiera de sus variantes) es una tarea única: se anota una sola vez en
+// la vida, desbloquea el minijuego del paseo (secreto) y se completa jugando el primer paseo.
+// No se tilda a mano.
 
-export function hayPaseoAnotadoHoy(estado, ahora = new Date()) {
-  const hoy = fechaLocal(ahora)
-  return estado.tareas.some((t) => t.tipo === 'paseo' && t.fecha === hoy)
+// ¿Ya la anotó alguna vez? (aunque la haya borrado: el secreto del paseo queda descubierto)
+export function yaAnotoElPaseo(estado) {
+  return Boolean(estado.secretos?.paseo) || estado.tareas.some((t) => t.tipo === 'paseo')
 }
 
 // Devuelve { estado, resultado: 'ok' | 'repetida' }
 export function agregarTareaDePaseo(estado, texto, ahora = new Date()) {
-  if (hayPaseoAnotadoHoy(estado, ahora)) return { estado, resultado: 'repetida' }
+  if (yaAnotoElPaseo(estado)) return { estado, resultado: 'repetida' }
   const limpio = texto.trim().slice(0, LARGO_MAXIMO_TEXTO)
   return { estado: { ...estado, tareas: [...estado.tareas, crearTarea(limpio, 'paseo', ahora)] }, resultado: 'ok' }
 }
