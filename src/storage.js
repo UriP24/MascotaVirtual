@@ -108,36 +108,42 @@ function esEstadoValido(datos) {
 }
 
 // ── Respaldo automático ─────────────────────────────────────────────────
-// Una vez por día se guarda aparte una copia del progreso (se guardan las últimas 7). Si al abrir
-// la app el guardado principal está roto, se usa sola la última copia buena.
-const CLAVE_COPIAS = 'patitas:copias'
-const COPIAS_A_GUARDAR = 7
+// Además del guardado principal, se guarda aparte una copia de hoy (se actualiza con cada cambio)
+// y las de los 6 días anteriores. Si al abrir la app el guardado principal está roto o falta, se
+// usa sola la copia buena más nueva.
+const CLAVE_COPIA_HOY = 'patitas:copia-hoy'
+const CLAVE_COPIAS = 'patitas:copias' // días anteriores, la más nueva primero
+const DIAS_ANTERIORES = 6
 
-function leerCopias() {
+function leerJSON(clave, porDefecto) {
   try {
-    const copias = JSON.parse(localStorage.getItem(CLAVE_COPIAS))
-    return Array.isArray(copias) ? copias : []
+    return JSON.parse(localStorage.getItem(clave)) ?? porDefecto
   } catch {
-    return []
+    return porDefecto
   }
 }
 
-// Si hoy todavía no se hizo, guarda la copia del día (y borra las más viejas)
-function guardarCopiaDelDia(estado, ahora) {
+function guardarCopia(estado, ahora) {
   try {
     const hoy = fechaLocal(ahora)
-    const copias = leerCopias()
-    if (copias[0]?.fecha === hoy) return
-    const nuevas = [{ fecha: hoy, datos: estado }, ...copias].slice(0, COPIAS_A_GUARDAR)
-    localStorage.setItem(CLAVE_COPIAS, JSON.stringify(nuevas))
+    const anterior = leerJSON(CLAVE_COPIA_HOY, null)
+    // Cambió el día: la copia de ayer pasa a la lista de días anteriores
+    if (anterior?.fecha && anterior.fecha !== hoy) {
+      const copias = leerJSON(CLAVE_COPIAS, [])
+      const lista = Array.isArray(copias) ? copias : []
+      localStorage.setItem(CLAVE_COPIAS, JSON.stringify([anterior, ...lista].slice(0, DIAS_ANTERIORES)))
+    }
+    localStorage.setItem(CLAVE_COPIA_HOY, JSON.stringify({ fecha: hoy, datos: estado }))
   } catch (error) {
-    console.error('No se pudo guardar la copia del día', error)
+    console.error('No se pudo guardar la copia de seguridad', error)
   }
 }
 
-// La copia más nueva que esté sana, o null
+// La copia sana más nueva (la de hoy, o si no la de los días anteriores), o null
 function ultimaCopiaBuena() {
-  const copia = leerCopias().find((c) => esEstadoValido(c?.datos))
+  const copias = leerJSON(CLAVE_COPIAS, [])
+  const candidatas = [leerJSON(CLAVE_COPIA_HOY, null), ...(Array.isArray(copias) ? copias : [])]
+  const copia = candidatas.find((c) => esEstadoValido(c?.datos))
   return copia ? completarEstado(copia.datos) : null
 }
 
@@ -160,7 +166,7 @@ export function cargarEstado() {
   return ultimaCopiaBuena() ?? crearEstadoInicial()
 }
 
-// Guarda el progreso (y, una vez por día, la copia aparte). Devuelve false si no se pudo.
+// Guarda el progreso (y la copia de seguridad aparte). Devuelve false si no se pudo.
 export function guardarEstado(estado, ahora = new Date()) {
   try {
     localStorage.setItem(CLAVE, JSON.stringify(estado))
@@ -168,7 +174,7 @@ export function guardarEstado(estado, ahora = new Date()) {
     console.error('No se pudo guardar el progreso', error)
     return false
   }
-  guardarCopiaDelDia(estado, ahora)
+  guardarCopia(estado, ahora)
   return true
 }
 

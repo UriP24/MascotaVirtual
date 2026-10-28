@@ -130,7 +130,8 @@ Las pantallas reciben `estado` y `setEstado` como props desde `App`.
 
 ## Modo prueba
 Panel oculto 🧪 para probar sin esperar (sumar estudio, adelantar a Bolti, monedas, reiniciar).
-Se activa con `?prueba` al final del link o con `npm run dev`; Mari nunca lo ve. Lógica en
+Se activa con la palabra secreta `?huesito-5283` al final del link (no `?prueba`, para que Mari no
+lo adivine y se regale puntos) o con `npm run dev`; Mari nunca lo ve. Lógica en
 `src/logic/prueba.js`. Cuando se agregue una función nueva que dependa del tiempo, sumarle un atajo acá.
 
 ## Forma de trabajo

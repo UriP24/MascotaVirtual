@@ -1,5 +1,6 @@
 // Atajos del modo prueba (solo para Uri, para no esperar los tiempos reales).
-// Se activa abriendo la app con ?prueba al final del link, o con `npm run dev`.
+// Se activa abriendo la app con la palabra secreta al final del link (?huesito-5283), o con
+// `npm run dev`. No es "?prueba" para que Mari no lo adivine y se regale puntos.
 
 import { crearEstadoInicial } from '../storage.js'
 import { COMIDAS, SECRETOS } from '../config.js'
@@ -10,9 +11,11 @@ import { actualizarBolti } from './bolti.js'
 const MINUTO = 60 * 1000
 const HORA = 60 * MINUTO
 
+const CLAVE_MODO_PRUEBA = 'huesito-5283'
+
 export function modoPruebaActivo() {
   if (import.meta.env?.DEV) return true
-  return new URLSearchParams(window.location.search).has('prueba')
+  return new URLSearchParams(window.location.search).has(CLAVE_MODO_PRUEBA)
 }
 
 // Suma minutos al cronómetro de la tarea de estudio pendiente (la que está corriendo, o la primera).

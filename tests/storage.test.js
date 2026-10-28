@@ -29,16 +29,26 @@ test('guarda y vuelve a cargar el progreso', () => {
   assert.equal(cargarEstado().monedas, 77)
 })
 
-test('una copia por día, y se guardan solo las últimas 7', () => {
+test('copia de hoy (siempre al día) más las de los 6 días anteriores', () => {
   for (let d = 0; d < 10; d++) {
     const dia = new Date(2026, 10, 1 + d, 12)
     guardarEstado(conMonedas(d), dia)
-    guardarEstado(conMonedas(d + 100), dia) // el mismo día no hace otra copia
+    guardarEstado(conMonedas(d + 100), dia) // la copia de hoy queda con lo último del día
   }
-  const copias = JSON.parse(localStorage.getItem('patitas:copias'))
-  assert.equal(copias.length, 7)
-  assert.equal(copias[0].fecha, '2026-11-10')
-  assert.equal(copias[0].datos.monedas, 9, 'la copia es la del primer guardado del día')
+  const hoy = JSON.parse(localStorage.getItem('patitas:copia-hoy'))
+  assert.equal(hoy.fecha, '2026-11-10')
+  assert.equal(hoy.datos.monedas, 109)
+  const anteriores = JSON.parse(localStorage.getItem('patitas:copias'))
+  assert.equal(anteriores.length, 6)
+  assert.equal(anteriores[0].fecha, '2026-11-09')
+  assert.equal(anteriores[0].datos.monedas, 108, 'cada día anterior queda con su último guardado')
+})
+
+test('si el guardado se rompe a la tarde, no se pierde lo del día', () => {
+  guardarEstado(conMonedas(10), new Date('2026-11-03T09:00:00'))
+  guardarEstado(conMonedas(4321), new Date('2026-11-03T18:00:00'))
+  localStorage.setItem('patitas:estado', '{roto')
+  assert.equal(cargarEstado().monedas, 4321)
 })
 
 test('si el guardado principal está roto, recupera la última copia buena', () => {

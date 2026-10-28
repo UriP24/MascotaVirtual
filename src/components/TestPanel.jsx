@@ -25,7 +25,7 @@ import {
 import { regalarTiradas } from '../logic/gacha.js'
 import './TestPanel.css'
 
-// Panel oculto del modo prueba. Solo aparece con ?prueba en el link (o con npm run dev).
+// Panel oculto del modo prueba. Solo aparece con la palabra secreta en el link (ver prueba.js) o con npm run dev.
 function TestPanel({ estado, setEstado }) {
   const [abierto, setAbierto] = useState(false)
   const [confirmarReinicio, setConfirmarReinicio] = useState(false)
