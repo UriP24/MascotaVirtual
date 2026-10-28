@@ -107,25 +107,79 @@ function esEstadoValido(datos) {
   )
 }
 
-export function cargarEstado() {
+// ── Respaldo automático ─────────────────────────────────────────────────
+// Una vez por día se guarda aparte una copia del progreso (se guardan las últimas 7). Si al abrir
+// la app el guardado principal está roto, se usa sola la última copia buena.
+const CLAVE_COPIAS = 'patitas:copias'
+const COPIAS_A_GUARDAR = 7
+
+function leerCopias() {
   try {
-    const texto = localStorage.getItem(CLAVE)
-    if (texto === null) return crearEstadoInicial()
-    const datos = JSON.parse(texto)
-    if (!esEstadoValido(datos)) return crearEstadoInicial()
-    return completarEstado(datos)
+    const copias = JSON.parse(localStorage.getItem(CLAVE_COPIAS))
+    return Array.isArray(copias) ? copias : []
+  } catch {
+    return []
+  }
+}
+
+// Si hoy todavía no se hizo, guarda la copia del día (y borra las más viejas)
+function guardarCopiaDelDia(estado, ahora) {
+  try {
+    const hoy = fechaLocal(ahora)
+    const copias = leerCopias()
+    if (copias[0]?.fecha === hoy) return
+    const nuevas = [{ fecha: hoy, datos: estado }, ...copias].slice(0, COPIAS_A_GUARDAR)
+    localStorage.setItem(CLAVE_COPIAS, JSON.stringify(nuevas))
+  } catch (error) {
+    console.error('No se pudo guardar la copia del día', error)
+  }
+}
+
+// La copia más nueva que esté sana, o null
+function ultimaCopiaBuena() {
+  const copia = leerCopias().find((c) => esEstadoValido(c?.datos))
+  return copia ? completarEstado(copia.datos) : null
+}
+
+export function cargarEstado() {
+  let texto = null
+  try {
+    texto = localStorage.getItem(CLAVE)
   } catch (error) {
     console.error('No se pudo leer el progreso guardado', error)
     return crearEstadoInicial()
   }
+  // Primera vez (o datos borrados): si quedó alguna copia, se recupera de ahí
+  if (texto === null) return ultimaCopiaBuena() ?? crearEstadoInicial()
+  try {
+    const datos = JSON.parse(texto)
+    if (esEstadoValido(datos)) return completarEstado(datos)
+  } catch (error) {
+    console.error('El progreso guardado está roto, se usa la última copia', error)
+  }
+  return ultimaCopiaBuena() ?? crearEstadoInicial()
 }
 
-export function guardarEstado(estado) {
+// Guarda el progreso (y, una vez por día, la copia aparte). Devuelve false si no se pudo.
+export function guardarEstado(estado, ahora = new Date()) {
   try {
     localStorage.setItem(CLAVE, JSON.stringify(estado))
-    return true
   } catch (error) {
     console.error('No se pudo guardar el progreso', error)
+    return false
+  }
+  guardarCopiaDelDia(estado, ahora)
+  return true
+}
+
+// Le pide al navegador que nunca borre los datos de la app para liberar espacio.
+// Con la app instalada, Chrome casi siempre lo acepta sin preguntar.
+export async function pedirQueNoSeBorren() {
+  try {
+    if (!navigator.storage?.persist) return false
+    if (await navigator.storage.persisted()) return true
+    return await navigator.storage.persist()
+  } catch {
     return false
   }
 }

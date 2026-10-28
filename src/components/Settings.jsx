@@ -33,7 +33,10 @@ function Settings({ secretos, onVerTutorial, onVerMensaje, onVerSecretos, onCerr
             </button>
           </li>
         </ul>
-        <p className="nota">💾 Tu progreso se guarda solo en este celular cada vez que hacés algo.</p>
+        <p className="nota">
+          💾 Tu progreso se guarda solo en este celular cada vez que hacés algo, y todos los días se hace una copia de
+          seguridad aparte.
+        </p>
       </div>
     </div>
   )

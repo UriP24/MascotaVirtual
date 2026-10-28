@@ -11,7 +11,7 @@ import Casa from './screens/Casa.jsx'
 import Tareas from './screens/Tareas.jsx'
 import Canjes from './screens/Canjes.jsx'
 import Jugar from './screens/Jugar.jsx'
-import { cargarEstado, guardarEstado } from './storage.js'
+import { cargarEstado, guardarEstado, pedirQueNoSeBorren } from './storage.js'
 import { actualizarDia, retomarCronometros } from './logic/tareas.js'
 import { actualizarBolti, horasDesdeUltimaVisita, registrarVisita } from './logic/bolti.js'
 import { modoPruebaActivo } from './logic/prueba.js'
@@ -47,6 +47,12 @@ function App() {
   const [tutorialAbierto, setTutorialAbierto] = useState(false)
   const [mensajeAbierto, setMensajeAbierto] = useState(false)
   const [secretosAbiertos, setSecretosAbiertos] = useState(false)
+  const [noSeGuardo, setNoSeGuardo] = useState(false)
+
+  // Al abrir: le pide al celu que no borre nunca los datos de la app
+  useEffect(() => {
+    pedirQueNoSeBorren()
+  }, [])
   const [preguntarTutorial, setPreguntarTutorial] = useState(false)
 
   // Cada minuto: revisa si cambió el día y avanza las necesidades de Bolti.
@@ -57,7 +63,8 @@ function App() {
 
   // Cada vez que cambia el estado, se guarda en el celular.
   useEffect(() => {
-    guardarEstado(estado)
+    // Si no se pudo guardar (por ejemplo, sin espacio), se avisa apenas termina este render
+    if (!guardarEstado(estado)) queueMicrotask(() => setNoSeGuardo(true))
   }, [estado])
 
   // Después de la bienvenida, deja que vea a Bolti un ratito y le ofrece el tutorial (una sola vez).
@@ -104,6 +111,14 @@ function App() {
         onCambiarPantalla={setPantallaActiva}
       />
       <BottomNav pantallaActiva={pantallaActiva} onCambiar={setPantallaActiva} />
+      {noSeGuardo && (
+        <div className="aviso-guardado" role="alert">
+          <span>⚠️ No se pudo guardar tu progreso. Fijate que el celu tenga espacio libre.</span>
+          <button onClick={() => setNoSeGuardo(false)} aria-label="Cerrar aviso">
+            ✕
+          </button>
+        </div>
+      )}
       {preguntarTutorial && (
         <ConfirmDialog
           titulo="🐾 ¿Te muestro cómo funciona?"
