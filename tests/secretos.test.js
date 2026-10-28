@@ -45,8 +45,9 @@ test('la estrella fugaz regala una multi', () => {
   assert.equal(r.estado.gacha.tiradasGratis, 10)
 })
 
-test('los secretos que vienen después todavía no se pueden descubrir', () => {
-  assert.equal(descubrir(estado(), 'paseo', MANANA).nuevo, false)
+test('pasear a Bolti regala una multi; INVENCIBLE da el traje de superhéroe', () => {
+  assert.equal(descubrir(estado(), 'paseo', MANANA).estado.gacha.tiradasGratis, 10)
+  assert.ok(descubrir(estado(), 'invencible', MANANA).estado.ropa.tiene.includes('traje-superheroe'))
 })
 
 test('fechas especiales: San Valentín y aniversario, todos los años', () => {
