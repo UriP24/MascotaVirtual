@@ -178,7 +178,7 @@ export const JUEGOS = {
   PASEO_CABALLO_DESDE: 12, // segundos: aparece entre estos dos momentos
   PASEO_CABALLO_HASTA: 28,
   PASEO_INVENCIBLE_SEGUNDOS: 5,
-  PASEO_PUNTOS_ESQUIVA: 50, // si salta justo cuando el caballo patea, lo esquiva
+  PASEO_PUNTOS_ESQUIVA: 50, // si salta desde que aparece el ❗ hasta que termina la patada, lo esquiva
   // Puntaje para ganar el título "Paseadora de perros" y el collar con chapita "Bolti"
   PASEO_PUNTAJE_PASEADORA: 1500,
 

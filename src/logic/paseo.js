@@ -13,8 +13,10 @@ const CAJAS_BOLTI = [
   { x1: 0.07, x2: 0.13, y1: 0.09, y2: 0.16 }, // cabeza
 ]
 const DISTANCIA_PATADA = 0.18 // a esta distancia patea: la pata de atrás llega justo adelante de Bolti
-export const DISTANCIA_AVISO = 0.45 // a esta distancia levanta la pata: si salta ahí, la esquiva
-const ALTURA_PARA_ESQUIVAR = 0.05 // si en el momento de la patada está más alta que esto, la esquiva
+const FIN_PATADA = 0.06 // la patada dura hasta esta distancia: si salta en ese rato, todavía la esquiva
+export const DISTANCIA_AVISO = 0.6 // a esta distancia levanta la pata (❗): cualquier salto desde ahí la esquiva
+const ALTURA_PARA_ESQUIVAR = 0.05 // más alta que esto, la patada no la alcanza
+const SALTO_GUARDADO = 0.2 // si toca un poquito antes de caer, salta apenas toca el piso
 
 // Caja de choque de cada cosa (ancho y alto), sacada de su dibujo y un poco más chica que él
 export const MEDIDAS = {
@@ -70,6 +72,7 @@ export function crearJuego(azar = Math.random, caballoSeguro = false) {
     proximo: 1.2,
     caballoEn: hayCaballo ? (caballoSeguro ? 6 : momento) : null, // cuándo aparece (null: este paseo no)
     caballoSalio: false,
+    saltoGuardadoHasta: 0, // toque en el aire: salta al caer si toca el piso antes de esto
     golpeHasta: 0, // después de chocar, un ratito sin poder volver a chocar (titila)
     invencibleHasta: 0,
     esquivas: 0,
@@ -97,7 +100,9 @@ export function fisicaDelSalto(t) {
 }
 
 export function saltar(juego) {
-  if (juego.terminado || !enElPiso(juego)) return juego
+  if (juego.terminado) return juego
+  // En el aire: se guarda el toque y salta al caer (así no se "pierde" un toque apurado)
+  if (!enElPiso(juego)) return { ...juego, saltoGuardadoHasta: juego.t + SALTO_GUARDADO }
   const { impulso, gravedad } = fisicaDelSalto(juego.t)
   return { ...juego, vy: impulso, gravedad }
 }
@@ -135,9 +140,16 @@ export function paso(juego, dt, azar = Math.random) {
   const gravedad = juego.gravedad ?? fisicaDelSalto(t).gravedad
   let vy = juego.vy - gravedad * dt
   let y = juego.y + vy * dt
+  let { gravedad: gravedadSalto, saltoGuardadoHasta } = juego
   if (y <= 0) {
     y = 0
     vy = 0
+    if (saltoGuardadoHasta >= t) {
+      const fisica = fisicaDelSalto(t)
+      vy = fisica.impulso
+      gravedadSalto = fisica.gravedad
+      saltoGuardadoHasta = 0
+    }
   }
 
   // Aparecen cosas nuevas por la derecha (un rato antes y después del caballo, el camino queda libre)
@@ -170,11 +182,15 @@ export function paso(juego, dt, azar = Math.random) {
         continue // se lo comió
       }
     } else if (item.tipo === 'caballo') {
-      // Avisa levantando la pata; al llegar, patea: si Bolti está saltando la esquiva, si no la patea
-      if (!item.preparando && x - X_BOLTI < DISTANCIA_AVISO) actualizado.preparando = true
-      if (!item.pateo && x - X_BOLTI < DISTANCIA_PATADA) {
-        actualizado.pateo = true
-        if (y > ALTURA_PARA_ESQUIVAR || t < invencibleHasta) {
+      // Avisa levantando la pata; al llegar, patea. Si Bolti salta en algún momento de la patada la
+      // esquiva; si sigue en el piso cuando termina, la patea
+      const distancia = x - X_BOLTI
+      if (!item.preparando && distancia < DISTANCIA_AVISO) actualizado.preparando = true
+      if (distancia < DISTANCIA_PATADA) actualizado.pateo = true
+      const enElAire = y > ALTURA_PARA_ESQUIVAR || t < invencibleHasta
+      if (!item.resuelto && distancia < DISTANCIA_PATADA && (enElAire || distancia < FIN_PATADA)) {
+        actualizado.resuelto = true
+        if (enElAire) {
           esquivas += 1
           const gana = JUEGOS.PASEO_PUNTOS_ESQUIVA * doble
           puntos += gana
@@ -229,6 +245,8 @@ export function paso(juego, dt, azar = Math.random) {
     patadas,
     esquivas,
     caballoSalio,
+    gravedad: gravedadSalto,
+    saltoGuardadoHasta,
     eventos,
     terminado,
   }

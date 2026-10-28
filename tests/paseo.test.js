@@ -79,6 +79,23 @@ test('si salta justo cuando el caballo patea, lo esquiva y gana puntos', () => {
   assert.equal(invencible(j), false)
 })
 
+test('cualquier salto desde que aparece el aviso hasta que termina la patada esquiva al caballo', () => {
+  for (const distancia of [0.59, 0.4, 0.2, 0.1]) {
+    const conCaballo = { ...juegoVacio(), items: [{ id: 1, tipo: 'caballo', x: X_BOLTI + 0.7, altura: 0 }] }
+    const j = correr(conCaballo, 3, { saltarCuando: (jj) => jj.items[0] && jj.items[0].x - X_BOLTI < distancia })
+    assert.equal(j.patadas, 0, `saltando a ${distancia}`)
+    assert.equal(j.esquivas, 1, `saltando a ${distancia}`)
+  }
+})
+
+test('si toca un poquito antes de caer, salta apenas toca el piso', () => {
+  let j = saltar(juegoVacio())
+  while (j.vy > 0 || j.y > 0.03) j = paso(j, DT, nunca)
+  j = saltar(j) // en el aire: se guarda
+  for (let i = 0; i < 0.15 / DT; i++) j = paso(j, DT, nunca)
+  assert.ok(j.y > 0.03 || j.vy > 0, 'volvió a saltar sola al caer')
+})
+
 test('invencible, los puntos valen doble', () => {
   const normal = correr(juegoVacio(), 1)
   const doble = correr({ ...juegoVacio(), invencibleHasta: 99 }, 1)
