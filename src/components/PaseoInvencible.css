@@ -83,18 +83,25 @@
 .paseo-invencible .bolti-parada {
   position: relative;
   width: 66%;
-  margin-top: 18%;
+  margin-top: 50%;
   animation: invencible-levantarse 0.5s ease-out;
 }
 .paseo-invencible .auras {
+  /* Desde el piso (las patas de Bolti) para arriba, del ancho de Bolti */
   position: absolute;
-  inset: 0;
+  left: -4%;
+  right: -4%;
+  bottom: 6%;
+  height: 200%;
   transform-origin: 50% 90%;
   animation: invencible-aura 0.16s ease-in-out infinite alternate;
 }
 .paseo-invencible .aura {
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
   opacity: 0;
   will-change: opacity;
   animation: invencible-llamas 0.36s steps(1) infinite;
