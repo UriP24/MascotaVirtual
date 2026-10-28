@@ -82,6 +82,43 @@ export function comerPure(estado, ahora = new Date()) {
   return descubrir(comido, 'pure', ahora)
 }
 
+// ── Estrella fugaz ──────────────────────────────────────────────────────
+// Cada noche se sortea si esta noche pasa una estrella. La chance arranca en 0,01% y se
+// multiplica ×1,25 por cada noche sin estrella (hasta 50%). Si pasa, cruza la ventana cada tanto
+// hasta que Mari la toca; al atraparla, la chance vuelve a empezar.
+
+export function esDeNoche(ahora = new Date()) {
+  const hora = ahora.getHours()
+  return hora >= R.NOCHE_DESDE || hora < R.NOCHE_HASTA
+}
+
+// La noche a la que pertenece un momento: la madrugada cuenta como la noche anterior
+function claveDeNoche(ahora) {
+  const d = new Date(ahora)
+  if (d.getHours() < R.NOCHE_HASTA) d.setDate(d.getDate() - 1)
+  return fechaLocal(d)
+}
+
+export function sortearEstrella(estado, ahora = new Date(), rng = Math.random) {
+  if (!esDeNoche(ahora)) return estado
+  const noche = claveDeNoche(ahora)
+  const e = estado.estrella
+  if (e.ultimaNoche === noche) return estado
+  // Las noches que pasaron sin estrella desde el último sorteo (aunque no haya abierto la app)
+  const noches = e.ultimaNoche ? Math.max(1, diasDesde(e.ultimaNoche, new Date(`${noche}T12:00:00`))) : 0
+  const chance = Math.min(R.ESTRELLA_CHANCE_MAXIMA, e.chance * R.ESTRELLA_MULTIPLICADOR ** noches)
+  return { ...estado, estrella: { ...e, ultimaNoche: noche, chance, estaNoche: rng() < chance } }
+}
+
+// Mari tocó la estrella: premio (la primera vez es el secreto, una multi) y la chance vuelve a empezar.
+// Devuelve { estado, nuevo, tiradas }
+export function atraparEstrella(estado, ahora = new Date()) {
+  const reiniciada = { ...estado, estrella: { ...estado.estrella, chance: R.ESTRELLA_CHANCE_INICIAL, estaNoche: false } }
+  const r = descubrir(reiniciada, 'estrella', ahora)
+  if (r.nuevo) return { estado: r.estado, nuevo: true, tiradas: buscarSecreto('estrella').premio.tiradas }
+  return { estado: regalarTiradas(r.estado, R.ESTRELLA_TIRADAS), nuevo: false, tiradas: R.ESTRELLA_TIRADAS }
+}
+
 // Una pista al azar de un secreto que todavía no descubrió (las fechas no tienen frase)
 export function pistaAlAzar(estado, rng = Math.random) {
   const pendientes = SECRETOS.filter((s) => s.frase && !estaDescubierto(estado, s.id))

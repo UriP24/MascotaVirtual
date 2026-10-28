@@ -71,7 +71,11 @@ real, aunque la app esté cerrada. **Nunca se enferma ni muere.**
    sale del gacha, del regalo de cumple y de los secretos. Cada prenda está dibujada en SVG con el
    mismo estilo que Bolti, en tres capas (atrás: capas y alas; cuerpo; cabeza): formas base en
    `src/components/ropa/PiezaRopa.jsx` y qué usa cada prenda en `src/components/ropa/dibujos.js`.
-8. **Frases** en una burbuja cuando cambia el humor, al tocarla y en momentos especiales
+8. **Estrella fugaz (secreto):** cada noche (21 a 6) se sortea si pasa una estrella. La chance
+   arranca en 0,01% y se multiplica ×1,25 por cada noche sin estrella, hasta 50% (en promedio sale
+   cada ~5 semanas). Si toca, una estrella dorada cruza la ventana despacio cada tanto hasta que Mari
+   la toca: la primera da una multi gratis (secreto) y las siguientes 1 tirada; la chance vuelve a empezar.
+9. **Frases** en una burbuja cuando cambia el humor, al tocarla y en momentos especiales
    (completó una tarea, terminó de estudiar, cumpleaños).
 
 ## Cara según cada necesidad (se combinan)

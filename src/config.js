@@ -526,7 +526,14 @@ export const REGLAS_SECRETOS = {
   CHANCE_GATO: 0.12,
   CHANCE_VACA: 0.06,
   VISITA_DURACION_SEGUNDOS: 7,
-  CHANCE_ESTRELLA: 0.35, // al tocar la ventana de noche
+  // Estrella fugaz: cada noche hay una chance de que cruce la ventana. Arranca chiquita y crece
+  // ×1,25 por cada noche sin estrella (hasta 50%); cuando Mari la atrapa, vuelve a empezar.
+  ESTRELLA_CHANCE_INICIAL: 0.0001, // 0,01%
+  ESTRELLA_MULTIPLICADOR: 1.25,
+  ESTRELLA_CHANCE_MAXIMA: 0.5,
+  ESTRELLA_TIRADAS: 1, // premio de cada estrella después de la primera (la primera es el secreto: una multi)
+  NOCHE_DESDE: 21, // la estrella puede aparecer de 21 a 6
+  NOCHE_HASTA: 6,
   CHANCE_MEDIA: 0.15, // cada mañana
   HORA_MEDIA: 10, // la media aparece desde que se despierta
   MONEDAS_POR_MEDIA_EXTRA: 10, // después del par

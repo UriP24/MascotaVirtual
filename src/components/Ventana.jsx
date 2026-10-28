@@ -1,8 +1,8 @@
 import './Ventana.css'
 
-// La ventana de la habitación. Cada tanto pasa alguien (un gato o una vaca) y, de noche,
-// a veces cruza una estrella fugaz. Tocar la ventana o a quien pasa puede destapar un secreto.
-function Ventana({ visita, estrella, onTocar, onTocarVisita }) {
+// La ventana de la habitación. Cada tanto pasa alguien (un gato o una vaca) y, algunas noches,
+// cruza una estrella fugaz que se puede atrapar tocándola. Son secretos.
+function Ventana({ visita, estrella, onTocar, onTocarVisita, onTocarEstrella }) {
   return (
     <div className="ventana" onClick={onTocar}>
       <span className="vidrio">
@@ -19,7 +19,27 @@ function Ventana({ visita, estrella, onTocar, onTocarVisita }) {
             {visita.tipo === 'gato' ? <Gato /> : <Vaca />}
           </button>
         )}
-        {estrella && <span className="estrella-fugaz" aria-hidden="true" />}
+        {estrella && (
+          <button
+            className="estrella-fugaz"
+            aria-label="¡Una estrella fugaz! Tocala"
+            onClick={(e) => {
+              e.stopPropagation()
+              onTocarEstrella()
+            }}
+          >
+            <span className="cola" aria-hidden="true" />
+            <svg viewBox="0 0 40 40" width="34" height="34" aria-hidden="true">
+              <path
+                fill="#ffd666"
+                stroke="#c98a00"
+                strokeWidth="2"
+                strokeLinejoin="round"
+                d="M20 2 L25 15 L38 15 L27.5 23.5 L31.5 37 L20 29 L8.5 37 L12.5 23.5 L2 15 L15 15 Z"
+              />
+            </svg>
+          </button>
+        )}
       </span>
       <span className="cortina izquierda" aria-hidden="true" />
       <span className="cortina derecha" aria-hidden="true" />

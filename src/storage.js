@@ -1,7 +1,7 @@
 // Único módulo que toca localStorage. Todo acceso pasa por acá, envuelto en try/catch,
 // porque localStorage puede fallar (modo incógnito, almacenamiento lleno, datos corruptos).
 
-import { COMIDAS, ECONOMIA, PERRITA } from './config.js'
+import { COMIDAS, ECONOMIA, PERRITA, REGLAS_SECRETOS } from './config.js'
 import { fechaLocal } from './logic/fechas.js'
 import { esHorarioDeDormir } from './logic/bolti.js'
 
@@ -54,6 +54,8 @@ export function crearEstadoInicial() {
     mediaEsperando: false,
     ultimoSorteoMedia: null, // día del último sorteo de la media (una vez por día)
     ultimoPure: null, // día en que comió el puré por última vez (aparece una vez por semana)
+    // Estrella fugaz: chance de esta noche, última noche sorteada y si esta noche pasa una
+    estrella: { chance: REGLAS_SECRETOS.ESTRELLA_CHANCE_INICIAL, ultimaNoche: null, estaNoche: false },
     // Día en que vio por última vez la cartita de cada fecha especial: { aniversario: '2027-03-24' }
     cartasVistas: {},
     // Día en que se empezó a usar la app (para no ponerla triste por días anteriores)
@@ -89,6 +91,7 @@ function completarEstado(datos) {
     secretos: { ...inicial.secretos, ...datos.secretos },
     cartasVistas: { ...inicial.cartasVistas, ...datos.cartasVistas },
     recordatoriosEstudio: { ...inicial.recordatoriosEstudio, ...datos.recordatoriosEstudio },
+    estrella: { ...inicial.estrella, ...datos.estrella },
     version: VERSION_ACTUAL,
   }
 }

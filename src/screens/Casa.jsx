@@ -23,12 +23,15 @@ import { esCumple } from '../logic/fechas.js'
 import { alternarPrenda } from '../logic/ropa.js'
 import {
   agarrarMedia,
+  atraparEstrella,
   comerPure,
   descubrir,
+  esDeNoche,
   estaDescubierto,
   fechaEspecial,
   hayPure,
   pistaAlAzar,
+  sortearEstrella,
   sortearMedia,
 } from '../logic/secretos.js'
 import { fechaLocal } from '../logic/fechas.js'
@@ -115,6 +118,8 @@ function Casa({ estado, setEstado, horasAusente = 0, onCambiarPantalla }) {
     t.frase = setTimeout(() => setFrase(null), 3500)
     // Secreto de las medias: una vez por día, desde que se despierta, puede traer una
     setEstado((e) => sortearMedia(e, new Date(e.perrita.actualizadaEn)))
+    // Secreto de la estrella: una vez por noche se sortea si esta noche pasa una
+    setEstado((e) => sortearEstrella(e, new Date()))
     return () => {
       clearTimeout(t.gesto)
       clearTimeout(t.apretado)
@@ -155,6 +160,20 @@ function Casa({ estado, setEstado, horasAusente = 0, onCambiarPantalla }) {
     return () => clearInterval(timer)
   }, [despierta])
 
+  // Secreto de la estrella: si esta noche toca, cruza la ventana al ratito y después cada tanto,
+  // hasta que Mari la atrape
+  const estrellaEstaNoche = estado.estrella.estaNoche && esDeNoche(ahora)
+  useEffect(() => {
+    if (!estrellaEstaNoche) return
+    const pasar = () => mostrarEstrellaRef.current()
+    const primera = setTimeout(pasar, 5000)
+    const cadaTanto = setInterval(pasar, 25000)
+    return () => {
+      clearTimeout(primera)
+      clearInterval(cadaTanto)
+    }
+  }, [estrellaEstaNoche])
+
   // Secreto de la sacudida: si sacude el celu, Bolti se sacude
   useEffect(() => {
     let ultima = 0
@@ -182,7 +201,9 @@ function Casa({ estado, setEstado, horasAusente = 0, onCambiarPantalla }) {
   const sacudirseRef = useRef(null)
   const manejarEventoRef = useRef(null)
   const recordarEstudioRef = useRef(null)
+  const mostrarEstrellaRef = useRef(null)
   useEffect(() => {
+    mostrarEstrellaRef.current = mostrarEstrella
     recordarEstudioRef.current = recordarEstudio
     mostrarVisitaRef.current = mostrarVisita
     sacudirseRef.current = sacudirse
@@ -334,19 +355,29 @@ function Casa({ estado, setEstado, horasAusente = 0, onCambiarPantalla }) {
     descubrirSecreto(tipo)
   }
 
+  // La estrella cruza la ventana despacio (4,5 s) para que Mari la pueda tocar
   function mostrarEstrella() {
     setEstrella(true)
     clearTimeout(timers.current.estrella)
-    timers.current.estrella = setTimeout(() => setEstrella(false), 1500)
-    decir('¡Una estrella fugaz! Pedí un deseo ✨', 3000)
-    descubrirSecreto('estrella', 1800)
+    timers.current.estrella = setTimeout(() => setEstrella(false), 4500)
   }
 
-  // Secreto de la estrella: de noche, tocar la ventana
+  function tocarEstrella() {
+    const r = atraparEstrella(estado, new Date())
+    setEstado(r.estado)
+    setEstrella(false)
+    navigator.vibrate?.([30, 50, 30])
+    if (r.nuevo) {
+      decir('¡Atrapaste una estrella fugaz! Pedí un deseo ✨', 3000)
+      clearTimeout(timers.current.secreto)
+      timers.current.secreto = setTimeout(() => setSecretoNuevo('estrella'), 1800)
+    } else {
+      decir(`¡Otra estrella fugaz! Pedí un deseo ✨ (+${r.tiradas} tirada gratis)`, 3500)
+    }
+  }
+
   function tocarVentana() {
-    if (animo !== 'dormida') return
-    if (Math.random() < REGLAS_SECRETOS.CHANCE_ESTRELLA) mostrarEstrella()
-    else decir('Qué linda noche… 🌙')
+    if (esDeNoche(new Date())) decir('Qué linda noche… 🌙')
   }
 
   function sacudirse() {
@@ -401,7 +432,10 @@ function Casa({ estado, setEstado, horasAusente = 0, onCambiarPantalla }) {
     if (tipo === 'gato' || tipo === 'vaca') mostrarVisita(tipo)
     if (tipo === 'media') setEstado((e) => ({ ...e, mediaEsperando: true }))
     if (tipo === 'pure') setEstado((e) => ({ ...e, purePrueba: true }))
-    if (tipo === 'estrella') mostrarEstrella()
+    if (tipo === 'estrella') {
+      setEstado((e) => ({ ...e, estrella: { ...e.estrella, estaNoche: true } }))
+      mostrarEstrella()
+    }
     if (tipo === 'sacudida') sacudirse()
     if (tipo === 'aniversario' || tipo === 'san-valentin') setCarta(tipo)
   }
@@ -546,7 +580,13 @@ function Casa({ estado, setEstado, horasAusente = 0, onCambiarPantalla }) {
         ref={habitacionRef}
         className={`habitacion ${animo === 'dormida' ? 'noche' : ''} ${mochilaAbierta ? 'con-mochila' : ''}`}
       >
-        <Ventana visita={visita} estrella={estrella} onTocar={tocarVentana} onTocarVisita={tocarVisita} />
+        <Ventana
+          visita={visita}
+          estrella={estrella}
+          onTocar={tocarVentana}
+          onTocarVisita={tocarVisita}
+          onTocarEstrella={tocarEstrella}
+        />
         <div className="cuadro" aria-hidden="true">
           BOLTI
         </div>

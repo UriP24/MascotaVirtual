@@ -4,6 +4,8 @@ import { crearEstadoInicial } from '../src/storage.js'
 import { PRENDAS, SECRETOS } from '../src/config.js'
 import {
   agarrarMedia,
+  atraparEstrella,
+  sortearEstrella,
   comerPure,
   descubrir,
   fechaEspecial,
@@ -106,4 +108,39 @@ test('modo prueba: borrar secretos los olvida y saca sus premios', () => {
   assert.ok(!limpio.ropa.tiene.includes('panuelo-salud'))
   assert.deepEqual(limpio.ropa.puesta, {})
   assert.equal(lanzarEvento(estado(), 'gato').eventoPrueba.tipo, 'gato')
+})
+
+const NOCHE = new Date('2026-11-05T23:00:00')
+const MADRUGADA = new Date('2026-11-06T02:00:00')
+
+test('estrella: se sortea una vez por noche (la madrugada cuenta como la misma noche)', () => {
+  const e = sortearEstrella(estado(), NOCHE, () => 0.99)
+  assert.equal(e.estrella.ultimaNoche, '2026-11-05')
+  assert.equal(e.estrella.estaNoche, false)
+  assert.equal(sortearEstrella(e, MADRUGADA, () => 0), e, 'misma noche: no se vuelve a sortear')
+  const dia = estado()
+  assert.equal(sortearEstrella(dia, new Date('2026-11-05T15:00:00'), () => 0), dia, 'de día no hace nada')
+})
+
+test('estrella: arranca en 0,01% y crece ×1,25 por noche sin estrella, hasta 50%', () => {
+  let e = sortearEstrella(estado(), NOCHE, () => 0.99)
+  assert.equal(e.estrella.chance, 0.0001)
+  e = sortearEstrella(e, new Date('2026-11-06T23:00:00'), () => 0.99)
+  assert.ok(Math.abs(e.estrella.chance - 0.000125) < 1e-12)
+  e = sortearEstrella(e, new Date('2026-11-09T23:00:00'), () => 0.99) // pasaron 3 noches
+  assert.ok(Math.abs(e.estrella.chance - 0.0001 * 1.25 ** 4) < 1e-12)
+  e = sortearEstrella(e, new Date('2027-06-01T23:00:00'), () => 0.99)
+  assert.equal(e.estrella.chance, 0.5)
+})
+
+test('estrella: al atraparla, la primera da la multi (secreto) y las siguientes 1 tirada; la chance vuelve a empezar', () => {
+  const alta = { ...estado(), estrella: { chance: 0.4, ultimaNoche: '2026-11-04', estaNoche: true } }
+  let r = atraparEstrella(alta, NOCHE)
+  assert.equal(r.nuevo, true)
+  assert.equal(r.estado.gacha.tiradasGratis, 10)
+  assert.equal(r.estado.estrella.chance, 0.0001)
+  assert.equal(r.estado.estrella.estaNoche, false)
+  r = atraparEstrella({ ...r.estado, estrella: { ...r.estado.estrella, estaNoche: true } }, NOCHE)
+  assert.equal(r.nuevo, false)
+  assert.equal(r.estado.gacha.tiradasGratis, 11)
 })
