@@ -148,6 +148,34 @@ export const JUEGOS = {
     { desde: 25, velocidad: 0.88, intervalo: 0.24, probDoble: 0.4, probChocolate: 0.33 }, // últimos 15 s
   ],
 
+  // Minijuego "Paseo con Bolti" (se desbloquea con el secreto de anotar "pasear a Bolti").
+  // Bolti corre de costado; tocar la pantalla la hace saltar. Las medidas son en "anchos de pantalla".
+  PASEO_DURACION_SEGUNDOS: 45,
+  PASEO_VIDAS: 3,
+  PASEO_SALTO: 1.6, // velocidad hacia arriba al saltar
+  PASEO_GRAVEDAD: 4.3, // con estos dos valores el salto dura ~0,75 s y sube ~0,3
+  PASEO_PUNTOS_POR_SEGUNDO: 10, // por caminar
+  PASEO_PUNTOS_HUESO: 10,
+  PASEO_PUNTOS_DORADO: 30,
+  PASEO_PUNTOS_SALTO: 20, // por cada obstáculo que pasa sin chocar
+  PASEO_PUNTOS_POR_VIDA: 100, // por cada corazón que queda al final
+  PASEO_PROB_DORADO: 0.15,
+  PASEO_ETAPAS: [
+    { desde: 0, velocidad: 0.42, intervalo: 1.6 },
+    { desde: 12, velocidad: 0.5, intervalo: 1.35 },
+    { desde: 25, velocidad: 0.6, intervalo: 1.15 },
+    { desde: 35, velocidad: 0.72, intervalo: 1 }, // últimos 10 s
+  ],
+  // El caballo (secreto INVENCIBLE): a veces aparece una vez por paseo, la patea y Bolti se levanta
+  // invencible unos segundos (nada la frena y los puntos valen doble)
+  PASEO_PROB_CABALLO: 0.5,
+  PASEO_CABALLO_DESDE: 12, // segundos: aparece entre estos dos momentos
+  PASEO_CABALLO_HASTA: 28,
+  PASEO_VUELO_SEGUNDOS: 1.4,
+  PASEO_INVENCIBLE_SEGUNDOS: 5,
+  // Puntaje para ganar el título "Paseadora de perros" y el collar con chapita "Bolti"
+  PASEO_PUNTAJE_PASEADORA: 1500,
+
   // Minijuego "Memoria de Bolti": límite por tiempo, cada nivel superado suma tiempo.
   // No se muestran las cartas al empezar: se van dando vuelta. Equivocarse no resta tiempo.
   MEMORIA_TIEMPO_INICIAL: 40, // segundos
@@ -478,8 +506,8 @@ export const SECRETOS = [
   { id: 'san-valentin', nombre: 'San Valentín', pista: 'Un día de febrero lleno de amor', premio: { prenda: 'mono-rojo' } },
   { id: 'aniversario', nombre: 'Aniversario', pista: 'Un día de marzo muy importante para ustedes dos', premio: { prenda: 'collar-corazon' } },
   { id: 'pure', nombre: 'Cómplices', pista: 'A la hora del almuerzo, a veces sobra algo naranja…', frase: '¿Hoy hay puré? 👀', premio: { prenda: 'babero-complice' } },
-  { id: 'paseo', nombre: 'A pasear', pista: 'Bolti quiere salir… si alguien lo anotara', proximamente: true },
-  { id: 'invencible', nombre: 'INVENCIBLE', pista: 'Algunos golpes no la frenan', proximamente: true },
+  { id: 'paseo', nombre: 'A pasear', pista: 'Bolti quiere salir… si alguien lo anotara', frase: 'Me encantaría salir a pasear… si alguien lo anotara 📝', premio: { tiradas: 10 } },
+  { id: 'invencible', nombre: 'INVENCIBLE', pista: 'En el paseo, algunos golpes no la frenan', premio: { prenda: 'traje-superheroe' } },
 ]
 
 export const REGLAS_SECRETOS = {
