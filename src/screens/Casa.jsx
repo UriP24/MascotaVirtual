@@ -11,6 +11,7 @@ import GiftReveal from '../components/GiftReveal.jsx'
 import Confetti from '../components/Confetti.jsx'
 import Ventana from '../components/Ventana.jsx'
 import ObjetoPiso from '../components/ObjetoPiso.jsx'
+import Mesita from '../components/Mesita.jsx'
 import SecretFound from '../components/SecretFound.jsx'
 import SpecialCard from '../components/SpecialCard.jsx'
 import { apagarLuz, darMimos, humor, prenderLuz } from '../logic/bolti.js'
@@ -551,6 +552,7 @@ function Casa({ estado, setEstado, horasAusente = 0, onCambiarPantalla }) {
           BOLTI
         </div>
         <div className="alfombra" aria-hidden="true" />
+        <Mesita conPure={hayPure(estado, ahora) && animo !== 'dormida' && !mochilaAbierta} onTocarPure={tocarPure} />
         <SpeechBubble texto={texto} />
         <Bolti
           animo={animo}
@@ -575,9 +577,7 @@ function Casa({ estado, setEstado, horasAusente = 0, onCambiarPantalla }) {
         <FloatingEmoji items={flotantes} />
         {hayRegaloDeCumple(estado, ahora) && !mochilaAbierta && <GiftBox onAbrir={abrirRegalo} />}
         {estado.mediaEsperando && !mochilaAbierta && <ObjetoPiso tipo="media" onTocar={tocarMedia} />}
-        {hayPure(estado, ahora) && animo !== 'dormida' && !mochilaAbierta && !hayRegaloDeCumple(estado, ahora) && (
-          <ObjetoPiso tipo="pure" onTocar={tocarPure} />
-        )}
+
         {mochilaAbierta && (
           <Backpack
             estado={estado}

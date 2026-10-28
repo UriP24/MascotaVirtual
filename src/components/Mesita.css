@@ -1,0 +1,62 @@
+.mesita {
+  position: absolute;
+  left: 1%;
+  bottom: 13%;
+  width: 31%;
+  max-width: 135px;
+}
+
+.mesita .mueble {
+  display: block;
+  width: 100%;
+}
+
+/* El plato apoyado sobre la tabla de la mesita */
+.mesita .plato {
+  position: absolute;
+  left: 50%;
+  bottom: 54%;
+  z-index: 3;
+  padding: 0;
+  border: none;
+  background: none;
+  transform: translateX(-50%);
+  filter: drop-shadow(0 2px 3px rgb(63 53 64 / 0.2));
+  animation: plato-aparecer 0.5s ease-out;
+}
+
+.mesita .plato svg {
+  display: block;
+}
+
+.mesita .vapor {
+  animation: vapor-subir 2.2s ease-in-out infinite;
+}
+
+@keyframes plato-aparecer {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -12px);
+  }
+}
+
+@keyframes vapor-subir {
+  0% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  50% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mesita .plato,
+  .mesita .vapor {
+    animation: none;
+  }
+}
