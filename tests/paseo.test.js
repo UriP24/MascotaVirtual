@@ -56,7 +56,7 @@ test('los huesitos se juntan pasando por encima (o saltando si están en el aire
   assert.equal(correr(enElAire, 1).huesos, 0, 'sin saltar no lo alcanza')
 })
 
-test('el caballo la patea: vuela, no pierde vidas y queda invencible', () => {
+test('si el caballo la agarra en el piso, la patea: no pierde vidas y queda invencible', () => {
   const conCaballo = {
     ...juegoVacio(),
     items: [
@@ -66,10 +66,17 @@ test('el caballo la patea: vuela, no pierde vidas y queda invencible', () => {
   }
   let j = correr(conCaballo, 0.4)
   assert.equal(j.patadas, 1)
-  assert.ok(j.y > 0, 'sale volando')
   assert.ok(invencible(j))
   j = correr(j, 2)
   assert.equal(j.vidas, JUEGOS.PASEO_VIDAS, 'invencible: la bici no la frena')
+})
+
+test('si salta justo cuando el caballo patea, lo esquiva y gana puntos', () => {
+  const conCaballo = { ...juegoVacio(), items: [{ id: 1, tipo: 'caballo', x: 0.6, altura: 0 }] }
+  const j = correr(conCaballo, 1.5, { saltarCuando: (jj) => jj.items[0] && jj.items[0].x - X_BOLTI < 0.2 })
+  assert.equal(j.patadas, 0)
+  assert.equal(j.esquivas, 1)
+  assert.equal(invencible(j), false)
 })
 
 test('invencible, los puntos valen doble', () => {

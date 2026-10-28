@@ -6,7 +6,9 @@ import { JUEGOS } from '../config.js'
 
 export const X_BOLTI = 0.25
 const MEDIO_ANCHO_BOLTI = 0.05 // la "caja" con la que choca (más chica que el dibujo, para ser justo)
-const DISTANCIA_PATADA = 0.12 // a esta distancia del caballo, la patea
+const DISTANCIA_PATADA = 0.18 // a esta distancia patea: la pata de atrás llega justo adelante de Bolti
+export const DISTANCIA_AVISO = 0.45 // a esta distancia levanta la pata: si salta ahí, la esquiva
+const ALTURA_PARA_ESQUIVAR = 0.05 // si en el momento de la patada está más alta que esto, la esquiva
 
 // Medidas de cada cosa: ancho y alto (en anchos de pantalla)
 export const MEDIDAS = {
@@ -45,8 +47,8 @@ export function crearJuego(azar = Math.random, caballoSeguro = false) {
     caballoEn: hayCaballo ? (caballoSeguro ? 6 : momento) : null, // cuándo aparece (null: este paseo no)
     caballoSalio: false,
     golpeHasta: 0, // después de chocar, un ratito sin poder volver a chocar (titila)
-    vueloHasta: 0, // volando por la patada del caballo
     invencibleHasta: 0,
+    esquivas: 0,
     siguienteId: 1,
     eventos: [],
     terminado: false,
@@ -57,17 +59,13 @@ export function enElPiso(juego) {
   return juego.y <= 0 && juego.vy <= 0
 }
 
-export function volando(juego) {
-  return juego.t < juego.vueloHasta
-}
-
 export function invencible(juego) {
   return juego.t < juego.invencibleHasta
 }
 
-// Tocar la pantalla: salta (solo si está en el piso y no la acaba de patear el caballo)
+// Tocar la pantalla: salta (solo si está en el piso)
 export function saltar(juego) {
-  if (juego.terminado || !enElPiso(juego) || volando(juego)) return juego
+  if (juego.terminado || !enElPiso(juego)) return juego
   return { ...juego, vy: JUEGOS.PASEO_SALTO }
 }
 
@@ -95,12 +93,12 @@ export function paso(juego, dt, azar = Math.random) {
   if (juego.terminado) return juego
   const t = juego.t + dt
   const config = JUEGOS.PASEO_ETAPAS[etapa(t)]
-  let { proximo, siguienteId, puntos, huesos, saltados, vidas, golpeHasta, vueloHasta, invencibleHasta, patadas, caballoSalio } = juego
+  let { proximo, siguienteId, puntos, huesos, saltados, vidas, golpeHasta, invencibleHasta, patadas, esquivas, caballoSalio } = juego
   const { caballoEn } = juego
   const eventos = []
   const doble = t < invencibleHasta ? 2 : 1
 
-  // Salto y gravedad (la patada del caballo la hace volar más alto)
+  // Salto y gravedad
   let vy = juego.vy - JUEGOS.PASEO_GRAVEDAD * dt
   let y = juego.y + vy * dt
   if (y <= 0) {
@@ -139,17 +137,23 @@ export function paso(juego, dt, azar = Math.random) {
         continue // se lo comió
       }
     } else if (item.tipo === 'caballo') {
+      // Avisa levantando la pata; al llegar, patea: si Bolti está saltando la esquiva, si no la patea
+      if (!item.preparando && x - X_BOLTI < DISTANCIA_AVISO) actualizado.preparando = true
       if (!item.pateo && x - X_BOLTI < DISTANCIA_PATADA) {
         actualizado.pateo = true
-        patadas += 1
-        vy = 2.6 // ¡vuela!
-        y = Math.max(y, 0.01)
-        vueloHasta = t + JUEGOS.PASEO_VUELO_SEGUNDOS
-        invencibleHasta = vueloHasta + JUEGOS.PASEO_INVENCIBLE_SEGUNDOS
-        eventos.push({ tipo: 'patada' })
+        if (y > ALTURA_PARA_ESQUIVAR || t < invencibleHasta) {
+          esquivas += 1
+          const gana = JUEGOS.PASEO_PUNTOS_ESQUIVA * doble
+          puntos += gana
+          eventos.push({ tipo: 'esquiva', gana })
+        } else {
+          patadas += 1
+          invencibleHasta = t + JUEGOS.PASEO_INVENCIBLE_SEGUNDOS
+          eventos.push({ tipo: 'patada' })
+        }
       }
     } else if (!item.pasado && !item.chocado) {
-      const protegida = t < golpeHasta || t < vueloHasta || t < invencibleHasta
+      const protegida = t < golpeHasta || t < invencibleHasta
       if (cerca && y < m.alto && !protegida) {
         actualizado.chocado = true
         vidas -= 1
@@ -182,9 +186,9 @@ export function paso(juego, dt, azar = Math.random) {
     proximo,
     siguienteId,
     golpeHasta,
-    vueloHasta,
     invencibleHasta,
     patadas,
+    esquivas,
     caballoSalio,
     eventos,
     terminado,

@@ -1,8 +1,9 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import BoltiPerfil from './BoltiPerfil.jsx'
 import PaseoObjeto from './PaseoObjeto.jsx'
+import PaseoInvencible from './PaseoInvencible.jsx'
 import { JUEGOS } from '../config.js'
-import { X_BOLTI, crearJuego, enElPiso, invencible, paso, puntajeFinal, saltar, segundosRestantes, volando } from '../logic/paseo.js'
+import { X_BOLTI, crearJuego, enElPiso, invencible, paso, puntajeFinal, saltar, segundosRestantes } from '../logic/paseo.js'
 import { formatearPuntaje } from '../logic/puntaje.js'
 import './Paseo.css'
 
@@ -10,8 +11,7 @@ const CUENTA_REGRESIVA = 3
 const PISO = 0.2 // alto de la vereda (proporción del alto de la pantalla)
 const ANCHO_BOLTI = 0.3 // ancho del dibujo de Bolti (proporción del ancho)
 // Ancho del dibujo de cada cosa (un poco más grande que su "caja" de choque)
-const ANCHO_DIBUJO = { charco: 0.19, gato: 0.13, bici: 0.21, hueso: 0.09, dorado: 0.09, caballo: 0.52 }
-const DURACION_CARTEL = 2.2 // segundos que se ve "INVENCIBLE"
+const ANCHO_DIBUJO = { charco: 0.19, gato: 0.13, bici: 0.21, hueso: 0.12, dorado: 0.12, caballo: 0.52 }
 
 // Minijuego "Paseo con Bolti": Bolti corre por el barrio y se toca para saltar.
 // La simulación vive en logic/paseo.js; acá solo se dibuja y se maneja el toque.
@@ -24,6 +24,7 @@ function Paseo({ onTerminar, caballoSeguro = false }) {
   const [cuenta, setCuenta] = useState(CUENTA_REGRESIVA)
   const [pausado, setPausado] = useState(false)
   const [textos, setTextos] = useState([])
+  const [escena, setEscena] = useState(false) // la escena de la patada del caballo (INVENCIBLE)
   const terminarRef = useRef(onTerminar)
   useEffect(() => {
     terminarRef.current = onTerminar
@@ -56,7 +57,7 @@ function Paseo({ onTerminar, caballoSeguro = false }) {
 
   // El bucle del juego: un paso por cuadro de animación
   useEffect(() => {
-    if (cuenta > 0 || pausado) return
+    if (cuenta > 0 || pausado || escena) return
     let anterior = performance.now()
     let id = requestAnimationFrame(function cuadro(ahora) {
       const dt = Math.min(0.05, (ahora - anterior) / 1000)
@@ -65,16 +66,25 @@ function Paseo({ onTerminar, caballoSeguro = false }) {
       juegoRef.current = j
       if (j.eventos.length > 0) {
         if (j.eventos.some((ev) => ev.tipo === 'choque')) navigator.vibrate?.([40, 30, 40])
-        if (j.eventos.some((ev) => ev.tipo === 'patada')) navigator.vibrate?.([60, 40, 120])
         const nuevos = j.eventos
           .filter((ev) => ev.gana)
-          .map((ev, i) => ({ id: `${j.t}-${i}`, texto: `+${ev.gana}`, dorado: ev.tipo === 'dorado' }))
+          .map((ev, i) => ({
+            id: `${j.t}-${i}`,
+            texto: ev.tipo === 'esquiva' ? `¡Esquivada! +${ev.gana}` : `+${ev.gana}`,
+            dorado: ev.tipo === 'dorado' || ev.tipo === 'esquiva',
+          }))
         if (nuevos.length > 0) {
           setTextos((lista) => [...lista, ...nuevos])
           setTimeout(() => setTextos((lista) => lista.filter((t) => !nuevos.includes(t))), 700)
         }
       }
       setJuego(j)
+      // ¡La pateó el caballo! Se pausa el juego y arranca la escena
+      if (j.eventos.some((ev) => ev.tipo === 'patada')) {
+        navigator.vibrate?.([60, 40, 120])
+        setEscena(true)
+        return
+      }
       if (j.terminado) {
         terminarRef.current(resultado(j))
         return
@@ -82,7 +92,9 @@ function Paseo({ onTerminar, caballoSeguro = false }) {
       id = requestAnimationFrame(cuadro)
     })
     return () => cancelAnimationFrame(id)
-  }, [cuenta, pausado])
+  }, [cuenta, pausado, escena])
+
+  const terminarEscena = useCallback(() => setEscena(false), [])
 
   function resultado(j) {
     return { puntaje: puntajeFinal(j), huesos: j.huesos, saltados: j.saltados, patadas: j.patadas }
@@ -97,8 +109,7 @@ function Paseo({ onTerminar, caballoSeguro = false }) {
   const piso = alto * PISO
   const anchoBolti = ancho * ANCHO_BOLTI
   const altoBolti = anchoBolti * (120 / 170)
-  const pose = volando(juego) ? 'volando' : enElPiso(juego) ? 'corriendo' : 'saltando'
-  const enCartel = juego.vueloHasta > 0 && juego.t >= juego.vueloHasta && juego.t < juego.vueloHasta + DURACION_CARTEL
+  const pose = enElPiso(juego) ? 'corriendo' : 'saltando'
 
   return (
     <div className="paseo" ref={areaRef} onPointerDown={tocar}>
@@ -139,10 +150,23 @@ function Paseo({ onTerminar, caballoSeguro = false }) {
             style={{ left: it.x * ancho - anchoDibujo / 2, bottom: piso + it.altura * ancho, width: anchoDibujo }}
             aria-hidden="true"
           >
-            <PaseoObjeto tipo={it.tipo} pateando={Boolean(it.pateo)} />
+            <PaseoObjeto tipo={it.tipo} preparando={Boolean(it.preparando)} pateando={Boolean(it.pateo)} />
           </div>
         )
       })}
+
+      {juego.items
+        .filter((it) => it.tipo === 'caballo' && it.preparando && !it.pateo) // levantó la pata: ¡saltá!
+        .map((it) => (
+          <span
+            key={`aviso-${it.id}`}
+            className="aviso-caballo"
+            style={{ left: (it.x - ANCHO_DIBUJO.caballo * 0.3) * ancho, bottom: piso + ancho * 0.48 }}
+            aria-hidden="true"
+          >
+            ❗
+          </span>
+        ))}
 
       <div
         className="bolti-paseo"
@@ -152,8 +176,7 @@ function Paseo({ onTerminar, caballoSeguro = false }) {
           width: anchoBolti,
         }}
       >
-        <BoltiPerfil pose={pose} invencible={invencible(juego) && !volando(juego)} golpe={juego.t < juego.golpeHasta} />
-        {volando(juego) && <span className="globo-soy">Soy…</span>}
+        <BoltiPerfil pose={pose} fase={juego.t} invencible={invencible(juego)} golpe={juego.t < juego.golpeHasta} />
       </div>
 
       {textos.map((t) => (
@@ -167,11 +190,7 @@ function Paseo({ onTerminar, caballoSeguro = false }) {
         </span>
       ))}
 
-      {enCartel && (
-        <div className="cartel-invencible" aria-live="polite">
-          <span>INVENCIBLE</span>
-        </div>
-      )}
+      {escena && <PaseoInvencible onTerminar={terminarEscena} />}
 
       {cuenta > 0 && (
         <div className="cartel">

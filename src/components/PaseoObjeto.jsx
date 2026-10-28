@@ -1,11 +1,12 @@
 // Las cosas que aparecen en el paseo, dibujadas con el mismo estilo que Bolti.
 // Todas miran / se apoyan sobre el piso (el borde de abajo del dibujo es el piso).
-function PaseoObjeto({ tipo, pateando = false }) {
+// El caballo: preparando = levanta la pata (aviso para saltar) · pateando = la estira hacia Bolti
+function PaseoObjeto({ tipo, preparando = false, pateando = false }) {
   if (tipo === 'charco') return <Charco />
   if (tipo === 'gato') return <GatoSentado />
   if (tipo === 'bici') return <Bici />
   if (tipo === 'hueso' || tipo === 'dorado') return <Hueso dorado={tipo === 'dorado'} />
-  if (tipo === 'caballo') return <Caballo pateando={pateando} />
+  if (tipo === 'caballo') return <Caballo preparando={preparando} pateando={pateando} />
   return null
 }
 
@@ -51,10 +52,13 @@ function Bici() {
   )
 }
 
+// Los huesitos van sobre una medalla de color, así se ven bien sobre el cielo y los arbustos
 function Hueso({ dorado }) {
   return (
-    <svg viewBox="0 0 60 30" width="100%" style={{ display: 'block' }} className={dorado ? 'hueso-dorado' : undefined}>
+    <svg viewBox="0 0 60 60" width="100%" style={{ display: 'block' }} className={dorado ? 'hueso-dorado' : undefined}>
+      <circle cx="30" cy="30" r="27" fill={dorado ? '#ffe9a8' : '#cdf3f0'} stroke={dorado ? '#f2c14e' : '#2bb8b0'} strokeWidth="4" />
       <path
+        transform="translate(0 15)"
         fill={dorado ? '#f2c14e' : '#fff8f2'}
         stroke={C}
         strokeWidth="2.5"
@@ -65,9 +69,10 @@ function Hueso({ dorado }) {
 }
 
 // El caballo mira a la derecha y le muestra la cola a Bolti; al patear estira las patas de atrás
-function Caballo({ pateando }) {
+function Caballo({ preparando, pateando }) {
+  const clase = ['caballo', preparando && 'preparando', pateando && 'pateando'].filter(Boolean).join(' ')
   return (
-    <svg viewBox="0 0 200 180" width="100%" style={{ display: 'block' }} className={pateando ? 'caballo pateando' : 'caballo'}>
+    <svg viewBox="0 0 200 180" width="100%" style={{ display: 'block' }} className={clase}>
       {/* Cola */}
       <path fill="#5c3b22" stroke={C} strokeWidth="3" strokeLinejoin="round" d="M44 66 C28 70 22 96 26 120 C34 112 36 96 48 80 Z" />
       {/* Patas de atrás (la de adelante patea) */}

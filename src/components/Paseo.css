@@ -137,7 +137,7 @@
   animation: paseo-flotar 0.6s ease-in-out infinite alternate;
 }
 .paseo .hueso-dorado {
-  filter: drop-shadow(0 0 5px gold);
+  filter: drop-shadow(0 0 6px gold);
 }
 
 /* El caballo patea: la pata de atrás se estira hacia Bolti */
@@ -146,8 +146,26 @@
   transform-origin: 50% 5%;
   transition: transform 0.15s ease-out;
 }
+.paseo .caballo.preparando .pata-patada {
+  transform: rotate(-22deg);
+}
 .paseo .caballo.pateando .pata-patada {
   transform: rotate(70deg);
+}
+
+/* Aviso arriba del caballo cuando está por patear */
+.paseo .aviso-caballo {
+  position: absolute;
+  z-index: 2;
+  font-size: 2rem;
+  transform: translateX(-50%);
+  animation: paseo-aviso 0.3s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+@keyframes paseo-aviso {
+  to {
+    transform: translateX(-50%) scale(1.25);
+  }
 }
 
 .paseo .bolti-paseo {
@@ -156,19 +174,6 @@
   pointer-events: none;
 }
 
-.paseo .globo-soy {
-  position: absolute;
-  top: -46px;
-  left: 50%;
-  padding: 6px 14px;
-  border-radius: 16px;
-  background: white;
-  font-size: 1.2rem;
-  font-weight: 800;
-  white-space: nowrap;
-  box-shadow: 0 2px 8px rgb(63 53 64 / 0.2);
-  transform: translateX(-50%);
-}
 
 .paseo .texto-paseo {
   position: absolute;
@@ -185,36 +190,6 @@
   font-size: 1.6rem;
 }
 
-/* INVENCIBLE: letras gruesas e inclinadas, en rosa con borde y sombra turquesa
-   (guiño a la serie que vieron juntos, con letras propias) */
-.paseo .cartel-invencible {
-  position: absolute;
-  top: 26%;
-  left: 0;
-  right: 0;
-  z-index: 3;
-  display: flex;
-  justify-content: center;
-  pointer-events: none;
-}
-.paseo .cartel-invencible span {
-  display: inline-block;
-  padding: 6px 4px;
-  font-family: Impact, 'Arial Black', system-ui, sans-serif;
-  font-size: clamp(2.4rem, 13vw, 4rem);
-  font-weight: 900;
-  font-style: italic;
-  letter-spacing: 1px;
-  color: #ffd9e7;
-  background: linear-gradient(180deg, #ffb3d1, #ec6f9e);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -webkit-text-stroke: 2.5px #3a2230;
-  filter: drop-shadow(4px 4px 0 #2bb8b0) drop-shadow(2px 3px 0 #3a2230);
-  transform: skewX(-8deg) scaleY(1.25);
-  animation: paseo-invencible 2.2s ease-out forwards;
-}
 
 .paseo .cartel {
   position: absolute;
@@ -262,26 +237,6 @@
   to {
     opacity: 0;
     transform: translate(-50%, -50px);
-  }
-}
-@keyframes paseo-invencible {
-  0% {
-    opacity: 0;
-    transform: skewX(-8deg) scaleY(1.25) scale(0.3);
-  }
-  20% {
-    opacity: 1;
-    transform: skewX(-8deg) scaleY(1.25) scale(1.12);
-  }
-  30% {
-    transform: skewX(-8deg) scaleY(1.25) scale(1);
-  }
-  85% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-    transform: skewX(-8deg) scaleY(1.25) scale(1);
   }
 }
 

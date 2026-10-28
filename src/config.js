@@ -168,13 +168,14 @@ export const JUEGOS = {
     { desde: 25, velocidad: 0.6, intervalo: 1.15 },
     { desde: 35, velocidad: 0.72, intervalo: 1 }, // últimos 10 s
   ],
-  // El caballo (secreto INVENCIBLE): a veces aparece una vez por paseo, la patea y Bolti se levanta
-  // invencible unos segundos (nada la frena y los puntos valen doble)
+  // El caballo (secreto INVENCIBLE): a veces aparece una vez por paseo y patea con las patas de atrás.
+  // Si Bolti salta justo, lo esquiva; si la agarra en el piso, la patea y se levanta invencible
+  // unos segundos (nada la frena y los puntos valen doble)
   PASEO_PROB_CABALLO: 0.5,
   PASEO_CABALLO_DESDE: 12, // segundos: aparece entre estos dos momentos
   PASEO_CABALLO_HASTA: 28,
-  PASEO_VUELO_SEGUNDOS: 1.4,
   PASEO_INVENCIBLE_SEGUNDOS: 5,
+  PASEO_PUNTOS_ESQUIVA: 50, // si salta justo cuando el caballo patea, lo esquiva
   // Puntaje para ganar el título "Paseadora de perros" y el collar con chapita "Bolti"
   PASEO_PUNTAJE_PASEADORA: 1500,
 

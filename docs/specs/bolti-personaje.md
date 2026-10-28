@@ -55,9 +55,15 @@ real, aunque la app esté cerrada. **Nunca se enferma ni muere.**
      primera, +50 × nivel superado. Tabla: <200 → 5 🪙, 200 → 10, 400 → 15, 600 → 20, 800 → 25,
      1.000 → 30, 1.300 → 35, 1.600 → 40 y +5 cada 300 más. Récord por juego: al superarlo, +10 🪙 cada 500 puntos del récord (mínimo 5).
    - "Paseo con Bolti" (se desbloquea anotando la tarea "pasear a Bolti"): Bolti de perfil corre por
-     la vereda, se toca para saltar charcos, gatos y bicis y junta huesitos. 45 s, 3 vidas. A veces
-     aparece un caballo que la patea: vuela diciendo "Soy…", cae y aparece el cartel INVENCIBLE
-     (5 s sin que nada la frene, puntos ×2). Con 1.500 puntos: "Paseadora de perros" y el collar "Bolti".
+     la vereda (las patas se mueven según el tiempo del juego, aunque el celu tenga "reducir
+     animaciones"), se toca para saltar charcos, gatos y bicis y junta huesitos (sobre una medalla de
+     color para que se vean). 45 s, 3 vidas. A veces aparece un caballo: levanta la pata con un ❗ y,
+     si Bolti salta en ese momento, esquiva la patada (+50). Si la agarra en el piso, la patea: escena
+     con zoom a Bolti tirada en un cráter (mareada, sin lastimarse), se levanta con aura dorada y dice
+     "SOY…", y aparece el cartel INVENCIBLE como el de la serie (5 s sin que nada la frene, puntos ×2).
+     Con 1.500 puntos: "Paseadora de perros" y el collar "Bolti".
+   - La tarea "pasear a Bolti" se puede anotar una vez por día y se completa jugando un paseo
+     (+1 ⭐ y las 🪙 de una tarea).
    - Después: más minijuegos.
 7. **Ropa:** la mochila tiene pestañas Comida y Ropa. Tocar una prenda se la pone o se la saca
    (una por zona: cabeza, cara, cuello, cuerpo, patitas; un disfraz entero saca lo demás). La ropa
