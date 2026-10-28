@@ -45,6 +45,8 @@ export function crearEstadoInicial() {
     tutorialPreguntado: false,
     // Año en que abrió el regalo de cumpleaños (el 28/10 de cada año aparece uno nuevo)
     regaloCumpleAbierto: null,
+    // Recordatorios de estudio de hoy (tope por día) y la última vez que dijo que la extrañó
+    recordatoriosEstudio: { fecha: null, cantidad: 0, ultimo: null, ultimoExtrano: null },
     // Secretos descubiertos: { estornudo: '2026-11-02T…' } (fecha en que lo descubrió)
     secretos: {},
     // Medias que trajo Bolti (con 2 completa el par) y si hay una esperando en la habitación
@@ -86,6 +88,7 @@ function completarEstado(datos) {
     ropa: { ...inicial.ropa, ...datos.ropa },
     secretos: { ...inicial.secretos, ...datos.secretos },
     cartasVistas: { ...inicial.cartasVistas, ...datos.cartasVistas },
+    recordatoriosEstudio: { ...inicial.recordatoriosEstudio, ...datos.recordatoriosEstudio },
     version: VERSION_ACTUAL,
   }
 }

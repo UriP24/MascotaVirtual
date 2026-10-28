@@ -45,6 +45,15 @@ export const ESTUDIO = {
   CHEQUEO_MINUTOS_PARA_RESPONDER: 3,
 }
 
+// Recordatorios de estudio: Bolti lo menciona en una burbujita que se va sola, sin quedarse triste
+export const RECORDATORIOS_ESTUDIO = {
+  MAXIMO_POR_DIA: 3,
+  HORAS_ENTRE: 2, // mínimo entre un recordatorio y el siguiente
+  EXTRANO_CADA_DIAS: 7, // "Ayer te extrañé estudiando" como mucho una vez por semana
+  PRIMERO_A_LOS_SEGUNDOS: 8, // al entrar a Casa, el primero (si toca) llega después de esto
+  REVISAR_CADA_MINUTOS: 5,
+}
+
 export const PERRITA = {
   // Las tres necesidades (panza, energía, cariño) van de 0 a este máximo. Nunca se enferma ni muere:
   // con valores bajos solo se pone triste o con hambre.
@@ -70,9 +79,6 @@ export const PERRITA = {
 
   // Con la panza en este valor o más, está llena y no quiere comer
   SACIEDAD_LLENA: 95,
-
-  // Si extraña el estudio, cada cuántos minutos le recuerda a Mari que estudie (unos segundos)
-  RECORDATORIO_ESTUDIO_MINUTOS: 7,
 
   // Cariño que gana cuando Mari completa una tarea o una sesión de estudio (Bolti está orgullosa)
   CARINO_POR_LOGRO: 5,

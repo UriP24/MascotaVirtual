@@ -16,10 +16,9 @@ real, aunque la app esté cerrada. **Nunca se enferma ni muere.**
    1. Dormida (si está durmiendo).
    2. Con hambre (panza < 30).
    3. Triste (cariño < 30 o energía < 30): lagrimita, orejas caídas, "¿Me hacés mimos? 🥺".
-   4. **Extraña el estudio** (no estudió el último día obligatorio): cara pensativa con una
-      nubecita 📚, sin lagrimita. Le recuerda estudiar unos segundos cada 7 minutos (no queda fijo).
-      Se le pasa en cuanto completa el estudio de hoy.
-   5. Contenta.
+   4. Contenta.
+   No estudiar **no** cambia su humor: Bolti lo recuerda en una burbujita que se va sola, como mucho
+   3 veces por día y "Ayer te extrañé estudiando" como mucho una vez por semana.
 3. **Mimos:** tocarla la hace saltar y hablar (+1 cariño). Frotarla con el dedo da corazones
    (+3 cariño cada tanto). **Dormida:** tocarla dice "zzz… 😴"; frotarla da corazones y cariño pero
    sigue durmiendo (ojos cerrados, mueve la cola despacito). Dormida no muestra hambre ni cansancio.
@@ -95,7 +94,7 @@ Los puntos ⭐ van aparte (tareas y estudio → canjes).
 - [ ] Respira, parpadea, mueve la cola y sigue el dedo con los ojos
 - [ ] Tocar y frotar suben el cariño y muestran corazones
 - [ ] Las necesidades bajan con el tiempo real aunque la app esté cerrada
-- [ ] El humor cambia según las reglas, incluido triste si no estudió
+- [ ] El humor cambia según las reglas (no estudiar no la pone triste)
 - [ ] Arrastrar comida del inventario a la boca la alimenta; mientras come no saca la lengua
 - [ ] A las 00:00 se duerme sola; desde las 22:00 se le puede apagar la luz; a las 10:00 se despierta
 - [ ] Nunca muestra estado de enferma ni muerta

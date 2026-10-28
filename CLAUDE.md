@@ -65,7 +65,10 @@ PWA instalable en el celular con cuatro pantallas:
   pomodoro (el finde sin estudio no la corta), mejor racha, tiempo total, pomodoros, promedio y
   gráfico de los últimos 7 días. Salen de `historialEstudio` (`src/logic/estadisticas.js`).
 - Si no estudia un día obligatorio: **sin castigo**, la tarea desaparece a medianoche (si tenía
-  ≥ 25 min se completa sola). Pero queda en `historialEstudio` y **Bolti se pone triste**.
+  ≥ 25 min se completa sola) y queda en `historialEstudio`. **Bolti no se pone triste**: solo lo
+  recuerda en una burbujita que se va sola, como mucho 3 veces por día (2 h entre una y otra) y solo
+  si la tarea de hoy está pendiente; "Ayer te extrañé estudiando" como mucho una vez por semana
+  (`src/logic/recordatorios.js`, valores en `RECORDATORIOS_ESTUDIO`).
 
 ### Bolti (el personaje, lo más importante)
 Mascota estilo Pou / Talking Tom. Spec completa en `docs/specs/bolti-personaje.md`, prototipo en

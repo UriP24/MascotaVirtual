@@ -15,7 +15,7 @@ import Mesita from '../components/Mesita.jsx'
 import SecretFound from '../components/SecretFound.jsx'
 import SpecialCard from '../components/SpecialCard.jsx'
 import { apagarLuz, darMimos, humor, prenderLuz } from '../logic/bolti.js'
-import { PERRITA, REGLAS_SECRETOS } from '../config.js'
+import { PERRITA, RECORDATORIOS_ESTUDIO, REGLAS_SECRETOS } from '../config.js'
 import { comprar, darDeComer } from '../logic/comida.js'
 import { festejoVisto, fraseDeFestejo } from '../logic/festejo.js'
 import { abrirRegaloDeCumple, hayRegaloDeCumple } from '../logic/cumple.js'
@@ -32,18 +32,13 @@ import {
   sortearMedia,
 } from '../logic/secretos.js'
 import { fechaLocal } from '../logic/fechas.js'
+import { fraseDeEstudio, registrarRecordatorio } from '../logic/recordatorios.js'
 import './Casa.css'
 
 const DISTANCIA_POR_MIMO = 45 // px que hay que frotar para cada corazón
 const RADIO_BOCA = 0.2 // qué tan cerca de la boca (en proporción al ancho de Bolti) cuenta como "en la boca"
 const DURACION_COMIENDO = 1800
 const FRASES_AL_TOCARLA = ['¡Guau! 🐾', '¡Hola, Mari! 💕', '¿Jugamos?', '¡Te quiero!', '¡Más mimos!']
-const RECORDATORIOS_ESTUDIO = [
-  '¿Estudiamos un ratito? 📚',
-  'Te espero para estudiar juntas 🐶📚',
-  'Con un pomodorito de 25 minutos me pongo contenta 💕',
-  '¿Hoy toca estudiar? Yo te acompaño 📚',
-]
 
 function azar(lista) {
   return lista[Math.floor(Math.random() * lista.length)]
@@ -70,7 +65,6 @@ function fraseDeHumor(estado, animo, ahora) {
     if (estado.perrita.energia < PERRITA.NIVEL_BAJO) return 'Estoy cansadita… 🥱'
     return '¿Me hacés mimos? 🥺'
   }
-  // 'estudio' no tiene frase fija: le recuerda cada tanto (ver RECORDATORIO_ESTUDIO_MINUTOS)
   return null
 }
 
@@ -78,7 +72,7 @@ function Casa({ estado, setEstado, horasAusente = 0, onCambiarPantalla }) {
   // "Ahora" es la última vez que se actualizó Bolti (App lo hace cada minuto). Así el dibujo
   // no depende de la hora exacta en que React decide redibujar.
   const ahora = new Date(estado.perrita.actualizadaEn)
-  const animo = humor(estado, ahora)
+  const animo = humor(estado)
   const [mimos, setMimos] = useState(false)
   // Si hay un logro sin festejar (y está despierta), entra saltando y lo festeja
   const festejando = animo !== 'dormida' && Boolean(estado.perrita.festejo)
@@ -136,23 +130,18 @@ function Casa({ estado, setEstado, horasAusente = 0, onCambiarPantalla }) {
     }
   }, [setEstado]) // setEstado nunca cambia: corre solo al entrar a Casa
 
-  // Si extraña el estudio: se lo recuerda un ratito al entrar y después cada tanto (no queda fijo)
-  const extranaEstudio = animo === 'estudio'
+  // Recordatorio de estudio: una burbujita que se va sola, pocas veces por día (ver recordatorios.js)
+  const despiertaParaRecordar = animo !== 'dormida'
   useEffect(() => {
-    if (!extranaEstudio) return
-    const t = timers.current
-    const recordar = () => {
-      setFrase(azar(RECORDATORIOS_ESTUDIO))
-      clearTimeout(t.frase)
-      t.frase = setTimeout(() => setFrase(null), 5000)
-    }
-    const primero = setTimeout(recordar, 4000)
-    const cadaTanto = setInterval(recordar, PERRITA.RECORDATORIO_ESTUDIO_MINUTOS * 60 * 1000)
+    if (!despiertaParaRecordar) return
+    const revisar = () => recordarEstudioRef.current()
+    const primero = setTimeout(revisar, RECORDATORIOS_ESTUDIO.PRIMERO_A_LOS_SEGUNDOS * 1000)
+    const cadaTanto = setInterval(revisar, RECORDATORIOS_ESTUDIO.REVISAR_CADA_MINUTOS * 60 * 1000)
     return () => {
       clearTimeout(primero)
       clearInterval(cadaTanto)
     }
-  }, [extranaEstudio])
+  }, [despiertaParaRecordar])
 
   // Secreto del gato y la vaca: cada tanto, de día, alguien pasa por la ventana
   const despierta = animo !== 'dormida'
@@ -192,7 +181,9 @@ function Casa({ estado, setEstado, horasAusente = 0, onCambiarPantalla }) {
   const mostrarVisitaRef = useRef(null)
   const sacudirseRef = useRef(null)
   const manejarEventoRef = useRef(null)
+  const recordarEstudioRef = useRef(null)
   useEffect(() => {
+    recordarEstudioRef.current = recordarEstudio
     mostrarVisitaRef.current = mostrarVisita
     sacudirseRef.current = sacudirse
     manejarEventoRef.current = manejarEventoPrueba
@@ -303,6 +294,14 @@ function Casa({ estado, setEstado, horasAusente = 0, onCambiarPantalla }) {
     // A veces, en vez de una frase común, suelta una pista de un secreto
     const pista = Math.random() < REGLAS_SECRETOS.CHANCE_PISTA ? pistaAlAzar(estado) : null
     decir(pista ?? azar(FRASES_AL_TOCARLA), pista ? 2800 : 1800)
+  }
+
+  function recordarEstudio() {
+    const momento = new Date()
+    const texto = fraseDeEstudio(estado, momento)
+    if (!texto) return
+    decir(texto, 5000)
+    setEstado((e) => registrarRecordatorio(e, texto, momento))
   }
 
   // ── Secretos ──────────────────────────────────────────────────────────

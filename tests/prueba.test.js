@@ -2,7 +2,7 @@ import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { crearEstadoInicial } from '../src/storage.js'
 import { actualizarDia, completarTarea } from '../src/logic/tareas.js'
-import { humor } from '../src/logic/bolti.js'
+import { extranaElEstudio, humor } from '../src/logic/bolti.js'
 import { adelantarBolti, simularQueNoEstudio, sumarEstudio, sumarPuntos, ultraEnLaProxima, vaciarRopa } from '../src/logic/prueba.js'
 import { tirar } from '../src/logic/gacha.js'
 
@@ -22,11 +22,12 @@ test('adelantar a Bolti baja sus necesidades', () => {
   assert.ok(despues.perrita.saciedad < e.perrita.saciedad)
 })
 
-test('"ayer no estudió" hace que extrañe el estudio', () => {
+test('"ayer no estudió" hace que lo extrañe (sin ponerse triste)', () => {
   const inicial = crearEstadoInicial()
   // despierta, para no depender de la hora real en que se corren las pruebas
   const e = simularQueNoEstudio({ ...inicial, perrita: { ...inicial.perrita, durmiendo: false } }, MARTES)
-  assert.equal(humor(e, MARTES), 'estudio')
+  assert.equal(extranaElEstudio(e, MARTES), true)
+  assert.equal(humor(e, MARTES), 'contenta')
 })
 
 test('sumar puntos también suma al total ganado', () => {

@@ -86,13 +86,13 @@ test('humor: dormida > hambre > triste > contenta', () => {
   assert.equal(humor(e({}), ahora), 'contenta')
 })
 
-test('extraña el estudio si no estudió el último día obligatorio; se le pasa estudiando hoy', () => {
+test('si no estudió el último día obligatorio lo extraña, pero no se pone triste', () => {
   const miercoles = new Date('2026-10-21T15:00:00')
   const e = estadoCon(perrita())
   assert.equal(extranaElEstudio(e, miercoles), true, 'el martes no estudió')
-  assert.equal(humor(e, miercoles), 'estudio', 'distinto de la tristeza por cariño')
+  assert.equal(humor(e, miercoles), 'contenta', 'no estudiar no cambia su humor')
   const estudioHoy = { ...e, historialEstudio: { '2026-10-21': 30 } }
-  assert.equal(humor(estudioHoy, miercoles), 'contenta')
+  assert.equal(extranaElEstudio(estudioHoy, miercoles), false)
 })
 
 test('el lunes mira al viernes anterior; no cuenta días antes de instalar la app', () => {
