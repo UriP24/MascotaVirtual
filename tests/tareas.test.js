@@ -3,6 +3,8 @@ import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { crearEstadoInicial } from '../src/storage.js'
 import {
+  agregarTareaDePaseo,
+  completarPaseo,
   agregarTarea,
   completarTarea,
   borrarTarea,
@@ -198,4 +200,25 @@ test('si la app se cerró con el cronómetro andando, solo cuenta hasta el últi
   const c = e.tareas[0].estudio
   assert.equal(crono.msContados(c, 100 * MIN), 10 * MIN)
   assert.ok(crono.estaCorriendo(c))
+})
+
+test('la tarea del paseo: una por día, en cualquiera de sus variantes', () => {
+  const r = agregarTareaDePaseo(sinPuntos(), 'Pasear a Bolti', MARTES)
+  assert.equal(r.resultado, 'ok')
+  assert.equal(r.estado.tareas.at(-1).tipo, 'paseo')
+  assert.equal(agregarTareaDePaseo(r.estado, 'sacar a pasear a bolti', MARTES).resultado, 'repetida')
+  assert.equal(agregarTareaDePaseo(r.estado, 'Paseo con Bolti', new Date('2026-10-21T10:00:00')).resultado, 'ok', 'al otro día sí')
+})
+
+test('la tarea del paseo no se tilda a mano: se completa jugando, con monedas y un punto', () => {
+  const e = { ...agregarTareaDePaseo(sinPuntos(), 'Pasear a Bolti', MARTES).estado, monedas: 0 }
+  const id = e.tareas.at(-1).id
+  assert.equal(completarTarea(e, id, MARTES).completada, false)
+  const r = completarPaseo(e, MARTES)
+  assert.equal(r.completada, true)
+  assert.equal(r.estado.puntos, 1)
+  assert.equal(r.estado.puntosGanadosTotal, 1)
+  assert.equal(r.estado.monedas, 10)
+  assert.ok(r.estado.tareas.find((t) => t.id === id).hecha)
+  assert.equal(completarPaseo(r.estado, MARTES).completada, false, 'no hay otra pendiente')
 })

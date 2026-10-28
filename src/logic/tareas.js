@@ -40,6 +40,36 @@ export function agregarTarea(estado, texto, tipo, ahora = new Date()) {
   return { ...estado, tareas: [...estado.tareas, crearTarea(limpio, tipo, ahora)] }
 }
 
+// ── Tarea del paseo ─────────────────────────────────────────────────────
+// "Pasear a Bolti" (en cualquiera de sus variantes) es una tarea especial: se puede anotar una
+// sola vez por día y no se tilda a mano, se completa jugando al Paseo con Bolti.
+
+export function hayPaseoAnotadoHoy(estado, ahora = new Date()) {
+  const hoy = fechaLocal(ahora)
+  return estado.tareas.some((t) => t.tipo === 'paseo' && t.fecha === hoy)
+}
+
+// Devuelve { estado, resultado: 'ok' | 'repetida' }
+export function agregarTareaDePaseo(estado, texto, ahora = new Date()) {
+  if (hayPaseoAnotadoHoy(estado, ahora)) return { estado, resultado: 'repetida' }
+  const limpio = texto.trim().slice(0, LARGO_MAXIMO_TEXTO)
+  return { estado: { ...estado, tareas: [...estado.tareas, crearTarea(limpio, 'paseo', ahora)] }, resultado: 'ok' }
+}
+
+// Al terminar un paseo: completa la tarea del paseo pendiente (si hay), con sus monedas
+// (respetando el tope de tareas del día) y un punto. Devuelve { estado, completada, puntos, monedas }.
+export function completarPaseo(estado, ahora = new Date()) {
+  const tarea = estado.tareas.find((t) => t.tipo === 'paseo' && !t.hecha)
+  if (!tarea) return { estado, completada: false, puntos: 0, monedas: 0 }
+  const conRecompensa = tareasConRecompensaRestantes(estado, ahora) > 0
+  const monedas = conRecompensa ? monedasDeTarea() : 0
+  const puntos = ECONOMIA.PUNTOS_POR_PASEO
+  let nuevo = acreditar(estado, tarea.id, puntos, fechaLocal(ahora), 0, ahora)
+  if (conRecompensa) nuevo = contarRecompensa({ ...nuevo, monedas: nuevo.monedas + monedas }, ahora)
+  nuevo = reemplazarTarea(nuevo, tarea.id, () => ({ monedasGanadas: monedas }))
+  return { estado: nuevo, completada: true, puntos, monedas }
+}
+
 // Todas las tareas dan lo mismo (las viejas "simple" y "grande" también)
 export function monedasDeTarea() {
   return ECONOMIA.MONEDAS_POR_TAREA
@@ -96,7 +126,7 @@ function acreditar(estado, id, puntos, fecha, minutosEstudio, ahora) {
 export function completarTarea(estado, id, ahora = new Date()) {
   const tarea = estado.tareas.find((t) => t.id === id)
   const nada = { estado, completada: false, puntos: 0, monedas: 0 }
-  if (!tarea || tarea.hecha) return nada
+  if (!tarea || tarea.hecha || tarea.tipo === 'paseo') return nada
 
   if (tarea.tipo !== 'estudio') {
     const conRecompensa = tareasConRecompensaRestantes(estado, ahora) > 0

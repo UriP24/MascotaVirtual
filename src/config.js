@@ -5,6 +5,8 @@ export const ECONOMIA = {
   // Monedas que da completar cualquier tarea (las tareas no dan puntos: así inventar tareas no rompe
   // la economía). Solo las primeras TAREAS_CON_RECOMPENSA_POR_DIA de cada día dan monedas.
   MONEDAS_POR_TAREA: 10,
+  // La tarea "pasear a Bolti" (una por día): se completa jugando al Paseo y da además un punto
+  PUNTOS_POR_PASEO: 1,
   TAREAS_CON_RECOMPENSA_POR_DIA: 5,
 
   // Estudio: cada bloque completo de minutos da puntos

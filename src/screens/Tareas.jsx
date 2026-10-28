@@ -10,6 +10,7 @@ import StudyStats from '../components/StudyStats.jsx'
 import {
   actualizarCronometro,
   agregarTarea,
+  agregarTareaDePaseo,
   borrarTarea,
   completarTarea,
   msDisponibles,
@@ -38,7 +39,18 @@ function Tareas({ estado, setEstado }) {
   }
 
   function agregar(texto, tipo) {
-    let nuevo = agregarTarea(estado, texto, tipo)
+    let nuevo
+    if (esTareaDePaseo(texto)) {
+      // "Pasear a Bolti": una por día, y se completa jugando al Paseo
+      const r = agregarTareaDePaseo(estado, texto)
+      if (r.resultado === 'repetida') {
+        avisar('Ya anotaste el paseo de Bolti hoy 🐾 ¡Mañana la volvés a sacar!')
+        return
+      }
+      nuevo = r.estado
+    } else {
+      nuevo = agregarTarea(estado, texto, tipo)
+    }
     // Secreto: anotar "pasear a Bolti" desbloquea el minijuego del paseo
     if (esTareaDePaseo(texto) && !estaDescubierto(nuevo, 'paseo')) {
       nuevo = descubrir(nuevo, 'paseo', new Date()).estado

@@ -5,6 +5,7 @@ import MemoryGame from '../components/MemoryGame.jsx'
 import Paseo from '../components/Paseo.jsx'
 import SecretFound from '../components/SecretFound.jsx'
 import { descubrir, estaDescubierto } from '../logic/secretos.js'
+import { completarPaseo } from '../logic/tareas.js'
 import { empezarPartida, puedeJugar, terminarPartida } from '../logic/juegos.js'
 import { formatearPuntaje } from '../logic/puntaje.js'
 import './Jugar.css'
@@ -74,8 +75,15 @@ function Jugar({ estado, setEstado }) {
     const fin = terminarPartida(estado, jugando, r.puntaje)
     let nuevo = fin.estado
     let paseadora = false
+    let tareaPaseo = null
     if (jugando === 'paseo') {
       nuevo = { ...nuevo, caballoSeguro: false }
+      // Si tenía anotado "pasear a Bolti", jugar el paseo completa la tarea
+      const t = completarPaseo(nuevo, new Date())
+      if (t.completada) {
+        nuevo = t.estado
+        tareaPaseo = { puntos: t.puntos, monedas: t.monedas }
+      }
       // Secreto INVENCIBLE: la primera vez que la patea el caballo
       if (r.patadas > 0 && !estaDescubierto(nuevo, 'invencible')) {
         nuevo = descubrir(nuevo, 'invencible', new Date()).estado
@@ -88,7 +96,7 @@ function Jugar({ estado, setEstado }) {
       }
     }
     setEstado(nuevo)
-    setResultado({ ...r, juego: jugando, monedas: fin.monedas, nuevoRecord: fin.nuevoRecord, premioRecord: fin.premioRecord, paseadora })
+    setResultado({ ...r, juego: jugando, monedas: fin.monedas, nuevoRecord: fin.nuevoRecord, premioRecord: fin.premioRecord, paseadora, tareaPaseo })
     setJugando(null)
   }
 
@@ -113,6 +121,12 @@ function Jugar({ estado, setEstado }) {
           <strong>{textoResultado(resultado)}</strong>
           <span className="puntaje">⭐ {formatearPuntaje(resultado.puntaje)} puntos</span>
           {resultado.nuevoRecord && <span className="record">¡Nuevo récord! 🏆 +{resultado.premioRecord} 🪙 de premio</span>}
+          {resultado.tareaPaseo && (
+            <span className="record">
+              📝 ¡Tarea cumplida: Bolti salió a pasear! +{resultado.tareaPaseo.puntos} ⭐
+              {resultado.tareaPaseo.monedas > 0 && ` +${resultado.tareaPaseo.monedas} 🪙`}
+            </span>
+          )}
           {resultado.paseadora && (
             <span className="record">🏅 ¡Sos Paseadora de perros! Te ganaste el collar con chapita "Bolti" (está en tu mochila)</span>
           )}
