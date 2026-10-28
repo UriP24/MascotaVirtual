@@ -3,7 +3,7 @@ import BoltiPerfil from './BoltiPerfil.jsx'
 import PaseoObjeto from './PaseoObjeto.jsx'
 import PaseoInvencible from './PaseoInvencible.jsx'
 import { JUEGOS } from '../config.js'
-import { X_BOLTI, crearJuego, enElPiso, invencible, paso, puntajeFinal, saltar, segundosRestantes } from '../logic/paseo.js'
+import { X_BOLTI, cajaDeCosa, cajasDeBolti, crearJuego, enElPiso, invencible, paso, puntajeFinal, saltar, segundosRestantes } from '../logic/paseo.js'
 import { formatearPuntaje } from '../logic/puntaje.js'
 import './Paseo.css'
 
@@ -15,7 +15,8 @@ const ANCHO_DIBUJO = { charco: 0.19, gato: 0.13, bici: 0.21, hueso: 0.12, dorado
 
 // Minijuego "Paseo con Bolti": Bolti corre por el barrio y se toca para saltar.
 // La simulación vive en logic/paseo.js; acá solo se dibuja y se maneja el toque.
-function Paseo({ onTerminar, caballoSeguro = false }) {
+// verCajas (modo prueba): dibuja las cajas de choque para revisarlas
+function Paseo({ onTerminar, caballoSeguro = false, verCajas = false }) {
   const [juegoInicial] = useState(() => crearJuego(Math.random, caballoSeguro))
   const juegoRef = useRef(juegoInicial)
   const areaRef = useRef(null)
@@ -189,6 +190,16 @@ function Paseo({ onTerminar, caballoSeguro = false }) {
           {t.texto}
         </span>
       ))}
+
+      {verCajas &&
+        [...cajasDeBolti(juego.y), ...juego.items.filter((it) => it.tipo !== 'caballo').map((it) => cajaDeCosa(it))].map((c, i) => (
+          <span
+            key={i}
+            className="caja-choque"
+            style={{ left: c.x1 * ancho, bottom: piso + c.y1 * ancho, width: (c.x2 - c.x1) * ancho, height: (c.y2 - c.y1) * ancho }}
+            aria-hidden="true"
+          />
+        ))}
 
       {escena && <PaseoInvencible onTerminar={terminarEscena} />}
 

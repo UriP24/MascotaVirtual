@@ -101,7 +101,7 @@ function Jugar({ estado, setEstado }) {
   }
 
   const enCurso = MINIJUEGOS.find((m) => m.id === jugando)
-  if (enCurso) return <enCurso.Componente onTerminar={terminar} caballoSeguro={Boolean(estado.caballoSeguro)} />
+  if (enCurso) return <enCurso.Componente onTerminar={terminar} caballoSeguro={Boolean(estado.caballoSeguro)} verCajas={Boolean(estado.verCajasPaseo)} />
   const juegos = MINIJUEGOS.filter((m) => !m.secreto || estaDescubierto(estado, m.secreto))
 
   return (

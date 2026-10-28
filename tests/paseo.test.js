@@ -43,7 +43,7 @@ test('chocar un obstáculo saca una vida; saltarlo da puntos', () => {
   const conGato = { ...juegoVacio(), items: [{ id: 1, tipo: 'gato', x: 0.6, altura: 0 }] }
   const choca = correr(conGato, 1.5)
   assert.equal(choca.vidas, JUEGOS.PASEO_VIDAS - 1)
-  const salta = correr(conGato, 1.5, { saltarCuando: (j) => j.items[0] && j.items[0].x - X_BOLTI < 0.17 })
+  const salta = correr(conGato, 1.5, { saltarCuando: (j) => j.items[0] && j.items[0].x - X_BOLTI < 0.2 })
   assert.equal(salta.vidas, JUEGOS.PASEO_VIDAS)
   assert.equal(salta.saltados, 1)
 })
@@ -117,4 +117,21 @@ test('la tarea "pasear a Bolti", sin importar mayúsculas ni tildes', () => {
   assert.equal(esTareaDePaseo('Paseo con Bolti'), true)
   assert.equal(esTareaDePaseo('Pasear al perro'), false)
   assert.equal(esTareaDePaseo('Estudiar'), false)
+})
+
+test('cada obstáculo se puede saltar a tiempo, aun a la velocidad más alta', () => {
+  const rapido = JUEGOS.PASEO_ETAPAS.at(-1).desde + 1
+  for (const tipo of ['charco', 'gato', 'bici']) {
+    const conObstaculo = { ...juegoVacio(), t: rapido, items: [{ id: 1, tipo, x: 0.8, altura: 0 }] }
+    // Salta un poquito antes de que el obstáculo llegue a su cabeza
+    const j = correr(conObstaculo, 1.5, { saltarCuando: (jj) => jj.items[0] && jj.items[0].x - X_BOLTI < 0.24 })
+    assert.equal(j.vidas, JUEGOS.PASEO_VIDAS, tipo)
+    assert.equal(j.saltados, 1, tipo)
+  }
+})
+
+test('los huesitos se agarran tocándolos con cualquier parte (también con la cabeza al saltar)', () => {
+  const enElAire = { ...juegoVacio(), items: [{ id: 1, tipo: 'hueso', x: 0.6, altura: 0.22 }] }
+  const j = correr(enElAire, 1.5, { saltarCuando: (jj) => jj.items[0] && jj.items[0].x - X_BOLTI < 0.3 })
+  assert.equal(j.huesos, 1)
 })

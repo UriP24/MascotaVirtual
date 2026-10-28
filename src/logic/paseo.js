@@ -5,19 +5,43 @@
 import { JUEGOS } from '../config.js'
 
 export const X_BOLTI = 0.25
-const MEDIO_ANCHO_BOLTI = 0.05 // la "caja" con la que choca (más chica que el dibujo, para ser justo)
+
+// Cajas de choque de Bolti, medidas sobre su dibujo (un poco más chicas, para ser justas):
+// el cuerpo con las patas, y la cabeza que va adelante y más arriba. Relativas a su x y a su altura.
+const CAJAS_BOLTI = [
+  { x1: -0.05, x2: 0.06, y1: 0, y2: 0.11 }, // cuerpo y patas
+  { x1: 0.07, x2: 0.13, y1: 0.09, y2: 0.16 }, // cabeza
+]
 const DISTANCIA_PATADA = 0.18 // a esta distancia patea: la pata de atrás llega justo adelante de Bolti
 export const DISTANCIA_AVISO = 0.45 // a esta distancia levanta la pata: si salta ahí, la esquiva
 const ALTURA_PARA_ESQUIVAR = 0.05 // si en el momento de la patada está más alta que esto, la esquiva
 
-// Medidas de cada cosa: ancho y alto (en anchos de pantalla)
+// Caja de choque de cada cosa (ancho y alto), sacada de su dibujo y un poco más chica que él
 export const MEDIDAS = {
-  charco: { ancho: 0.16, alto: 0.03 },
-  gato: { ancho: 0.1, alto: 0.09 },
-  bici: { ancho: 0.17, alto: 0.13 },
-  hueso: { ancho: 0.06, alto: 0.04 },
-  dorado: { ancho: 0.06, alto: 0.04 },
+  charco: { ancho: 0.15, alto: 0.03 },
+  gato: { ancho: 0.09, alto: 0.1 },
+  bici: { ancho: 0.16, alto: 0.11 },
+  hueso: { ancho: 0.1, alto: 0.1 }, // la medalla entera
+  dorado: { ancho: 0.1, alto: 0.1 },
   caballo: { ancho: 0.32, alto: 0.45 },
+}
+
+export function cajasDeBolti(y) {
+  return CAJAS_BOLTI.map((c) => ({ x1: X_BOLTI + c.x1, x2: X_BOLTI + c.x2, y1: y + c.y1, y2: y + c.y2 }))
+}
+
+// La caja de una cosa: centrada en su x y apoyada en su altura
+export function cajaDeCosa(item, x = item.x) {
+  const m = MEDIDAS[item.tipo]
+  return { x1: x - m.ancho / 2, x2: x + m.ancho / 2, y1: item.altura, y2: item.altura + m.alto }
+}
+
+function seTocan(a, b) {
+  return a.x1 < b.x2 && b.x1 < a.x2 && a.y1 < b.y2 && b.y1 < a.y2
+}
+
+function tocaABolti(caja, y) {
+  return cajasDeBolti(y).some((c) => seTocan(c, caja))
 }
 const OBSTACULOS = ['charco', 'gato', 'bici']
 
@@ -124,12 +148,11 @@ export function paso(juego, dt, azar = Math.random) {
   const quedan = []
   for (const item of items) {
     const x = item.x - config.velocidad * dt
-    const m = MEDIDAS[item.tipo]
-    const cerca = Math.abs(x - X_BOLTI) < m.ancho / 2 + MEDIO_ANCHO_BOLTI
+    const caja = cajaDeCosa(item, x)
     let actualizado = { ...item, x }
 
     if (item.tipo === 'hueso' || item.tipo === 'dorado') {
-      if (cerca && Math.abs(y - item.altura) < 0.1) {
+      if (tocaABolti(caja, y)) {
         const gana = (item.tipo === 'dorado' ? JUEGOS.PASEO_PUNTOS_DORADO : JUEGOS.PASEO_PUNTOS_HUESO) * doble
         puntos += gana
         huesos += 1
@@ -154,12 +177,12 @@ export function paso(juego, dt, azar = Math.random) {
       }
     } else if (!item.pasado && !item.chocado) {
       const protegida = t < golpeHasta || t < invencibleHasta
-      if (cerca && y < m.alto && !protegida) {
+      if (tocaABolti(caja, y) && !protegida) {
         actualizado.chocado = true
         vidas -= 1
         golpeHasta = t + 1
         eventos.push({ tipo: 'choque' })
-      } else if (x + m.ancho / 2 < X_BOLTI - MEDIO_ANCHO_BOLTI) {
+      } else if (caja.x2 < X_BOLTI + CAJAS_BOLTI[0].x1) {
         actualizado.pasado = true
         saltados += 1
         puntos += JUEGOS.PASEO_PUNTOS_SALTO * doble

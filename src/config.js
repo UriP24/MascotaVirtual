@@ -154,8 +154,8 @@ export const JUEGOS = {
   // Bolti corre de costado; tocar la pantalla la hace saltar. Las medidas son en "anchos de pantalla".
   PASEO_DURACION_SEGUNDOS: 45,
   PASEO_VIDAS: 3,
-  PASEO_SALTO: 1.6, // velocidad hacia arriba al saltar
-  PASEO_GRAVEDAD: 4.3, // con estos dos valores el salto dura ~0,75 s y sube ~0,3
+  PASEO_SALTO: 1.8, // velocidad hacia arriba al saltar
+  PASEO_GRAVEDAD: 4.6, // con estos dos valores el salto dura ~0,78 s y sube ~0,35
   PASEO_PUNTOS_POR_SEGUNDO: 10, // por caminar
   PASEO_PUNTOS_HUESO: 10,
   PASEO_PUNTOS_DORADO: 30,

@@ -168,6 +168,14 @@
   }
 }
 
+.paseo .caja-choque {
+  position: absolute;
+  z-index: 3;
+  border: 2px solid rgb(232 80 91 / 0.8);
+  background: rgb(232 80 91 / 0.15);
+  pointer-events: none;
+}
+
 .paseo .bolti-paseo {
   position: absolute;
   z-index: 2;

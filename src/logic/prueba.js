@@ -169,6 +169,11 @@ export function caballoEnElProximoPaseo(estado) {
   return { ...estado, caballoSeguro: true }
 }
 
+// Paseo: muestra u oculta las cajas de choque (para revisar que coincidan con los dibujos)
+export function alternarCajasDelPaseo(estado) {
+  return { ...estado, verCajasPaseo: !estado.verCajasPaseo }
+}
+
 export function reiniciarTodo() {
   return actualizarDia(crearEstadoInicial())
 }

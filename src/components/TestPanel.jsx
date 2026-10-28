@@ -18,6 +18,7 @@ import {
   borrarSecretos,
   desbloquearPaseo,
   caballoEnElProximoPaseo,
+  alternarCajasDelPaseo,
   vaciarRopa,
   volverAlHorarioNormal,
 } from '../logic/prueba.js'
@@ -91,6 +92,7 @@ function TestPanel({ estado, setEstado }) {
         ['Hoy es aniversario', (e) => lanzarEvento(e, 'aniversario')],
         ['Desbloquear paseo', (e) => desbloquearPaseo(e)],
         ['Caballo en el próximo paseo', (e) => caballoEnElProximoPaseo(e)],
+        [estado.verCajasPaseo ? 'Ocultar cajas del paseo' : 'Ver cajas del paseo', (e) => alternarCajasDelPaseo(e)],
         ['Borrar secretos', (e) => borrarSecretos(e)],
       ],
     },
