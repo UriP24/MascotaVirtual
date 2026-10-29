@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { JUEGOS } from '../config.js'
 import CatchBones from '../components/CatchBones.jsx'
 import MemoryGame from '../components/MemoryGame.jsx'
@@ -8,6 +8,7 @@ import { descubrir, estaDescubierto } from '../logic/secretos.js'
 import { completarPaseo } from '../logic/tareas.js'
 import { empezarPartida, puedeJugar, terminarPartida } from '../logic/juegos.js'
 import { formatearPuntaje } from '../logic/puntaje.js'
+import { marcarOcupada } from '../logic/actualizacion.js'
 import './Jugar.css'
 
 const MOTIVOS = {
@@ -63,6 +64,9 @@ function Jugar({ estado, setEstado }) {
   const [secretoNuevo, setSecretoNuevo] = useState(null)
   const disponible = puedeJugar(estado, estado.perrita.actualizadaEn)
   const energia = Math.round(estado.perrita.energia)
+
+  // Mientras juega, una versión nueva de la app espera para no cortarle la partida
+  useEffect(() => marcarOcupada('juego', jugando !== null), [jugando])
 
   function jugar(id) {
     if (!puedeJugar(estado).ok) return

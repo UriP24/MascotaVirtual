@@ -18,6 +18,7 @@ import { modoPruebaActivo } from './logic/prueba.js'
 import { hayRegaloDeCumple } from './logic/cumple.js'
 import { esCumple } from './logic/fechas.js'
 import { progresoSecretos } from './logic/secretos.js'
+import { marcarOcupada } from './logic/actualizacion.js'
 import './App.css'
 
 // Se decide una sola vez al abrir la app.
@@ -60,6 +61,10 @@ function App() {
     const timer = setInterval(() => setEstado((e) => actualizarBolti(actualizarDia(e))), 60 * 1000)
     return () => clearInterval(timer)
   }, [])
+
+  // Con un cronómetro de estudio andando, una versión nueva de la app espera para no cortarlo
+  const estudiando = estado.tareas.some((t) => t.estudio && t.estudio.inicioTramo !== null)
+  useEffect(() => marcarOcupada('estudio', estudiando), [estudiando])
 
   // Cada vez que cambia el estado, se guarda en el celular.
   useEffect(() => {

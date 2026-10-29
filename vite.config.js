@@ -15,8 +15,8 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
-      // Cuando subimos una versión nueva, la app se actualiza sola.
-      registerType: 'autoUpdate',
+      // Cuando subimos una versión nueva, se instala sola cuando no corta nada (src/main.jsx)
+      registerType: 'prompt',
       includeAssets: ['favicon.svg', 'icons/apple-touch-icon.png'],
       manifest: {
         name: 'Huellitas',
