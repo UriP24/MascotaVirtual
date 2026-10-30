@@ -127,7 +127,7 @@ Si un día no llego, se recorta primero el minijuego; el resto del plan se corre
 - [ ] Ícono definitivo con Bolti
 - [ ] Aviso si falla el guardado; exportar/importar progreso (respaldo)
 - [ ] `/ux-review` de toda la app a 360 px
-- [ ] Borrar `public/prototipo-bolti.html`
+- [x] Borrar `public/prototipo-bolti.html`
 - [ ] Revisar que el modo prueba no aparezca sin `?prueba` (y decidir si se deja)
 - [ ] **Sonidos** (última fase, pulido): ladrido corto al tocarla, "ñam ñam" al comer, ronquidito
       dormida, sonido al atrapar huesitos / chocolate / récord, campanita al terminar un pomodoro,

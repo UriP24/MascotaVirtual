@@ -1,7 +1,7 @@
 # Spec: Bolti como personaje (estilo Pou / Talking Tom)
 
-Acordado con Uri el 21/10. Prototipo jugable: `public/prototipo-bolti.html`
-(con `npm run dev` → `/prototipo-bolti.html`). Valores en `src/config.js` (`PERRITA`, `COMIDAS`, `JUEGOS`).
+Acordado con Uri el 21/10. El prototipo jugable del principio se borró
+(queda en el historial de git). Valores en `src/config.js` (`PERRITA`, `COMIDAS`, `JUEGOS`).
 
 ## Resumen
 Bolti vive en la pantalla Casa. Es un dibujo **SVG armado por partes** (cabeza, orejas, ojos, boca,

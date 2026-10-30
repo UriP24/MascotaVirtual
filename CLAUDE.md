@@ -71,8 +71,8 @@ PWA instalable en el celular con cuatro pantallas:
   (`src/logic/recordatorios.js`, valores en `RECORDATORIOS_ESTUDIO`).
 
 ### Bolti (el personaje, lo más importante)
-Mascota estilo Pou / Talking Tom. Spec completa en `docs/specs/bolti-personaje.md`, prototipo en
-`public/prototipo-bolti.html`, apariencia en `docs/specs/bolti-apariencia.md`.
+Mascota estilo Pou / Talking Tom. Spec completa en `docs/specs/bolti-personaje.md`, apariencia en
+`docs/specs/bolti-apariencia.md` (el prototipo HTML del principio se borró; queda en el historial de git).
 - Dibujo **SVG por partes** animado con CSS (respira, parpadea, cola, ojos que siguen el dedo).
 - Pelaje rubio/crema, mancha blanca en la frente, pecho blanco, franja blanca de la nuca a la mitad
   del cuello, orejas caídas y cola larga, también rubias/crema.
