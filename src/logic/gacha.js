@@ -10,9 +10,21 @@ export function buscarPrenda(id) {
   return PRENDAS.find((p) => p.id === id)
 }
 
+// 'MM-DD' de una fecha, para comparar con las fechas de las temporadas
+function mesDia(fecha) {
+  return `${String(fecha.getMonth() + 1).padStart(2, '0')}-${String(fecha.getDate()).padStart(2, '0')}`
+}
+
 export function temporadasActivas(ahora = new Date()) {
-  const mes = ahora.getMonth() + 1
-  return TEMPORADAS.filter((t) => t.meses.includes(mes))
+  const hoy = mesDia(ahora)
+  return TEMPORADAS.filter((t) => (t.desde <= t.hasta ? hoy >= t.desde && hoy <= t.hasta : hoy >= t.desde || hoy <= t.hasta))
+}
+
+// "10/12": desde cuándo vuelve una temporada (para mostrar en el álbum)
+export function cuandoVuelve(temporadaId) {
+  const t = TEMPORADAS.find((x) => x.id === temporadaId)
+  const [mes, dia] = t.desde.split('-')
+  return `${Number(dia)}/${Number(mes)}`
 }
 
 // ¿Puede salir en el gacha (o canjearse con piezas) en este momento?
@@ -145,6 +157,20 @@ export function canjearPiezas(estado, prendaId, ahora = new Date()) {
       ...estado,
       piezas: { ...estado.piezas, [prenda.rareza]: estado.piezas[prenda.rareza] - costo },
       ropa: { ...estado.ropa, tiene: [...estado.ropa.tiene, prendaId] },
+    },
+  }
+}
+
+// Mejora piezas: junta `cantidad` de una rareza y las cambia por 1 de la rareza siguiente
+export function mejorarPiezas(estado, rareza) {
+  const regla = GACHA.MEJORAR_PIEZAS[rareza]
+  if (!regla) return { resultado: 'no-se-puede', estado }
+  if (estado.piezas[rareza] < regla.cantidad) return { resultado: 'faltan-piezas', estado }
+  return {
+    resultado: 'ok',
+    estado: {
+      ...estado,
+      piezas: { ...estado.piezas, [rareza]: estado.piezas[rareza] - regla.cantidad, [regla.a]: estado.piezas[regla.a] + 1 },
     },
   }
 }

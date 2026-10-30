@@ -405,8 +405,15 @@ export const GACHA = {
   },
   // La ropa de temporada sale más seguido que la de siempre mientras es su época
   PESO_TEMPORADA: 2,
-  // Una prenda repetida da 1 pieza de su rareza. Con estas piezas se canjea una prenda que no tenga.
-  PIEZAS_PARA_CANJE: { comun: 5, rara: 10, epica: 20, ultra: 3 },
+  // Una prenda repetida da 1 pieza de su rareza. Con estas piezas se canjea una prenda que no tenga
+  // de esa misma rareza (las comunes y raras salen mucho, por eso cuestan más)
+  PIEZAS_PARA_CANJE: { comun: 10, rara: 15, epica: 5, ultra: 5 },
+  // Mejorar piezas (solo para arriba): `cantidad` piezas de una rareza → 1 pieza de la siguiente
+  MEJORAR_PIEZAS: {
+    comun: { a: 'rara', cantidad: 10 },
+    rara: { a: 'epica', cantidad: 10 },
+    epica: { a: 'ultra', cantidad: 5 },
+  },
 }
 
 export const RAREZAS = [
@@ -418,12 +425,13 @@ export const RAREZAS = [
 
 // Temporadas de Argentina (hemisferio sur). Puede haber dos a la vez (octubre: primavera y Halloween).
 export const TEMPORADAS = [
-  { id: 'navidad', nombre: 'Navidad y verano', emoji: '🎄', meses: [12, 1] },
-  { id: 'san-valentin', nombre: 'San Valentín', emoji: '💘', meses: [2] },
-  { id: 'otono', nombre: 'Otoño', emoji: '🍂', meses: [3, 4, 5] },
-  { id: 'invierno', nombre: 'Invierno', emoji: '❄️', meses: [6, 7, 8] },
-  { id: 'primavera', nombre: 'Primavera', emoji: '🌼', meses: [9, 10, 11] },
-  { id: 'halloween', nombre: 'Halloween', emoji: '🦇', meses: [10] },
+  // desde / hasta: 'MM-DD', los dos días incluidos. Fuera de esas fechas su ropa no sale ni se canjea.
+  { id: 'navidad', nombre: 'Navidad', emoji: '🎄', desde: '12-10', hasta: '12-31' },
+  { id: 'san-valentin', nombre: 'San Valentín', emoji: '💘', desde: '02-01', hasta: '02-14' },
+  { id: 'otono', nombre: 'Otoño', emoji: '🍂', desde: '03-21', hasta: '06-20' },
+  { id: 'invierno', nombre: 'Invierno', emoji: '❄️', desde: '06-21', hasta: '09-20' },
+  { id: 'primavera', nombre: 'Primavera', emoji: '🌼', desde: '09-21', hasta: '12-20' },
+  { id: 'halloween', nombre: 'Halloween', emoji: '🦇', desde: '10-01', hasta: '10-31' },
 ]
 
 // Zonas donde se pone cada prenda. "entero" es un disfraz o conjunto que la viste toda.

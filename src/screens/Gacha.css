@@ -160,6 +160,14 @@
   font-weight: 700;
 }
 
+.gacha .piezas button.mejorar {
+  min-height: 32px;
+  border: 2px solid var(--color-rareza);
+  background: transparent;
+  color: var(--color-rareza);
+  font-size: 0.85rem;
+}
+
 .gacha .piezas button:disabled {
   background: var(--color-borde);
   color: var(--color-texto-suave);

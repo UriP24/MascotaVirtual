@@ -7,6 +7,7 @@ import ConfirmDialog from '../components/ConfirmDialog.jsx'
 import {
   buscarPrenda,
   canjearPiezas,
+  mejorarPiezas,
   faltanParaRara,
   faltanParaUltra,
   precio,
@@ -18,6 +19,7 @@ import {
 import './Gacha.css'
 
 const RAREZAS_CON_PIEZAS = RAREZAS.map((r) => r.id)
+const nombreRareza = (id) => RAREZAS.find((r) => r.id === id).nombre.toLowerCase()
 
 // Sección Gacha de Canjes: se gastan ⭐ en ropa y accesorios para Bolti.
 function Gacha({ estado, setEstado, onAviso }) {
@@ -54,6 +56,13 @@ function Gacha({ estado, setEstado, onAviso }) {
     setEstado(r.estado)
     const prenda = buscarPrenda(prendaId)
     onAviso(`¡Conseguiste ${prenda.nombre}! ${prenda.emoji}`)
+  }
+
+  function mejorar(rareza) {
+    const r = mejorarPiezas(estado, rareza)
+    if (r.resultado !== 'ok') return
+    setEstado(r.estado)
+    onAviso(`⬆️ ¡Una pieza ${nombreRareza(GACHA.MEJORAR_PIEZAS[rareza].a)} más!`)
   }
 
   function botonTirar(cantidad, texto) {
@@ -127,13 +136,23 @@ function Gacha({ estado, setEstado, onAviso }) {
               <button disabled={tiene < costo || !hayOpciones} onClick={() => setCanjeando(id)}>
                 Canjear
               </button>
+              {GACHA.MEJORAR_PIEZAS[id] && (
+                <button
+                  className="mejorar"
+                  disabled={tiene < GACHA.MEJORAR_PIEZAS[id].cantidad}
+                  onClick={() => mejorar(id)}
+                  aria-label={`Mejorar ${GACHA.MEJORAR_PIEZAS[id].cantidad} piezas ${rareza.nombre.toLowerCase()} por 1 ${nombreRareza(GACHA.MEJORAR_PIEZAS[id].a)}`}
+                >
+                  ⬆️ {GACHA.MEJORAR_PIEZAS[id].cantidad} → 1 {nombreRareza(GACHA.MEJORAR_PIEZAS[id].a).replace(' rara', '')}
+                </button>
+              )}
             </li>
           )
         })}
       </ul>
       <small className="ayuda">
         Si te toca una prenda repetida, te llevás una pieza de su rareza. Juntá piezas y elegí una prenda que te
-        falte.
+        falte, o mejorá piezas a la rareza siguiente (⬆️). Lo de temporada se canjea solo en su época.
       </small>
 
       <p className="coleccion">

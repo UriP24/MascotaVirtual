@@ -54,7 +54,10 @@ test('los premios de ⭐ devuelven menos de lo que cuesta la tirada', () => {
 
 test('temporadas de Argentina: octubre es primavera y Halloween, diciembre Navidad', () => {
   assert.deepEqual(temporadasActivas(OCT).map((t) => t.id), ['primavera', 'halloween'])
-  assert.deepEqual(temporadasActivas(DIC).map((t) => t.id), ['navidad'])
+  assert.deepEqual(temporadasActivas(DIC).map((t) => t.id), ['navidad', 'primavera'])
+  assert.deepEqual(temporadasActivas(new Date('2026-12-05T12:00:00')).map((t) => t.id), ['primavera'], 'Navidad recién el 10/12')
+  assert.deepEqual(temporadasActivas(new Date('2027-01-05T12:00:00')).map((t) => t.id), [], 'después de diciembre, nada de Navidad')
+  assert.deepEqual(temporadasActivas(new Date('2026-11-01T12:00:00')).map((t) => t.id), ['primavera'], 'terminó Halloween')
   assert.deepEqual(temporadasActivas(new Date('2026-07-01T12:00:00')).map((t) => t.id), ['invierno'])
 })
 
@@ -134,7 +137,7 @@ test('las tiradas gratis se usan primero y no gastan ⭐', () => {
 })
 
 test('con piezas se canjea una prenda que no tenga de esa rareza', () => {
-  const estado = { ...conPuntos(0), piezas: { comun: 5, rara: 0, epica: 0, ultra: 0 } }
+  const estado = { ...conPuntos(0), piezas: { comun: GACHA.PIEZAS_PARA_CANJE.comun, rara: 0, epica: 0, ultra: 0 } }
   const opciones = prendasCanjeables(estado, 'comun', OCT)
   const r = canjearPiezas(estado, opciones[0].id, OCT)
   assert.equal(r.resultado, 'ok')
@@ -145,7 +148,7 @@ test('con piezas se canjea una prenda que no tenga de esa rareza', () => {
 })
 
 test('lo de temporada solo se canjea en su época', () => {
-  const estado = { ...conPuntos(0), piezas: { comun: 0, rara: 10, epica: 0, ultra: 0 } }
+  const estado = { ...conPuntos(0), piezas: { comun: 0, rara: GACHA.PIEZAS_PARA_CANJE.rara, epica: 0, ultra: 0 } }
   assert.equal(canjearPiezas(estado, 'capa-vampiro', NOV).resultado, 'no-disponible')
   assert.equal(canjearPiezas(estado, 'capa-vampiro', OCT).resultado, 'ok')
   assert.ok(!prendasCanjeables(estado, 'rara', NOV).some((p) => p.id === 'capa-vampiro'))
@@ -167,4 +170,14 @@ test('un progreso guardado de antes del gacha se completa sin perder nada', () =
   assert.equal(cargado.puntos, 42)
   assert.equal(cargado.gacha.tiradasDesdeUltra, 0)
   assert.deepEqual(cargado.ropa, { tiene: [], puesta: {} })
+})
+
+test('mejorar piezas: 10 comunes → 1 rara, 10 raras → 1 épica, 5 épicas → 1 ultra (solo para arriba)', async () => {
+  const { mejorarPiezas } = await import('../src/logic/gacha.js')
+  const conPiezas = (piezas) => ({ ...crearEstadoInicial(), piezas: { comun: 0, rara: 0, epica: 0, ultra: 0, ...piezas } })
+  assert.deepEqual(mejorarPiezas(conPiezas({ comun: 12 }), 'comun').estado.piezas, { comun: 2, rara: 1, epica: 0, ultra: 0 })
+  assert.deepEqual(mejorarPiezas(conPiezas({ rara: 10 }), 'rara').estado.piezas, { comun: 0, rara: 0, epica: 1, ultra: 0 })
+  assert.deepEqual(mejorarPiezas(conPiezas({ epica: 5 }), 'epica').estado.piezas, { comun: 0, rara: 0, epica: 0, ultra: 1 })
+  assert.equal(mejorarPiezas(conPiezas({ comun: 9 }), 'comun').resultado, 'faltan-piezas')
+  assert.equal(mejorarPiezas(conPiezas({ ultra: 9 }), 'ultra').resultado, 'no-se-puede')
 })
