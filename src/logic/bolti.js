@@ -51,8 +51,18 @@ export function avanzarTiempo(perrita, ahora) {
       durmiendo = forzado.durmiendo
     } else if (!durmiendo && esHorarioDeDormir(fecha) && t >= ultimaActividad + ESPERA_PARA_REDORMIRSE) {
       durmiendo = true
-    } else if (siesta && !esHorarioDeDia(fecha)) {
-      siesta = false // la siesta se hizo de noche: sigue durmiendo como de noche
+    } else if (
+      !durmiendo &&
+      !esHorarioDeDormir(fecha) &&
+      energia <= PERRITA.SIESTA_SOLA_ENERGIA &&
+      t >= ultimaActividad + PERRITA.SIESTA_SOLA_MINUTOS_QUIETA * MINUTO
+    ) {
+      // Sin energía y sin que nadie juegue con ella: se duerme una siesta sola (aparte del sueño
+      // de la noche: se despierta cuando recupera energía)
+      durmiendo = true
+      siesta = true
+    } else if (siesta && esHorarioDeDormir(fecha)) {
+      siesta = false // la siesta llegó a la medianoche: sigue durmiendo como de noche
     } else if (siesta && energia >= PERRITA.SIESTA_HASTA_ENERGIA) {
       durmiendo = false // terminó la siesta
       siesta = false

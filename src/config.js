@@ -78,6 +78,8 @@ export const PERRITA = {
   HORA_SE_DESPIERTA: 10, // se despierta sola
   ENERGIA_PARA_SIESTA: 20, // con menos energía puede dormir siesta a cualquier hora
   SIESTA_HASTA_ENERGIA: 80, // la siesta termina sola cuando recupera esta energía
+  SIESTA_SOLA_ENERGIA: 5, // con esta energía o menos se duerme una siesta sola (de día)…
+  SIESTA_SOLA_MINUTOS_QUIETA: 5, // …si hace este rato que nadie juega con ella
 
   // Con la panza en este valor o más, está llena y no quiere comer
   SACIEDAD_LLENA: 95,

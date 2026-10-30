@@ -191,6 +191,14 @@ function Casa({ estado, setEstado, horasAusente = 0, onCambiarPantalla }) {
     return () => window.removeEventListener('devicemotion', alMoverCelu)
   }, [])
 
+  // Se durmió una siesta sola por cansancio (si la siesta es por apagar la luz, ya lo dice la luz)
+  const siestaSola = estado.perrita.durmiendo && estado.perrita.siesta && estado.perrita.ultimaActividad !== null
+  const habiaSiestaSola = useRef(siestaSola)
+  useEffect(() => {
+    if (siestaSola && !habiaSiestaSola.current) decirRef.current('Estoy cansadita… me voy a dormir una siestita 😴', 5000)
+    habiaSiestaSola.current = siestaSola
+  }, [siestaSola])
+
   // Modo prueba: los atajos de secretos dejan un evento en el estado y acá se dispara
   const eventoPrueba = estado.eventoPrueba
   useEffect(() => {
@@ -205,7 +213,9 @@ function Casa({ estado, setEstado, horasAusente = 0, onCambiarPantalla }) {
   const manejarEventoRef = useRef(null)
   const recordarEstudioRef = useRef(null)
   const mostrarEstrellaRef = useRef(null)
+  const decirRef = useRef(null)
   useEffect(() => {
+    decirRef.current = decir
     mostrarEstrellaRef.current = mostrarEstrella
     recordarEstudioRef.current = recordarEstudio
     mostrarVisitaRef.current = mostrarVisita

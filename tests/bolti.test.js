@@ -147,6 +147,24 @@ test('siesta: con poca energía duerme de día hasta recuperar 80', async () => 
   assert.ok(p2.energia >= 75)
 })
 
+test('sin energía, de día se duerme una siesta sola y se despierta al recuperarse', () => {
+  const tarde = ms('2026-10-22T14:00:00')
+  const cansada = perrita({ energia: 4, actualizadaEn: tarde, ultimaActividad: tarde, durmiendo: false })
+  assert.equal(avanzarTiempo(cansada, tarde + 2 * MIN).durmiendo, false, 'recién jugó: espera un rato')
+  const dormida = avanzarTiempo(cansada, tarde + 30 * MIN)
+  assert.equal(dormida.durmiendo, true)
+  assert.equal(dormida.siesta, true, 'es una siesta, no el sueño de la noche')
+  const despierta = avanzarTiempo(dormida, tarde + 7 * HORA)
+  assert.equal(despierta.durmiendo, false)
+  assert.ok(despierta.energia >= 75)
+})
+
+test('con energía no se duerme sola de día', () => {
+  const tarde = ms('2026-10-22T14:00:00')
+  const p = avanzarTiempo(perrita({ energia: 60, actualizadaEn: tarde, durmiendo: false }), tarde + 3 * HORA)
+  assert.equal(p.durmiendo, false)
+})
+
 test('prender la luz la despierta; de madrugada se vuelve a dormir sola', async () => {
   const { prenderLuz } = await import('../src/logic/bolti.js')
   const t = ms('2026-10-23T02:00:00')
