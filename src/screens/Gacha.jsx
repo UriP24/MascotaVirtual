@@ -16,6 +16,8 @@ import {
   temporadasActivas,
   tirar,
 } from '../logic/gacha.js'
+import ClothesAlbum from '../components/ClothesAlbum.jsx'
+import { alternarPrenda } from '../logic/ropa.js'
 import './Gacha.css'
 
 const RAREZAS_CON_PIEZAS = RAREZAS.map((r) => r.id)
@@ -25,6 +27,7 @@ const nombreRareza = (id) => RAREZAS.find((r) => r.id === id).nombre.toLowerCase
 function Gacha({ estado, setEstado, onAviso }) {
   const [confirmar, setConfirmar] = useState(null) // cantidad de tiradas a confirmar
   const [premios, setPremios] = useState(null)
+  const [albumAbierto, setAlbumAbierto] = useState(false)
   const [canjeando, setCanjeando] = useState(null) // rareza de las piezas que está canjeando
 
   // "Ahora" = última actualización del estado (App lo refresca cada minuto)
@@ -155,9 +158,9 @@ function Gacha({ estado, setEstado, onAviso }) {
         falte, o mejorá piezas a la rareza siguiente (⬆️). Lo de temporada se canjea solo en su época.
       </small>
 
-      <p className="coleccion">
-        👗 Tu ropa: {coleccion.tiene} de {coleccion.total}
-      </p>
+      <button className="coleccion" onClick={() => setAlbumAbierto(true)}>
+        📖 Tu ropa: {coleccion.tiene} de {coleccion.total} · Ver álbum
+      </button>
 
       <GachaOdds ahora={ahora} />
 
@@ -181,6 +184,14 @@ function Gacha({ estado, setEstado, onAviso }) {
           opciones={prendasCanjeables(estado, canjeando, ahora)}
           onElegir={canjear}
           onCerrar={() => setCanjeando(null)}
+        />
+      )}
+
+      {albumAbierto && (
+        <ClothesAlbum
+          estado={estado}
+          onAlternarPrenda={(id) => setEstado((e) => alternarPrenda(e, id))}
+          onCerrar={() => setAlbumAbierto(false)}
         />
       )}
 

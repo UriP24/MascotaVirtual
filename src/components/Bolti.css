@@ -443,3 +443,10 @@
     animation-duration: 5s;
   }
 }
+
+/* Miniatura quieta (álbum de ropa): sin animaciones */
+.bolti.quieta,
+.bolti.quieta * {
+  animation: none !important;
+  cursor: inherit;
+}

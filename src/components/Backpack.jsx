@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import { comidasEnInventario } from '../logic/comida.js'
 import { estaPuesta, ropaQueTiene } from '../logic/ropa.js'
+import ClothesAlbum from './ClothesAlbum.jsx'
 import './Backpack.css'
 
 const DISTANCIA_PARA_ARRASTRAR = 10 // px: si el dedo se mueve más, es un arrastre y no un toque
@@ -22,6 +23,7 @@ function Backpack({
   onCerrar,
 }) {
   const [pestana, setPestana] = useState('comida')
+  const [albumAbierto, setAlbumAbierto] = useState(false)
   const comidas = comidasEnInventario(estado)
   const ropa = ropaQueTiene(estado)
   const toque = useRef(null) // { comida, x, y, arrastrando }
@@ -100,6 +102,14 @@ function Backpack({
           </>
         ))}
 
+      {pestana === 'ropa' && (
+        <button className="ver-album" onClick={() => setAlbumAbierto(true)}>
+          📖 Ver álbum de ropa
+        </button>
+      )}
+      {albumAbierto && (
+        <ClothesAlbum estado={estado} onAlternarPrenda={onAlternarPrenda} onCerrar={() => setAlbumAbierto(false)} />
+      )}
       {pestana === 'ropa' &&
         (ropa.length === 0 ? (
           <p className="vacia">Todavía no tenés ropa para Bolti. ¡Probá el gacha en Canjes! ✨</p>

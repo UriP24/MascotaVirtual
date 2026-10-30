@@ -416,6 +416,9 @@ export const GACHA = {
   },
 }
 
+// Las prendas exclusivas (secretos, regalos) no salen en el gacha: en el álbum van en dorado
+export const RAREZA_EXCLUSIVA = { id: 'exclusiva', nombre: 'Exclusiva', color: '#d99a1e' }
+
 export const RAREZAS = [
   { id: 'comun', nombre: 'Común', color: '#857682' },
   { id: 'rara', nombre: 'Rara', color: '#2bb8b0' },

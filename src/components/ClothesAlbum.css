@@ -1,0 +1,154 @@
+.clothes-album {
+  position: fixed;
+  inset: 0;
+  z-index: 26;
+  overflow-y: auto;
+  padding: calc(12px + env(safe-area-inset-top)) 16px calc(24px + env(safe-area-inset-bottom));
+  background: var(--color-fondo);
+  animation: clothes-album-entrar 0.25s ease-out;
+}
+
+@keyframes clothes-album-entrar {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}
+
+.clothes-album .encabezado {
+  display: flex;
+  align-items: center;
+}
+
+.clothes-album h2 {
+  flex: 1;
+  margin: 0;
+  font-size: 1.3rem;
+  color: var(--color-principal-oscuro);
+}
+
+.clothes-album .cerrar {
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  background: var(--color-superficie);
+  font-size: 1.1rem;
+  color: var(--color-texto);
+}
+
+.clothes-album section {
+  margin-top: 20px;
+}
+
+.clothes-album h3 {
+  margin: 0 0 6px;
+  font-size: 1.05rem;
+  color: var(--color-texto);
+}
+
+.clothes-album h3 small {
+  font-weight: 600;
+  color: var(--color-texto-suave);
+}
+
+.clothes-album .progreso {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 6px 0 10px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-texto-suave);
+}
+
+.clothes-album .barra {
+  flex: 1;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--color-borde);
+  overflow: hidden;
+}
+
+.clothes-album .barra div {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--color-degrade);
+}
+
+.clothes-album ul {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+}
+
+.clothes-album .ficha {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  list-style: none;
+  text-align: center;
+}
+
+.clothes-album .ficha button,
+.clothes-album .ficha .signo {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 1;
+  padding: 4px;
+  border: 3px solid var(--color-rareza);
+  border-radius: 18px;
+  background: var(--color-superficie);
+}
+
+.clothes-album .ficha.puesta button {
+  background: color-mix(in srgb, var(--color-rareza) 18%, var(--color-superficie));
+}
+
+.clothes-album .ficha .bolti {
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.clothes-album .ficha .tilde {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--color-rareza);
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.clothes-album .ficha.falta .signo {
+  border-style: dashed;
+  background: color-mix(in srgb, var(--color-rareza) 10%, var(--color-fondo));
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: var(--color-rareza);
+}
+
+.clothes-album .ficha .nombre {
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--color-texto);
+}
+
+.clothes-album .ficha .rareza {
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: var(--color-rareza);
+}

@@ -15,6 +15,7 @@ import './Bolti.css'
 // - esperando: abre la boca porque se acerca comida; comiendo: mastica; rechaza: da vuelta la cara
 // - gesto: un gesto especial de los secretos ('nariz', 'estornuda', 'patea', 'rueda', 'sacude', 'mareada', 'guino')
 // - ropa: la ropa puesta por zona ({ cabeza: 'gorrito-cumple', cuello: 'bufanda' })
+// - quieta: sin animaciones ni ojos que siguen el dedo (para las miniaturas del álbum)
 // - el resto (onPointerDown, etc.) se pasa al <svg>
 function Bolti({
   animo,
@@ -28,6 +29,7 @@ function Bolti({
   rechaza = false,
   ropa,
   gesto = null,
+  quieta = false,
   ...resto
 }) {
   const svgRef = useRef(null)
@@ -38,6 +40,7 @@ function Bolti({
 
   // Parpadea cada tanto, al azar, para parecer viva.
   useEffect(() => {
+    if (quieta) return
     let timer
     function siguiente() {
       timer = setTimeout(() => {
@@ -50,11 +53,11 @@ function Bolti({
     }
     siguiente()
     return () => clearTimeout(timer)
-  }, [])
+  }, [quieta])
 
   // Cada tanto ladea la cabeza, solo si está contenta.
   useEffect(() => {
-    if (animo !== 'contenta') return
+    if (animo !== 'contenta' || quieta) return
     let timer
     function siguiente() {
       timer = setTimeout(() => {
@@ -67,12 +70,12 @@ function Bolti({
     }
     siguiente()
     return () => clearTimeout(timer)
-  }, [animo])
+  }, [animo, quieta])
 
   // Contenta: cada tanto jadea unos segundos (boca un poco abierta, lengua afuera) y después
   // cierra la boca. El primero llega rápido para que se note al entrar.
   useEffect(() => {
-    if (animo !== 'contenta') return
+    if (animo !== 'contenta' || quieta) return
     let timer
     function siguiente(espera) {
       timer = setTimeout(() => {
@@ -88,11 +91,12 @@ function Bolti({
       clearTimeout(timer)
       setJadeando(false)
     }
-  }, [animo])
+  }, [animo, quieta])
 
   // Los ojos siguen el dedo o el mouse. Movemos el grupo directo (sin estado) para no
   // redibujar todo el componente con cada movimiento.
   useEffect(() => {
+    if (quieta) return
     function mirar(e) {
       const svg = svgRef.current
       const ojos = ojosRef.current
@@ -106,7 +110,7 @@ function Bolti({
     }
     window.addEventListener('pointermove', mirar)
     return () => window.removeEventListener('pointermove', mirar)
-  }, [])
+  }, [quieta])
 
   // Rubor de 0 (sin cariño) a 0.85 (mucho cariño)
   const rubor = Math.max(0, Math.min(1, (carino - PERRITA.NIVEL_BAJO) / (100 - PERRITA.NIVEL_BAJO))) * 0.85
@@ -125,6 +129,7 @@ function Bolti({
     cansada && 'cansada',
     hambrienta && 'hambrienta',
     gesto && `gesto-${gesto}`,
+    quieta && 'quieta',
   ]
     .filter(Boolean)
     .join(' ')

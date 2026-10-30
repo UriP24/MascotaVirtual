@@ -179,10 +179,14 @@
 }
 
 .gacha .coleccion {
+  width: 100%;
+  min-height: 48px;
   margin: 0;
   padding: 12px;
+  border: none;
   border-radius: 14px;
   background: var(--color-terciario-claro);
   text-align: center;
   font-weight: 700;
+  color: var(--color-texto);
 }
