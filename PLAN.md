@@ -201,7 +201,7 @@ Mari tiene **Android**. Decisiones de Uri del 23/10 (todas cerradas):
    vacaciones? 🏖️". Sí → elige desde (por defecto el día que dejó de estudiar) y hasta; en ese período
    no hay tarea obligatoria ni recordatorios y la racha no se corta. No → no vuelve a preguntar por una
    semana. También se cargan / terminan desde Configuración. (Reemplaza la regla especial de diciembre.)
-9. ✅ (25/10) **Arranque:** 100 🪙 y 30 ⭐, lista de tareas vacía.
+9. ✅ (25/10; 30/10: ahora vienen dentro del regalo) **Arranque:** la app arranca en 0 y la primera vez aparece un regalo con 100 🪙, 30 ⭐, el gorrito, la torta y una multi gratis; lista de tareas vacía.
 10. **Sonidos antes del 28:** ladrido, ñam, ronquido, sonidos de los juegos, campanita del pomodoro,
     monedas. Volumen bajo, arrancan después del primer toque, botón para silenciar (en Configuración).
 11. **QR** con el link de la app para imprimir en la tarjeta de cumpleaños.

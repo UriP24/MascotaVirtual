@@ -26,9 +26,9 @@ export const ECONOMIA = {
   // Para los canjes de jueguitos (precio en dólares)
   DOLAR_EN_PESOS: 1600,
 
-  // Monedas con las que arranca la app (para comprarle comida desde el primer día)
+  // La app arranca en 0: las monedas y los puntos del primer día vienen dentro del regalo de
+  // bienvenida (para comprarle comida y probar un canje o el gacha desde el primer día)
   MONEDAS_DE_BIENVENIDA: 100,
-  // Puntos de regalo para que pueda probar un canje o el gacha el primer día
   PUNTOS_DE_BIENVENIDA: 30,
 }
 
@@ -101,6 +101,8 @@ export const COMIDAS = [
 ]
 // Cumpleaños de Mari (todos los años): aparece un regalo, no hay estudio obligatorio
 export const FECHA_CUMPLE = '10-28' // MM-DD
+// El regalo: la primera vez que abre la app trae todo esto más las monedas y los puntos de
+// bienvenida (ECONOMIA); después, cada 28/10 aparece otro con la prenda, la torta y la multi.
 export const REGALO_CUMPLE = {
   prenda: 'gorrito-cumple', // se la pone sola al abrir el regalo
   comida: 'torta', // va a la mochila

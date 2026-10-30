@@ -18,7 +18,7 @@ import { apagarLuz, darMimos, humor, prenderLuz } from '../logic/bolti.js'
 import { PERRITA, RECORDATORIOS_ESTUDIO, REGLAS_SECRETOS } from '../config.js'
 import { comprar, darDeComer } from '../logic/comida.js'
 import { festejoVisto, fraseDeFestejo } from '../logic/festejo.js'
-import { abrirRegaloDeCumple, hayRegaloDeCumple } from '../logic/cumple.js'
+import { abrirRegaloDeCumple, esRegaloDeBienvenida, hayRegaloDeCumple } from '../logic/cumple.js'
 import { esCumple } from '../logic/fechas.js'
 import { alternarPrenda } from '../logic/ropa.js'
 import {
@@ -92,7 +92,7 @@ function Casa({ estado, setEstado, horasAusente = 0, onCambiarPantalla }) {
   const [rechaza, setRechaza] = useState(false)
   // El día del cumple: confeti al entrar y al abrir el regalo
   const [confeti, setConfeti] = useState(() => (esCumple(ahora) ? 1 : 0))
-  const [regaloAbierto, setRegaloAbierto] = useState(false)
+  const [regaloAbierto, setRegaloAbierto] = useState(null) // { bienvenida } mientras se ve lo que traía
   // Secretos
   const [gesto, setGesto] = useState(null) // gesto especial de Bolti: 'estornuda', 'patea', 'rueda'…
   const [visita, setVisita] = useState(null) // quien pasa por la ventana: { tipo: 'gato' | 'vaca', id }
@@ -503,14 +503,14 @@ function Casa({ estado, setEstado, horasAusente = 0, onCambiarPantalla }) {
   }
 
   function abrirRegalo() {
+    setRegaloAbierto({ bienvenida: esRegaloDeBienvenida(estado) })
     setEstado((e) => abrirRegaloDeCumple(e, new Date(e.perrita.actualizadaEn)))
-    setRegaloAbierto(true)
     tirarConfeti()
     navigator.vibrate?.([40, 60, 40])
   }
 
   function cerrarRegalo() {
-    setRegaloAbierto(false)
+    setRegaloAbierto(null)
     if (animo === 'dormida') return
     setSaltos((n) => n + 1)
     setMimos(true)
@@ -661,7 +661,7 @@ function Casa({ estado, setEstado, horasAusente = 0, onCambiarPantalla }) {
           {volando.comida.emoji}
         </div>
       )}
-      {regaloAbierto && <GiftReveal onCerrar={cerrarRegalo} />}
+      {regaloAbierto && <GiftReveal bienvenida={regaloAbierto.bienvenida} onCerrar={cerrarRegalo} />}
       {confeti > 0 && <Confetti key={confeti} />}
       {carta && <SpecialCard tipo={carta} onCerrar={cerrarCarta} />}
       {secretoNuevo && <SecretFound id={secretoNuevo} onCerrar={() => setSecretoNuevo(null)} />}

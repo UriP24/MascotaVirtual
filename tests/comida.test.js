@@ -7,13 +7,14 @@ import { comprar, darDeComer, comidasEnInventario, comidasALaVenta } from '../sr
 const TARDE = new Date('2026-10-23T15:00:00').getTime()
 
 function estado(perrita = {}, extra = {}) {
-  const e = crearEstadoInicial()
+  const e = { ...crearEstadoInicial(), monedas: ECONOMIA.MONEDAS_DE_BIENVENIDA } // como después del primer regalo
   return { ...e, perrita: { ...e.perrita, durmiendo: false, actualizadaEn: TARDE, forzado: null, ...perrita }, ...extra }
 }
 
-test('arranca con las monedas de bienvenida y el inventario vacío', () => {
+test('arranca en 0 (las monedas vienen en el regalo) y con el inventario vacío', () => {
   const e = crearEstadoInicial()
-  assert.equal(e.monedas, ECONOMIA.MONEDAS_DE_BIENVENIDA)
+  assert.equal(e.monedas, 0)
+  assert.equal(e.puntos, 0)
   assert.equal(comidasEnInventario(e).length, 0)
 })
 

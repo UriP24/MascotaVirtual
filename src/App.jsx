@@ -16,7 +16,6 @@ import { actualizarDia, retomarCronometros } from './logic/tareas.js'
 import { actualizarBolti, horasDesdeUltimaVisita, registrarVisita } from './logic/bolti.js'
 import { modoPruebaActivo } from './logic/prueba.js'
 import { hayRegaloDeCumple } from './logic/cumple.js'
-import { esCumple } from './logic/fechas.js'
 import { progresoSecretos } from './logic/secretos.js'
 import { marcarOcupada } from './logic/actualizacion.js'
 import './App.css'
@@ -77,7 +76,7 @@ function App() {
   const ahora = new Date(estado.perrita.actualizadaEn)
   const faltaPreguntarTutorial =
     estado.bienvenidaVista && !estado.tutorialPreguntado && !hayRegaloDeCumple(estado, ahora)
-  const esperaTutorial = esCumple(ahora) ? 8000 : 2500
+  const esperaTutorial = 8000 // la primera vez siempre hay regalo: que lo vea tranquila
   useEffect(() => {
     if (!faltaPreguntarTutorial) return
     const timer = setTimeout(() => setPreguntarTutorial(true), esperaTutorial)

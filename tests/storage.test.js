@@ -84,3 +84,10 @@ test('una actualización con cosas nuevas no pierde el progreso: los campos nuev
   assert.deepEqual(cargado.ropa.tiene, ['corona'])
   assert.ok(cargado.estrella && cargado.secretos, 'lo nuevo arranca con sus valores iniciales')
 })
+
+test('un guardado de antes del regalo de bienvenida no vuelve a recibir las monedas y los puntos', () => {
+  const viejo = conMonedas(55)
+  delete viejo.regaloBienvenidaAbierto
+  assert.equal(importarProgreso(JSON.stringify(viejo)).regaloBienvenidaAbierto, true)
+  assert.equal(importarProgreso(JSON.stringify({ ...viejo, regaloBienvenidaAbierto: false })).regaloBienvenidaAbierto, false)
+})

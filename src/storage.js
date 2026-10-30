@@ -1,21 +1,22 @@
 // Único módulo que toca localStorage. Todo acceso pasa por acá, envuelto en try/catch,
 // porque localStorage puede fallar (modo incógnito, almacenamiento lleno, datos corruptos).
 
-import { COMIDAS, ECONOMIA, PERRITA, REGLAS_SECRETOS } from './config.js'
+import { COMIDAS, PERRITA, REGLAS_SECRETOS } from './config.js'
 import { fechaLocal } from './logic/fechas.js'
 import { esHorarioDeDormir } from './logic/bolti.js'
 
 const CLAVE = 'patitas:estado'
-const VERSION_ACTUAL = 9
+const VERSION_ACTUAL = 10
 
 export function crearEstadoInicial() {
   const ahora = new Date().toISOString()
   return {
     version: VERSION_ACTUAL,
-    monedas: ECONOMIA.MONEDAS_DE_BIENVENIDA,
-    puntos: ECONOMIA.PUNTOS_DE_BIENVENIDA,
+    // Arranca en 0: las monedas y los puntos de bienvenida vienen dentro del primer regalo
+    monedas: 0,
+    puntos: 0,
     // Historial de todo lo ganado. Nunca baja: los puntos ganados no se restan ni vencen.
-    puntosGanadosTotal: ECONOMIA.PUNTOS_DE_BIENVENIDA,
+    puntosGanadosTotal: 0,
     // { id, texto, tipo: 'tarea' | 'estudio', fecha, hecha, obligatoria, estudio? } (las viejas 'simple'/'grande' valen como 'tarea')
     tareas: [],
     // Minutos de estudio acreditados por día: { 'AAAA-MM-DD': minutos }.
@@ -45,6 +46,8 @@ export function crearEstadoInicial() {
     tutorialPreguntado: false,
     // Año en que abrió el regalo de cumpleaños (el 28/10 de cada año aparece uno nuevo)
     regaloCumpleAbierto: null,
+    // El regalo de la primera vez (con las monedas y los puntos de bienvenida): ya lo abrió o no
+    regaloBienvenidaAbierto: false,
     // Recordatorios de estudio de hoy (tope por día) y la última vez que dijo que la extrañó
     recordatoriosEstudio: { fecha: null, cantidad: 0, ultimo: null, ultimoExtrano: null },
     // Secretos descubiertos: { estornudo: '2026-11-02T…' } (fecha en que lo descubrió)
@@ -92,6 +95,9 @@ function completarEstado(datos) {
     cartasVistas: { ...inicial.cartasVistas, ...datos.cartasVistas },
     recordatoriosEstudio: { ...inicial.recordatoriosEstudio, ...datos.recordatoriosEstudio },
     estrella: { ...inicial.estrella, ...datos.estrella },
+    // Los guardados de antes de la versión 10 ya arrancaron con las monedas y los puntos: para
+    // ellos el regalo de bienvenida cuenta como abierto (si no, los recibiría dos veces)
+    regaloBienvenidaAbierto: datos.regaloBienvenidaAbierto ?? true,
     version: VERSION_ACTUAL,
   }
 }
