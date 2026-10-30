@@ -396,7 +396,8 @@ export const GACHA = {
   GARANTIA_RARA: 10, // cada 10 tiradas, una rara o mejor asegurada (o sea, en cada multi)
   GARANTIA_ULTRA: 30, // a las 30 tiradas, ultra rara asegurada
   // Chance de cada rareza en una tirada normal
-  PROBABILIDADES: { comun: 0.7, rara: 0.22, epica: 0.07, ultra: 0.01 },
+  // (épicas y ultra raras tienen que ser raras de verdad)
+  PROBABILIDADES: { comun: 0.74, rara: 0.22, epica: 0.03, ultra: 0.01 },
   // Premios de ⭐ (chance sobre el total de tiradas). Devuelven en promedio ~30% de lo gastado.
   PREMIOS_PUNTOS: {
     comun: { puntos: 15, chance: 0.05 },
@@ -410,9 +411,9 @@ export const GACHA = {
   PIEZAS_PARA_CANJE: { comun: 10, rara: 15, epica: 5, ultra: 5 },
   // Mejorar piezas (solo para arriba): `cantidad` piezas de una rareza → 1 pieza de la siguiente
   MEJORAR_PIEZAS: {
-    comun: { a: 'rara', cantidad: 10 },
-    rara: { a: 'epica', cantidad: 10 },
-    epica: { a: 'ultra', cantidad: 5 },
+    comun: { a: 'rara', cantidad: 30 },
+    rara: { a: 'epica', cantidad: 20 },
+    epica: { a: 'ultra', cantidad: 10 },
   },
 }
 

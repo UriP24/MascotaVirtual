@@ -172,12 +172,12 @@ test('un progreso guardado de antes del gacha se completa sin perder nada', () =
   assert.deepEqual(cargado.ropa, { tiene: [], puesta: {} })
 })
 
-test('mejorar piezas: 10 comunes → 1 rara, 10 raras → 1 épica, 5 épicas → 1 ultra (solo para arriba)', async () => {
+test('mejorar piezas: 30 comunes → 1 rara, 20 raras → 1 épica, 10 épicas → 1 ultra (solo para arriba)', async () => {
   const { mejorarPiezas } = await import('../src/logic/gacha.js')
   const conPiezas = (piezas) => ({ ...crearEstadoInicial(), piezas: { comun: 0, rara: 0, epica: 0, ultra: 0, ...piezas } })
-  assert.deepEqual(mejorarPiezas(conPiezas({ comun: 12 }), 'comun').estado.piezas, { comun: 2, rara: 1, epica: 0, ultra: 0 })
-  assert.deepEqual(mejorarPiezas(conPiezas({ rara: 10 }), 'rara').estado.piezas, { comun: 0, rara: 0, epica: 1, ultra: 0 })
-  assert.deepEqual(mejorarPiezas(conPiezas({ epica: 5 }), 'epica').estado.piezas, { comun: 0, rara: 0, epica: 0, ultra: 1 })
-  assert.equal(mejorarPiezas(conPiezas({ comun: 9 }), 'comun').resultado, 'faltan-piezas')
+  assert.deepEqual(mejorarPiezas(conPiezas({ comun: 32 }), 'comun').estado.piezas, { comun: 2, rara: 1, epica: 0, ultra: 0 })
+  assert.deepEqual(mejorarPiezas(conPiezas({ rara: 20 }), 'rara').estado.piezas, { comun: 0, rara: 0, epica: 1, ultra: 0 })
+  assert.deepEqual(mejorarPiezas(conPiezas({ epica: 10 }), 'epica').estado.piezas, { comun: 0, rara: 0, epica: 0, ultra: 1 })
+  assert.equal(mejorarPiezas(conPiezas({ comun: 29 }), 'comun').resultado, 'faltan-piezas')
   assert.equal(mejorarPiezas(conPiezas({ ultra: 9 }), 'ultra').resultado, 'no-se-puede')
 })

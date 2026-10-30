@@ -45,8 +45,8 @@ PWA instalable en el celular con cuatro pantallas:
 - **Gacha de ropa** (pestaña "✨ Gacha" en Canjes, `src/logic/gacha.js`, valores en `GACHA` y
   `PRENDAS` de `config.js`): tirada 5 ⭐, multi de 10 por 50 ⭐ con rara o mejor asegurada, ultra rara
   segura a las 30 tiradas (sin 50-50). Repetidas dan piezas de su rareza para canjear prendas que falten
-  de esa rareza (10 comunes, 15 raras, 5 épicas, 5 ultra) o para mejorarlas (10 comunes → 1 rara,
-  10 raras → 1 épica, 5 épicas → 1 ultra). La ropa de temporada (estaciones de Argentina, Navidad
+  de esa rareza (10 comunes, 15 raras, 5 épicas, 5 ultra) o para mejorarlas (30 comunes → 1 rara,
+  20 raras → 1 épica, 10 épicas → 1 ultra). Chances: común 74%, rara 22%, épica 3%, ultra 1%. La ropa de temporada (estaciones de Argentina, Navidad
   10–31/12, San Valentín 1–14/2, Halloween octubre) solo sale y se canjea entre sus fechas (`TEMPORADAS`). Premios de ⭐ que devuelven ~30% en promedio (nunca más de lo que cobra).
 - **Cupones:** "Mis cupones" muestra solo los pendientes; al marcarlos cumplidos pasan al
   **historial de canjes** (todos, con fecha y hora de canje y de cumplido).
