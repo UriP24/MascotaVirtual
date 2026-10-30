@@ -1,6 +1,8 @@
 // Atajos del modo prueba (solo para Uri, para no esperar los tiempos reales).
-// Se activa abriendo la app con la palabra secreta al final del link (?huesito-5283), o con
-// `npm run dev`. No es "?prueba" para que Mari no lo adivine y se regale puntos.
+// Se activa abriendo la app con la palabra secreta al final del link (?palabra), o con
+// `npm run dev`. No es "?prueba" para que Mari no lo adivine y se regale puntos. El repo es
+// público, así que la palabra no está escrita: solo su "huella" (un número que sale de ella y del
+// que no se puede volver a la palabra). Uri la tiene anotada aparte.
 
 import { crearEstadoInicial } from '../storage.js'
 import { COMIDAS, SECRETOS } from '../config.js'
@@ -11,11 +13,25 @@ import { actualizarBolti } from './bolti.js'
 const MINUTO = 60 * 1000
 const HORA = 60 * MINUTO
 
-const CLAVE_MODO_PRUEBA = 'huesito-5283'
+const HUELLA_MODO_PRUEBA = 1218093212233323
+
+// Huella de un texto (hash cyrb53): siempre da el mismo número para el mismo texto
+export function huella(texto) {
+  let h1 = 0xdeadbeef
+  let h2 = 0x41c6ce57
+  for (let i = 0; i < texto.length; i++) {
+    const c = texto.charCodeAt(i)
+    h1 = Math.imul(h1 ^ c, 2654435761)
+    h2 = Math.imul(h2 ^ c, 1597334677)
+  }
+  h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909)
+  h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909)
+  return 4294967296 * (2097151 & h2) + (h1 >>> 0)
+}
 
 export function modoPruebaActivo() {
   if (import.meta.env?.DEV) return true
-  return new URLSearchParams(window.location.search).has(CLAVE_MODO_PRUEBA)
+  return [...new URLSearchParams(window.location.search).keys()].some((clave) => huella(clave) === HUELLA_MODO_PRUEBA)
 }
 
 // Suma minutos al cronómetro de la tarea de estudio pendiente (la que está corriendo, o la primera).

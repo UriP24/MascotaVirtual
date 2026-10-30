@@ -142,7 +142,7 @@ Si un día no llego, se recorta primero el minijuego; el resto del plan se corre
 ## Mié 28 — Entrega 🎂
 
 ## Después del cumple
-- [ ] **Sacar de `PLAN.md` los textos privados** (el mensaje de cumpleaños, la anécdota del puré y la del caballo) porque el repo es público
+- [x] **Sacar de `PLAN.md` los textos privados** (el mensaje de cumpleaños, la anécdota del puré y la del caballo) porque el repo es público
 - [ ] Tala y Lucky
 - [ ] Bolti repite lo que dice Mari con ladridos (como Tom)
 - [ ] Habitaciones: cocina, baño (bañarla), patio
@@ -180,12 +180,7 @@ La app publicada: https://urip24.github.io/MascotaVirtual/ (se actualiza sola co
 Mari tiene **Android**. Decisiones de Uri del 23/10 (todas cerradas):
 
 1. ✅ (25/10) **Bienvenida** (solo la primera vez, se guarda `bienvenidaVista`), pantallas en orden:
-   1. El mensaje de Uri, textual:
-      > Mi amor, feliz cumpleaños, esta vez decidí ser un poco mas creativo con tu regalo. Así q con
-      > mi amigo Claudio (Claude Code), decidimos hacerte un regalo. Tu propia mascota virtual. Espero
-      > que te guste, que lo disfrutes, que te entretengas y que te sirva sobre todas las cosas.
-      >
-      > Te Amo, Uri ❤️
+   1. El mensaje de cumpleaños de Uri (el texto está en `src/components/Welcome.jsx`).
    2. Botón para seguir → "¿Estás lista para empezar?" con botón **"Sí"**.
    3. Texto "¡Hola, Mari!, soy Bolti" (Bolti **todavía no se ve**, solo el mensaje).
    4. Botón **"Conocer a Bolti"** → Casa. El homenaje ya está en el mensaje, no hace falta más.
@@ -245,9 +240,7 @@ Mari tiene **Android**. Decisiones de Uri del 23/10 (todas cerradas):
 15. **Colección:** álbum con todas las prendas (las que faltan, en silueta con "?"), por colección, con
     barra de progreso. Recompensas: tirada gratis en hitos (10, 20, 30 prendas), prenda exclusiva al
     completar una colección (no sale en el gacha) y un cupón especial al completar todo.
-16. **El puré de zapallo (secreto de cómplices):** de chica Mari no quería comer su puré de zapallo
-    anco, los papás no la dejaban levantarse, se fueron a dormir, Bolti se lo comió y la felicitaron por
-    el plato vacío. Aprobado: a la hora del **almuerzo (13 a 15 h)** aparece un platito de puré en la
+16. **El puré de zapallo (secreto de cómplices, por una anécdota que Mari va a reconocer).** Aprobado: a la hora del **almuerzo (13 a 15 h)** aparece un platito de puré en la
     habitación (la primera vez unos días después del cumple, para que lo descubra; después ~1 vez por
     semana); si Mari se lo da, Bolti se lo come feliz, le **guiña un ojo** y dice "Shhh… nuestro
     secreto 🤫". La primera vez da la prenda exclusiva "Babero de cómplice" para la colección. Sin
@@ -278,7 +271,7 @@ Mari tiene **Android**. Decisiones de Uri del 23/10 (todas cerradas):
     charcos, pozos, gatos y bicis, y junta huesitos (reemplaza a "Bolti aventuras").
     - Con cierto puntaje: título **"Paseadora de perros"** y el **collar con chapita "Bolti"**
       (exclusivo, no sale en el gacha).
-    - **INVENCIBLE** (anécdota real: un caballo la pateó, Bolti voló y se levantó como si nada): a veces
+    - **INVENCIBLE** (por una anécdota real de Bolti): a veces
       aparece un caballo. Si la patea, Bolti sale volando en dibujito (estrellitas, rebota, sin
       lastimarse), se levanta moviendo la cola y dice "Soy…" → cartel **INVENCIBLE** en letras propias
       gruesas al estilo de la serie, pero en rosa y turquesa (guiño a la serie que vieron juntos; no se
