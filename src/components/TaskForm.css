@@ -15,8 +15,8 @@
   min-width: 0;
   height: 44px;
   padding: 0 12px;
-  border: 1px solid var(--color-borde);
-  border-radius: 12px;
+  border: var(--borde-sticker);
+  border-radius: 14px;
   font-size: 1rem; /* 16px evita que el iPhone haga zoom al tocar */
   background: var(--color-superficie);
   color: var(--color-texto);
@@ -30,11 +30,13 @@
 .task-form .agregar {
   height: 44px;
   padding: 0 16px;
-  border: none;
-  border-radius: 12px;
+  border: var(--borde-sticker);
+  border-radius: 14px;
   background: var(--color-principal);
   color: white;
+  font-family: var(--fuente-titulos);
   font-weight: 600;
+  box-shadow: 0 3px 0 var(--contorno);
 }
 
 .task-form .agregar:disabled {
@@ -49,15 +51,16 @@
 .task-form .tipos button {
   flex: 1;
   height: 40px;
-  border: 1px solid var(--color-borde);
+  border: 2px solid var(--color-borde);
   border-radius: 999px;
   background: var(--color-superficie);
-  font-size: 0.85rem;
+  font-family: var(--fuente-titulos);
+  font-size: 0.9rem;
   color: var(--color-texto-suave);
 }
 
 .task-form .tipos button.elegido {
-  border-color: var(--color-secundario);
+  border-color: var(--contorno);
   background: var(--color-secundario-claro);
   color: var(--color-secundario-oscuro);
   font-weight: 600;

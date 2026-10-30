@@ -3,7 +3,7 @@
   height: calc(var(--alto-barra-inferior) + env(safe-area-inset-bottom));
   padding-bottom: env(safe-area-inset-bottom);
   background: var(--color-superficie);
-  border-top: 1px solid var(--color-borde);
+  border-top: var(--borde-sticker);
 }
 
 .bottom-nav button {
@@ -15,16 +15,34 @@
   gap: 2px;
   border: none;
   background: none;
-  font-size: 0.75rem;
+  font-family: var(--fuente-titulos);
+  font-size: 0.78rem;
+  font-weight: 500;
   color: var(--color-texto-suave);
   cursor: pointer;
 }
 
 .bottom-nav button .icono {
-  font-size: 1.4rem;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 32px;
+  border-radius: 999px;
+  font-size: 1.35rem;
+  transition: background 0.2s;
 }
 
+/* Pestaña activa: una pastilla rosa detrás del ícono y un saltito */
 .bottom-nav button.activa {
   color: var(--color-principal-oscuro);
-  font-weight: 600;
+  font-weight: 700;
+}
+.bottom-nav button.activa .icono {
+  background: var(--color-principal-claro);
+  animation: bottom-nav-saltito 0.35s ease-out;
+}
+@keyframes bottom-nav-saltito {
+  40% {
+    transform: translateY(-5px) scale(1.08);
+  }
 }

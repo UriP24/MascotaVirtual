@@ -1,13 +1,19 @@
 .task-item {
   list-style: none;
   padding: 10px 12px;
-  border-radius: 14px;
+  border-radius: 16px;
   background: var(--color-superficie);
-  border: 1px solid var(--color-borde);
+  border: var(--borde-sticker);
+  box-shadow: var(--sombra-sticker);
 }
 
 .task-item.obligatoria:not(.hecha) {
-  border: 2px solid var(--color-secundario);
+  border-left: 8px solid var(--color-secundario);
+}
+
+.task-item.hecha {
+  box-shadow: none;
+  opacity: 0.75;
 }
 
 .task-item .fila {
@@ -21,8 +27,8 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  border: 2px solid var(--color-principal);
-  background: none;
+  border: 2.5px solid var(--contorno);
+  background: var(--color-principal-claro);
   color: white;
   font-weight: 700;
 }

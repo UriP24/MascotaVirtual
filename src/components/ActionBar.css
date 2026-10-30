@@ -11,12 +11,14 @@
   align-items: center;
   justify-content: center;
   min-height: 56px;
-  border: none;
+  border: var(--borde-sticker);
   border-radius: 16px;
   background: var(--color-superficie);
-  box-shadow: 0 2px 0 rgb(63 53 64 / 0.12);
+  box-shadow: 0 4px 0 var(--contorno);
+  font-family: var(--fuente-titulos);
   font-size: 0.85rem;
-  font-weight: 700;
+  font-weight: 600;
+  transition: transform 0.08s, box-shadow 0.08s;
 }
 
 .action-bar button span {
@@ -25,6 +27,6 @@
 }
 
 .action-bar button:active {
-  transform: translateY(2px);
-  box-shadow: none;
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 var(--contorno);
 }

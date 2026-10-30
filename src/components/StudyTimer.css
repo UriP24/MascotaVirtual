@@ -6,8 +6,9 @@
 }
 
 .study-timer .reloj {
-  font-size: 2.4rem;
-  font-weight: 700;
+  font-family: var(--fuente-titulos);
+  font-size: 2.8rem;
+  font-weight: 600;
   font-variant-numeric: tabular-nums;
   letter-spacing: 1px;
 }
@@ -50,10 +51,16 @@
 .study-timer .botones button {
   flex: 1;
   height: 48px;
-  border: none;
-  border-radius: 12px;
-  font-weight: 700;
-  font-size: 1rem;
+  border: var(--borde-sticker);
+  border-radius: 14px;
+  font-family: var(--fuente-titulos);
+  font-weight: 600;
+  font-size: 1.05rem;
+  box-shadow: 0 3px 0 var(--contorno);
+}
+.study-timer .botones button:active:not(:disabled) {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 var(--contorno);
 }
 
 .study-timer .empezar {

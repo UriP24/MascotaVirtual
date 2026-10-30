@@ -8,14 +8,16 @@
   position: relative;
   flex: 1;
   min-height: 320px;
+  border: var(--borde-sticker);
   border-radius: 24px;
   overflow: hidden;
+  box-shadow: var(--sombra-sticker);
   background: linear-gradient(
     180deg,
-    var(--color-principal-claro) 0%,
-    var(--color-terciario-claro) 55%,
-    var(--color-secundario-claro) 56%,
-    #bfe9e4 100%
+    var(--pared-arriba) 0%,
+    var(--pared-abajo) 55%,
+    var(--piso-arriba) 56%,
+    var(--piso-abajo) 100%
   );
 }
 

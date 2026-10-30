@@ -1,3 +1,11 @@
+/* Fredoka (licencia OFL, ver assets/fuentes): letra redondita para títulos, botones y números */
+@font-face {
+  font-family: 'Fredoka';
+  src: url('./assets/fuentes/fredoka.woff2') format('woff2');
+  font-weight: 300 700;
+  font-display: swap;
+}
+
 :root {
   /* Paleta: rosa + turquesa */
   --color-fondo: #fff5f8;
@@ -19,6 +27,19 @@
   --color-texto-suave: #857682;
   --color-borde: #f4dce6;
 
+  /* Estilo "sticker": el mismo contorno marrón de los dibujos de Bolti, con una sombrita dura abajo */
+  --contorno: #6b4636;
+  --borde-sticker: 2px solid var(--contorno);
+  --sombra-sticker: 0 3px 0 var(--contorno);
+  --fuente-titulos: 'Fredoka', system-ui, sans-serif;
+  /* La habitación de Bolti */
+  --pared-arriba: #ffd9e7;
+  --pared-abajo: #e9e0fc;
+  --piso-arriba: #cdf3f0;
+  --piso-abajo: #bfe9e4;
+  /* Huellitas de fondo, muy suaves */
+  --fondo-huellitas: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' viewBox='0 0 96 96'%3E%3Cg fill='%23ec6f9e' fill-opacity='0.07'%3E%3Cg transform='translate(22 24) rotate(-18)'%3E%3Cellipse cx='0' cy='8' rx='8' ry='6.5'/%3E%3Ccircle cx='-8' cy='-3' r='3.2'/%3E%3Ccircle cx='-2.8' cy='-7.5' r='3.2'/%3E%3Ccircle cx='2.8' cy='-7.5' r='3.2'/%3E%3Ccircle cx='8' cy='-3' r='3.2'/%3E%3C/g%3E%3Cg transform='translate(70 70) rotate(16)'%3E%3Cellipse cx='0' cy='8' rx='8' ry='6.5'/%3E%3Ccircle cx='-8' cy='-3' r='3.2'/%3E%3Ccircle cx='-2.8' cy='-7.5' r='3.2'/%3E%3Ccircle cx='2.8' cy='-7.5' r='3.2'/%3E%3Ccircle cx='8' cy='-3' r='3.2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+
   --alto-barra-superior: 56px;
   --alto-barra-inferior: 64px;
 
@@ -27,6 +48,31 @@
   background: var(--color-fondo);
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: transparent;
+}
+
+/* Modo oscuro: "la habitación de noche". App pone data-tema='oscuro' (o 'claro') en <html>,
+   según lo que se eligió en Configuración (Automático sigue al celu). */
+:root[data-tema='oscuro'] {
+  color-scheme: dark;
+  --color-fondo: #1c1624;
+  --color-superficie: #2a2135;
+  --color-principal: #ff7fb0;
+  --color-principal-oscuro: #ffa3c7;
+  --color-principal-claro: #4a2740;
+  --color-secundario: #34cbc2;
+  --color-secundario-oscuro: #7fe6df;
+  --color-secundario-claro: #1d3b3f;
+  --color-terciario-claro: #342a4d;
+  --color-texto: #f6ebf1;
+  --color-texto-suave: #b8a7bb;
+  --color-borde: #3d3149;
+  --contorno: #0e0a13;
+  --color-moneda: #f2c14e;
+  --pared-arriba: #3a2547;
+  --pared-abajo: #2c2448;
+  --piso-arriba: #1f3a45;
+  --piso-abajo: #193039;
+  --fondo-huellitas: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' viewBox='0 0 96 96'%3E%3Cg fill='%23ffffff' fill-opacity='0.035'%3E%3Cg transform='translate(22 24) rotate(-18)'%3E%3Cellipse cx='0' cy='8' rx='8' ry='6.5'/%3E%3Ccircle cx='-8' cy='-3' r='3.2'/%3E%3Ccircle cx='-2.8' cy='-7.5' r='3.2'/%3E%3Ccircle cx='2.8' cy='-7.5' r='3.2'/%3E%3Ccircle cx='8' cy='-3' r='3.2'/%3E%3C/g%3E%3Cg transform='translate(70 70) rotate(16)'%3E%3Cellipse cx='0' cy='8' rx='8' ry='6.5'/%3E%3Ccircle cx='-8' cy='-3' r='3.2'/%3E%3Ccircle cx='-2.8' cy='-7.5' r='3.2'/%3E%3Ccircle cx='2.8' cy='-7.5' r='3.2'/%3E%3Ccircle cx='8' cy='-3' r='3.2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
 
 * {
@@ -41,11 +87,18 @@ body,
 }
 
 body {
-  background: var(--color-fondo);
+  background: var(--fondo-huellitas) var(--color-fondo);
   overscroll-behavior: none;
 }
 
 button {
   font: inherit;
   color: inherit;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--fuente-titulos);
+  font-weight: 600;
 }

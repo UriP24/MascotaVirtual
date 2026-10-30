@@ -6,6 +6,7 @@
   padding: env(safe-area-inset-top) 16px 0;
   align-items: center;
   background: var(--color-degrade);
+  border-bottom: var(--borde-sticker);
 }
 
 .contador {
@@ -13,14 +14,17 @@
   align-items: center;
   gap: 6px;
   padding: 4px 12px;
+  border: var(--borde-sticker);
   border-radius: 999px;
-  font-size: 1rem;
-  box-shadow: 0 1px 3px rgb(0 0 0 / 0.08);
+  font-family: var(--fuente-titulos);
+  font-size: 1.05rem;
+  font-weight: 600;
+  box-shadow: 0 2px 0 var(--contorno);
 }
 
 .contador.moneda {
   background: var(--color-superficie);
-  color: #9a6a12;
+  color: var(--color-moneda, #9a6a12);
 }
 
 .contador.punto {
@@ -32,9 +36,9 @@
   width: 40px;
   height: 40px;
   margin-right: auto; /* queda a la izquierda, los contadores a la derecha */
-  border: none;
+  border: var(--borde-sticker);
   border-radius: 50%;
   background: var(--color-superficie);
   font-size: 1.2rem;
-  box-shadow: 0 1px 3px rgb(0 0 0 / 0.08);
+  box-shadow: 0 2px 0 var(--contorno);
 }
