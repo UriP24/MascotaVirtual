@@ -23,6 +23,7 @@ import {
   volverAlHorarioNormal,
 } from '../logic/prueba.js'
 import { regalarTiradas } from '../logic/gacha.js'
+import SoundLoader from './SoundLoader.jsx'
 import './TestPanel.css'
 
 // Panel oculto del modo prueba. Solo aparece con la palabra secreta en el link (ver prueba.js) o con npm run dev.
@@ -133,6 +134,7 @@ function TestPanel({ estado, setEstado }) {
           </div>
         </div>
       ))}
+      <SoundLoader />
       <div className="grupo">
         <span>🔄 Progreso</span>
         <div className="botones">

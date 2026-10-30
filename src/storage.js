@@ -212,3 +212,56 @@ export function importarProgreso(texto) {
     return null
   }
 }
+
+// ── Sonidos cargados en el celu ─────────────────────────────────────────
+// Algunos sonidos no están en la app publicada: Uri los carga desde el modo prueba en el celu de
+// Mari y quedan guardados solo ahí (en IndexedDB, que aguanta archivos). Nunca pasan por el repo.
+const BASE_SONIDOS = 'huellitas-sonidos'
+const TABLA_SONIDOS = 'sonidos'
+
+function abrirBaseSonidos() {
+  return new Promise((resolver, rechazar) => {
+    const pedido = indexedDB.open(BASE_SONIDOS, 1)
+    pedido.onupgradeneeded = () => pedido.result.createObjectStore(TABLA_SONIDOS)
+    pedido.onsuccess = () => resolver(pedido.result)
+    pedido.onerror = () => rechazar(pedido.error)
+  })
+}
+
+async function usarTablaSonidos(modo, hacer) {
+  const base = await abrirBaseSonidos()
+  return new Promise((resolver, rechazar) => {
+    const tabla = base.transaction(TABLA_SONIDOS, modo).objectStore(TABLA_SONIDOS)
+    const pedido = hacer(tabla)
+    pedido.onsuccess = () => resolver(pedido.result)
+    pedido.onerror = () => rechazar(pedido.error)
+  })
+}
+
+// Guarda un archivo de sonido (Blob/File) con su nombre. Devuelve true si se pudo.
+export async function guardarSonido(nombre, archivo) {
+  try {
+    await usarTablaSonidos('readwrite', (tabla) => tabla.put(archivo, nombre))
+    return true
+  } catch {
+    return false
+  }
+}
+
+// El archivo guardado con ese nombre, o null
+export async function leerSonido(nombre) {
+  try {
+    return (await usarTablaSonidos('readonly', (tabla) => tabla.get(nombre))) ?? null
+  } catch {
+    return null
+  }
+}
+
+export async function borrarSonido(nombre) {
+  try {
+    await usarTablaSonidos('readwrite', (tabla) => tabla.delete(nombre))
+    return true
+  } catch {
+    return false
+  }
+}

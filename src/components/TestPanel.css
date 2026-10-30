@@ -77,3 +77,13 @@
 .test-panel small {
   opacity: 0.7;
 }
+
+.test-panel .cargar-sonido {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: var(--color-secundario-claro);
+  font-size: 0.85rem;
+  font-weight: 700;
+}

@@ -137,6 +137,9 @@ palabra nunca se escribe en el repo (ni en el código, ni en docs, ni en commits
 su huella (`HUELLA_MODO_PRUEBA`). Uri la tiene anotada aparte. Tampoco van al repo textos privados
 de Uri y Mari (cartas, anécdotas): describirlos sin contarlos. Lógica en
 `src/logic/prueba.js`. Cuando se agregue una función nueva que dependa del tiempo, sumarle un atajo acá.
+**Sonidos con derechos de autor** (los de INVENCIBLE): no van al repo ni a la app publicada. Uri los
+carga desde el panel 🧪 en el celu de Mari y quedan solo ahí (IndexedDB, vía `storage.js`;
+`src/logic/sonidos.js`). Sin archivo cargado, no suena nada.
 
 ## Forma de trabajo
 - Antes de codear, mostrar un plan corto y esperar el OK.

@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import BoltiPerfil from './BoltiPerfil.jsx'
+import { prepararSonidos, sonar } from '../logic/sonidos.js'
 import './PaseoInvencible.css'
 
 // La escena de cuando el caballo patea a Bolti (secreto INVENCIBLE), con el juego en pausa:
@@ -16,6 +17,9 @@ const PASOS = [
 const LETRAS = 'INVENCIBLE'.split('')
 const TAMANOS = [62, 68, 74, 80, 84, 84, 80, 74, 68, 62]
 
+// Sonido de cada paso (si Uri los cargó en el celu desde el modo prueba)
+const SONIDO_DEL_PASO = { impacto: 'patada', levanta: 'transformacion', titulo: 'cartel' }
+
 // Llamas distintas para el aura: se turnan para que parezca que se mueve (cada filtro se dibuja
 // una sola vez, porque es pesado para el celu)
 const SEMILLAS_AURA = [3, 11, 23]
@@ -23,6 +27,31 @@ const SEMILLAS_AURA = [3, 11, 23]
 function PaseoInvencible({ onTerminar }) {
   const [paso, setPaso] = useState(0)
   const [fase, setFase] = useState(0) // para las estrellitas
+  const sonidos = useRef(null) // { audios, liberar } cuando están listos
+  const pasoRef = useRef(0)
+
+  // Los sonidos se leen del celu al empezar; si el golpe llega tarde, suena igual mientras dure el cráter
+  useEffect(() => {
+    let vigente = true
+    prepararSonidos(Object.values(SONIDO_DEL_PASO)).then((s) => {
+      if (!vigente) return s.liberar()
+      sonidos.current = s
+      if (pasoRef.current <= 1) sonar(s.audios.patada)
+    })
+    return () => {
+      vigente = false
+      sonidos.current?.liberar()
+    }
+  }, [])
+
+  useEffect(() => {
+    pasoRef.current = paso
+    const audios = sonidos.current?.audios
+    const nombre = PASOS[paso]?.nombre
+    if (!audios || !SONIDO_DEL_PASO[nombre]) return
+    if (nombre === 'titulo') audios.transformacion?.pause() // el cartel corta la transformación
+    sonar(audios[SONIDO_DEL_PASO[nombre]])
+  }, [paso])
 
   useEffect(() => {
     if (paso >= PASOS.length) {
