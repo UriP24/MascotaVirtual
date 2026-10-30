@@ -13,7 +13,7 @@ import './Bolti.css'
 // - carino, energia, saciedad: cada necesidad se ve en la cara por separado
 //   (cariño = cachetes sonrojados, energía baja = ojeras, hambre = panza que gruñe)
 // - esperando: abre la boca porque se acerca comida; comiendo: mastica; rechaza: da vuelta la cara
-// - gesto: un gesto especial de los secretos ('estornuda', 'patea', 'rueda', 'sacude', 'guino')
+// - gesto: un gesto especial de los secretos ('nariz', 'estornuda', 'patea', 'rueda', 'sacude', 'mareada', 'guino')
 // - ropa: la ropa puesta por zona ({ cabeza: 'gorrito-cumple', cuello: 'bufanda' })
 // - el resto (onPointerDown, etc.) se pasa al <svg>
 function Bolti({
@@ -208,8 +208,10 @@ function Bolti({
               </g>
               <path className="lagrima" fill="#8fd8f0" d="M116 124 C112 132 112 138 117 139 C122 138 121 132 116 124 Z" />
 
-              <path fill="#2a2022" d="M139 132 C139 125 161 125 161 132 C161 139 154 144 150 144 C146 144 139 139 139 132 Z" />
-              <ellipse cx="146" cy="130" rx="3.5" ry="2" fill="#fff" opacity="0.7" />
+              <g className="nariz">
+                <path fill="#2a2022" d="M139 132 C139 125 161 125 161 132 C161 139 154 144 150 144 C146 144 139 139 139 132 Z" />
+                <ellipse cx="146" cy="130" rx="3.5" ry="2" fill="#fff" opacity="0.7" />
+              </g>
               <path className="boca-cerrada" fill="none" stroke="#5a3a2a" strokeWidth="3" strokeLinecap="round" d="M150 144 L150 150 M136 150 Q143 158 150 150 Q157 158 164 150" />
               <path className="boca-abierta" fill="#7a2f3a" stroke="#5a3a2a" strokeWidth="3" d="M136 150 Q150 172 164 150 Q150 156 136 150 Z" />
               <path className="lengua" fill="#f08aa0" stroke="#c9566f" strokeWidth="2" d="M144 153 L156 153 L156 162 C156 168 144 168 144 162 Z" />
@@ -218,6 +220,21 @@ function Bolti({
                 <path fill="#7a2f3a" stroke="#5a3a2a" strokeWidth="3" strokeLinejoin="round" d="M137 149 Q150 165 163 149 Q150 154 137 149 Z" />
                 <path className="lengua-jadeo" fill="#f08aa0" stroke="#c9566f" strokeWidth="2" d="M143 155 L157 155 L157 167 C157 175 143 175 143 167 Z" />
               </g>
+              {/* Mareada (después de sacudirse): ojitos en espiral y estrellitas que giran */}
+              {gesto === 'mareada' && (
+                <g className="mareo">
+                  <g fill="none" stroke="#2a2022" strokeWidth="2.6" strokeLinecap="round">
+                    <path d={espiral(121, 110)} />
+                    <path d={espiral(179, 110)} />
+                  </g>
+                  {[0, 1, 2].map((i) => (
+                    <text key={i} fontSize="20" textAnchor="middle" dominantBaseline="central">
+                      ⭐
+                      <animateMotion dur="1.4s" begin={`${-i * 0.47}s`} repeatCount="indefinite" path="M150 30 m-60 0 a60 16 0 1 0 120 0 a60 16 0 1 0 -120 0" />
+                    </text>
+                  ))}
+                </g>
+              )}
               <g className="zzz">
                 <text x="210" y="60" fontSize="22">z</text>
                 <text x="226" y="44" fontSize="18">z</text>
@@ -231,6 +248,16 @@ function Bolti({
       </g>
     </svg>
   )
+}
+
+// Espiral de 3 vueltas alrededor de (cx, cy), para los ojitos mareados
+function espiral(cx, cy) {
+  const puntos = []
+  for (let a = 0; a <= Math.PI * 5; a += 0.25) {
+    const r = 1.5 + a * 0.62
+    puntos.push(`${(cx + r * Math.cos(a)).toFixed(1)} ${(cy + r * Math.sin(a)).toFixed(1)}`)
+  }
+  return `M${puntos.join(' L')}`
 }
 
 export default Bolti

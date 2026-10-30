@@ -306,6 +306,28 @@
 .bolti.gesto-guino .guino {
   display: inline;
 }
+.bolti .nariz {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+}
+/* Le tocan la nariz: la arruga (le pica) */
+.bolti.gesto-nariz .nariz {
+  animation: bolti-nariz 0.4s ease-in-out;
+}
+.bolti.gesto-nariz .ojos-normales {
+  transform: scaleY(0.6);
+}
+@keyframes bolti-nariz {
+  25% {
+    transform: scale(1.18, 0.85) translateY(-1px);
+  }
+  50% {
+    transform: scale(0.92, 1.1);
+  }
+  75% {
+    transform: scale(1.1, 0.9);
+  }
+}
 .bolti.gesto-estornuda .cabeza {
   animation: bolti-estornudo 0.7s ease-out;
 }
@@ -323,7 +345,38 @@
   animation: bolti-rodar 1.1s ease-in-out;
 }
 .bolti.gesto-sacude .entera {
-  animation: bolti-sacudirse 0.9s ease-in-out;
+  animation: bolti-sacudirse 0.7s ease-in-out infinite;
+}
+.bolti.gesto-sacude .oreja {
+  animation: bolti-orejas-sacudida 0.15s linear infinite alternate;
+}
+/* Mareada: se tambalea con los ojitos en espiral */
+.bolti.gesto-mareada .entera {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: bolti-tambalearse 1.1s ease-in-out infinite;
+}
+.bolti.gesto-mareada .ojos-normales,
+.bolti.gesto-mareada .ojos-felices,
+.bolti.gesto-mareada .ojos-dormidos {
+  display: none;
+}
+@keyframes bolti-orejas-sacudida {
+  from {
+    transform: rotate(-18deg);
+  }
+  to {
+    transform: rotate(18deg);
+  }
+}
+@keyframes bolti-tambalearse {
+  0%,
+  100% {
+    transform: rotate(-5deg) translateX(-4px);
+  }
+  50% {
+    transform: rotate(5deg) translateX(4px);
+  }
 }
 @keyframes bolti-estornudo {
   0% {

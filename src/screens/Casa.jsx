@@ -42,6 +42,8 @@ const DISTANCIA_POR_MIMO = 45 // px que hay que frotar para cada corazón
 const RADIO_BOCA = 0.2 // qué tan cerca de la boca (en proporción al ancho de Bolti) cuenta como "en la boca"
 const DURACION_COMIENDO = 1800
 const FRASES_AL_TOCARLA = ['¡Guau! 🐾', '¡Hola, Mari! 💕', '¿Jugamos?', '¡Te quiero!', '¡Más mimos!']
+// Le tocan la nariz: cada toque le pica un poco más, hasta que estornuda
+const FRASES_NARIZ = ['¿Eh? 👃', 'Me pica…', 'A… aa…', 'Aaa… aaaa…']
 
 function azar(lista) {
   return lista[Math.floor(Math.random() * lista.length)]
@@ -180,7 +182,8 @@ function Casa({ estado, setEstado, horasAusente = 0, onCambiarPantalla }) {
     function alMoverCelu(e) {
       const a = e.acceleration
       const fuerza = a && a.x !== null ? Math.hypot(a.x, a.y, a.z) : 0
-      if (fuerza < REGLAS_SECRETOS.SACUDIDA_FUERZA || Date.now() - ultima < 3000) return
+      // Mientras siga sacudiendo, Bolti sigue sacudiéndose (cada sacudida fuerte la estira)
+      if (fuerza < REGLAS_SECRETOS.SACUDIDA_FUERZA || Date.now() - ultima < 250) return
       ultima = Date.now()
       sacudirseRef.current()
     }
@@ -292,26 +295,32 @@ function Casa({ estado, setEstado, horasAusente = 0, onCambiarPantalla }) {
       decir('zzz… 😴')
       return
     }
-    // Secreto del estornudo: tocarle la nariz varias veces seguidas
+    // Secreto del estornudo: tocarle la nariz varias veces seguidas. Tocar la nariz no la hace
+    // saltar (si saltara, la nariz se movería y el próximo toque no le acertaría)
     const p = puntoEnBolti(e)
-    if (Math.hypot(p.x - 150, p.y - 134) < 22) {
+    if (Math.hypot(p.x - 150, p.y - 134) < REGLAS_SECRETOS.NARIZ_RADIO) {
       const n = nariz.current
       n.toques = Date.now() - n.ultimo < REGLAS_SECRETOS.NARIZ_SEGUNDOS_ENTRE_TOQUES * 1000 ? n.toques + 1 : 1
       n.ultimo = Date.now()
       if (n.toques >= REGLAS_SECRETOS.NARIZ_TOQUES) {
         n.toques = 0
         hacerGesto('estornuda', 800)
-        decir('¡Achís! 🤧')
+        decir('¡ACHÍS! 🤧', 2000)
+        soltarEmoji('💨', e.clientX, e.clientY)
+        navigator.vibrate?.(60)
         descubrirSecreto('estornudo')
         return
       }
+      hacerGesto('nariz', 400)
+      decir(FRASES_NARIZ[Math.min(n.toques, FRASES_NARIZ.length) - 1], 1400)
+      return
     }
+    // Un toque: salta y mueve la cola (los corazones son solo para los mimos, frotándola)
     setSaltos((s) => s + 1)
     setEstado((est) => darMimos(est, 1))
-    setMimos(true) // mueve la cola de contenta
+    setMimos(true)
     clearTimeout(timers.current.mimos)
     timers.current.mimos = setTimeout(() => setMimos(false), 900)
-    soltarEmoji('💗', e.clientX, e.clientY)
     // A veces, en vez de una frase común, suelta una pista de un secreto
     const pista = Math.random() < REGLAS_SECRETOS.CHANCE_PISTA ? pistaAlAzar(estado) : null
     decir(pista ?? azar(FRASES_AL_TOCARLA), pista ? 2800 : 1800)
@@ -380,10 +389,20 @@ function Casa({ estado, setEstado, horasAusente = 0, onCambiarPantalla }) {
     if (esDeNoche(new Date())) decir('Qué linda noche… 🌙')
   }
 
+  // Se sacude un rato (más si siguen sacudiendo el celu) y después queda mareada
   function sacudirse() {
-    hacerGesto('sacude', 900)
-    decir(animo === 'dormida' ? '¿Eh? ¿Qué pasó? 😵‍💫' : '¡Brrr! 💦')
-    descubrirSecreto('sacudida')
+    const empieza = !timers.current.mareo
+    clearTimeout(timers.current.mareo)
+    hacerGesto('sacude', 60 * 1000) // la corta el mareo
+    timers.current.mareo = setTimeout(() => {
+      timers.current.mareo = null
+      hacerGesto('mareada', REGLAS_SECRETOS.MAREO_MS)
+      decir('Uy… todo da vueltas 😵‍💫', REGLAS_SECRETOS.MAREO_MS)
+    }, REGLAS_SECRETOS.SACUDIDA_MS)
+    if (!empieza) return
+    navigator.vibrate?.([80, 40, 80, 40, 80])
+    decir(animo === 'dormida' ? '¿Eh? ¿Qué pasó? 😵‍💫' : '¡Brrr! ¡Brrr! 💦', REGLAS_SECRETOS.SACUDIDA_MS)
+    descubrirSecreto('sacudida', REGLAS_SECRETOS.SACUDIDA_MS + REGLAS_SECRETOS.MAREO_MS)
   }
 
   function tocarMedia() {

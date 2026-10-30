@@ -521,9 +521,12 @@ export const SECRETOS = [
 export const REGLAS_SECRETOS = {
   NARIZ_TOQUES: 5, // toques seguidos en la nariz para que estornude
   NARIZ_SEGUNDOS_ENTRE_TOQUES: 3,
+  NARIZ_RADIO: 28, // zona de la nariz que cuenta (en unidades del dibujo, que mide 300 de ancho)
   PANZA_RECORRIDO: 700, // px frotando la panza para que patee
   APRETADO_MS: 1800, // dedo quieto sobre Bolti para que se ponga panza arriba
   SACUDIDA_FUERZA: 22, // aceleración (m/s²) para que cuente como sacudir el celu
+  SACUDIDA_MS: 2000, // se sacude este rato después de la última sacudida del celu
+  MAREO_MS: 3200, // y después queda mareada (ojitos en espiral y estrellitas)
   VISITA_CADA_SEGUNDOS: 40, // cada cuánto puede pasar alguien por la ventana
   CHANCE_GATO: 0.12,
   CHANCE_VACA: 0.06,
