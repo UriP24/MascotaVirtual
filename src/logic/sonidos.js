@@ -34,3 +34,20 @@ export function sonar(audio) {
   audio.currentTime = 0
   audio.play().catch(() => {}) // si el celu no lo deja sonar, sigue sin sonido
 }
+
+// Baja el volumen de a poco y lo frena (para no cortarlo de golpe)
+export function apagar(audio, ms = 500) {
+  if (!audio || audio.paused) return
+  const inicio = audio.volume
+  const pasos = 10
+  let paso = 0
+  const timer = setInterval(() => {
+    paso += 1
+    audio.volume = Math.max(0, inicio * (1 - paso / pasos))
+    if (paso >= pasos) {
+      clearInterval(timer)
+      audio.pause()
+      audio.volume = inicio
+    }
+  }, ms / pasos)
+}

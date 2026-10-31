@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import BoltiPerfil from './BoltiPerfil.jsx'
-import { prepararSonidos, sonar } from '../logic/sonidos.js'
+import { apagar, prepararSonidos, sonar } from '../logic/sonidos.js'
 import './PaseoInvencible.css'
 
 // La escena de cuando el caballo patea a Bolti (secreto INVENCIBLE), con el juego en pausa:
@@ -10,7 +10,7 @@ const PASOS = [
   { nombre: 'impacto', dura: 500 },
   { nombre: 'tirada', dura: 3000 },
   { nombre: 'levanta', dura: 3800 },
-  { nombre: 'titulo', dura: 3500 },
+  { nombre: 'titulo', dura: 4800 }, // lo que dura el sonido del cartel
 ]
 
 // Más altas en el medio, como el título de la serie
@@ -49,7 +49,7 @@ function PaseoInvencible({ onTerminar }) {
     const audios = sonidos.current?.audios
     const nombre = PASOS[paso]?.nombre
     if (!audios || !SONIDO_DEL_PASO[nombre]) return
-    if (nombre === 'titulo') audios.transformacion?.pause() // el cartel corta la transformación
+    if (nombre === 'titulo') apagar(audios.transformacion) // la transformación se apaga cuando sale el cartel
     sonar(audios[SONIDO_DEL_PASO[nombre]])
   }, [paso])
 
