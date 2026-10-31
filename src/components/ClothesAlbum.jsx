@@ -1,3 +1,4 @@
+import { createPortal } from 'react-dom'
 import Bolti from './Bolti.jsx'
 import { PRENDAS, RAREZAS, RAREZA_EXCLUSIVA, TEMPORADAS } from '../config.js'
 import { cuandoVuelve, estaDisponible, tienePrenda } from '../logic/gacha.js'
@@ -27,7 +28,8 @@ function ClothesAlbum({ estado, onAlternarPrenda, onCerrar }) {
   const total = PRENDAS.length
   const tiene = PRENDAS.filter((p) => tienePrenda(estado, p.id)).length
 
-  return (
+  // Va directo en <body> (no adentro de la mochila), así no le llegan los estilos de donde se abre
+  return createPortal(
     <div className="clothes-album" role="dialog" aria-modal="true" aria-label="Álbum de ropa">
       <div className="encabezado">
         <h2>📖 Álbum de ropa</h2>
@@ -62,7 +64,8 @@ function ClothesAlbum({ estado, onAlternarPrenda, onCerrar }) {
           </section>
         )
       })}
-    </div>
+    </div>,
+    document.body,
   )
 }
 
