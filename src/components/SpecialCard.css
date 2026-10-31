@@ -19,8 +19,9 @@
   padding: 36px 22px 20px;
   border-radius: 22px;
   background: var(--color-superficie);
-  box-shadow: 0 6px 24px rgb(201 79 128 / 0.25);
   animation: special-card-abrir 0.5s ease-out;
+  border: var(--borde-sticker);
+  box-shadow: var(--sombra-sticker);
 }
 
 .special-card .sobre {
@@ -54,11 +55,13 @@
   align-self: center;
   min-width: 120px;
   min-height: 48px;
-  border: none;
   border-radius: 14px;
   background: var(--color-principal);
   color: white;
   font-size: 1.2rem;
+  border: var(--borde-sticker);
+  box-shadow: var(--sombra-boton);
+  font-family: var(--fuente-titulos);
 }
 
 @keyframes special-card-abrir {

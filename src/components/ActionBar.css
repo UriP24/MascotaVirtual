@@ -14,7 +14,7 @@
   border: var(--borde-sticker);
   border-radius: 16px;
   background: var(--color-superficie);
-  box-shadow: 0 4px 0 var(--contorno);
+  box-shadow: var(--sombra-boton);
   font-family: var(--fuente-titulos);
   font-size: 0.85rem;
   font-weight: 600;
@@ -27,6 +27,6 @@
 }
 
 .action-bar button:active {
-  transform: translateY(3px);
-  box-shadow: 0 1px 0 var(--contorno);
+  transform: translate(3px, 3px);
+  box-shadow: none;
 }

@@ -61,6 +61,18 @@ function App() {
     return () => clearInterval(timer)
   }, [])
 
+  // Tema claro u oscuro: "auto" sigue al celu (y cambia solo si el celu cambia)
+  useEffect(() => {
+    const oscuroDelCelu = window.matchMedia('(prefers-color-scheme: dark)')
+    const aplicar = () => {
+      const oscuro = estado.tema === 'oscuro' || (estado.tema === 'auto' && oscuroDelCelu.matches)
+      document.documentElement.dataset.tema = oscuro ? 'oscuro' : 'claro'
+    }
+    aplicar()
+    oscuroDelCelu.addEventListener('change', aplicar)
+    return () => oscuroDelCelu.removeEventListener('change', aplicar)
+  }, [estado.tema])
+
   // Con un cronómetro de estudio andando, una versión nueva de la app espera para no cortarlo
   const estudiando = estado.tareas.some((t) => t.estudio && t.estudio.inicioTramo !== null)
   useEffect(() => marcarOcupada('estudio', estudiando), [estudiando])
@@ -137,6 +149,8 @@ function App() {
       {configuracionAbierta && (
         <Settings
           secretos={progresoSecretos(estado)}
+          tema={estado.tema}
+          onCambiarTema={(tema) => setEstado((e) => ({ ...e, tema }))}
           onVerSecretos={() => {
             setConfiguracionAbierta(false)
             setSecretosAbiertos(true)

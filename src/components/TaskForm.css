@@ -36,7 +36,7 @@
   color: white;
   font-family: var(--fuente-titulos);
   font-weight: 600;
-  box-shadow: 0 3px 0 var(--contorno);
+  box-shadow: var(--sombra-boton);
 }
 
 .task-form .agregar:disabled {
@@ -51,12 +51,13 @@
 .task-form .tipos button {
   flex: 1;
   height: 40px;
-  border: 2px solid var(--color-borde);
   border-radius: 999px;
   background: var(--color-superficie);
   font-family: var(--fuente-titulos);
   font-size: 0.9rem;
   color: var(--color-texto-suave);
+  border: var(--borde-sticker);
+  box-shadow: var(--sombra-sticker);
 }
 
 .task-form .tipos button.elegido {

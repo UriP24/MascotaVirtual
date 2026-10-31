@@ -32,7 +32,8 @@
   padding: 36px 22px 24px;
   border-radius: 20px;
   background: var(--color-superficie);
-  box-shadow: 0 6px 24px rgb(201 79 128 / 0.18);
+  border: var(--borde-sticker);
+  box-shadow: var(--sombra-sticker);
 }
 
 .welcome .carta .sobre {
@@ -92,13 +93,14 @@
   min-width: 180px;
   min-height: 52px;
   padding: 0 28px;
-  border: none;
   border-radius: 16px;
   background: var(--color-principal);
   color: white;
   font-size: 1.1rem;
   font-weight: 700;
-  box-shadow: 0 4px 12px rgb(236 111 158 / 0.35);
+  border: var(--borde-sticker);
+  box-shadow: var(--sombra-boton);
+  font-family: var(--fuente-titulos);
 }
 
 .welcome .principal:active {

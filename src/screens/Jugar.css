@@ -17,6 +17,8 @@
   background: var(--color-superficie);
   font-size: 0.9rem;
   font-weight: 600;
+  border: var(--borde-sticker);
+  box-shadow: var(--sombra-sticker);
 }
 
 .jugar .energia .barra {
@@ -77,6 +79,8 @@
   padding: 14px;
   border-radius: 16px;
   background: var(--color-superficie);
+  border: var(--borde-sticker);
+  box-shadow: var(--sombra-sticker);
 }
 
 .jugar .juego .emoji {
@@ -103,12 +107,14 @@
 .jugar .juego button {
   min-width: 80px;
   height: 48px;
-  border: none;
   border-radius: 14px;
   background: var(--color-principal);
   color: white;
   font-weight: 700;
   font-size: 1rem;
+  border: var(--borde-sticker);
+  box-shadow: var(--sombra-boton);
+  font-family: var(--fuente-titulos);
 }
 
 .jugar .juego button:disabled {

@@ -92,6 +92,12 @@ su perrita al entrar. Adentro de la app sí se la nombra.
 ### Estilo visual
 Paleta rosa + turquesa, con un lila de transición (tokens en `src/index.css`).
 Rosa `#ec6f9e`, turquesa `#2bb8b0`, lila `#a488ec`, fondo `#fff5f8`.
+Estilo **"pop"** (elegido por Uri el 31/10): tarjetas y botones con borde rosa fuerte (`--borde-sticker`)
+y sombra turquesa corrida (`--sombra-sticker`, `--sombra-boton`), letra **Fredoka** (OFL, en
+`src/assets/fuentes`) para títulos, botones y números, lunares turquesa de fondo, barra de arriba
+rosa. **Modo oscuro** con los mismos tokens bajo `:root[data-tema='oscuro']`; App pone `data-tema`
+según `estado.tema` ('auto' sigue al celu). En CSS nuevo usar siempre tokens, nunca colores sueltos
+(salvo los dibujos y escenas de los juegos).
 
 ## Tecnología
 React + Vite en JavaScript (sin TypeScript), vite-plugin-pwa, datos en localStorage. Sin backend

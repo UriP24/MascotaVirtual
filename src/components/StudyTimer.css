@@ -56,16 +56,19 @@
   font-family: var(--fuente-titulos);
   font-weight: 600;
   font-size: 1.05rem;
-  box-shadow: 0 3px 0 var(--contorno);
+  box-shadow: var(--sombra-boton);
 }
 .study-timer .botones button:active:not(:disabled) {
-  transform: translateY(2px);
-  box-shadow: 0 1px 0 var(--contorno);
+  transform: translate(3px, 3px);
+  box-shadow: none;
 }
 
 .study-timer .empezar {
   background: var(--color-secundario);
   color: white;
+  border: var(--borde-sticker);
+  box-shadow: var(--sombra-boton);
+  font-family: var(--fuente-titulos);
 }
 
 .study-timer .pausar {
@@ -76,6 +79,9 @@
 .study-timer .completar {
   background: var(--color-principal);
   color: white;
+  border: var(--borde-sticker);
+  box-shadow: var(--sombra-boton);
+  font-family: var(--fuente-titulos);
 }
 
 .study-timer button:disabled {

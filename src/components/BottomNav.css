@@ -38,7 +38,8 @@
   font-weight: 700;
 }
 .bottom-nav button.activa .icono {
-  background: var(--color-principal-claro);
+  background: var(--color-secundario-claro);
+  outline: 2px solid var(--color-secundario);
   animation: bottom-nav-saltito 0.35s ease-out;
 }
 @keyframes bottom-nav-saltito {

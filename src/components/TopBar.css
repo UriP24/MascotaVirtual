@@ -5,7 +5,7 @@
   height: calc(var(--alto-barra-superior) + env(safe-area-inset-top));
   padding: env(safe-area-inset-top) 16px 0;
   align-items: center;
-  background: var(--color-degrade);
+  background: var(--barra-superior);
   border-bottom: var(--borde-sticker);
 }
 
@@ -14,12 +14,12 @@
   align-items: center;
   gap: 6px;
   padding: 4px 12px;
-  border: var(--borde-sticker);
+  border: 2.5px solid var(--color-superficie);
   border-radius: 999px;
   font-family: var(--fuente-titulos);
   font-size: 1.05rem;
   font-weight: 600;
-  box-shadow: 0 2px 0 var(--contorno);
+  box-shadow: 3px 3px 0 var(--contorno);
 }
 
 .contador.moneda {
@@ -36,9 +36,9 @@
   width: 40px;
   height: 40px;
   margin-right: auto; /* queda a la izquierda, los contadores a la derecha */
-  border: var(--borde-sticker);
+  border: 2.5px solid var(--color-superficie);
   border-radius: 50%;
   background: var(--color-superficie);
   font-size: 1.2rem;
-  box-shadow: 0 2px 0 var(--contorno);
+  box-shadow: 3px 3px 0 var(--contorno);
 }

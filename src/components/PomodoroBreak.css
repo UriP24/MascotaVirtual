@@ -20,6 +20,8 @@
   background: var(--color-superficie);
   text-align: center;
   animation: pomodoro-saltito 0.4s ease-out;
+  border: var(--borde-sticker);
+  box-shadow: var(--sombra-sticker);
 }
 
 .pomodoro-break .bolti {
@@ -66,6 +68,9 @@
 .pomodoro-break .principal {
   background: var(--color-principal);
   color: white;
+  border: var(--borde-sticker);
+  box-shadow: var(--sombra-boton);
+  font-family: var(--fuente-titulos);
 }
 
 .pomodoro-break .secundario {

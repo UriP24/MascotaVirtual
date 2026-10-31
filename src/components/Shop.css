@@ -44,6 +44,8 @@
   background: var(--color-superficie);
   color: #9a6a12;
   font-weight: 700;
+  border: var(--borde-sticker);
+  box-shadow: var(--sombra-sticker);
 }
 
 .shop .cerrar {
@@ -70,6 +72,8 @@
   padding: 10px 12px;
   border-radius: 14px;
   background: var(--color-superficie);
+  border: var(--borde-sticker);
+  box-shadow: var(--sombra-sticker);
 }
 
 .shop .emoji {
@@ -90,11 +94,13 @@
 .shop .comprar {
   min-width: 72px;
   height: 44px;
-  border: none;
   border-radius: 12px;
   background: var(--color-secundario);
   color: white;
   font-weight: 700;
+  border: var(--borde-sticker);
+  box-shadow: var(--sombra-boton);
+  font-family: var(--fuente-titulos);
 }
 
 .shop .comprar:disabled {

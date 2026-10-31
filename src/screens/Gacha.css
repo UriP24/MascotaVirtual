@@ -38,7 +38,8 @@
 .gacha-cartel .temporadas span {
   padding: 3px 10px;
   border-radius: 999px;
-  background: rgb(255 255 255 / 0.7);
+  background: var(--color-superficie);
+  border: 2px solid var(--contorno);
   font-size: 0.8rem;
   font-weight: 700;
 }
@@ -50,6 +51,8 @@
   padding: 12px 14px;
   border-radius: 16px;
   background: var(--color-superficie);
+  border: var(--borde-sticker);
+  box-shadow: var(--sombra-sticker);
 }
 
 .gacha .garantias .fila {
@@ -93,12 +96,14 @@
   align-items: center;
   gap: 2px;
   min-height: 64px;
-  border: none;
   border-radius: 16px;
   background: var(--color-secundario);
   color: white;
   font-size: 1rem;
   font-weight: 700;
+  border: var(--borde-sticker);
+  box-shadow: var(--sombra-boton);
+  font-family: var(--fuente-titulos);
 }
 
 .gacha .tirar.multi {
@@ -139,6 +144,9 @@
   border-radius: 14px;
   background: var(--color-superficie);
   list-style: none;
+  border: var(--borde-sticker);
+  border-left: 6px solid var(--color-rareza);
+  box-shadow: var(--sombra-sticker);
 }
 
 .gacha .piezas .nombre {

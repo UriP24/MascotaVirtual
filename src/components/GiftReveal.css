@@ -55,6 +55,8 @@
   list-style: none;
   opacity: 0;
   animation: gift-reveal-item 0.4s ease-out forwards;
+  border: var(--borde-sticker);
+  box-shadow: var(--sombra-sticker);
 }
 
 .gift-reveal li .emoji {
@@ -73,12 +75,14 @@
 .gift-reveal button {
   min-height: 48px;
   padding: 0 28px;
-  border: none;
   border-radius: 14px;
   background: var(--color-principal);
   color: white;
   font-size: 1rem;
   font-weight: 700;
+  border: var(--borde-sticker);
+  box-shadow: var(--sombra-boton);
+  font-family: var(--fuente-titulos);
 }
 
 @keyframes gift-reveal-abrir {

@@ -30,11 +30,12 @@
 .clothes-album .cerrar {
   width: 44px;
   height: 44px;
-  border: none;
   border-radius: 50%;
   background: var(--color-superficie);
   font-size: 1.1rem;
   color: var(--color-texto);
+  border: var(--borde-sticker);
+  box-shadow: var(--sombra-sticker);
 }
 
 .clothes-album section {
@@ -102,9 +103,10 @@
   width: 100%;
   aspect-ratio: 1;
   padding: 4px;
-  border: 3px solid var(--color-rareza);
   border-radius: 18px;
   background: var(--color-superficie);
+  border: 3px solid var(--color-rareza);
+  box-shadow: var(--sombra-sticker);
 }
 
 .clothes-album .ficha.puesta button {

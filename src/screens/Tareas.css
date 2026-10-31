@@ -15,9 +15,10 @@
 .tareas .vacio {
   padding: 16px;
   text-align: center;
-  border: 2px dashed var(--color-borde);
   border-radius: 14px;
   background: var(--color-superficie);
+  border: var(--borde-sticker);
+  box-shadow: var(--sombra-sticker);
 }
 
 .tareas .recompensas {
@@ -45,5 +46,5 @@
   background: var(--color-superficie);
   font-family: var(--fuente-titulos);
   font-weight: 600;
-  box-shadow: 0 2px 0 var(--contorno);
+  box-shadow: var(--sombra-boton);
 }

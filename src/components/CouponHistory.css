@@ -14,6 +14,8 @@
   padding: 10px 12px;
   border-radius: 14px;
   background: var(--color-superficie);
+  border: var(--borde-sticker);
+  box-shadow: var(--sombra-sticker);
 }
 
 .coupon-history .emoji {
@@ -50,4 +52,6 @@
   border-radius: 14px;
   background: var(--color-superficie);
   text-align: center;
+  border: var(--borde-sticker);
+  box-shadow: var(--sombra-sticker);
 }
