@@ -32,6 +32,14 @@ jobs:
       - run: npm run build
         env:
           GITHUB_PAGES: 'true'
+      # Sonidos temporales: mientras exista la rama `sonidos-temporales`, sus archivos se suman a la
+      # página para que la app los guarde en el celu (después se borra la rama y desaparecen de acá)
+      - name: Sonidos temporales
+        run: |
+          if git fetch --depth 1 origin sonidos-temporales; then
+            git archive FETCH_HEAD s | tar -x -C dist
+            ls dist/s
+          fi
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

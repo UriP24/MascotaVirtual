@@ -18,6 +18,7 @@ import { modoPruebaActivo } from './logic/prueba.js'
 import { hayRegaloDeCumple } from './logic/cumple.js'
 import { progresoSecretos } from './logic/secretos.js'
 import { marcarOcupada } from './logic/actualizacion.js'
+import { bajarSonidosQueFalten } from './logic/sonidos.js'
 import './App.css'
 
 // Se decide una sola vez al abrir la app.
@@ -52,6 +53,7 @@ function App() {
   // Al abrir: le pide al celu que no borre nunca los datos de la app
   useEffect(() => {
     pedirQueNoSeBorren()
+    bajarSonidosQueFalten()
   }, [])
   const [preguntarTutorial, setPreguntarTutorial] = useState(false)
 
