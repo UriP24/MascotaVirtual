@@ -18,6 +18,8 @@ export default defineConfig({
       // Cuando subimos una versión nueva, se instala sola cuando no corta nada (src/main.jsx)
       registerType: 'prompt',
       includeAssets: ['favicon.svg', 'icons/apple-touch-icon.png'],
+      // Que la letra también quede guardada para usar la app sin internet
+      workbox: { globPatterns: ['**/*.{js,css,html,woff2}'] },
       manifest: {
         name: 'Huellitas',
         short_name: 'Huellitas',

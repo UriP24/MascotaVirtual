@@ -6,8 +6,9 @@
 }
 
 .study-timer .reloj {
-  font-size: 2.4rem;
-  font-weight: 700;
+  font-family: var(--fuente-titulos);
+  font-size: 2.8rem;
+  font-weight: 600;
   font-variant-numeric: tabular-nums;
   letter-spacing: 1px;
 }
@@ -50,15 +51,24 @@
 .study-timer .botones button {
   flex: 1;
   height: 48px;
-  border: none;
-  border-radius: 12px;
-  font-weight: 700;
-  font-size: 1rem;
+  border: var(--borde-sticker);
+  border-radius: 14px;
+  font-family: var(--fuente-titulos);
+  font-weight: 600;
+  font-size: 1.05rem;
+  box-shadow: var(--sombra-boton);
+}
+.study-timer .botones button:active:not(:disabled) {
+  transform: translate(3px, 3px);
+  box-shadow: none;
 }
 
 .study-timer .empezar {
   background: var(--color-secundario);
   color: white;
+  border: var(--borde-sticker);
+  box-shadow: var(--sombra-boton);
+  font-family: var(--fuente-titulos);
 }
 
 .study-timer .pausar {
@@ -69,6 +79,9 @@
 .study-timer .completar {
   background: var(--color-principal);
   color: white;
+  border: var(--borde-sticker);
+  box-shadow: var(--sombra-boton);
+  font-family: var(--fuente-titulos);
 }
 
 .study-timer button:disabled {

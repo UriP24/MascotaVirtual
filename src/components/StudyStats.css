@@ -63,6 +63,8 @@
   border-radius: 16px;
   background: var(--color-superficie);
   text-align: center;
+  border: var(--borde-sticker);
+  box-shadow: var(--sombra-sticker);
 }
 
 .study-stats .racha .numero {

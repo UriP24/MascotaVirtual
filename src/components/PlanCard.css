@@ -6,6 +6,8 @@
   border-radius: 16px;
   background: var(--color-superficie);
   list-style: none;
+  border: var(--borde-sticker);
+  box-shadow: var(--sombra-sticker);
 }
 
 .plan-card .emoji {
@@ -41,13 +43,15 @@
 .plan-card button {
   min-height: 40px;
   padding: 0 12px;
-  border: none;
   border-radius: 12px;
   background: var(--color-principal);
   color: white;
   font-weight: 700;
   font-size: 0.85rem;
   white-space: nowrap;
+  border: var(--borde-sticker);
+  box-shadow: var(--sombra-boton);
+  font-family: var(--fuente-titulos);
 }
 
 .plan-card button:disabled {

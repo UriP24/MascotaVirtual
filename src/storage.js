@@ -6,7 +6,7 @@ import { fechaLocal } from './logic/fechas.js'
 import { esHorarioDeDormir } from './logic/bolti.js'
 
 const CLAVE = 'patitas:estado'
-const VERSION_ACTUAL = 10
+const VERSION_ACTUAL = 11
 
 export function crearEstadoInicial() {
   const ahora = new Date().toISOString()
@@ -48,6 +48,8 @@ export function crearEstadoInicial() {
     regaloCumpleAbierto: null,
     // El regalo de la primera vez (con las monedas y los puntos de bienvenida): ya lo abrió o no
     regaloBienvenidaAbierto: false,
+    // Tema de la app: 'auto' (sigue al celu), 'claro' u 'oscuro'
+    tema: 'auto',
     // Recordatorios de estudio de hoy (tope por día) y la última vez que dijo que la extrañó
     recordatoriosEstudio: { fecha: null, cantidad: 0, ultimo: null, ultimoExtrano: null },
     // Secretos descubiertos: { estornudo: '2026-11-02T…' } (fecha en que lo descubrió)

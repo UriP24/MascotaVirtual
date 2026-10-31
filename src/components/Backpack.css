@@ -67,12 +67,14 @@
 .backpack .tienda {
   height: 34px;
   padding: 0 10px;
-  border: none;
   border-radius: 10px;
   background: var(--color-secundario);
   color: white;
   font-size: 0.8rem;
   font-weight: 700;
+  border: var(--borde-sticker);
+  box-shadow: var(--sombra-boton);
+  font-family: var(--fuente-titulos);
 }
 
 .backpack .cerrar {
@@ -151,6 +153,7 @@
   font-size: 0.75rem;
   font-weight: 800;
   line-height: 20px;
+  font-family: var(--fuente-titulos);
 }
 
 .backpack .comida.arrastrando .emoji {
@@ -168,6 +171,7 @@
   color: white;
   font-size: 0.75rem;
   font-weight: 700;
+  font-family: var(--fuente-titulos);
 }
 
 .backpack .vacia,

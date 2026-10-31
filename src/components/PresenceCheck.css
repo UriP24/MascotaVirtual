@@ -17,6 +17,8 @@
   background: var(--color-superficie);
   text-align: center;
   animation: saltito 0.4s ease-out;
+  border: var(--borde-sticker);
+  box-shadow: var(--sombra-sticker);
 }
 
 .presence-check .bolti {
@@ -37,12 +39,14 @@
 .presence-check button {
   width: 100%;
   height: 52px;
-  border: none;
   border-radius: 14px;
   background: var(--color-principal);
   color: white;
   font-size: 1.1rem;
   font-weight: 700;
+  border: var(--borde-sticker);
+  box-shadow: var(--sombra-boton);
+  font-family: var(--fuente-titulos);
 }
 
 .presence-check small {

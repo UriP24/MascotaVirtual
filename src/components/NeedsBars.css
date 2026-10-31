@@ -9,17 +9,19 @@
   flex-direction: column;
   gap: 4px;
   padding: 6px 8px 8px;
+  border: var(--borde-sticker);
   border-radius: 14px;
   background: var(--color-superficie);
-  box-shadow: 0 1px 3px rgb(63 53 64 / 0.1);
+  box-shadow: var(--sombra-sticker);
 }
 
 .needs-bars .etiqueta {
   display: flex;
   justify-content: space-between;
   gap: 4px;
-  font-size: 0.74rem;
-  font-weight: 700;
+  font-family: var(--fuente-titulos);
+  font-size: 0.8rem;
+  font-weight: 600;
   white-space: nowrap;
 }
 
@@ -29,7 +31,8 @@
 }
 
 .needs-bars .barra {
-  height: 8px;
+  height: 10px;
+  border: 1.5px solid var(--contorno);
   border-radius: 999px;
   background: var(--color-terciario-claro);
   overflow: hidden;

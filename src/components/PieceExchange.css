@@ -66,6 +66,8 @@
   border-radius: 14px;
   background: var(--color-superficie);
   list-style: none;
+  border: var(--borde-sticker);
+  box-shadow: var(--sombra-sticker);
 }
 
 .piece-exchange .emoji {

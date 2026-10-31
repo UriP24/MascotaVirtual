@@ -9,9 +9,10 @@
   background: var(--color-superficie);
   font-weight: 700;
   text-align: center;
-  box-shadow: 0 2px 8px rgb(63 53 64 / 0.15);
   transform: translateX(-50%);
   animation: globo-aparecer 0.25s ease-out;
+  border: var(--borde-sticker);
+  box-shadow: var(--sombra-sticker);
 }
 
 .speech-bubble::after {

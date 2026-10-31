@@ -5,6 +5,8 @@
   padding: 12px;
   border-radius: 16px;
   background: var(--color-superficie);
+  border: var(--borde-sticker);
+  box-shadow: var(--sombra-sticker);
 }
 
 .coin-exchange .info {
@@ -20,11 +22,13 @@
 .coin-exchange button {
   min-height: 44px;
   padding: 0 16px;
-  border: none;
   border-radius: 12px;
   background: var(--color-secundario);
   color: white;
   font-weight: 700;
+  border: var(--borde-sticker);
+  box-shadow: var(--sombra-boton);
+  font-family: var(--fuente-titulos);
 }
 
 .coin-exchange button:disabled {

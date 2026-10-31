@@ -103,6 +103,9 @@
 .tutorial .siguiente {
   background: var(--color-principal);
   color: white;
+  border: var(--borde-sticker);
+  box-shadow: var(--sombra-boton);
+  font-family: var(--fuente-titulos);
 }
 
 @keyframes tutorial-pagina {

@@ -17,6 +17,8 @@
   background: var(--color-superficie);
   text-align: center;
   animation: confirm-aparecer 0.2s ease-out;
+  border: var(--borde-sticker);
+  box-shadow: var(--sombra-sticker);
 }
 
 @keyframes confirm-aparecer {
@@ -57,4 +59,7 @@
 .confirm .confirmar {
   background: var(--color-principal);
   color: white;
+  border: var(--borde-sticker);
+  box-shadow: var(--sombra-boton);
+  font-family: var(--fuente-titulos);
 }

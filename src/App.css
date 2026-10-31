@@ -14,7 +14,10 @@
 
 .pantalla h1 {
   margin: 0 0 8px;
-  font-size: 1.5rem;
+  font-size: 1.75rem;
+  letter-spacing: 0.5px;
+  color: var(--titulo);
+  text-shadow: 3px 3px 0 var(--titulo-sombra);
 }
 
 .pantalla p {

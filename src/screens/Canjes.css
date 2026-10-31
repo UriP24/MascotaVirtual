@@ -38,6 +38,8 @@
   border-radius: 14px;
   background: var(--color-superficie);
   text-align: center;
+  border: var(--borde-sticker);
+  box-shadow: var(--sombra-sticker);
 }
 
 .canjes .ver-historial {
